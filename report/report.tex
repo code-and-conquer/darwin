@@ -1,0 +1,105 @@
+\documentclass[11pt]{scrartcl}
+
+\usepackage{ucs}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{float}
+\usepackage{subfig}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[automark]{scrlayer-scrpage}
+\usepackage[hidelinks]{hyperref}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage[acronym]{glossaries}
+\usepackage{enumitem}
+\usepackage{epigraph}
+
+\makeglossaries
+
+\mdfdefinestyle{note-style}{%
+  rightline=true,
+  innerleftmargin=10,
+  innerrightmargin=10,
+  outerlinewidth=3pt,
+  topline=false,
+  rightline=true,
+  bottomline=false,
+  skipabove=\topsep,
+  skipbelow=\topsep
+}
+
+\newglossaryentry{nodejs}
+{
+    name=Node.js,
+    description={Node.js is an open-source, cross-platform, JavaScript library that executes JavaScript code outside of a browser.}
+}
+
+\makeindex
+
+\newacronym{arest}{REST}{Representational State Transfer}
+
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\pagestyle{scrheadings}
+\clearscrheadfoot
+\ofoot[\pagemark]{\pagemark}
+\ihead[]{\headmark}
+\setheadsepline[\textwidth]{1pt}
+
+\title{Final Report}
+\author{Marc Berli, Simon Stucki, ...}
+\date{\today{}, Zürich}
+
+\begin{document}
+
+\begin{titlepage}
+	\centering
+	{\scshape\LARGE PSIT4 \par}
+  \vspace{1cm}
+  {\scshape ZHAW - School of Engineering\par}
+	\vspace{1cm}
+	{\scshape\Large Gl0bis\par}
+	\vspace{1.5cm}
+	{\huge\bfseries Final Report\par}
+	\vspace{2cm}
+	{by \Large\itshape Marc Berli, ... and Simon Stucki\par}
+	\vfill
+  \textbf{Team}\par
+  IT17TA ZH\par
+  \textbf{Status}\par
+	In Progress
+
+	\vfill
+
+	{\large \today \textbf{ --} Zürich\par}
+\end{titlepage}
+
+\tableofcontents
+
+\newpage
+
+\section{Definitions}
+
+\subsection{Vocabulary}
+
+\begin{enumerate}
+  \item MUST -- This word, or the terms "REQUIRED" or "SHALL", mean that the definition is an absolute requirement of the specification.
+  \item MUST NOT -- This phrase, or the phrase "SHALL NOT", mean that the definition is an absolute prohibition of the specification.
+  \item SHOULD -- This word, or the adjective "RECOMMENDED", mean that there may exist valid reasons in particular circumstances to ignore a particular item, but the full implications must be understood and carefully weighed before choosing a different course.
+  \item SHOULD NOT -- This phrase, or the phrase "NOT RECOMMENDED", mean that there may exist valid reasons in particular circumstances when the particular behavior is acceptable or even useful, but the full implications should be understood and the case carefully weighed before implementing any behavior described with this label.
+\end{enumerate}
+
+\clearpage
+
+\printglossary[type=\acronymtype]
+
+\printglossary
+
+\end{document}
