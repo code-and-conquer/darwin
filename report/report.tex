@@ -15,7 +15,7 @@
 \usepackage[acronym]{glossaries}
 \usepackage{enumitem}
 \usepackage{epigraph}
-\usepackage[left=2.0cm, right=2.0cm, top=2.0cm, bottom=2.0cm]{geometry}
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
 
 \let\oldsection\section
 \renewcommand\section{\clearpage\oldsection}
@@ -55,7 +55,7 @@
 \clearscrheadfoot
 \ofoot[\pagemark]{\pagemark}
 \ihead[]{\headmark}
-\setheadsepline[\textwidth]{1pt}
+\setheadsepline[\textwidth]{0.5pt}
 
 \title{Final Report}
 \author{Marc Berli, Simon Stucki, ...}
@@ -93,6 +93,20 @@
 \newpage
 
 \section{Kontext}
+% Dieser erste Teil des Dokuments beschreibt grob die Idee des Produktes und das Umfeld des
+% Produktes. Dieses Kapitel muss nicht lang sein (halbe bis max. 2 Seiten) und sollte folgende
+% Fragen beantworten:
+% • Um was geht es bei der Software, dem Produkt, dem System?
+% • Was wird produziert?
+% • Wie passt es ins bestehende Umfeld?
+% • Wer verwendet die Software? (Aktoren, Anwender, Rollen, ...)
+% Dieses Kapitel muss in jedem Software-Guidebook enthalten sein.
+
+Die Idee des Projekts ist es ein Spiel zu entwickeln, welches sich nicht durch klassische Echtzeiteingaben, sondern durch Code steuern lässt. Der Spieler schreibt dazu ein Skript, welches in einer Schleife ausgeführt wird. Er kann mittels des Skripts beispielsweise den aktuellen Spielzustand auslesen, Berechnungen anstellen und zum Schluss eine Liste von vordefinierten Aktionen durchführen.
+
+Das Spiel selbst ist in seiner Grundform ein Multiplayer Survival Game. Es treten mehrere Spieler gegeneinander an. Ziel des Spiels ist es, der einzige Überlebende zu sein. Dazu müssen  Einheiten der Spieler beispielsweise Essen aufsammeln, um nicht zu verhungern, Ressourcen sammeln, um Ausrüstung oder Gebäude zu bauen, oder können gegnerische Einheiten angreifen. Dieses simple Spielprinzip ist für Spieler einfach zu verstehen oder bereits bekannt. Die Steuerung durch den Code erlaubt uns, den Schwerpunkt des Gameplays stärker auf die Vorausplanung und langfristigen Strategien zu legen und reaktives Gameplay in den Hintergrund zu stellen.
+
+Das Spiel wird als Webapplikation umgesetzt. Spieler können sich gegenseitig herausforden und ein Match starten. Während des Spielverlaufs können sie ihr Skript aktualisieren und visuell verfolgen, wie das Spielfeld aktuell aussieht. Zuschauer können die verschiedenen Matches beitreten und zuschauen.
 
 \section{Ziele und Hauptfunktonen}
 
@@ -116,16 +130,14 @@
 
 \section{Entscheidungs-Logbuch}
 
-\section{Definitions}
-
-\subsection{Vocabulary}
-
-\begin{enumerate}
-  \item MUST -- This word, or the terms "REQUIRED" or "SHALL", mean that the definition is an absolute requirement of the specification.
-  \item MUST NOT -- This phrase, or the phrase "SHALL NOT", mean that the definition is an absolute prohibition of the specification.
-  \item SHOULD -- This word, or the adjective "RECOMMENDED", mean that there may exist valid reasons in particular circumstances to ignore a particular item, but the full implications must be understood and carefully weighed before choosing a different course.
-  \item SHOULD NOT -- This phrase, or the phrase "NOT RECOMMENDED", mean that there may exist valid reasons in particular circumstances when the particular behavior is acceptable or even useful, but the full implications should be understood and the case carefully weighed before implementing any behavior described with this label.
-\end{enumerate}
+\begin{itemize}
+  \item 21.02.2020
+  \begin{itemize}
+    \item Wir haben uns zum Genre "Survival" geeinigt. Dies, da es ein sehr flexibles Genre ist, mit dem bereits durch eine sehr einfache Spielmechanik (Hunger) das Grundprinzip umgesetzt werden kann.
+    \item Wir haben uns entschieden die Steuerung mittels Code zu machen, da es erst wenige Spiele mit einer solchen Steuerung gibt und uns die technischen sowie auch gameplay-spezifischen Aspekte interessieren.
+    \item Wir setzen Frontend und Backend mittels JavaScript (TypeScript) um, da unser Know-How mit dieser Sprache am höchsten ist und sie uns hohe Flexibilität bietet.
+  \end{itemize}
+\end{itemize}
 
 \clearpage
 
