@@ -17,6 +17,9 @@
 \usepackage{epigraph}
 \usepackage[left=2.0cm, right=2.0cm, top=2.0cm, bottom=2.0cm]{geometry}
 
+\let\oldsection\section
+\renewcommand\section{\clearpage\oldsection}
+
 \makeglossaries
 
 \mdfdefinestyle{note-style}{%
