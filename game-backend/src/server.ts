@@ -15,3 +15,5 @@ WSServer.on('connection', (ws) => {
   });
 });
 /* eslint-enable no-console */
+
+server.listen(8080, '0.0.0.0');
