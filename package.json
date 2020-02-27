@@ -1,0 +1,27 @@
+{
+  "name": "darwin",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install-fe": "./.scripts/frontend/install.sh",
+    "install-be": "./.scripts/backend/install.sh",
+    "build-fe": "./.scripts/frontend/build.sh",
+    "build-be": "./.scripts/backend/build.sh",
+    "test-fe": "./.scripts/frontend/test.sh",
+    "test-be": "./.scripts/backend/build.sh",
+    "install": "npm run install-be && npm run install-fe",
+    "build": "npm run build-be && npm run build-fe",
+    "test": "npm run test-be && npm run test-fe"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code-and-conquer/darwin.git"
+  },
+  "author": "code-and-conquer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/code-and-conquer/darwin/issues"
+  },
+  "homepage": "https://github.com/code-and-conquer/darwin#readme"
+}
