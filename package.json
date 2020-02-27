@@ -10,7 +10,7 @@
     "build-be": "./.scripts/backend/build.sh",
     "test-fe": "./.scripts/frontend/test.sh",
     "test-be": "./.scripts/backend/build.sh",
-    "install": "npm run install-be && npm run install-fe",
+    "install-app": "npm run install-be && npm run install-fe",
     "build": "npm run build-be && npm run build-fe",
     "test": "npm run test-be && npm run test-fe"
   },
