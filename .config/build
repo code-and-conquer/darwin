@@ -1,0 +1,2 @@
+BE_SOURCE=game-backend #to be configured
+FE_SOURCE=game-frontend
