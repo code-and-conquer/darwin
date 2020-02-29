@@ -1,11 +1,12 @@
 import hyperid from 'hyperid';
+import Position from './types/Position';
 
 const hyperIdInstance = hyperid();
 
 export default class GameObject {
-  private id: string
+  private id: string;
 
-  private position: Pos;
+  private position: Position;
 
   constructor() {
     this.id = hyperIdInstance();

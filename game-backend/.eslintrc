@@ -33,6 +33,8 @@
     "rules": {
         "import/extensions": ["error", "never"],
         "import/no-unresolved": "off",
-        "@typescript-eslint/no-unused-vars": "warn"
+        "@typescript-eslint/no-unused-vars": "warn",
+        "semi": "off",
+        "@typescript-eslint/semi": ["error"]
     }
 }
