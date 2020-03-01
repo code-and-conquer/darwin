@@ -75,7 +75,7 @@ description={Node.js is an open-source, cross-platform, JavaScript library that 
 \vspace{2cm}
 von
 \vspace{1em}
-\Large\itshape \\ Raphael Mailänder, Marc Berli, Ferenc Kuntic \\ Michael Schaufelberger, Filip Kasikovic, und Simon Stucki\par
+\Large\itshape \\ Raphael Mailänder, Marc Berli, Ferenc Kuntić \\ Michael Schaufelberger, Filip Kašiković, und Simon Stucki\par
 \vfill
 \textbf{Team}\par
 IT17ta\_ZH\par
@@ -91,12 +91,6 @@ In Progress
 \tableofcontents
 
 \newpage
-
-\FirstSprintPoints
-Branching: Wir arbeiten mit Feature branches, pull requests und reviews an master commits
-Doku:
-Testing:
-CI/CD:
 
 \section{Kontext}
 % Dieser erste Teil des Dokuments beschreibt grob die Idee des Produktes und das Umfeld des
@@ -164,16 +158,22 @@ durch Werbung eingenommen.
 
 Relevanz zu den Spiel Attributen abinden
 Qualitätsattribute:
-Performance - Das Spiel soll den eingegeben Code innerhalb weniger Minuten kompilieren und ausführen.
-Verfügbarkeit - Der Server sollte 24h laufen
-Security - Eine Prüfung auf schädlichen Code sowie Standard gegen 'Javascript Injection' müssen geprüft werden, zudem muss sich jeder Benutzer authentifizieren, um die Webapplikation zu bedienen.
-Erweiterbarkeit - Die Software muss modular aufgebaut sein um einzelne Funktionen und Features einfach zu erweitern
-Zuverlässigkeit - Das Spiel muss gewährleisten das es fliessend ohne grössere Unterbrüche läuft und ein fehlerhaftes/schädliches Script nicht ausführt
-Benutzerfreundlichkeit - Die Userinterface soll es ermöglichen, die gesuchten Infos möglichst schnell, unmittelbar und bequem bereitzustellen und es muss es dem User erlauben, dass man sich auf Seite bewegen kann, ohne auf Probleme zu stossen
-Failover / Disaster Recovery Ziele - Die Recovery Plans werden eingeschränkt auf:
-1) Hardware Probleme - Es muss sichergestellt werden das bei einem CPU Ausfall
-2) Applikations- Code Probleme -
-3) Dependency probleme -
+\begin{itemize}
+
+\item Performance - Das Spiel soll den eingegeben Code innerhalb weniger Minuten kompilieren und ausführen.
+\item Verfügbarkeit - Der Server sollte 24h laufen
+\item Security - Eine Prüfung auf schädlichen Code sowie Standard gegen 'Javascript Injection' müssen geprüft werden, zudem muss sich jeder Benutzer authentifizieren, um die Webapplikation zu bedienen.
+\item Erweiterbarkeit - Die Software muss modular aufgebaut sein um einzelne Funktionen und Features einfach zu erweitern
+\item Zuverlässigkeit - Das Spiel muss gewährleisten das es fliessend ohne grössere Unterbrüche läuft und ein fehlerhaftes/schädliches Script nicht ausführt
+\item Benutzerfreundlichkeit - Die Userinterface soll es ermöglichen, die gesuchten Infos möglichst schnell, unmittelbar und bequem bereitzustellen und es muss es dem User erlauben, dass man sich auf Seite bewegen kann, ohne auf Probleme zu stossen
+\item Failover / Disaster Recovery Ziele - Die Recovery Plans werden eingeschränkt auf:
+\begin{enumerate}
+\item Hardware Probleme - Es muss sichergestellt werden das bei einem CPU Ausfall
+\item Applikations- Code Probleme -
+\item Dependency probleme -
+\end{enumerate}
+
+\end{itemize}
 
 Um die Qualitätsattribute einzuhalten ist die Sicherstellung von Programmcode-Entwicklungsprinzipien und Eskalationsplännen ein muss. Diese werden mithilfe
 von agilen Framework Prozessen wie Scrum und zuverlässigen Entwicklung Tools wie Github/Jira oder Confluence einfacher eingehaltet.
@@ -192,13 +192,19 @@ Bei unserer Software-Entwicklung werden die Prozesse von Story Beschreibung, Ent
 Ein strukturiertes Vorgehen ist zwingend, um den Durchbruch bei unserem IT-Projekt zu schaffen.
 
 Unsere Software ist unabhängig von dem Entwicklungsprozess folgenden Beschränkungen ausgesetzt.
-1) Zeit: die Zeitdauer des Projekts eingeschränkt was sich auf 6 Sprints beläuft.
-2) Budget und Ressourcen: Das Budget soll sich möglichst auf das Minimum beziehen und optimaler weise jeder Ressource zu 100% ausgenutzt werden.
-3) Technologien:
-1)Cloud basierende Hosting Services: Github und Azure
-2)TypeScript:
-4)Grösse des Entwicklungsteams: Das Team besteht aus einem Product Owner, einem Scrum muster und 4 weiteren Entwicklern
-5)Kompetenzenprofil: Alle Entwickler haben bereits mehrjährige Erfahrungen mit den Technologien die für unsere Entwicklung eingesetzt werden.
+\begin{enumerate}
+\item Zeit: die Zeitdauer des Projekts eingeschränkt was sich auf 6 Sprints beläuft.
+\item Budget und Ressourcen: Das Budget soll sich möglichst auf das Minimum beziehen und optimaler weise jeder Ressource zu 100\% ausgenutzt werden.
+\item Technologien:
+	\begin{enumerate}
+
+	\item Cloud basierende Hosting Services: Github und Azure
+	\item TypeScript:
+
+	\end{enumerate}
+\item Grösse des Entwicklungsteams: Das Team besteht aus einem Product Owner, einem Scrum muster und 4 weiteren Entwicklern
+\item Kompetenzenprofil: Alle Entwickler haben bereits mehrjährige Erfahrungen mit den Technologien die für unsere Entwicklung eingesetzt werden.
+\end{enumerate}
 
 \section{Verwendete Prinzipien}
 
