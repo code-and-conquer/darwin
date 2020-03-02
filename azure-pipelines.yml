@@ -28,7 +28,7 @@ steps:
     displayName: "test"
   - task: CopyFiles@2
     inputs:
-      Contents: '**'
+      Contents: './game-frontend/build/**'
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
   - task: PublishBuildArtifacts@1
     inputs:
