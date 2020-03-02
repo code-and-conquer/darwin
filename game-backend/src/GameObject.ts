@@ -1,5 +1,5 @@
 import hyperid from 'hyperid';
-import Position from './types/Position';
+import Position from '../../darwin-types/Position';
 
 const hyperIdInstance = hyperid();
 

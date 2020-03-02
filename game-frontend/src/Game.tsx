@@ -1,9 +1,12 @@
 import React from 'react'
 import {Stage, Text} from '@inlet/react-pixi';
 import * as Pixi from 'pixi.js';
+import Position from "../../darwin-types/Position";
 
 interface GameProps {
-  unit: any
+  unit: {
+    position: Position
+  }
 }
 
 function Game({unit}: GameProps) {
