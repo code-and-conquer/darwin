@@ -2,6 +2,8 @@ import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 
 import logo from './logo.svg';
+import Game from './Game';
+import useWebsocketData from "./useWebsocketData";
 
 const GlobalStyle = createGlobalStyle`
  body {
@@ -36,6 +38,7 @@ const AppLogo = styled.img`
 `;
 
 function App() {
+  const unit = useWebsocketData();
   return (
     <>
       <GlobalStyle />
@@ -45,6 +48,7 @@ function App() {
           <AppTitle>
             Darwin is ready for React.
           </AppTitle>
+          {unit && <Game unit={unit} />}
         </AppHeader>
       </AppContainer>
     </>
