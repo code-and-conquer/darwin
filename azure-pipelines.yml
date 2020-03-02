@@ -29,8 +29,8 @@ steps:
   - task: CopyFiles@2
     inputs:
       Contents: |
-        '**/game-frontend/build/**.*'
-        '**/game-backend/build/**.*'
+        **/game-frontend/build/**.*
+        **/game-backend/build/**.*
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
   - task: PublishBuildArtifacts@1
     inputs:
