@@ -224,6 +224,20 @@ Unsere Software ist unabhängig von dem Entwicklungsprozess folgenden Beschränk
 \section{Verwendete Prinzipien}
 
 \section{Architektur}
+\subsection{Applikation}
+Bei Darwin handelt es sich um eine Webapplikation welche in Frontend und Backend aufgeteilt ist.
+Aufgrund der Erfahrung der Teammitglieder wird ausschliesslich TypeScript bzw. JavaScript eingesetzt.
+
+\subsubsection{Frontend}
+Die Usability ist ein Kernanspruch an die Applikation deshalb verwendet Darwin moderne Technologien im Frontend Bereich.
+Die Visualisierung des Spiels wird in einem 2D Canvas Context mittels Pixi.js gerendered.
+Als UI Library wird aufgrund der Erfahrung des Teams React eingesetzt.
+
+\subsubsection{Backend}
+Für das Backend wird Node.js eingesetzt, da dieses die meistverwendete Node.js Runtime ist und die notwendige Stabilität aufweist. 
+Damit das Frontend in Realtime über den neusten Spielstand informiert wird findet die Kommunikation mittels Websockets statt.
+Im Backend werden keine externen APIs verwendet und es ist insbesondere keine Persistierungsschicht angedacht.
+
 \subsection{CI /CD}
 Um einen raschen release Zyklus zu gewährleisten wurde eine Build- sowie eine Releasepipeline eingerichtet.
 Diese ermöglicht es, Pull-Requests automatisch zu testen und bei einem erfolgten merge automatisiert zu releasen und deployen.
