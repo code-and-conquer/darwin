@@ -217,6 +217,20 @@ Unsere Software ist unabhängig von dem Entwicklungsprozess folgenden Beschränk
 \section{Verwendete Prinzipien}
 
 \section{Architektur}
+\subsection{CI /CD}
+Um einen raschen release Zyklus zu gewährleisten wurde eine Build- sowie eine Releasepipeline eingerichtet.
+Diese ermöglicht es, Pull-Requests automatisch zu testen und bei einem erfolgten merge automatisiert zu releasen und deployen.
+Dies soll die Entwicklungsphase beschleunigen und gewähleisten, dass stets und ausschliesslich funktionierender Code deployed wird.
+
+Innerhalb dieser Pipeline werden folgende Schritte durchgeführt:
+\begin{itemize}
+  \item Installieren aller notwendigen Paketen
+  \item Bauen der beiden Artefakten (Frontend und Backend)
+  \item Durchführen der Unit Tests
+  \item Erstellung eines deploybaren Paketes
+  \item Deployment auf den Server
+  \item Neustarten des Docker-Containers auf dem Server
+\end{itemize}
 
 Der Aufbau unserer Software hat in voraus bereits eine Grobplanung in welchen schritten und Phasen entwickelt wird.
 Dies ermöglicht es uns, bereits frühzeitig Fehler zu erkennen und Schnittstellen genauer zu spezifizieren.
