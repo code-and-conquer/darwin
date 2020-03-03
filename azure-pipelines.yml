@@ -3,7 +3,7 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 variables:
-- group: darwin
+  - group: darwin
 
 trigger:
   - master
@@ -14,7 +14,7 @@ pool:
 steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: "10.x"
+      versionSpec: "12.x"
     displayName: "Install Node.js"
 
   - script: |
@@ -35,9 +35,9 @@ steps:
         **/game-frontend/package.json
         **/game-backend/dist/**
         **/game-backend/package.json
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      TargetFolder: "$(Build.ArtifactStagingDirectory)"
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'drop'
-      publishLocation: 'Container'
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+      ArtifactName: "drop"
+      publishLocation: "Container"
