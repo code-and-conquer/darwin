@@ -222,6 +222,18 @@ Unsere Software ist unabhängig von dem Entwicklungsprozess folgenden Beschränk
 \end{enumerate}
 
 \section{Verwendete Prinzipien}
+ie Qualitäs einer Software hat stets oberste Priorität. Um diese bei der Entwicklung unseres Spieles
+sicherzustellen haben wir uns auf folgende Prinzipien geeinigt:
+\begin{itemize}
+\item Hohe Kohäsion und minimale Kopplung ist wichtiger Bestandteil um die Komplexität unseres
+ Spieles und die Fehlerbehebung zu vereinfachen,
+\item Coding Guidlines werden für unsere Entwicklung eingesetzt und mittels Tools überprüft. So können Syntax und Code-Styling eingehalten werden.
+\item Datenbank Zugriffe können vernachlässigt werden, da unser Ziel ist die Spiele im RAM laufen zu lassen und somit eine bessere Performance zu erreichen.
+\item Fehlerbehandlungen werden grundsätzlich normal mit 'bug Stories' abgearbeitet. Bei Notfällen haben wir ein Eskalationsprotokoll um die Fehlerbehandlung effizienter zu gestallten.
+\item Anstatt direkt in den Master-Branch zu pushen wird pro User-Story ein Branch erstellt welcher mittels einem Pull-Request in den Master-Branch gemerged wird.
+\item Wir kommunizieren offen und ehrlich miteinander. 
+\end{itemize}
+All diese Prinzipien sind ein wichtiger Bestandteil unserer Entwicklung und werden von allen Teammitglieder stets eingehalten.
 
 \section{Architektur}
 \subsection{Applikation}
