@@ -23,21 +23,21 @@
 \makeglossaries
 
 \mdfdefinestyle{note-style}{%
-rightline=true,
-innerleftmargin=10,
-innerrightmargin=10,
-outerlinewidth=3pt,
-topline=false,
-rightline=true,
-bottomline=false,
-skipabove=\topsep,
-skipbelow=\topsep
+  rightline=true,
+  innerleftmargin=10,
+  innerrightmargin=10,
+  outerlinewidth=3pt,
+  topline=false,
+  rightline=true,
+  bottomline=false,
+  skipabove=\topsep,
+  skipbelow=\topsep
 }
 
 \newglossaryentry{nodejs}
 {
-name=Node.js,
-description={Node.js is an open-source, cross-platform, JavaScript library that executes JavaScript code outside of a browser.}
+  name=Node.js,
+  description={Node.js is an open-source, cross-platform, JavaScript library that executes JavaScript code outside of a browser.}
 }
 
 \makeindex
@@ -64,28 +64,28 @@ description={Node.js is an open-source, cross-platform, JavaScript library that 
 \begin{document}
 
 \begin{titlepage}
-\centering
-{\scshape\LARGE PSIT4 \par}
-\vspace{1cm}
-{\scshape ZHAW - School of Engineering\par}
-\vspace{1cm}
-{\scshape\Large Gl0bis\par}
-\vspace{1.5cm}
-{\huge\bfseries Schlussbericht\par}
-\vspace{2cm}
-von
-\vspace{1em}
-\Large\itshape \\ Raphael Mailänder, Marc Berli, Ferenc Kuntić \\ Michael Schaufelberger, Filip Kašiković, und Simon Stucki\par
-\vfill
-\textbf{Team}\par
-IT17ta\_ZH\par
-\vspace{2em}
-\textbf{Status}\par
-In Progress
+  \centering
+  {\scshape\LARGE PSIT4 \par}
+  \vspace{1cm}
+  {\scshape ZHAW - School of Engineering\par}
+  \vspace{1cm}
+  {\scshape\Large Gl0bis\par}
+  \vspace{1.5cm}
+  {\huge\bfseries Schlussbericht\par}
+  \vspace{2cm}
+  von
+  \vspace{1em}
+  \Large\itshape \\ Raphael Mailänder, Marc Berli, Ferenc Kuntić \\ Michael Schaufelberger, Filip Kašiković, und Simon Stucki\par
+  \vfill
+  \textbf{Team}\par
+  IT17ta\_ZH\par
+  \vspace{2em}
+  \textbf{Status}\par
+  In Progress
 
-\vfill
+  \vfill
 
-{\large \today \textbf{ --} Zürich\par}
+  {\large \today \textbf{ --} Zürich\par}
 \end{titlepage}
 
 \tableofcontents
@@ -121,18 +121,17 @@ Die Steuerung durch den Code erlaubt uns,
 den Schwerpunkt des Gameplays stärker auf die Vorausplanung und langfristigen Strategien
 zu legen und reaktives Gameplay in den Hintergrund zu stellen.
 
-(Eventuell ein 'game play' Bild reinpasten)
+% (Eventuell ein 'game play' Bild reinpasten)
 
 Das Spiel wird als Webapplikation umgesetzt.
 Spieler können sich gegenseitig herausforden und ein Match starten.
 Während des Spielverlaufs können sie ihr Skript aktualisieren und visuell verfolgen,
 wie das Spielfeld aktuell aussieht. Zuschauer können den verschiedenen Matches beitreten und zuschauen.
 
-Für die Entwicklung unseres Spieles wird github und azure als Repository Hosting Service verwendet,
-während dem die Hauptprogrammiersprache im backend sowie im auch frontend TypeScript zum Einsatz kommt.
+Für die Entwicklung unseres Spieles wird Github und Azure DevOps verwendet,
+währenddessen als Hauptprogrammiersprache, im Backend sowie im Frontend, TypeScript zum Einsatz kommt.
 
-Das Spiel richtet sich auf leidenschaftliche und engagierte Software Entwickler aus,
-die ihr Können nicht nur beim 'coden', sondern auch beim verständig der KI Architektur zeigen wollen.
+Das Spiel richtet sich auf leidenschaftliche und engagierte Software Entwickler aus, die ihr Können nicht nur mit einfachem "Coden", sondern auch mit bester KI-Architektur unter Beweis stellen können.
 
 \section{Ziele und Hauptfunktonen}
 %• Ist allen Teilnehmern klar, was das System, die Software macht?
@@ -141,14 +140,19 @@ die ihr Können nicht nur beim 'coden', sondern auch beim verständig der KI Arc
 %wirtschaftliche oder organisatorische Ziele)
 % Spiel beschreiben und das so kleinwenig das technische ansprechen
 
-Die essenziellen Komponenten des Spieles sind einerseits ein lauffähiger Programmcode, der es erlaubt
-die KI auszuführen und andererseits die Grafik, die es dem Benutzer ersichtlich macht, was für Auswirkungen
-sein Code hat.
-Um diese Ziele zu erreichen, ist es wichtig, eine gut aufgebaute Organisation zu haben, dessen Struktur und
-Visionen klar definiert sind. Ein agiles Umfeld wie Scrum wird uns helfen, die stetig auftretenden Probleme
+Die essenziellen Komponenten des Spieles sind einerseits das Backend, das es erlaubt den vom Spieler verfassten Code auszuführen und andererseits die Grafik, die es dem Benutzer ersichtlich macht, was für Auswirkungen sein Code hat. Zusätzlich dazu braucht es ein faires Game Balancing, welches ermöglicht verschiedenste Strategien zu verfolgen, um im Spiel zu gewinnen:
+
+\begin{itemize}
+  \item Ein Spieler kann ein Match ausschreiben und ein anderer kann diesem beitreten.
+  \item Zuschauer können einem beliebigen Match beitreten, ohne dass sie Einheiten kontrollieren können.
+  \item Die Spieler und Zuschauer können das Match visuell mitverfolgen.
+  \item Die Spieler können das Spiel mittels Code steuern.
+  \item Der Spieler kann die Spielregeln sowie eine Liste aller verfügbaren Aktionen der Einheiten abrufen.
+\end{itemize}
+
+Des Weiteren soll das Spiel kostenlos als Webapplikation zur Verfügung stehen. Die Einnahmen werden durch Werbung eingenommen.
+Um diese Ziele zu erreichen, ist es wichtig, eine gut aufgebaute Organisation zu haben, dessen Struktur und Visionen klar definiert sind. Ein agiles Umfeld wie Scrum wird uns helfen, die stetig auftretenden Probleme
 besser und effizienter zu bewältigen.
-Das Spiel soll kostenlos als Webapplikation den Benutzern zu Verfügung stehen. Die Einnahmen werden
-durch Werbung eingenommen.
 
 \section{Qualitätsattribute}
 %• Welche Qualitätsattribute soll die Software/das System erfüllen?
@@ -156,12 +160,11 @@ durch Werbung eingenommen.
 %• Gibt es Attribute, die üblicherweise als gegeben betrachtet werden explizit ausgenommen sind?
 %• Sind alle Attribute und Anforderungen realistisch?
 
-Relevanz zu den Spiel Attributen abinden
 Qualitätsattribute:
 \begin{itemize}
 
 \item Performance - Das Spiel soll den eingegeben Code innerhalb weniger Minuten kompilieren und ausführen
-\item Verfügbarkeit - Der Server sollte 24h laufen
+\item Verfügbarkeit - Der Server soll 24h am Tag laufen.
 \item Security - Eine Prüfung auf schädlichen Code sowie Standard gegen 'Javascript Injection' müssen geprüft werden, zudem muss sich jeder Benutzer authentifizieren, um die Webapplikation zu bedienen
 \item Erweiterbarkeit - Die Software muss modular aufgebaut sein, um einzelne Funktionen und Features einfach zu erweitern
 \item Zuverlässigkeit - Das Spiel muss gewährleisten, dass es fliessend ohne grössere Unterbrüche läuft und ein fehlerhaftes/schädliches Script nicht ausführ
@@ -175,8 +178,7 @@ Qualitätsattribute:
 
 \end{itemize}
 
-Um die Qualitätsattribute einzuhalten, ist die Sicherstellung von Programmcode-Entwicklungsprinzipien und Eskalationsplännen ein Muss. Diese werden mithilfe
-von agilen Framework Prozessen wie Scrum und zuverlässigen Entwicklung Tools wie Github/Jira oder Confluence einfacher eingehalten.
+Um die Qualitätsattribute einzuhalten, ist die Sicherstellung von Programmcode-Entwicklungsprinzipien und Eskalationsplännen ein Muss. Diese werden mithilfe von agilen Framework Prozessen wie Scrum und zuverlässigen Entwicklungstools einfacher eingehalten.
 
 \section{User Roles}
 \subsection{Player}
