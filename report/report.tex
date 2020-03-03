@@ -15,7 +15,14 @@
 \usepackage[acronym]{glossaries}
 \usepackage{enumitem}
 \usepackage{epigraph}
+\usepackage{hyperref}
 \usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!70!black,
+  urlcolor=blue!70!black
+}
 
 \let\oldsection\section
 \renewcommand\section{\clearpage\oldsection}
@@ -138,7 +145,7 @@ währenddessen als Hauptprogrammiersprache, im Backend sowie im Frontend, TypeSc
 
 Das Spiel richtet sich auf leidenschaftliche und engagierte Software Entwickler aus, die ihr Können nicht nur mit einfachem "Coden", sondern auch mit bester KI-Architektur unter Beweis stellen können.
 
-\section{Ziele und Hauptfunktonen}
+\section{Ziele und Hauptfunktionen}
 %• Ist allen Teilnehmern klar, was das System, die Software macht?
 %• Welche Funktionen sind essentiell für den Erfolg des Produkts
 %• Wann ist es ein Erfolg? Welche Ziele müssen erreicht werden? (quantitative technische,
@@ -148,11 +155,11 @@ Das Spiel richtet sich auf leidenschaftliche und engagierte Software Entwickler 
 Die essenziellen Komponenten des Spieles sind einerseits das Backend, das es erlaubt den vom Spieler verfassten Code auszuführen und andererseits die Grafik, die es dem Benutzer ersichtlich macht, was für Auswirkungen sein Code hat. Zusätzlich dazu braucht es ein faires Game Balancing, welches ermöglicht verschiedenste Strategien zu verfolgen, um im Spiel zu gewinnen:
 
 \begin{itemize}
-  \item Ein Spieler kann ein Match ausschreiben und ein anderer kann diesem beitreten.
-  \item Zuschauer können einem beliebigen Match beitreten, ohne dass sie Einheiten kontrollieren können.
-  \item Die Spieler und Zuschauer können das Match visuell mitverfolgen.
-  \item Die Spieler können das Spiel mittels Code steuern.
-  \item Der Spieler kann die Spielregeln sowie eine Liste aller verfügbaren Aktionen der Einheiten abrufen.
+  \item Ein Spieler kann ein Match ausschreiben und ein anderer kann diesem beitreten. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/41/}{\#41 Match lobbies}
+  \item Zuschauer können einem beliebigen Match beitreten, ohne dass sie Einheiten kontrollieren können. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/43/}{\#43 Spectators}
+  \item Die Spieler und Zuschauer können das Match visuell mitverfolgen. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/21/}{\#21 Arena Update}
+  \item Die Spieler können das Spiel mittels Code steuern. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/42/}{\#42 Code controls}
+  \item Der Spieler kann die Spielregeln sowie eine Liste aller verfügbaren Aktionen der Einheiten abrufen. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/22/}{\#22 Help}
 \end{itemize}
 
 Des Weiteren soll das Spiel kostenlos als Webapplikation zur Verfügung stehen. Die Einnahmen werden durch Werbung eingenommen.
