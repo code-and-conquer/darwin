@@ -182,9 +182,9 @@ von agilen Framework Prozessen wie Scrum und zuverlässigen Entwicklung Tools wi
 \subsection{Player}
 Der Player ist der Hauptbenutzer des Spiels. Er verwendet die Software häufig. Sein Hauptziel ist es, mittels Code seine Units zu steuern, um möglichst lange im Spiel zu überleben. Da der Code die einzige Möglichkeit ist, das Spiel zu steuern möchte er den Code möglichst bequem (mittels Syntax-Highlighting) eingeben.
 \subsection{Spectator}
-Der Spectator ist ein Zuschauer des Spiels. Er ist wie der Player mit den Regeln des Spiels vertraut, möchte aber nur eine Arena sehen und nicht selbst spielen. 
+Der Spectator ist ein Zuschauer des Spiels. Er ist wie der Player mit den Regeln des Spiels vertraut, möchte aber nur eine Arena sehen und nicht selbst spielen.
 \subsection{Unit}
-Die Unit ist eine logische Rolle. Ihr Ziel ist zu Überleben, kann das aber nicht selbst beeinflussen, da sie vom Player gesteuert wird. Diese Rolle vereinfacht das Schreiben von User Stories für den Spielablauf und die Ausbalanciertheit des Spiels. 
+Die Unit ist eine logische Rolle. Ihr Ziel ist zu Überleben, kann das aber nicht selbst beeinflussen, da sie vom Player gesteuert wird. Diese Rolle vereinfacht das Schreiben von User Stories für den Spielablauf und die Ausbalanciertheit des Spiels.
 
 \section{Bekannte Beschränkungen}
 %• Zeit
@@ -234,6 +234,25 @@ Innerhalb dieser Pipeline werden folgende Schritte durchgeführt:
 
 Der Aufbau unserer Software hat in voraus bereits eine Grobplanung in welchen schritten und Phasen entwickelt wird.
 Dies ermöglicht es uns, bereits frühzeitig Fehler zu erkennen und Schnittstellen genauer zu spezifizieren.
+
+\subsection{Testing}
+Das Testen der Applikation erfolgt in drei Schritten:
+
+\subsubsection{Unit Testing}
+Unit Tests werden automatisiert bei jedem Build und Pull Request ausgeführt.
+Als Framework wird Jest von Facebook verwendet. Dieses ist in der Javascript-Welt sehr verbreitet und im Team ist damit bereits Know-How vorhanden.
+Beim Unit Testing werden einzelne Einheiten isoliert getestet und sowohl im Frontend als auch im Backend separat ausgeführt.
+
+\subsubsection{Integration Testing}
+Integration Tests, die durchgeführt werden, während der Entwicklung und vor einem PR zum Überprüfen der Akzeptanzkriterien.
+Für die End-to-End-Tests wird Cypress verwendet. Auch hier ist damit bereits wertvolle Erfahrung im Team vorhanden
+und löste bislang immer Zufriedenheit bei der Benutzung aus.
+Integration Tests prüfen das Zusammenspiel der Applikation und überprüft die Gesamtfunktionalität.
+Die Applikation wird dabei aus der Sicht eines Benutzers automatisiert getestet und Testfälle basieren
+auf den Akzeptanzkriterien der User Stories.
+
+\subsubsection{Manuelles Testing}
+Manuelles Testen während der Entwicklungsphase und danach. Dieser Teil sollte so klein wie möglich gehalten werden, um die Qualität zu gewährleisten.
 
 \section{Externe Schnittstellen}
 
