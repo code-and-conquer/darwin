@@ -7,9 +7,9 @@
     "install-fe": "cd ./game-frontend && npm install",
     "install-be": "cd ./game-backend && npm install",
     "build-fe": "cd ./game-frontend && cross-env NODE_ENV=production npm run build",
-    "build-be": "cd ./game-frontend && cross-env NODE_ENV=production npm run build",
+    "build-be": "cd ./game-backend && cross-env NODE_ENV=production npm run build",
     "test-fe": "cd ./game-frontend && cross-env NODE_ENV=test CI=true npm run test",
-    "test-be": "cd ./game-frontend && cross-env NODE_ENV=test CI=true npm run test",
+    "test-be": "cd ./game-backend && cross-env NODE_ENV=test CI=true npm run test",
     "install-app": "npm install && npm run install-be && npm run install-fe",
     "build": "npm run build-be && npm run build-fe",
     "test": "npm run test-be && npm run test-fe"
