@@ -1,16 +1,16 @@
 /// <reference types="cypress" />
 
-context("Actions", () => {
+context("Basic test", () => {
   beforeEach(() => {
-    cy.visit("/");
+    cy.visit("localhost:3000/");
   });
 
-  it(".focus() - focus on a DOM element", () => {
+  it("should render react logo", () => {
     // https://on.cypress.io/focus
-    cy.get(".action-focus")
-      .focus()
-      .should("have.class", "focus")
-      .prev()
-      .should("have.attr", "style", "color: orange;");
+    cy.get(".App-logo");
+  });
+  it("should render a canvas", () => {
+    // https://on.cypress.io/focus
+    cy.get("canvas");
   });
 });
