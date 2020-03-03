@@ -15,7 +15,14 @@
 \usepackage[acronym]{glossaries}
 \usepackage{enumitem}
 \usepackage{epigraph}
+\usepackage{hyperref}
 \usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!70!black,
+  urlcolor=blue!70!black
+}
 
 \let\oldsection\section
 \renewcommand\section{\clearpage\oldsection}
@@ -69,13 +76,13 @@
   \vspace{1cm}
   {\scshape ZHAW - School of Engineering\par}
   \vspace{1cm}
-  {\scshape\Large Gl0bis\par}
+  {\scshape\Large Darwin\par}
   \vspace{1.5cm}
   {\huge\bfseries Schlussbericht\par}
   \vspace{2cm}
   von
   \vspace{1em}
-  \Large\itshape \\ Raphael Mailänder, Marc Berli, Ferenc Kuntić \\ Michael Schaufelberger, Filip Kašiković, und Simon Stucki\par
+  \Large\itshape \\ Raphael Mailänder, Marc Berli, Ferenc Kuntić \\ Michael Schaufelberger, Filip Kašiković und Simon Stucki\par
   \vfill
   \textbf{Team}\par
   IT17ta\_ZH\par
@@ -138,7 +145,7 @@ währenddessen als Hauptprogrammiersprache, im Backend sowie im Frontend, TypeSc
 
 Das Spiel richtet sich auf leidenschaftliche und engagierte Software Entwickler aus, die ihr Können nicht nur mit einfachem "Coden", sondern auch mit bester KI-Architektur unter Beweis stellen können.
 
-\section{Ziele und Hauptfunktonen}
+\section{Ziele und Hauptfunktionen}
 %• Ist allen Teilnehmern klar, was das System, die Software macht?
 %• Welche Funktionen sind essentiell für den Erfolg des Produkts
 %• Wann ist es ein Erfolg? Welche Ziele müssen erreicht werden? (quantitative technische,
@@ -148,11 +155,11 @@ Das Spiel richtet sich auf leidenschaftliche und engagierte Software Entwickler 
 Die essenziellen Komponenten des Spieles sind einerseits das Backend, das es erlaubt den vom Spieler verfassten Code auszuführen und andererseits die Grafik, die es dem Benutzer ersichtlich macht, was für Auswirkungen sein Code hat. Zusätzlich dazu braucht es ein faires Game Balancing, welches ermöglicht verschiedenste Strategien zu verfolgen, um im Spiel zu gewinnen:
 
 \begin{itemize}
-  \item Ein Spieler kann ein Match ausschreiben und ein anderer kann diesem beitreten.
-  \item Zuschauer können einem beliebigen Match beitreten, ohne dass sie Einheiten kontrollieren können.
-  \item Die Spieler und Zuschauer können das Match visuell mitverfolgen.
-  \item Die Spieler können das Spiel mittels Code steuern.
-  \item Der Spieler kann die Spielregeln sowie eine Liste aller verfügbaren Aktionen der Einheiten abrufen.
+  \item Ein Spieler kann ein Match ausschreiben und ein anderer kann diesem beitreten. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/41/}{\#41 Match lobbies}
+  \item Zuschauer können einem beliebigen Match beitreten, ohne dass sie Einheiten kontrollieren können. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/43/}{\#43 Spectators}
+  \item Die Spieler und Zuschauer können das Match visuell mitverfolgen. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/21/}{\#21 Arena Update}
+  \item Die Spieler können das Spiel mittels Code steuern. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/42/}{\#42 Code controls}
+  \item Der Spieler kann die Spielregeln sowie eine Liste aller verfügbaren Aktionen der Einheiten abrufen. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/22/}{\#22 Help}
 \end{itemize}
 
 Des Weiteren soll das Spiel kostenlos als Webapplikation zur Verfügung stehen. Die Einnahmen werden durch Werbung eingenommen.
@@ -222,8 +229,34 @@ Unsere Software ist unabhängig von dem Entwicklungsprozess folgenden Beschränk
 \end{enumerate}
 
 \section{Verwendete Prinzipien}
+Die Qualität einer Software hat stets oberste Priorität. Um diese bei der Entwicklung unseres Spieles
+sicherzustellen haben wir uns auf folgende Prinzipien geeinigt:
+\begin{itemize}
+\item Hohe Kohäsion und minimale Kopplung ist wichtiger Bestandteil um die Komplexität unseres
+ Spieles und die Fehlerbehebung zu vereinfachen,
+\item Coding Guidlines werden für unsere Entwicklung eingesetzt und mittels Tools überprüft. So können Syntax und Code-Styling eingehalten werden.
+\item Datenbank Zugriffe können vernachlässigt werden, da unser Ziel ist die Spiele im RAM laufen zu lassen und somit eine bessere Performance zu erreichen.
+\item Fehlerbehandlungen werden grundsätzlich normal mit 'bug Stories' abgearbeitet. Bei Notfällen haben wir ein Eskalationsprotokoll um die Fehlerbehandlung effizienter zu gestallten.
+\item Anstatt direkt in den Master-Branch zu pushen wird pro User-Story ein Branch erstellt welcher mittels einem Pull-Request in den Master-Branch gemerged wird.
+\item Wir kommunizieren offen und ehrlich miteinander. 
+\end{itemize}
+All diese Prinzipien sind ein wichtiger Bestandteil unserer Entwicklung und werden von allen Teammitglieder stets eingehalten.
 
 \section{Architektur}
+\subsection{Applikation}
+Bei Darwin handelt es sich um eine Webapplikation welche in Frontend und Backend aufgeteilt ist.
+Aufgrund der Erfahrung der Teammitglieder wird ausschliesslich TypeScript bzw. JavaScript eingesetzt.
+
+\subsubsection{Frontend}
+Die Usability ist ein Kernanspruch an die Applikation deshalb verwendet Darwin moderne Technologien im Frontend Bereich.
+Die Visualisierung des Spiels wird in einem 2D Canvas Context mittels Pixi.js gerendered.
+Als UI Library wird aufgrund der Erfahrung des Teams React eingesetzt.
+
+\subsubsection{Backend}
+Für das Backend wird Node.js eingesetzt, da dieses die meistverwendete JavaScript Runtime ist und die notwendige Stabilität aufweist.
+Damit das Frontend in Realtime über den neusten Spielstand informiert wird findet die Kommunikation mittels Websockets statt.
+Im Backend werden keine externen APIs verwendet und es ist insbesondere keine Persistierungsschicht angedacht.
+
 \subsection{CI /CD}
 Um einen raschen release Zyklus zu gewährleisten wurde eine Build- sowie eine Releasepipeline eingerichtet.
 Diese ermöglicht es, Pull-Requests automatisch zu testen und bei einem erfolgten merge automatisiert zu releasen und deployen.
