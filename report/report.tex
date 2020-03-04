@@ -275,6 +275,26 @@ Innerhalb dieser Pipeline werden folgende Schritte durchgeführt:
 Der Aufbau unserer Software hat in voraus bereits eine Grobplanung in welchen schritten und Phasen entwickelt wird.
 Dies ermöglicht es uns, bereits frühzeitig Fehler zu erkennen und Schnittstellen genauer zu spezifizieren.
 
+\subsection{Testing}
+Das Testen der Applikation erfolgt in drei Schritten:
+
+\subsubsection{Unit Testing}
+Unit Tests werden automatisiert bei jedem Build und Pull Request ausgeführt.
+Als Framework wird Jest von Facebook verwendet. Dieses ist in der Javascript-Welt sehr verbreitet und im Team ist damit bereits Know-How vorhanden.
+Beim Unit Testing werden einzelne Einheiten isoliert getestet und sowohl im Frontend als auch im Backend separat ausgeführt.
+
+\subsubsection{Integration Testing}
+Integration Tests, die durchgeführt werden, während der Entwicklung und vor einem PR zum Überprüfen der Akzeptanzkriterien.
+Für die End-to-End-Tests wird Cypress verwendet. Auch hier ist damit bereits wertvolle Erfahrung im Team vorhanden
+und löste bislang immer Zufriedenheit bei der Benutzung aus.
+Integration Tests prüfen das Zusammenspiel der Applikation und überprüft die Gesamtfunktionalität.
+Die Applikation wird dabei aus der Sicht eines Benutzers automatisiert getestet und Testfälle basieren
+auf den Akzeptanzkriterien der User Stories.
+
+\subsubsection{Manuelles Testing}
+Manuelles Testen während der Entwicklungsphase und danach. Dieser Teil sollte so klein wie möglich gehalten werden, um die Qualität zu gewährleisten. Manuelles Testing wird vom Entwickler während und nach der Entwicklung durchgeführt.
+Zudem soll der PO durch manuelles Prüfen das Feature zum Schluss noch abnehmen.
+
 \section{Externe Schnittstellen}
 
 \section{Code}

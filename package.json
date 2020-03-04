@@ -8,8 +8,15 @@
     "install-be": "cd ./game-backend && npm install",
     "build-fe": "cd ./game-frontend && cross-env NODE_ENV=production npm run build",
     "build-be": "cd ./game-backend && cross-env NODE_ENV=production npm run build",
+    "start-fe": "cd ./game-frontend && cross-env NODE_ENV=production npm run start",
+    "start-be": "cd ./game-backend && cross-env NODE_ENV=production npm run start",
     "test-fe": "cd ./game-frontend && cross-env NODE_ENV=test CI=true npm run test",
     "test-be": "cd ./game-backend && cross-env NODE_ENV=test CI=true npm run test",
+    "start-app": "concurrently \"npm run start-be\" \"npm run start-fe\"",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open",
+    "test-e2e:run": "start-server-and-test start-app http-get://localhost:3000 cy:run",
+    "test-e2e:open": "start-server-and-test start-app http-get://localhost:3000 cy:open",
     "install-app": "npm install && npm run install-be && npm run install-fe",
     "build": "npm run build-be && npm run build-fe",
     "test": "npm run test-be && npm run test-fe"
@@ -24,7 +31,11 @@
     "url": "https://github.com/code-and-conquer/darwin/issues"
   },
   "homepage": "https://github.com/code-and-conquer/darwin#readme",
+  "dependencies": {},
   "devDependencies": {
-    "cross-env": "^7.0.0"
+    "concurrently": "^5.1.0",
+    "cross-env": "^7.0.0",
+    "cypress": "^4.0.2",
+    "start-server-and-test": "^1.10.8"
   }
 }
