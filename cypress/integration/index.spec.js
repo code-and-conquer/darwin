@@ -6,11 +6,9 @@ context("Basic test", () => {
   });
 
   it("should render react logo", () => {
-    // https://on.cypress.io/focus
     cy.get(".App-logo");
   });
   it("should render a canvas", () => {
-    // https://on.cypress.io/focus
     cy.get("canvas");
   });
 });
