@@ -15,7 +15,14 @@
 \usepackage[acronym]{glossaries}
 \usepackage{enumitem}
 \usepackage{epigraph}
+\usepackage{hyperref}
 \usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!70!black,
+  urlcolor=blue!70!black
+}
 
 \let\oldsection\section
 \renewcommand\section{\clearpage\oldsection}
@@ -36,8 +43,8 @@
 
 \newglossaryentry{nodejs}
 {
-    name=Node.js,
-    description={Node.js is an open-source, cross-platform, JavaScript library that executes JavaScript code outside of a browser.}
+  name=Node.js,
+  description={Node.js is an open-source, cross-platform, JavaScript library that executes JavaScript code outside of a browser.}
 }
 
 \makeindex
@@ -64,28 +71,28 @@
 \begin{document}
 
 \begin{titlepage}
-	\centering
-	{\scshape\LARGE PSIT4 \par}
+  \centering
+  {\scshape\LARGE PSIT4 \par}
   \vspace{1cm}
   {\scshape ZHAW - School of Engineering\par}
-	\vspace{1cm}
-	{\scshape\Large Gl0bis\par}
-	\vspace{1.5cm}
-	{\huge\bfseries Schlussbericht\par}
-	\vspace{2cm}
+  \vspace{1cm}
+  {\scshape\Large Darwin\par}
+  \vspace{1.5cm}
+  {\huge\bfseries Schlussbericht\par}
+  \vspace{2cm}
   von
-	\vspace{1em}
-  \Large\itshape \\ Raphael Mailänder, Marc Berli, Ferenc Kuntic \\ Michael Schaufelberger, Filip Kasikovic, und Simon Stucki\par
-	\vfill
+  \vspace{1em}
+  \Large\itshape \\ Raphael Mailänder, Marc Berli, Ferenc Kuntić \\ Michael Schaufelberger, Filip Kašiković und Simon Stucki\par
+  \vfill
   \textbf{Team}\par
   IT17ta\_ZH\par
-	\vspace{2em}
+  \vspace{2em}
   \textbf{Status}\par
-	In Progress
+  In Progress
 
-	\vfill
+  \vfill
 
-	{\large \today \textbf{ --} Zürich\par}
+  {\large \today \textbf{ --} Zürich\par}
 \end{titlepage}
 
 \tableofcontents
@@ -102,19 +109,191 @@
 % • Wer verwendet die Software? (Aktoren, Anwender, Rollen, ...)
 % Dieses Kapitel muss in jedem Software-Guidebook enthalten sein.
 
-Die Idee des Projekts ist es ein Spiel zu entwickeln, welches sich nicht durch klassische Echtzeiteingaben, sondern durch Code steuern lässt. Der Spieler schreibt dazu ein Skript, welches in einer Schleife ausgeführt wird. Er kann mittels des Skripts beispielsweise den aktuellen Spielzustand auslesen, Berechnungen anstellen und zum Schluss eine Liste von vordefinierten Aktionen durchführen.
+Die Idee des Projekts ist es, ein Spiel zu entwickeln,
+welches sich nicht durch klassische Echtzeiteingaben,
+sondern durch Code steuern lässt.
+Der Spieler schreibt dazu ein Skript,
+welches in einer Schleife ausgeführt wird.
+Er kann mittels des Skripts beispielsweise den aktuellen Spielstand auslesen,
+Berechnungen anstellen und zum Schluss eine Liste von vordefinierten Aktionen durchführen.
 
-Das Spiel selbst ist in seiner Grundform ein Multiplayer Survival Game. Es treten mehrere Spieler gegeneinander an. Ziel des Spiels ist es, der einzige Überlebende zu sein. Dazu müssen  Einheiten der Spieler beispielsweise Essen aufsammeln, um nicht zu verhungern, Ressourcen sammeln, um Ausrüstung oder Gebäude zu bauen, oder können gegnerische Einheiten angreifen. Dieses simple Spielprinzip ist für Spieler einfach zu verstehen oder bereits bekannt. Die Steuerung durch den Code erlaubt uns, den Schwerpunkt des Gameplays stärker auf die Vorausplanung und langfristigen Strategien zu legen und reaktives Gameplay in den Hintergrund zu stellen.
+Das Spiel selbst ist in seiner Grundform ein Multiplayer Survival Game.
+Es treten mehrere Spieler gegeneinander an.
+Ziel des Spiels ist es, der einzige Überlebende zu sein.
+Dazu müssen Einheiten der Spieler beispielsweise Essen aufsammeln,
+um nicht zu verhungern, Ressourcen sammeln, um Ausrüstung oder Gebäude zu bauen,
+oder können gegnerische Einheiten angreifen.
+Dieses simple Spielprinzip ist für Spieler einfach zu verstehen oder bereits bekannt.
+Die Steuerung durch den Code erlaubt uns,
+den Schwerpunkt des Gameplays stärker auf die Vorausplanung und langfristigen Strategien
+zu legen und reaktives Gameplay in den Hintergrund zu stellen.
 
-Das Spiel wird als Webapplikation umgesetzt. Spieler können sich gegenseitig herausforden und ein Match starten. Während des Spielverlaufs können sie ihr Skript aktualisieren und visuell verfolgen, wie das Spielfeld aktuell aussieht. Zuschauer können die verschiedenen Matches beitreten und zuschauen.
+% (Eventuell ein 'game play' Bild reinpasten)
+Das Theme des Spiels wird an die Legende um Willhelm Tell angelehnt werden. So sind die Einheiten welche vom Player
+gesteuert werden Figuren aus dieser Geschichte. Für den Anfang gibt es eine Einheit die an Willhelm Tell angelegt ist.
+Die Einheiten verteidigen sich mit Armbrust, Schwertern und ähnlichem. Ressourcen sind typisch schweizerische Produkte
+wie Käse, Schokolade oder Rösti. In einem späteren Entwicklungsstadium des Spiels sind Computergesteuerte Gegner
+wie Gessler oder die Habsburger angedacht, welche dem Spieler Vorteile bringen, falls er sie besiegt. 
 
-\section{Ziele und Hauptfunktonen}
+Das Spiel wird als Webapplikation umgesetzt.
+Spieler können sich gegenseitig herausforden und ein Match starten.
+Während des Spielverlaufs können sie ihr Skript aktualisieren und visuell verfolgen,
+wie das Spielfeld aktuell aussieht. Zuschauer können den verschiedenen Matches beitreten und zuschauen.
+
+Für die Entwicklung unseres Spieles wird Github und Azure DevOps verwendet,
+währenddessen als Hauptprogrammiersprache, im Backend sowie im Frontend, TypeScript zum Einsatz kommt.
+
+Das Spiel richtet sich auf leidenschaftliche und engagierte Software Entwickler aus, die ihr Können nicht nur mit einfachem "Coden", sondern auch mit bester KI-Architektur unter Beweis stellen können.
+
+\section{Ziele und Hauptfunktionen}
+%• Ist allen Teilnehmern klar, was das System, die Software macht?
+%• Welche Funktionen sind essentiell für den Erfolg des Produkts
+%• Wann ist es ein Erfolg? Welche Ziele müssen erreicht werden? (quantitative technische,
+%wirtschaftliche oder organisatorische Ziele)
+% Spiel beschreiben und das so kleinwenig das technische ansprechen
+
+Die essenziellen Komponenten des Spieles sind einerseits das Backend, das es erlaubt den vom Spieler verfassten Code auszuführen und andererseits die Grafik, die es dem Benutzer ersichtlich macht, was für Auswirkungen sein Code hat. Zusätzlich dazu braucht es ein faires Game Balancing, welches ermöglicht verschiedenste Strategien zu verfolgen, um im Spiel zu gewinnen:
+
+\begin{itemize}
+  \item Ein Spieler kann ein Match ausschreiben und ein anderer kann diesem beitreten. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/41/}{\#41 Match lobbies}
+  \item Zuschauer können einem beliebigen Match beitreten, ohne dass sie Einheiten kontrollieren können. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/43/}{\#43 Spectators}
+  \item Die Spieler und Zuschauer können das Match visuell mitverfolgen. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/21/}{\#21 Arena Update}
+  \item Die Spieler können das Spiel mittels Code steuern. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/42/}{\#42 Code controls}
+  \item Der Spieler kann die Spielregeln sowie eine Liste aller verfügbaren Aktionen der Einheiten abrufen. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/22/}{\#22 Help}
+\end{itemize}
+
+Des Weiteren soll das Spiel kostenlos als Webapplikation zur Verfügung stehen. Die Einnahmen werden durch Werbung eingenommen.
+Um diese Ziele zu erreichen, ist es wichtig, eine gut aufgebaute Organisation zu haben, dessen Struktur und Visionen klar definiert sind. Ein agiles Umfeld wie Scrum wird uns helfen, die stetig auftretenden Probleme
+besser und effizienter zu bewältigen.
+
+\section{Qualitätsattribute}
+%• Welche Qualitätsattribute soll die Software/das System erfüllen?
+%• Sind die Qualitatsatribute SMART (specific, measurable, achievable, relevant, timely)?
+%• Gibt es Attribute, die üblicherweise als gegeben betrachtet werden explizit ausgenommen sind?
+%• Sind alle Attribute und Anforderungen realistisch?
+
+Qualitätsattribute:
+\begin{itemize}
+
+\item Performance - Das Spiel soll den eingegeben Code innerhalb weniger Minuten kompilieren und ausführen
+\item Verfügbarkeit - Der Server soll 24h am Tag laufen.
+\item Security - Eine Prüfung auf schädlichen Code sowie Standard gegen 'Javascript Injection' müssen geprüft werden, zudem muss sich jeder Benutzer authentifizieren, um die Webapplikation zu bedienen
+\item Erweiterbarkeit - Die Software muss modular aufgebaut sein, um einzelne Funktionen und Features einfach zu erweitern
+\item Zuverlässigkeit - Das Spiel muss gewährleisten, dass es fliessend ohne grössere Unterbrüche läuft und ein fehlerhaftes/schädliches Script nicht ausführ
+\item Benutzerfreundlichkeit - Das Userinterface soll es ermöglichen, die gesuchten Infos möglichst schnell, unmittelbar und bequem bereitzustellen und es muss dem User erlauben, dass man sich auf der Seite bewegen kann, ohne auf Probleme zu stossen
+\item Failover / Disaster Recovery Ziele - Die Recovery Plans werden eingeschränkt auf:
+\begin{enumerate}
+\item Hardware Probleme - Es muss sichergestellt werden das bei einem CPU Ausfall
+\item Applikations- Code Probleme -
+\item Dependency probleme -
+\end{enumerate}
+
+\end{itemize}
+
+Um die Qualitätsattribute einzuhalten, ist die Sicherstellung von Programmcode-Entwicklungsprinzipien und Eskalationsplännen ein Muss. Diese werden mithilfe von agilen Framework Prozessen wie Scrum und zuverlässigen Entwicklungstools einfacher eingehalten.
+
+\section{User Roles}
+\subsection{Player}
+Der Player ist der Hauptbenutzer des Spiels. Er verwendet die Software häufig. Sein Hauptziel ist es, mittels Code seine Units zu steuern, um möglichst lange im Spiel zu überleben. Da der Code die einzige Möglichkeit ist, das Spiel zu steuern möchte er den Code möglichst bequem (mittels Syntax-Highlighting) eingeben.
+\subsection{Spectator}
+Der Spectator ist ein Zuschauer des Spiels. Er ist wie der Player mit den Regeln des Spiels vertraut, möchte aber nur eine Arena sehen und nicht selbst spielen. 
+\subsection{Unit}
+Die Unit ist eine logische Rolle. Ihr Ziel ist zu Überleben, kann das aber nicht selbst beeinflussen, da sie vom Player gesteuert wird. Diese Rolle vereinfacht das Schreiben von User Stories für den Spielablauf und die Ausbalanciertheit des Spiels. 
 
 \section{Bekannte Beschränkungen}
+%• Zeit
+%• Budget und Ressourcen
+%• Technologievorgaben
+%• Ziel-Plattform
+%• Standardprotoklle
+%• Grösse des Entwicklungsteams
+%• Kompetenzenprofil des Entwicklungsteams
+%• lokale Standards
+
+Bei unserer Software-Entwicklung werden die Prozesse von Story Beschreibung, Entwicklung, Testing und Code-Review befolgt und eingehalten.
+Ein strukturiertes Vorgehen ist zwingend, um den Durchbruch bei unserem IT-Projekt zu schaffen.
+
+Unsere Software ist unabhängig von dem Entwicklungsprozess folgenden Beschränkungen ausgesetzt.
+\begin{enumerate}
+\item Zeit: die Zeitdauer des Projekts ist eingeschränkt was sich auf 6 Sprints beläuft.
+\item Budget und Ressourcen: Das Budget soll sich möglichst auf das Minimum beziehen und optimaler Weise jede Ressource zu 100\% ausnutzen.
+\item Technologien:
+	\begin{enumerate}
+
+	\item Cloud basierende Hosting Services: Github und Azure
+	\item TypeScript:
+
+	\end{enumerate}
+\item Grösse des Entwicklungsteams: Das Team besteht aus einem Product Owner, einem Scrum master und 4 weiteren Entwicklern
+\item Kompetenzenprofil: Alle Entwickler haben bereits mehrjährige Erfahrungen mit den Technologien, welche für unsere Entwicklung eingesetzt werden.
+\end{enumerate}
 
 \section{Verwendete Prinzipien}
+Die Qualität einer Software hat stets oberste Priorität. Um diese bei der Entwicklung unseres Spieles
+sicherzustellen haben wir uns auf folgende Prinzipien geeinigt:
+\begin{itemize}
+\item Hohe Kohäsion und minimale Kopplung ist wichtiger Bestandteil um die Komplexität unseres
+ Spieles und die Fehlerbehebung zu vereinfachen,
+\item Coding Guidlines werden für unsere Entwicklung eingesetzt und mittels Tools überprüft. So können Syntax und Code-Styling eingehalten werden.
+\item Datenbank Zugriffe können vernachlässigt werden, da unser Ziel ist die Spiele im RAM laufen zu lassen und somit eine bessere Performance zu erreichen.
+\item Fehlerbehandlungen werden grundsätzlich normal mit 'bug Stories' abgearbeitet. Bei Notfällen haben wir ein Eskalationsprotokoll um die Fehlerbehandlung effizienter zu gestallten.
+\item Anstatt direkt in den Master-Branch zu pushen wird pro User-Story ein Branch erstellt welcher mittels einem Pull-Request in den Master-Branch gemerged wird.
+\item Wir kommunizieren offen und ehrlich miteinander. 
+\end{itemize}
+All diese Prinzipien sind ein wichtiger Bestandteil unserer Entwicklung und werden von allen Teammitglieder stets eingehalten.
 
 \section{Architektur}
+\subsection{Applikation}
+Bei Darwin handelt es sich um eine Webapplikation welche in Frontend und Backend aufgeteilt ist.
+Aufgrund der Erfahrung der Teammitglieder wird ausschliesslich TypeScript bzw. JavaScript eingesetzt.
+
+\subsubsection{Frontend}
+Die Usability ist ein Kernanspruch an die Applikation deshalb verwendet Darwin moderne Technologien im Frontend Bereich.
+Die Visualisierung des Spiels wird in einem 2D Canvas Context mittels Pixi.js gerendered.
+Als UI Library wird aufgrund der Erfahrung des Teams React eingesetzt.
+
+\subsubsection{Backend}
+Für das Backend wird Node.js eingesetzt, da dieses die meistverwendete JavaScript Runtime ist und die notwendige Stabilität aufweist.
+Damit das Frontend in Realtime über den neusten Spielstand informiert wird findet die Kommunikation mittels Websockets statt.
+Im Backend werden keine externen APIs verwendet und es ist insbesondere keine Persistierungsschicht angedacht.
+
+\subsection{CI /CD}
+Um einen raschen release Zyklus zu gewährleisten wurde eine Build- sowie eine Releasepipeline eingerichtet.
+Diese ermöglicht es, Pull-Requests automatisch zu testen und bei einem erfolgten merge automatisiert zu releasen und deployen.
+Dies soll die Entwicklungsphase beschleunigen und gewähleisten, dass stets und ausschliesslich funktionierender Code deployed wird.
+
+Innerhalb dieser Pipeline werden folgende Schritte durchgeführt:
+\begin{itemize}
+  \item Installieren aller notwendigen Paketen
+  \item Bauen der beiden Artefakten (Frontend und Backend)
+  \item Durchführen der Unit Tests
+  \item Erstellung eines deploybaren Paketes
+  \item Deployment auf den Server
+  \item Neustarten des Docker-Containers auf dem Server
+\end{itemize}
+
+Der Aufbau unserer Software hat in voraus bereits eine Grobplanung in welchen schritten und Phasen entwickelt wird.
+Dies ermöglicht es uns, bereits frühzeitig Fehler zu erkennen und Schnittstellen genauer zu spezifizieren.
+
+\subsection{Testing}
+Das Testen der Applikation erfolgt in drei Schritten:
+
+\subsubsection{Unit Testing}
+Unit Tests werden automatisiert bei jedem Build und Pull Request ausgeführt.
+Als Framework wird Jest von Facebook verwendet. Dieses ist in der Javascript-Welt sehr verbreitet und im Team ist damit bereits Know-How vorhanden.
+Beim Unit Testing werden einzelne Einheiten isoliert getestet und sowohl im Frontend als auch im Backend separat ausgeführt.
+
+\subsubsection{Integration Testing}
+Integration Tests, die durchgeführt werden, während der Entwicklung und vor einem PR zum Überprüfen der Akzeptanzkriterien.
+Für die End-to-End-Tests wird Cypress verwendet. Auch hier ist damit bereits wertvolle Erfahrung im Team vorhanden
+und löste bislang immer Zufriedenheit bei der Benutzung aus.
+Integration Tests prüfen das Zusammenspiel der Applikation und überprüft die Gesamtfunktionalität.
+Die Applikation wird dabei aus der Sicht eines Benutzers automatisiert getestet und Testfälle basieren
+auf den Akzeptanzkriterien der User Stories.
+
+\subsubsection{Manuelles Testing}
+Manuelles Testen während der Entwicklungsphase und danach. Dieser Teil sollte so klein wie möglich gehalten werden, um die Qualität zu gewährleisten. Manuelles Testing wird vom Entwickler während und nach der Entwicklung durchgeführt.
+Zudem soll der PO durch manuelles Prüfen das Feature zum Schluss noch abnehmen.
 
 \section{Externe Schnittstellen}
 
@@ -141,12 +320,12 @@ Das Spiel wird als Webapplikation umgesetzt. Spieler können sich gegenseitig he
 \section{Entscheidungs-Logbuch}
 
 \begin{itemize}
-  \item 21.02.2020
-  \begin{itemize}
-    \item Wir haben uns zum Genre "Survival" geeinigt. Dies, da es ein sehr flexibles Genre ist, mit dem bereits durch eine sehr einfache Spielmechanik (Hunger) das Grundprinzip umgesetzt werden kann.
-    \item Wir haben uns entschieden die Steuerung mittels Code zu machen, da es erst wenige Spiele mit einer solchen Steuerung gibt und uns die technischen sowie auch gameplay-spezifischen Aspekte interessieren.
-    \item Wir setzen Frontend und Backend mittels JavaScript (TypeScript) um, da unser Know-How mit dieser Sprache am höchsten ist und sie uns hohe Flexibilität bietet.
-  \end{itemize}
+\item 21.02.2020
+\begin{itemize}
+\item Wir haben auf das Genre "Survival" geeinigt. Dies, da es ein sehr flexibles Genre ist, mit dem bereits durch eine sehr einfache Spielmechanik (Hunger) das Grundprinzip umgesetzt werden kann.
+\item Wir haben uns entschieden, die Steuerung mittels Code zu machen, da es erst wenige Spiele mit einer solchen Steuerung gibt und uns die technischen sowie auch Gameplay-spezifischen Aspekte interessieren.
+\item Wir setzen Frontend und Backend mittels JavaScript (TypeScript) um, da unser Know-how mit dieser Sprache am höchsten ist und sie uns hohe Flexibilität bietet.
+\end{itemize}
 \end{itemize}
 
 \clearpage
