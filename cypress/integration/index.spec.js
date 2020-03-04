@@ -2,7 +2,7 @@
 
 context("Basic test", () => {
   beforeEach(() => {
-    cy.visit("localhost:3000/");
+    cy.visit("/");
   });
 
   it("should render react logo", () => {
