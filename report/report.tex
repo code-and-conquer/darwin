@@ -326,6 +326,12 @@ Zudem soll der PO durch manuelles Prüfen das Feature zum Schluss noch abnehmen.
 \item Wir haben uns entschieden, die Steuerung mittels Code zu machen, da es erst wenige Spiele mit einer solchen Steuerung gibt und uns die technischen sowie auch Gameplay-spezifischen Aspekte interessieren.
 \item Wir setzen Frontend und Backend mittels JavaScript (TypeScript) um, da unser Know-how mit dieser Sprache am höchsten ist und sie uns hohe Flexibilität bietet.
 \end{itemize}
+\item 04.03.2020
+\begin{itemize}
+\item Branches werden gelöscht, sobald sie in den Master-Branch gemerged wurden. Das ver-bessert die Übersicht im Repository. Der Pull Request bleibt bestehen, da dort nachvollzogen werden kann, wie man zu einem Entschluss gekommen ist. 
+\item Beim mergen eines Pull-Requests muss die Option "Squash Commits" gewählt werden. Diese Option fasst alle Commits aus dem Branch in einen zusammen. So bleibt der Master-Branch sauber und es ist ersichtlich wann welches Feature hinzugefügt wurde. 
+\item Bevor ein Pull-Request gemerged werden darf, muss mindestens eine andere Person die Änderungen durchgeschaut haben (4-Augen-Prinzip).
+\end{itemize}
 \end{itemize}
 
 \clearpage
