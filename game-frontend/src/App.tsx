@@ -1,7 +1,7 @@
 import React from 'react';
 
 import logo from './logo.svg';
-import Game from './Game';
+import Game from './game';
 import { WebsocketProvider } from './service/useWebsocketData';
 import AppContainer from './components/container/app-container';
 import AppHeader from './components/visual/app-header';
