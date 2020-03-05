@@ -50,8 +50,8 @@ function App() {
         <AppHeader>
           <AppLogo src={logo} className="App-logo" alt="logo" />
           <AppTitle>Darwin is ready for React.</AppTitle>
-          {unit && <Game unit={unit} />}
         </AppHeader>
+        {unit && <Game unit={unit} />}
       </AppContainer>
     </>
   );
