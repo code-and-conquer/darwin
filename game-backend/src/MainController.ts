@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
-import hyperid from "hyperid";
-import {GameObject} from "../../darwin-types/GameObject";
+import hyperid from 'hyperid';
+import { GameObject } from '../../darwin-types/GameObject';
 
 const hyperIdInstance = hyperid();
 
@@ -11,7 +11,7 @@ export default class MainController {
       position: {
         x: Math.floor(Math.random() * (21)),
         y: Math.floor(Math.random() * (21)),
-      }
+      },
     };
     ws.send(JSON.stringify(unit));
   }
