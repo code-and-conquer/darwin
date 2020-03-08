@@ -2,7 +2,7 @@ import WebSocket from 'ws';
 import hyperid from 'hyperid';
 import { GameObject } from '../../darwin-types/GameObject';
 import { UserContext } from '../../darwin-types/UserContext';
-import state from './State';
+import store from './Store';
 
 const hyperIdInstance = hyperid();
 
@@ -12,8 +12,8 @@ export default class MainController {
 
     const userCtx: UserContext = { unitId }
 
-    state.userContextMap[id] = userCtx
-    state.userContextIds.push(id)
+    store.userContextMap[id] = userCtx
+    store.userContextIds.push(id)
 
     const unit: GameObject = {
       id: unitId,
