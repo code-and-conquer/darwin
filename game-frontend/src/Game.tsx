@@ -1,17 +1,18 @@
-import React from 'react'
-import {Stage, Text} from '@inlet/react-pixi';
+import React from 'react';
+import { Stage, Text } from '@inlet/react-pixi';
 import * as Pixi from 'pixi.js';
-import Position from "../../darwin-types/Position";
+import Position from '../../darwin-types/Position';
 
 interface GameProps {
   unit: {
-    position: Position
-  }
+    position: Position;
+  };
 }
 
-function Game({unit}: GameProps) {
-  return <Stage width={200} height={200}>
-    <Text
+function Game({ unit }: GameProps) {
+  return (
+    <Stage width={200} height={200}>
+      <Text
         text=":)"
         anchor={0.5}
         x={unit.position.x * 10}
@@ -23,8 +24,9 @@ function Game({unit}: GameProps) {
             fill: '#ffffff',
           })
         }
-    />
-  </Stage>
+      />
+    </Stage>
+  );
 }
 
-export default Game
+export default Game;

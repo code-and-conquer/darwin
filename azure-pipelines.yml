@@ -22,6 +22,11 @@ steps:
     displayName: "install"
 
   - script: |
+      npm run prettier
+      npm run lint
+    displayName: "prettify and lint"
+
+  - script: |
       npm run build
     displayName: "build"
 

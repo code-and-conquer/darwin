@@ -9,8 +9,8 @@ export default class MainController {
     const unit: GameObject = {
       id: hyperIdInstance(),
       position: {
-        x: Math.floor(Math.random() * (21)),
-        y: Math.floor(Math.random() * (21)),
+        x: Math.floor(Math.random() * 21),
+        y: Math.floor(Math.random() * 21),
       },
     };
     ws.send(JSON.stringify(unit));

@@ -8,7 +8,7 @@ const WSServer = new WebSocket.Server({
   server,
 });
 
-WSServer.on('connection', (ws) => {
+WSServer.on('connection', ws => {
   MainController.newConnection(ws);
 });
 
