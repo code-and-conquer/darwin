@@ -6,6 +6,9 @@ function useWebsocketData() {
     const [gamePosition, setGamePosition] = useState(null);
     useEffect(() => {
         const socket = new WebSocket(API_URL);
+        socket.onopen = function(event) {
+          socket.send("Hello server!");
+        };
 
         socket.addEventListener('message', function (event) {
             setGamePosition(JSON.parse(event.data))

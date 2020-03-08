@@ -1,5 +1,7 @@
 import {ObjectId} from "./GameObject";
 
+export type UserContextId = string;
+
 export interface UserContext {
   unitId: ObjectId
 }
