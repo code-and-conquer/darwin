@@ -1,8 +1,8 @@
-import { Store } from "../../darwin-types/Store";
+import { Store } from '../../darwin-types/Store';
 
 const store: Store = {
   userContextIds: [],
-  userContextMap: {}
+  userContextMap: {},
 };
 
 export default store;

@@ -1,8 +1,8 @@
-import WebSocket from "ws";
-import hyperid from "hyperid";
-import { GameObject } from "../../darwin-types/GameObject";
-import { UserContext } from "../../darwin-types/UserContext";
-import store from "./Store";
+import WebSocket from 'ws';
+import hyperid from 'hyperid';
+import { GameObject } from '../../darwin-types/GameObject';
+import { UserContext } from '../../darwin-types/UserContext';
+import store from './Store';
 
 const hyperIdInstance = hyperid();
 
@@ -19,8 +19,8 @@ export default class MainController {
       id: unitId,
       position: {
         x: Math.floor(Math.random() * 21),
-        y: Math.floor(Math.random() * 21)
-      }
+        y: Math.floor(Math.random() * 21),
+      },
     };
     ws.send(JSON.stringify(unit));
   }
