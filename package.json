@@ -22,7 +22,8 @@
     "test": "npm run test-be && npm run test-fe",
     "lint-fe": "cd ./game-frontend && npm run lint",
     "lint-be": "cd ./game-backend && npm run lint",
-    "lint": "concurrently \"npm run lint-fe\" \"npm run lint-be\""
+    "lint": "concurrently \"npm run lint-fe\" \"npm run lint-be\"",
+    "prettier": "prettier \"**/*.{js,jsx,ts,tsx}\" --write"
   },
   "repository": {
     "type": "git",
