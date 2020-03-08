@@ -1,15 +1,10 @@
 {
+  "root": true,
   "env": {
     "es6": true,
     "node": true,
     "jest": true
   },
-  "extends": [
-    "plugin:@typescript-eslint/recommended",
-    "airbnb-base",
-    "react-app",
-    "prettier"
-  ],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -18,13 +13,6 @@
   "parserOptions": {
     "ecmaVersion": 2018
   },
-  "plugins": [
-    "@typescript-eslint",
-    "eslint-plugin-flowtype",
-    "eslint-plugin-react",
-    "eslint-plugin-react-hooks",
-    "eslint-plugin-jsx-a11y"
-  ],
   "settings": {
     "import/resolver": {
       "node": {
