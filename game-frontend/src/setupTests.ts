@@ -4,4 +4,6 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect';
 // For mocking canvas
+
+// eslint-disable-next-line import/no-extraneous-dependencies
 import 'jest-canvas-mock';
