@@ -10,4 +10,5 @@ module.exports = {
   },
   testMatch: ['**/*.test.(ts|js)'],
   testEnvironment: 'node',
+  rootDir: 'src'
 };
