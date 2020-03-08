@@ -25,6 +25,7 @@
     "import/no-unresolved": "off",
     "@typescript-eslint/no-unused-vars": "warn",
     "semi": "off",
-    "@typescript-eslint/semi": ["error"]
+    "@typescript-eslint/semi": ["error"],
+    "spaced-comment": ["error", "always", { "markers": ["/"] }]
   }
 }
