@@ -1,14 +1,14 @@
 /// <reference types="cypress" />
 
-context("Basic test", () => {
+context('Basic test', () => {
   beforeEach(() => {
-    cy.visit("/");
+    cy.visit('/');
   });
 
-  it("should render react logo", () => {
-    cy.get(".App-logo");
+  it('should render react logo', () => {
+    cy.get('.App-logo');
   });
-  it("should render a canvas", () => {
-    cy.get("canvas");
+  it('should render a canvas', () => {
+    cy.get('canvas');
   });
 });

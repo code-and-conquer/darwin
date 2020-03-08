@@ -1,13 +1,13 @@
-import {ObjectId} from "./GameObject";
+import { ObjectId } from './GameObject';
 
 export interface UserContext {
-  unitId: ObjectId
+  unitId: ObjectId;
 }
 
 export interface UserExecutionContext extends UserContext {
-  userScript: UserScript
+  userScript: UserScript;
 }
 
 export interface UserScript {
-  script: string
+  script: string;
 }

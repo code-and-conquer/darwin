@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 import logo from './logo.svg';
 import Game from './Game';
-import useWebsocketData from "./useWebsocketData";
+import useWebsocketData from './useWebsocketData';
 
 const GlobalStyle = createGlobalStyle`
  body {
@@ -14,27 +14,31 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const AppContainer = styled.div`
- text-align: center;
+  text-align: center;
 `;
 
 const AppHeader = styled.header`
- background-color: #222;
- height: 150px;
- padding: 20px;
- color: white;
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
 `;
 
 const AppTitle = styled.h1`
-   font-size: 1.5em;
+  font-size: 1.5em;
 `;
 
 const AppLogo = styled.img`
- animation: App-logo-spin infinite 20s linear;
- height: 80px;
- @keyframes App-logo-spin {
-   from { transform: rotate(0deg); }
-   to { transform: rotate(360deg); }
- }
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 function App() {
@@ -45,9 +49,7 @@ function App() {
       <AppContainer>
         <AppHeader>
           <AppLogo src={logo} className="App-logo" alt="logo" />
-          <AppTitle>
-            Darwin is ready for React.
-          </AppTitle>
+          <AppTitle>Darwin is ready for React.</AppTitle>
           {unit && <Game unit={unit} />}
         </AppHeader>
       </AppContainer>
