@@ -23,6 +23,9 @@
   "rules": {
     "import/extensions": ["error", "never"],
     "import/no-unresolved": "off",
+    "no-plusplus": "off",
+    "no-useless-constructor": "off",
+    "no-empty-function": "off",
     "@typescript-eslint/no-unused-vars": "warn",
     "semi": "off",
     "@typescript-eslint/semi": ["error"],
