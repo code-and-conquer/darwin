@@ -25,7 +25,7 @@ export default class MainController {
     ws.send(JSON.stringify(unit));
   }
 
-  static newMessage(msg: any, ws: WebSocket, id: string) {
-    ws.send(`got message ${msg}`);
+  static newMessage(msg: WebSocket.Data, ws: WebSocket, id: string): void {
+    ws.send(`got message ${msg} from ${id}`);
   }
 }
