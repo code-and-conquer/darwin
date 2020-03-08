@@ -12,8 +12,8 @@
     "watch-test": "npm run test -- --watchAll",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
-    "lint": "eslint \"src/**/*.{js,ts}\" --quiet --fix",
-    "prettier": "prettier \"src/**/*.{js,ts}\" --write"
+    "lint": "eslint \"src/**/*.{js,ts}\"",
+    "prettier": "prettier \"src/**/*.{js,ts}\" --check"
   },
   "devDependencies": {
     "@types/jest": "^25.1.3",

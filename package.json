@@ -25,7 +25,10 @@
     "lint": "concurrently \"npm run lint-fe\" \"npm run lint-be\"",
     "prettier-fe": "cd ./game-frontend && npm run prettier",
     "prettier-be": "cd ./game-backend && npm run prettier",
-    "prettier": "npm run prettier-be && npm run prettier-fe"
+    "prettier-fe:fix": "cd ./game-frontend && npm run prettier -- --write",
+    "prettier-be:fix": "cd ./game-backend && npm run prettier -- --write",
+    "prettier": "npm run prettier-be && npm run prettier-fe",
+    "prettier:fix": "npm run prettier-be:fix && npm run prettier-fe:fix "
   },
   "repository": {
     "type": "git",
