@@ -19,7 +19,10 @@
     "test-e2e:open": "start-server-and-test start-app http-get://localhost:3000 cy:open",
     "install-app": "npm install && npm run install-be && npm run install-fe",
     "build": "npm run build-be && npm run build-fe",
-    "test": "npm run test-be && npm run test-fe"
+    "test": "npm run test-be && npm run test-fe",
+    "lint-fe": "cd ./game-frontend && npm run lint",
+    "lint-be": "cd ./game-backend && npm run lint",
+    "lint": "concurrently \"npm run lint-fe\" \"npm run lint-be\""
   },
   "repository": {
     "type": "git",
@@ -33,10 +36,22 @@
   "homepage": "https://github.com/code-and-conquer/darwin#readme",
   "dependencies": {},
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.22.0",
+    "@typescript-eslint/parser": "^2.22.0",
     "concurrently": "^5.1.0",
     "cross-env": "^7.0.0",
     "cypress": "^4.0.2",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-config-react-app": "^5.2.0",
+    "eslint-plugin-flowtype": "^4.6.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.5.0",
     "prettier": "1.19.1",
-    "start-server-and-test": "^1.10.8"
+    "start-server-and-test": "^1.10.8",
+    "typescript": "^3.8.3"
   }
 }
