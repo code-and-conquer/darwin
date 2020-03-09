@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "james-yu.latex-workshop",
+    "pmneo.tsimporter",
+  ]
+}
