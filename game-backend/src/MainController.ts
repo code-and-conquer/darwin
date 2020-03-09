@@ -47,7 +47,7 @@ export default class MainController {
     ws.send(`got message ${msg} from ${id}`);
   }
 
-  static startTicking(): void {
+  private static startTicking(): void {
     this.isTicking = true;
     this.tickingInterval = setInterval(() => {
       this.store.matchState.tick++;
@@ -58,7 +58,7 @@ export default class MainController {
     }, 2000);
   }
 
-  static stopTicking(): void {
+  private static stopTicking(): void {
     clearInterval(this.tickingInterval);
   }
 }
