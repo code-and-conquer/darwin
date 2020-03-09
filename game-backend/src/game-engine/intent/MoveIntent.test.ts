@@ -21,6 +21,6 @@ describe('MoveIntent', () => {
         unitId: 'unit1',
       }
     );
-    expect(newState.objectMap.unit1.position.x).toBe(1);
+    expect(newState.objectMap.unit1.position.y).toBe(1);
   });
 });

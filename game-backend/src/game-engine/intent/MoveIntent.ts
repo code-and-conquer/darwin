@@ -23,16 +23,16 @@ export default class MoveIntent implements Intent {
     };
     switch (this.direction) {
       case Direction.Up:
-        position.x--;
-        break;
-      case Direction.Down:
-        position.x++;
-        break;
-      case Direction.Left:
         position.y--;
         break;
-      case Direction.Right:
+      case Direction.Down:
         position.y++;
+        break;
+      case Direction.Left:
+        position.x--;
+        break;
+      case Direction.Right:
+        position.x++;
         break;
       default:
     }
