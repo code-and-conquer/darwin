@@ -4,7 +4,7 @@
 /node_modules
 
 # testing
-/coverage
+/src/coverage
 
 # Ignore built ts files
 dist/**/*
