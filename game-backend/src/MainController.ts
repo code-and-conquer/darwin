@@ -2,7 +2,7 @@ import WebSocket from 'ws';
 import hyperid from 'hyperid';
 import { GameObject } from '../../darwin-types/GameObject';
 import { UserContext } from '../../darwin-types/UserContext';
-import { ServerStore } from '../../darwin-types/ServerStore';
+import { ServerStore, createStore } from './ServerStore';
 
 /**
  * Main controller, which handles new connections and stores match data and other server data.
@@ -10,16 +10,7 @@ import { ServerStore } from '../../darwin-types/ServerStore';
 export default class MainController {
   private static hyperIdInstance: hyperid.Instance = hyperid();
 
-  private static store: ServerStore = {
-    matchState: {
-      objectIds: [],
-      objectMap: {},
-    },
-    userContexts: {
-      userContextIds: [],
-      userContextMap: {},
-    },
-  };
+  private static store: ServerStore = createStore();
 
   static newConnection(ws: WebSocket, connectionId: string): void {
     // generate a unit
