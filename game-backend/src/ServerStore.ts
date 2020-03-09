@@ -1,3 +1,4 @@
+import WebSocket from 'ws';
 import { UserContext, UserContextId } from '../../darwin-types/UserContext';
 import { State } from '../../darwin-types/State';
 
@@ -7,6 +8,7 @@ export interface ServerStore {
     userContextMap: Record<UserContextId, UserContext>;
     userContextIds: UserContextId[];
   };
+  connections: [string, WebSocket][];
 }
 
 export const createStore = (): ServerStore => {
@@ -14,10 +16,12 @@ export const createStore = (): ServerStore => {
     matchState: {
       objectIds: [],
       objectMap: {},
+      tick: 0,
     },
     userContexts: {
       userContextIds: [],
       userContextMap: {},
     },
+    connections: [],
   };
 };

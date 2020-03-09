@@ -12,7 +12,13 @@ export default class MainController {
 
   private static store: ServerStore = createStore();
 
+  private static isTicking = false;
+
+  static tickingInterval: NodeJS.Timeout;
+
   static newConnection(ws: WebSocket, connectionId: string): void {
+    this.store.connections.push([connectionId, ws]);
+
     // generate a unit
     const unitId = this.hyperIdInstance();
     const unit: GameObject = {
@@ -32,11 +38,27 @@ export default class MainController {
     this.store.userContexts.userContextMap[connectionId] = userCtx;
     this.store.userContexts.userContextIds.push(connectionId);
 
-    // send matchState to client
-    ws.send(JSON.stringify(this.store.matchState));
+    if (!this.isTicking && this.store.connections.length) {
+      this.startTicking();
+    }
   }
 
   static newMessage(msg: WebSocket.Data, ws: WebSocket, id: string): void {
     ws.send(`got message ${msg} from ${id}`);
+  }
+
+  static startTicking(): void {
+    this.isTicking = true;
+    this.tickingInterval = setInterval(() => {
+      this.store.matchState.tick++;
+      for (const [id, ws] of this.store.connections) {
+        ws.send(`Hello ${id}`);
+        ws.send(JSON.stringify(this.store.matchState));
+      }
+    }, 2000);
+  }
+
+  static stopTicking(): void {
+    clearInterval(this.tickingInterval);
   }
 }
