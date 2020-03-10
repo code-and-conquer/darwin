@@ -16,6 +16,7 @@ describe('MoveIntent', () => {
           },
         },
         objectIds: ['unit1'],
+        tick: 0,
       },
       {
         unitId: 'unit1',
