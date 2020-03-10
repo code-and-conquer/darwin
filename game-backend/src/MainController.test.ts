@@ -57,9 +57,17 @@ describe('MainController', () => {
     mainController.newConnection(wsMock1 as WebSocket, 'connection1');
 
     jest.advanceTimersByTime(2000);
-    const state0 = JSON.parse(sendFunction0.mock.calls[0][0]);
-    const state1 = JSON.parse(sendFunction1.mock.calls[0][0]);
-    expect(state0.tick).toBe(1);
-    expect(state1.tick).toBe(1);
+    const state0 = sendFunction0.mock.calls[0][0];
+    const state1 = sendFunction1.mock.calls[0][0];
+    expect(state0).toMatch(state1);
+    expect(JSON.parse(state0).tick).toBe(1);
+    expect(JSON.parse(state1).tick).toBe(1);
+
+    jest.advanceTimersByTime(2000);
+    const state2 = sendFunction0.mock.calls[1][0];
+    const state3 = sendFunction1.mock.calls[1][0];
+    expect(state2).toMatch(state3);
+    expect(JSON.parse(state2).tick).toBe(2);
+    expect(JSON.parse(state3).tick).toBe(2);
   });
 });
