@@ -1,14 +1,65 @@
 import WebSocket from 'ws';
 import MainController from './MainController';
+import { State } from '../../darwin-types/State';
 
 describe('MainController', () => {
-  it('sends object', () => {
-    const sendFunction = jest.fn();
-    const wsMock = {
-      send: sendFunction,
-    };
-    MainController.newConnection((wsMock as unknown) as WebSocket, 'randomId');
-    const object = JSON.parse(sendFunction.mock.calls[0][0]);
-    expect(object.id).not.toBeNull();
+  // Websocket mocks
+  const sendFunction0 = jest.fn();
+  const sendFunction1 = jest.fn();
+  const wsMock0: unknown = {
+    send: sendFunction0,
+  };
+  const wsMock1: unknown = {
+    send: sendFunction1,
+  };
+
+  let mainController: MainController;
+  jest.useFakeTimers();
+
+  beforeEach(() => {
+    mainController = new MainController();
+    jest.clearAllMocks();
+    jest.clearAllTimers();
+  });
+
+  it('starts ticking', () => {
+    mainController.newConnection(wsMock0 as WebSocket, 'connection0');
+    jest.advanceTimersByTime(2000);
+    expect(setInterval).toBeCalledTimes(1);
+  });
+
+  it('sends correct states on tick', () => {
+    mainController.newConnection(wsMock0 as WebSocket, 'connection0');
+    jest.advanceTimersByTime(2000);
+    const state: State = JSON.parse(sendFunction0.mock.calls[0][0]);
+    const unitId = state.objectIds[0];
+    expect(unitId).not.toBeNull();
+    expect(state.objectMap.unitId).not.toBeNull();
+  });
+
+  it('increments tick counter on each tick', () => {
+    let state: State;
+
+    mainController.newConnection(wsMock0 as WebSocket, 'connection0');
+
+    jest.advanceTimersByTime(2000);
+    state = JSON.parse(sendFunction0.mock.calls[0][0]);
+    expect(state.tick).toBe(1);
+
+    jest.advanceTimersByTime(2000);
+    state = JSON.parse(sendFunction0.mock.calls[1][0]);
+    expect(state.tick).toBe(2);
+  });
+
+  // we will probably have to change this in the future, when we hide infos for certain users
+  it('sends the same state to multiple clients', () => {
+    mainController.newConnection(wsMock0 as WebSocket, 'connection0');
+    mainController.newConnection(wsMock1 as WebSocket, 'connection1');
+
+    jest.advanceTimersByTime(2000);
+    const state0 = JSON.parse(sendFunction0.mock.calls[0][0]);
+    const state1 = JSON.parse(sendFunction1.mock.calls[0][0]);
+    expect(state0.tick).toBe(1);
+    expect(state1.tick).toBe(1);
   });
 });
