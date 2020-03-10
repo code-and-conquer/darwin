@@ -8,15 +8,15 @@ import { ServerStore, createStore } from './ServerStore';
  * Main controller, which handles new connections and stores match data and other server data.
  */
 export default class MainController {
-  private static hyperIdInstance: hyperid.Instance = hyperid();
+  private hyperIdInstance: hyperid.Instance = hyperid();
 
-  private static store: ServerStore = createStore();
+  private store: ServerStore = createStore();
 
-  private static isTicking = false;
+  private isTicking = false;
 
-  static tickingInterval: NodeJS.Timeout;
+  private tickingInterval: NodeJS.Timeout;
 
-  static newConnection(ws: WebSocket, connectionId: string): void {
+  newConnection(ws: WebSocket, connectionId: string): void {
     this.store.connections.push([connectionId, ws]);
 
     // generate a unit
@@ -47,18 +47,17 @@ export default class MainController {
     ws.send(`got message ${msg} from ${id}`);
   }
 
-  private static startTicking(): void {
+  private startTicking(): void {
     this.isTicking = true;
     this.tickingInterval = setInterval(() => {
       this.store.matchState.tick++;
-      for (const [id, ws] of this.store.connections) {
-        ws.send(`Hello ${id}`);
+      for (const [, ws] of this.store.connections) {
         ws.send(JSON.stringify(this.store.matchState));
       }
     }, 2000);
   }
 
-  private static stopTicking(): void {
+  private stopTicking(): void {
     clearInterval(this.tickingInterval);
   }
 }

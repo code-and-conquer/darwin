@@ -7,10 +7,11 @@ const server = http.createServer();
 const WSServer = new WebSocket.Server({
   server,
 });
+const mainController = new MainController();
 
 WSServer.on('connection', (ws: WebSocket, req: http.IncomingMessage) => {
   const connectionId = req.headers['sec-websocket-key'] as string;
-  MainController.newConnection(ws, connectionId);
+  mainController.newConnection(ws, connectionId);
 
   ws.on('message', msg => {
     MainController.newMessage(msg, ws, connectionId);
