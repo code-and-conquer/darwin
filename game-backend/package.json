@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "hyperid": "^2.0.3",
+    "immer": "^6.0.1",
     "ws": "^7.2.1"
   }
 }
