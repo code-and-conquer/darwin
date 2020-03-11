@@ -2,7 +2,7 @@ import WebSocket from 'ws';
 import hyperid from 'hyperid';
 import { GameObject } from '../../darwin-types/GameObject';
 import { UserContext } from '../../darwin-types/UserContext';
-import { ServerStore, createStore } from './ServerStore';
+import { ServerStore, createStore, ConnectionId } from './ServerStore';
 
 /**
  * Main controller, which handles new connections and stores match data and other server data.
@@ -16,7 +16,7 @@ export default class MainController {
 
   private tickingInterval: NodeJS.Timeout;
 
-  newConnection(ws: WebSocket, connectionId: string): void {
+  newConnection(ws: WebSocket, connectionId: ConnectionId): void {
     this.store.connections.push([connectionId, ws]);
 
     // generate a unit
