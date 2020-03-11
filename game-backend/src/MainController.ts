@@ -8,6 +8,8 @@ import { ServerStore, createStore, ConnectionId } from './ServerStore';
  * Main controller, which handles new connections and stores match data and other server data.
  */
 export default class MainController {
+  private readonly TICK_INTERVAL = 2000;
+
   private hyperIdInstance = hyperid();
 
   private store = createStore();
@@ -50,7 +52,7 @@ export default class MainController {
       for (const [, ws] of this.store.connections) {
         ws.send(JSON.stringify(this.store.matchState));
       }
-    }, 2000);
+    }, this.TICK_INTERVAL);
   }
 
   private stopTicking(): void {
