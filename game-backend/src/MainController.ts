@@ -2,7 +2,7 @@ import WebSocket from 'ws';
 import hyperid from 'hyperid';
 import { GameObject } from '../../darwin-types/GameObject';
 import { UserContext } from '../../darwin-types/UserContext';
-import { ServerStore, createStore, ConnectionId } from './ServerStore';
+import { createStore, ConnectionId } from './ServerStore';
 
 /**
  * Main controller, which handles new connections and stores match data and other server data.
