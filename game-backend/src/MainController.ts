@@ -8,9 +8,9 @@ import { ServerStore, createStore, ConnectionId } from './ServerStore';
  * Main controller, which handles new connections and stores match data and other server data.
  */
 export default class MainController {
-  private hyperIdInstance: hyperid.Instance = hyperid();
+  private hyperIdInstance = hyperid();
 
-  private store: ServerStore = createStore();
+  private store = createStore();
 
   private isTicking = false;
 
