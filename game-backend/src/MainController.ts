@@ -43,10 +43,6 @@ export default class MainController {
     }
   }
 
-  static newMessage(msg: WebSocket.Data, ws: WebSocket, id: string): void {
-    ws.send(`got message ${msg} from ${id}`);
-  }
-
   private startTicking(): void {
     this.isTicking = true;
     this.tickingInterval = setInterval(() => {
