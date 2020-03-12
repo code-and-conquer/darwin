@@ -11,6 +11,7 @@ export interface ServerStore {
     userContextIds: UserContextId[];
   };
   connections: [ConnectionId, WebSocket][];
+  currentTick: number;
 }
 
 export const createStore = (): ServerStore => {
@@ -18,12 +19,12 @@ export const createStore = (): ServerStore => {
     matchState: {
       objectIds: [],
       objectMap: {},
-      tick: 0,
     },
     userContexts: {
       userContextIds: [],
       userContextMap: {},
     },
     connections: [],
+    currentTick: 0,
   };
 };

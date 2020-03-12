@@ -5,7 +5,6 @@ describe('scheduleIntents', () => {
   const getDummyState = (): State => ({
     objectMap: {},
     objectIds: [],
-    tick: 0,
   });
   it('returns state of a given intent', () => {
     const mockExecute = jest.fn();

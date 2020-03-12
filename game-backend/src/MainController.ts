@@ -3,6 +3,7 @@ import hyperid from 'hyperid';
 import { GameObject } from '../../darwin-types/GameObject';
 import { UserContext } from '../../darwin-types/UserContext';
 import { createStore, ConnectionId } from './ServerStore';
+import { MatchUpdate } from '../../darwin-types/messages/matchUpdate';
 
 /**
  * Main controller, which handles new connections and stores match data and other server data.
@@ -48,11 +49,24 @@ export default class MainController {
   private startTicking(): void {
     this.isTicking = true;
     this.tickingInterval = setInterval(() => {
-      this.store.matchState.tick++;
+      const matchUpdate = this.generateMatchUpdate();
       for (const [, ws] of this.store.connections) {
-        ws.send(JSON.stringify(this.store.matchState));
+        ws.send(JSON.stringify(matchUpdate));
       }
     }, this.TICK_INTERVAL);
+  }
+
+  private generateMatchUpdate(): MatchUpdate {
+    this.store.currentTick++;
+    return {
+      type: 'matchUpdate',
+      payload: {
+        state: this.store.matchState,
+      },
+      debug: {
+        currentTick: this.store.currentTick,
+      },
+    } as MatchUpdate;
   }
 
   private stopTicking(): void {
