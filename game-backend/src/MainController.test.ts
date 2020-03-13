@@ -1,5 +1,5 @@
 import WebSocket from 'ws';
-import MainController from './MainController';
+import MainController, { TICK_INTERVAL } from './MainController';
 import { MatchUpdate } from '../../darwin-types/messages/matchUpdate';
 
 describe('MainController', () => {
@@ -28,13 +28,13 @@ describe('MainController', () => {
 
   it('starts ticking', () => {
     mainController.newConnection(wsMock0 as WebSocket, 'connection0');
-    jest.advanceTimersByTime(2000);
+    jest.advanceTimersByTime(TICK_INTERVAL);
     expect(setInterval).toBeCalledTimes(1);
   });
 
   it('sends a matchUpdate', () => {
     mainController.newConnection(wsMock0 as WebSocket, 'connection0');
-    jest.advanceTimersByTime(2000);
+    jest.advanceTimersByTime(TICK_INTERVAL);
 
     const matchUpdate = parseResponseBody(sendFunction0.mock.calls[0][0]);
     expect(matchUpdate.type).toBe('matchUpdate');
@@ -42,7 +42,7 @@ describe('MainController', () => {
 
   it('sends correct states on tick', () => {
     mainController.newConnection(wsMock0 as WebSocket, 'connection0');
-    jest.advanceTimersByTime(2000);
+    jest.advanceTimersByTime(TICK_INTERVAL);
 
     const matchUpdate = parseResponseBody(sendFunction0.mock.calls[0][0]);
     const unitId = matchUpdate.payload.state.objectIds[0];
@@ -56,11 +56,11 @@ describe('MainController', () => {
 
     mainController.newConnection(wsMock0 as WebSocket, 'connection0');
 
-    jest.advanceTimersByTime(2000);
+    jest.advanceTimersByTime(TICK_INTERVAL);
     matchUpdate = parseResponseBody(sendFunction0.mock.calls[0][0]);
     expect(matchUpdate.payload.meta.currentTick).toBe(1);
 
-    jest.advanceTimersByTime(2000);
+    jest.advanceTimersByTime(TICK_INTERVAL);
     matchUpdate = parseResponseBody(sendFunction0.mock.calls[1][0]);
     expect(matchUpdate.payload.meta.currentTick).toBe(2);
   });
@@ -70,14 +70,14 @@ describe('MainController', () => {
     mainController.newConnection(wsMock0 as WebSocket, 'connection0');
     mainController.newConnection(wsMock1 as WebSocket, 'connection1');
 
-    jest.advanceTimersByTime(2000);
+    jest.advanceTimersByTime(TICK_INTERVAL);
     const matchUpdate0 = sendFunction0.mock.calls[0][0];
     const matchUpdate1 = sendFunction1.mock.calls[0][0];
     expect(matchUpdate0).toMatch(matchUpdate1);
     expect(parseResponseBody(matchUpdate0).payload.meta.currentTick).toBe(1);
     expect(parseResponseBody(matchUpdate1).payload.meta.currentTick).toBe(1);
 
-    jest.advanceTimersByTime(2000);
+    jest.advanceTimersByTime(TICK_INTERVAL);
     const matchUpdate2 = sendFunction0.mock.calls[0][0];
     const matchUpdate3 = sendFunction1.mock.calls[0][0];
     expect(matchUpdate2).toMatch(matchUpdate3);

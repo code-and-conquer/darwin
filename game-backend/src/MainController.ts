@@ -5,12 +5,12 @@ import { UserContext } from '../../darwin-types/UserContext';
 import { createStore, ConnectionId } from './ServerStore';
 import { MatchUpdate } from '../../darwin-types/messages/matchUpdate';
 
+export const TICK_INTERVAL = 2000;
+
 /**
  * Main controller, which handles new connections and stores match data and other server data.
  */
 export default class MainController {
-  private readonly TICK_INTERVAL = 2000;
-
   private hyperIdInstance = hyperid();
 
   private store = createStore();
@@ -53,7 +53,7 @@ export default class MainController {
       for (const [, ws] of this.store.connections) {
         ws.send(JSON.stringify(matchUpdate));
       }
-    }, this.TICK_INTERVAL);
+    }, TICK_INTERVAL);
   }
 
   private generateMatchUpdate(): MatchUpdate {
