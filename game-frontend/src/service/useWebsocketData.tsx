@@ -1,11 +1,12 @@
 import React, { useEffect, createContext, useContext, useReducer } from 'react';
-import { MatchUpdate } from '../../../darwin-types/messages/MatchUpdate';
+import { Message } from '../../../darwin-types/messages/Message';
 import { State } from '../../../darwin-types/State';
+import { MatchUpdate } from '../../../darwin-types/messages/MatchUpdate';
 
-const reducer = (state: State, action: MatchUpdate): State => {
+const reducer = (state: State, action: Message): State => {
   switch (action.type) {
     case 'matchUpdate': {
-      return action.payload.state;
+      return (action as MatchUpdate).payload.state;
     }
     default:
       return state;
@@ -23,7 +24,7 @@ function useGetWebsocketData(): State {
     const socket = new WebSocket(API_URL);
 
     socket.addEventListener('message', event => {
-      const action: MatchUpdate = JSON.parse(event.data);
+      const action: Message = JSON.parse(event.data);
 
       dispatch(action);
     });
