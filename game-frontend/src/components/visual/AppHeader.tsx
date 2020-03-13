@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const AppHeader = styled.header`
   background-color: #222;
@@ -7,4 +7,4 @@ const AppHeader = styled.header`
   color: white;
 `;
 
-export default AppHeader
+export default AppHeader;

@@ -1,13 +1,13 @@
 import React from 'react';
 
 import logo from './logo.svg';
-import Game from './game';
+import Game from './Game';
 import { WebsocketProvider } from './service/useWebsocketData';
-import AppContainer from './components/container/app-container';
-import AppHeader from './components/visual/app-header';
-import AppTitle from './components/visual/app-title';
-import AppLogo from './components/visual/app-logo';
-import GlobalStyle from './global-style';
+import AppContainer from './components/container/AppContainer';
+import AppHeader from './components/visual/AppHeader';
+import AppTitle from './components/visual/AppTitle';
+import AppLogo from './components/visual/AppLogo';
+import GlobalStyle from './GlobalStyle';
 
 function App() {
   return (

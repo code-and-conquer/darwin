@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const CanvasWrapper = styled.div`
   & > canvas {
@@ -6,6 +6,6 @@ const CanvasWrapper = styled.div`
     width: calc(100% - 20px);
     margin: 0 auto;
   }
-`
+`;
 
-export default CanvasWrapper
+export default CanvasWrapper;

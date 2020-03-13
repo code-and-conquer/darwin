@@ -3,7 +3,7 @@ import { Stage } from '@inlet/react-pixi';
 import Position from '../../darwin-types/Position';
 import CanvasWrapper from './components/visual/canvas-wrapper';
 import useWebsocketData from './service/useWebsocketData';
-import Unit from './components/canvas-objects/unit';
+import Unit from './components/canvas-objects/Unit';
 
 interface Unit {
   position: Position;

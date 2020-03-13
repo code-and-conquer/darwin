@@ -4,4 +4,4 @@ const AppContainer = styled.div`
   text-align: center;
 `;
 
-export default AppContainer
+export default AppContainer;
