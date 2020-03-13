@@ -78,10 +78,10 @@ describe('MainController', () => {
     expect(parseResponseBody(matchUpdate1).payload.meta.currentTick).toBe(1);
 
     jest.advanceTimersByTime(TICK_INTERVAL);
-    const matchUpdate2 = sendFunction0.mock.calls[0][0];
-    const matchUpdate3 = sendFunction1.mock.calls[0][0];
+    const matchUpdate2 = sendFunction0.mock.calls[1][0];
+    const matchUpdate3 = sendFunction1.mock.calls[1][0];
     expect(matchUpdate2).toMatch(matchUpdate3);
-    expect(parseResponseBody(matchUpdate2).payload.meta.currentTick).toBe(1);
-    expect(parseResponseBody(matchUpdate3).payload.meta.currentTick).toBe(1);
+    expect(parseResponseBody(matchUpdate2).payload.meta.currentTick).toBe(2);
+    expect(parseResponseBody(matchUpdate3).payload.meta.currentTick).toBe(2);
   });
 });
