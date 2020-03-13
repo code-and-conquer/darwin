@@ -66,7 +66,7 @@ export default class MainController {
           currentTick: this.store.currentTick,
         },
       },
-    } as MatchUpdate;
+    };
   }
 
   private stopTicking(): void {
