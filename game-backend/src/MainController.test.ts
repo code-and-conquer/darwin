@@ -17,7 +17,7 @@ describe('MainController', () => {
   jest.useFakeTimers();
 
   const parseResponseBody = (body: string): MatchUpdate => {
-    return JSON.parse(body) as MatchUpdate;
+    return JSON.parse(body);
   };
 
   beforeEach(() => {
