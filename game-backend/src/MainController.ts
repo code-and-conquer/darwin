@@ -62,9 +62,9 @@ export default class MainController {
       type: 'matchUpdate',
       payload: {
         state: this.store.matchState,
-      },
-      debug: {
-        currentTick: this.store.currentTick,
+        meta: {
+          currentTick: this.store.currentTick,
+        },
       },
     } as MatchUpdate;
   }

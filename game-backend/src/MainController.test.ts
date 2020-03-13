@@ -58,11 +58,11 @@ describe('MainController', () => {
 
     jest.advanceTimersByTime(2000);
     matchUpdate = JSON.parse(sendFunction0.mock.calls[0][0]);
-    expect(matchUpdate.debug.currentTick).toBe(1);
+    expect(matchUpdate.payload.meta.currentTick).toBe(1);
 
     jest.advanceTimersByTime(2000);
     matchUpdate = JSON.parse(sendFunction0.mock.calls[1][0]);
-    expect(matchUpdate.debug.currentTick).toBe(2);
+    expect(matchUpdate.payload.meta.currentTick).toBe(2);
   });
 
   // we will probably have to change this in the future, when we hide infos for certain users
@@ -74,14 +74,22 @@ describe('MainController', () => {
     const matchUpdate0 = sendFunction0.mock.calls[0][0];
     const matchUpdate1 = sendFunction1.mock.calls[0][0];
     expect(matchUpdate0).toMatch(matchUpdate1);
-    expect((JSON.parse(matchUpdate0) as MatchUpdate).debug.currentTick).toBe(1);
-    expect((JSON.parse(matchUpdate1) as MatchUpdate).debug.currentTick).toBe(1);
+    expect(
+      (JSON.parse(matchUpdate0) as MatchUpdate).payload.meta.currentTick
+    ).toBe(1);
+    expect(
+      (JSON.parse(matchUpdate1) as MatchUpdate).payload.meta.currentTick
+    ).toBe(1);
 
     jest.advanceTimersByTime(2000);
     const matchUpdate2 = sendFunction0.mock.calls[0][0];
     const matchUpdate3 = sendFunction1.mock.calls[0][0];
     expect(matchUpdate2).toMatch(matchUpdate3);
-    expect((JSON.parse(matchUpdate2) as MatchUpdate).debug.currentTick).toBe(1);
-    expect((JSON.parse(matchUpdate3) as MatchUpdate).debug.currentTick).toBe(1);
+    expect(
+      (JSON.parse(matchUpdate2) as MatchUpdate).payload.meta.currentTick
+    ).toBe(1);
+    expect(
+      (JSON.parse(matchUpdate3) as MatchUpdate).payload.meta.currentTick
+    ).toBe(1);
   });
 });
