@@ -129,11 +129,10 @@ den Schwerpunkt des Gameplays stärker auf die Vorausplanung und langfristigen S
 zu legen und reaktives Gameplay in den Hintergrund zu stellen.
 
 % (Eventuell ein 'game play' Bild reinpasten)
-Das Theme des Spiels wird an die Legende um Willhelm Tell angelehnt werden. So sind die Einheiten welche vom Player
-gesteuert werden Figuren aus dieser Geschichte. Für den Anfang gibt es eine Einheit die an Willhelm Tell angelegt ist.
-Die Einheiten verteidigen sich mit Armbrust, Schwertern und ähnlichem. Ressourcen sind typisch schweizerische Produkte
-wie Käse, Schokolade oder Rösti. In einem späteren Entwicklungsstadium des Spiels sind Computergesteuerte Gegner
-wie Gessler oder die Habsburger angedacht, welche dem Spieler Vorteile bringen, falls er sie besiegt. 
+Ursprünglich war es die Idee das Spiel an die Legende um Willhelm Tell anzulehnen. Da aber keiner im Team Erfahrung 
+im Bereich Grafik Design mitbringt, möchten wir das Theme des Spiels einfacher gestalten. Alle Objekte im Spiel 
+möchten wir als geometrische Form darstellen, welche allenfalls kleine Modifikationen (zum Beispiel ein rotes Dreieck mit einem
+Punkt in der Mitte) aufweisen. So wird die Darstellung des Spiels einfacher, bleibt aber trotzdem noch ansprechend. 
 
 Das Spiel wird als Webapplikation umgesetzt.
 Spieler können sich gegenseitig herausforden und ein Match starten.
@@ -331,6 +330,16 @@ Zudem soll der PO durch manuelles Prüfen das Feature zum Schluss noch abnehmen.
 \item Branches werden gelöscht, sobald sie in den Master-Branch gemerged wurden. Das ver-bessert die Übersicht im Repository. Der Pull Request bleibt bestehen, da dort nachvollzogen werden kann, wie man zu einem Entschluss gekommen ist. 
 \item Beim mergen eines Pull-Requests muss die Option "Squash Commits" gewählt werden. Diese Option fasst alle Commits aus dem Branch in einen zusammen. So bleibt der Master-Branch sauber und es ist ersichtlich wann welches Feature hinzugefügt wurde. 
 \item Bevor ein Pull-Request gemerged werden darf, muss mindestens eine andere Person die Änderungen durchgeschaut haben (4-Augen-Prinzip).
+\end{itemize}
+\item 11.03.2020
+\begin{itemize}
+\item Das Theme des Spiels wurde der Einfachheit halber vom Willhelm Tell auf "Geometrische Figuren" geändert.
+\end{itemize}
+\item 12.03.2020
+\begin{itemize}
+\item Ursprung des Koordinatensystems für die Berechnung der Befehle und die Darstellung des Spiels ist oben links 
+mit steigenden Koordinaten nach rechts und unten. Da wir für die Darstellung des Spiels Canvas verwenden und das den
+Ursprung oben links hat, haben wir uns entschieden das so durch die ganze Applikation hinweg so zu machen. 
 \end{itemize}
 \end{itemize}
 
