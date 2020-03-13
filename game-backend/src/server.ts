@@ -1,15 +1,22 @@
 import http from 'http';
 import WebSocket from 'ws';
 import MainController from './MainController';
+import { ConnectionId } from './ServerStore';
+
+function extractConnectionId(req: http.IncomingMessage): ConnectionId {
+  return req.headers['sec-websocket-key'] as ConnectionId;
+}
 
 // initialize server
 const server = http.createServer();
 const WSServer = new WebSocket.Server({
   server,
 });
+const mainController = new MainController();
 
-WSServer.on('connection', ws => {
-  MainController.newConnection(ws);
+WSServer.on('connection', (ws: WebSocket, req: http.IncomingMessage) => {
+  const connectionId = extractConnectionId(req);
+  mainController.newConnection(ws, connectionId);
 });
 
 // start server
