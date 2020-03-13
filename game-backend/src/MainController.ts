@@ -3,7 +3,7 @@ import hyperid from 'hyperid';
 import { GameObject } from '../../darwin-types/GameObject';
 import { UserContext } from '../../darwin-types/UserContext';
 import { createStore, ConnectionId } from './ServerStore';
-import { MatchUpdate } from '../../darwin-types/messages/matchUpdate';
+import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
 
 export const TICK_INTERVAL = 2000;
 

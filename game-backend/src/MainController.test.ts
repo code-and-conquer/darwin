@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import MainController, { TICK_INTERVAL } from './MainController';
-import { MatchUpdate } from '../../darwin-types/messages/matchUpdate';
+import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
 
 describe('MainController', () => {
   // Websocket mocks
