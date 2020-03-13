@@ -9,7 +9,7 @@ interface Unit {
   position: Position;
 }
 
-function Game() {
+function Game(): JSX.Element {
   const unit: Unit | null = useWebsocketData();
 
   if (!unit) {

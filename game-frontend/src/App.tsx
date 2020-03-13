@@ -9,7 +9,7 @@ import AppTitle from './components/visual/AppTitle';
 import AppLogo from './components/visual/AppLogo';
 import GlobalStyle from './GlobalStyle';
 
-function App() {
+function App(): JSX.Element {
   return (
     <>
       <GlobalStyle />
