@@ -16,6 +16,10 @@ describe('MainController', () => {
   let mainController: MainController;
   jest.useFakeTimers();
 
+  const parseResponseBody = (body: string): MatchUpdate => {
+    return JSON.parse(body) as MatchUpdate;
+  };
+
   beforeEach(() => {
     mainController = new MainController();
     jest.clearAllMocks();
@@ -32,9 +36,7 @@ describe('MainController', () => {
     mainController.newConnection(wsMock0 as WebSocket, 'connection0');
     jest.advanceTimersByTime(2000);
 
-    const matchUpdate = JSON.parse(
-      sendFunction0.mock.calls[0][0]
-    ) as MatchUpdate;
+    const matchUpdate = parseResponseBody(sendFunction0.mock.calls[0][0]);
     expect(matchUpdate.type).toBe('matchUpdate');
   });
 
@@ -42,9 +44,7 @@ describe('MainController', () => {
     mainController.newConnection(wsMock0 as WebSocket, 'connection0');
     jest.advanceTimersByTime(2000);
 
-    const matchUpdate = JSON.parse(
-      sendFunction0.mock.calls[0][0]
-    ) as MatchUpdate;
+    const matchUpdate = parseResponseBody(sendFunction0.mock.calls[0][0]);
     const unitId = matchUpdate.payload.state.objectIds[0];
 
     expect(unitId).not.toBeNull();
@@ -57,11 +57,11 @@ describe('MainController', () => {
     mainController.newConnection(wsMock0 as WebSocket, 'connection0');
 
     jest.advanceTimersByTime(2000);
-    matchUpdate = JSON.parse(sendFunction0.mock.calls[0][0]);
+    matchUpdate = parseResponseBody(sendFunction0.mock.calls[0][0]);
     expect(matchUpdate.payload.meta.currentTick).toBe(1);
 
     jest.advanceTimersByTime(2000);
-    matchUpdate = JSON.parse(sendFunction0.mock.calls[1][0]);
+    matchUpdate = parseResponseBody(sendFunction0.mock.calls[1][0]);
     expect(matchUpdate.payload.meta.currentTick).toBe(2);
   });
 
@@ -74,22 +74,14 @@ describe('MainController', () => {
     const matchUpdate0 = sendFunction0.mock.calls[0][0];
     const matchUpdate1 = sendFunction1.mock.calls[0][0];
     expect(matchUpdate0).toMatch(matchUpdate1);
-    expect(
-      (JSON.parse(matchUpdate0) as MatchUpdate).payload.meta.currentTick
-    ).toBe(1);
-    expect(
-      (JSON.parse(matchUpdate1) as MatchUpdate).payload.meta.currentTick
-    ).toBe(1);
+    expect(parseResponseBody(matchUpdate0).payload.meta.currentTick).toBe(1);
+    expect(parseResponseBody(matchUpdate1).payload.meta.currentTick).toBe(1);
 
     jest.advanceTimersByTime(2000);
     const matchUpdate2 = sendFunction0.mock.calls[0][0];
     const matchUpdate3 = sendFunction1.mock.calls[0][0];
     expect(matchUpdate2).toMatch(matchUpdate3);
-    expect(
-      (JSON.parse(matchUpdate2) as MatchUpdate).payload.meta.currentTick
-    ).toBe(1);
-    expect(
-      (JSON.parse(matchUpdate3) as MatchUpdate).payload.meta.currentTick
-    ).toBe(1);
+    expect(parseResponseBody(matchUpdate2).payload.meta.currentTick).toBe(1);
+    expect(parseResponseBody(matchUpdate3).payload.meta.currentTick).toBe(1);
   });
 });
