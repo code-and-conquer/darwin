@@ -26,6 +26,7 @@
     "no-plusplus": "off",
     "no-useless-constructor": "off",
     "no-empty-function": "off",
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["draft"] }],
     "@typescript-eslint/no-unused-vars": "warn",
     "semi": "off",
     "@typescript-eslint/semi": ["error"],

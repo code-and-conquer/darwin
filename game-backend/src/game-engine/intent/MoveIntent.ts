@@ -1,6 +1,9 @@
+import produce from 'immer';
 import { Intent } from './Intent';
 import { State } from '../../../../darwin-types/State';
 import { UserContext } from '../../../../darwin-types/UserContext';
+import Position from '../../../../darwin-types/Position';
+import { ARENA_HEIGHT, ARENA_WIDTH } from '../../../../darwin-types/Arena';
 
 export enum Direction {
   Up = 'UP',
@@ -15,11 +18,9 @@ export enum Direction {
 export default class MoveIntent implements Intent {
   constructor(private direction: Direction) {}
 
-  execute(state: State, userContext: UserContext): State {
-    const unit = state.objectMap[userContext.unitId];
-
+  private move(originalPosition: Position): Position {
     const position = {
-      ...unit.position,
+      ...originalPosition,
     };
     switch (this.direction) {
       case Direction.Up:
@@ -36,15 +37,32 @@ export default class MoveIntent implements Intent {
         break;
       default:
     }
+    return position;
+  }
+
+  private static checkBoundaries(position: Position): Position {
+    const x = Math.min(position.x, ARENA_HEIGHT);
+    const y = Math.min(position.y, ARENA_WIDTH);
     return {
-      ...state,
-      objectMap: {
-        ...state.objectMap,
-        [unit.id]: {
-          ...unit,
-          position,
-        },
-      },
+      x: Math.max(0, x),
+      y: Math.max(0, y),
     };
+  }
+
+  execute(state: State, userContext: UserContext): State {
+    const unit = state.objectMap[userContext.unitId];
+    const position = MoveIntent.checkBoundaries(this.move(unit.position));
+    const conflictingObject = state.objectIds
+      .map(id => state.objectMap[id])
+      .find(
+        object =>
+          object.position.x === position.x && object.position.y === position.y
+      );
+    const hasConflictingObject = conflictingObject !== undefined;
+    return produce(state, draft => {
+      draft.objectMap[unit.id].position = hasConflictingObject
+        ? unit.position
+        : position;
+    });
   }
 }
