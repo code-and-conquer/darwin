@@ -6,11 +6,14 @@ describe('MainController', () => {
   // Websocket mocks
   const sendFunction0 = jest.fn();
   const sendFunction1 = jest.fn();
+  const onFunction = jest.fn();
   const wsMock0: unknown = {
     send: sendFunction0,
+    on: onFunction,
   };
   const wsMock1: unknown = {
     send: sendFunction1,
+    on: onFunction,
   };
 
   let mainController: MainController;
