@@ -23,7 +23,11 @@ const Grid: FC<Props> = ({ numberOfRows, numberOfColumns, scaleFactor }) => {
   return (
     <>
       {fields.map(field => (
-        <Field position={field} scaleFactor={scaleFactor} />
+        <Field
+          key={`${field.x}-${field.y}`}
+          position={field}
+          scaleFactor={scaleFactor}
+        />
       ))}
     </>
   );
