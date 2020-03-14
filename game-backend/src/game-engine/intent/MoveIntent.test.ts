@@ -19,7 +19,7 @@ describe('MoveIntent', () => {
       .addObject({ id: UNIT_ID, x: 0, y: 0 })
       .build();
     upperPositionState = StateBuilder.buildState()
-      .addObject({ id: UNIT_ID, x: ARENA_WIDTH, y: ARENA_HEIGHT })
+      .addObject({ id: UNIT_ID, x: ARENA_WIDTH - 1, y: ARENA_HEIGHT - 1 })
       .build();
     baseUserContext = {
       unitId: UNIT_ID,
@@ -94,7 +94,7 @@ describe('MoveIntent', () => {
 
     const newState = intent.execute(upperPositionState, baseUserContext);
 
-    expect(newState.objectMap[UNIT_ID].position.y).toBe(ARENA_HEIGHT);
+    expect(newState.objectMap[UNIT_ID].position.y).toBe(ARENA_HEIGHT - 1);
   });
 
   it('handles upper x system boundaries', () => {
@@ -102,6 +102,6 @@ describe('MoveIntent', () => {
 
     const newState = intent.execute(upperPositionState, baseUserContext);
 
-    expect(newState.objectMap[UNIT_ID].position.x).toBe(ARENA_WIDTH);
+    expect(newState.objectMap[UNIT_ID].position.x).toBe(ARENA_WIDTH - 1);
   });
 });
