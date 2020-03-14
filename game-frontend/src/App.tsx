@@ -8,6 +8,7 @@ import AppHeader from './components/visual/AppHeader';
 import AppTitle from './components/visual/AppTitle';
 import AppLogo from './components/visual/AppLogo';
 import GlobalStyle from './GlobalStyle';
+import UserScript from './components/user-script';
 
 function App(): JSX.Element {
   return (
@@ -19,6 +20,7 @@ function App(): JSX.Element {
           <AppTitle>Darwin is ready for React.</AppTitle>
         </AppHeader>
         <WebsocketProvider>
+          <UserScript />
           <Game />
         </WebsocketProvider>
       </AppContainer>

@@ -3,11 +3,17 @@ import React, {
   createContext,
   useContext,
   useReducer,
+  useState,
   FC,
 } from 'react';
 import { Message } from '../../../darwin-types/messages/Message';
 import { State } from '../../../darwin-types/State';
 import { MatchUpdate } from '../../../darwin-types/messages/MatchUpdate';
+
+type ContextState = {
+  state: State;
+  socket: WebSocket | undefined;
+};
 
 const reducer = (state: State, action: Message): State => {
   switch (action.type) {
@@ -22,29 +28,54 @@ const reducer = (state: State, action: Message): State => {
 const API_URL = process.env.REACT_APP_BACKEND_URL as string;
 const emptyState: State = { objectMap: {}, objectIds: [] };
 
-const WebsocketContext = createContext<State>(emptyState);
+const WebsocketContext = createContext<ContextState>({
+  state: emptyState,
+  socket: undefined,
+});
 
-function useGetWebsocketData(): State {
-  const [state, dispatch] = useReducer(reducer, emptyState);
+function useInitWebsocket(): ContextState {
+  const [gameState, dispatch] = useReducer(reducer, emptyState);
+  const [socket, setSocket] = useState<WebSocket>();
+
   useEffect(() => {
-    const socket = new WebSocket(API_URL);
+    setSocket(new WebSocket(API_URL));
+  }, [setSocket]);
 
-    socket.addEventListener('message', event => {
-      const action: Message = JSON.parse(event.data);
+  useEffect(() => {
+    if (socket) {
+      socket.addEventListener('message', event => {
+        const action: Message = JSON.parse(event.data);
 
-      dispatch(action);
-    });
-  }, []);
-  return state;
+        dispatch(action);
+      });
+    }
+  }, [socket, dispatch]);
+  return { state: gameState, socket };
 }
 
 export const WebsocketProvider: FC = props => {
-  const websocketData = useGetWebsocketData();
+  const websocketData = useInitWebsocket();
   return <WebsocketContext.Provider value={websocketData} {...props} />;
 };
 
-function useWebsocketData(): State {
+function useWebsocketData(): ContextState {
   return useContext(WebsocketContext);
+}
+
+export function useGameState(): State {
+  const { state } = useContext(WebsocketContext);
+  return state;
+}
+
+export function useWebsocket(): (message: Message) => void {
+  const { socket } = useContext(WebsocketContext);
+
+  const send = (message: Message): void => {
+    if (socket) {
+      socket.send(JSON.stringify(message));
+    }
+  };
+  return send;
 }
 
 export default useWebsocketData;
