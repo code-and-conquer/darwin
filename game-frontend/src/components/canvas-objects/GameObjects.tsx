@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Unit from './Unit';
 import { ObjectId, GameObject } from '../../../../darwin-types/GameObject';
 
@@ -8,27 +8,21 @@ type Props = {
   scaleFactor: number;
 };
 
-function GameObjects({
-  objectIds,
-  objectMap,
-  scaleFactor,
-}: Props): JSX.Element {
-  return (
-    <>
-      {objectIds.map(objectId => {
-        const { position } = objectMap[objectId];
-        return (
-          <Unit
-            position={{
-              x: position.x * scaleFactor,
-              y: position.y * scaleFactor,
-            }}
-            key={objectId}
-          />
-        );
-      })}
-    </>
-  );
-}
+const GameObjects: FC<Props> = ({ objectIds, objectMap, scaleFactor }) => (
+  <>
+    {objectIds.map(objectId => {
+      const { position } = objectMap[objectId];
+      return (
+        <Unit
+          key={objectId}
+          position={{
+            x: position.x * scaleFactor,
+            y: position.y * scaleFactor,
+          }}
+        />
+      );
+    })}
+  </>
+);
 
 export default GameObjects;

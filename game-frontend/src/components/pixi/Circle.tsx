@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Graphics } from '@inlet/react-pixi';
 import { PixiGeometricFormProps } from './PixiGeometricFormProps';
 
@@ -6,17 +6,17 @@ interface Props extends PixiGeometricFormProps {
   radius: number;
 }
 
-function Circle({
+const Circle: FC<Props> = ({
   radius,
   position,
   color = 0xffffff,
   alpha = 1,
   lineWidth = 1,
-}: Props): JSX.Element {
+}) => {
   const { x, y } = position;
   return (
     <Graphics
-      draw={g => {
+      draw={(g): void => {
         // clear the graphics
         g.clear();
         // start drawing
@@ -25,6 +25,6 @@ function Circle({
       }}
     />
   );
-}
+};
 
 export default Circle;

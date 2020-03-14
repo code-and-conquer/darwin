@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Position from '../../../../darwin-types/Position';
 import Field from './Field';
 
@@ -8,11 +8,7 @@ type Props = {
   scaleFactor: number;
 };
 
-function Grid({
-  numberOfRows,
-  numberOfColumns,
-  scaleFactor,
-}: Props): JSX.Element {
+const Grid: FC<Props> = ({ numberOfRows, numberOfColumns, scaleFactor }) => {
   const fields: Position[] = [];
 
   for (let row = 0; row < numberOfRows; row++) {
@@ -31,6 +27,6 @@ function Grid({
       ))}
     </>
   );
-}
+};
 
 export default Grid;

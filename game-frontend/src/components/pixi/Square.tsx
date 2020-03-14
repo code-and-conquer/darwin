@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Graphics } from '@inlet/react-pixi';
 import { PixiGeometricFormProps } from './PixiGeometricFormProps';
 
@@ -6,17 +6,17 @@ interface Props extends PixiGeometricFormProps {
   size: number;
 }
 
-function Square({
+const Square: FC<Props> = ({
   size,
   position,
   color = 0xffffff,
   alpha = 1,
   lineWidth = 1,
-}: Props): JSX.Element {
+}) => {
   const { x, y } = position;
   return (
     <Graphics
-      draw={g => {
+      draw={(g): void => {
         // clear the graphics
         g.clear();
 
@@ -26,6 +26,6 @@ function Square({
       }}
     />
   );
-}
+};
 
 export default Square;
