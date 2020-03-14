@@ -1,14 +1,14 @@
 import React from 'react';
 import { Stage } from '@inlet/react-pixi';
 import CanvasWrapper from './components/visual/CanvasWrapper';
-import useWebsocketData from './service/useWebsocketData';
+import { useGameState } from './service/useWebsocketData';
 import GameObjects from './components/canvas-objects/GameObjects';
 import { State } from '../../darwin-types/State';
 import Grid from './components/canvas-objects/Grid';
 import { STAGE_ROWS, FIELD_SIZE, STAGE_COLUMNS } from './constants/stage';
 
 function Game(): JSX.Element {
-  const gameState: State = useWebsocketData();
+  const gameState: State = useGameState();
 
   if (!gameState) {
     return <p>Loading</p>;
