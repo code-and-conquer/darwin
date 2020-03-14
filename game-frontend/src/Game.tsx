@@ -10,8 +10,8 @@ interface GameProps {
 }
 
 function Game({ unit }: GameProps) {
-  return (
-    <Stage width={200} height={200}>
+  return (<>
+    {unit && unit.position && <Stage width={200} height={200}>
       <Text
         text=":)"
         anchor={0.5}
@@ -26,6 +26,7 @@ function Game({ unit }: GameProps) {
         }
       />
     </Stage>
+    }</>
   );
 }
 

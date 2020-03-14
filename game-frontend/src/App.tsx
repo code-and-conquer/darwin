@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 
 import logo from './logo.svg';
 import Game from './Game';
 import useWebsocketData from './useWebsocketData';
+import HelpDialog from './components/HelpDialog';
 
 const GlobalStyle = createGlobalStyle`
  body {
@@ -41,13 +42,31 @@ const AppLogo = styled.img`
   }
 `;
 
+const Button = styled.button`
+
+  background-color: rebeccapurple; 
+  border: none;
+  border-radius: 200px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+`;
+
 function App() {
   const unit = useWebsocketData();
+  const [isHelpDialogOpen, setIsHelpDialogOpen] = useState(false);
   return (
     <>
       <GlobalStyle />
       <AppContainer>
         <AppHeader>
+          {
+            isHelpDialogOpen && <HelpDialog />
+          }
+          <Button onClick={() => setIsHelpDialogOpen(!isHelpDialogOpen)}> Help dialog</Button>
           <AppLogo src={logo} className="App-logo" alt="logo" />
           <AppTitle>Darwin is ready for React.</AppTitle>
           {unit && <Game unit={unit} />}
