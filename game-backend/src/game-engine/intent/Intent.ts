@@ -1,5 +1,8 @@
 import { State } from '../../../../darwin-types/State';
-import { UserContext } from '../../../../darwin-types/UserContext';
+import {
+  UserContext,
+  UserExecutionContext,
+} from '../../../../darwin-types/UserContext';
 
 /**
  * Represents an action dispatched by a user script.
@@ -15,5 +18,6 @@ export interface Intent {
  * Stores the intents of a user during a single tick.
  */
 export interface UserTickIntents {
+  context: UserExecutionContext;
   intents: Intent[];
 }

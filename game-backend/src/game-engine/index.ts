@@ -16,11 +16,13 @@ function performTick(state: State, scripts: UserExecutionContext[]): State {
       try {
         const intents = recordIntents(executionContext.userScript);
         return {
+          context: executionContext,
           intents,
         };
       } catch (e) {
         // assume no intents in case of script error
         return {
+          context: executionContext,
           intents: [],
         };
       }

@@ -12,6 +12,12 @@ describe('scheduleIntents', () => {
     mockExecute.mockReturnValueOnce(state);
     const newState = scheduleIntents(getDummyState(), [
       {
+        context: {
+          userScript: {
+            script: '',
+          },
+          unitId: '',
+        },
         intents: [
           {
             execute: mockExecute,
