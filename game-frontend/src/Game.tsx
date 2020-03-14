@@ -1,14 +1,9 @@
 import React from 'react';
 import { Stage } from '@inlet/react-pixi';
-import Position from '../../darwin-types/Position';
 import CanvasWrapper from './components/visual/canvas-wrapper';
 import useWebsocketData from './service/useWebsocketData';
-import Unit from './components/canvas-objects/Unit';
+import GameObjects from './components/canvas-objects/GameObjects';
 import { State } from '../../darwin-types/State';
-
-interface Unit {
-  position: Position;
-}
 
 function Game(): JSX.Element {
   const gameState: State = useWebsocketData();
@@ -20,9 +15,11 @@ function Game(): JSX.Element {
   return (
     <CanvasWrapper>
       <Stage width={200} height={200}>
-        {gameState.objectIds.map(objectId => (
-          <Unit {...gameState.objectMap[objectId]} key={objectId} />
-        ))}
+        <GameObjects
+          objectIds={gameState.objectIds}
+          objectMap={gameState.objectMap}
+          scaleFactor={10}
+        />
       </Stage>
     </CanvasWrapper>
   );
