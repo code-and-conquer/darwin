@@ -6,8 +6,8 @@ type Props = {
   position: Position;
 };
 
-function Unit({ position }: Props): JSX.Element {
-  return <Square position={position} size={10} color={0xffd900} />;
+function Field({ position }: Props): JSX.Element {
+  return <Square position={position} size={10} color={0x333333} />;
 }
 
-export default Unit;
+export default Field;

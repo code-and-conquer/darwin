@@ -5,13 +5,27 @@ import CanvasWrapper from './components/visual/canvas-wrapper';
 import useWebsocketData from './service/useWebsocketData';
 import Unit from './components/canvas-objects/Unit';
 import { State } from '../../darwin-types/State';
+import Field from './components/canvas-objects/Field';
 
 interface Unit {
   position: Position;
 }
 
 function Game(): JSX.Element {
+  const STAGE_ROWS = 20;
+  const STAGE_COLUMNS = 20;
   const gameState: State = useWebsocketData();
+
+  const fields: Position[] = [];
+
+  for (let row = 0; row < STAGE_ROWS; row++) {
+    for (let col = 0; col < STAGE_COLUMNS; col++) {
+      fields.push({
+        x: row,
+        y: col,
+      } as Position);
+    }
+  }
 
   if (!gameState) {
     return <p>Loading</p>;
@@ -19,7 +33,10 @@ function Game(): JSX.Element {
 
   return (
     <CanvasWrapper>
-      <Stage width={200} height={200}>
+      <Stage width={STAGE_ROWS} height={STAGE_COLUMNS}>
+        {fields.map(field => (
+          <Field position={field} />
+        ))}
         {gameState.objectIds.map(objectId => (
           <Unit {...gameState.objectMap[objectId]} key={objectId} />
         ))}
