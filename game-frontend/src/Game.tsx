@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stage } from '@inlet/react-pixi';
-import CanvasWrapper from './components/visual/canvas-wrapper';
+import CanvasWrapper from './components/visual/CanvasWrapper';
 import useWebsocketData from './service/useWebsocketData';
 import GameObjects from './components/canvas-objects/GameObjects';
 import { State } from '../../darwin-types/State';
