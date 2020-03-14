@@ -1,31 +1,37 @@
 import React from 'react';
-import { Stage, Text } from '@inlet/react-pixi';
-import * as Pixi from 'pixi.js';
-import Position from '../../darwin-types/Position';
+import { Stage } from '@inlet/react-pixi';
+import CanvasWrapper from './components/visual/CanvasWrapper';
+import useWebsocketData from './service/useWebsocketData';
+import GameObjects from './components/canvas-objects/GameObjects';
+import { State } from '../../darwin-types/State';
+import Grid from './components/canvas-objects/Grid';
+import { STAGE_ROWS, FIELD_SIZE, STAGE_COLUMNS } from './constants/stage';
 
-interface GameProps {
-  unit: {
-    position: Position;
-  };
-}
+function Game(): JSX.Element {
+  const gameState: State = useWebsocketData();
 
-function Game({ unit }: GameProps) {
+  if (!gameState) {
+    return <p>Loading</p>;
+  }
+
   return (
-    <Stage width={200} height={200}>
-      <Text
-        text=":)"
-        anchor={0.5}
-        x={unit.position.x * 10}
-        y={unit.position.y * 10}
-        style={
-          new Pixi.TextStyle({
-            align: 'center',
-            fontSize: 50,
-            fill: '#ffffff',
-          })
-        }
-      />
-    </Stage>
+    <CanvasWrapper>
+      <Stage
+        width={STAGE_ROWS * FIELD_SIZE}
+        height={STAGE_COLUMNS * FIELD_SIZE}
+      >
+        <Grid
+          numberOfRows={STAGE_ROWS}
+          numberOfColumns={STAGE_COLUMNS}
+          scaleFactor={FIELD_SIZE}
+        />
+        <GameObjects
+          objectIds={gameState.objectIds}
+          objectMap={gameState.objectMap}
+          scaleFactor={FIELD_SIZE}
+        />
+      </Stage>
+    </CanvasWrapper>
   );
 }
 
