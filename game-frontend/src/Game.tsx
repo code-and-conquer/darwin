@@ -5,12 +5,9 @@ import useWebsocketData from './service/useWebsocketData';
 import GameObjects from './components/canvas-objects/GameObjects';
 import { State } from '../../darwin-types/State';
 import Grid from './components/canvas-objects/Grid';
+import { STAGE_ROWS, FIELD_SIZE, STAGE_COLUMNS } from './constants/stage';
 
 function Game(): JSX.Element {
-  const STAGE_ROWS = 20;
-  const STAGE_COLUMNS = 20;
-  const SCALE_FACTOR = 10;
-
   const gameState: State = useWebsocketData();
 
   if (!gameState) {
@@ -19,16 +16,19 @@ function Game(): JSX.Element {
 
   return (
     <CanvasWrapper>
-      <Stage width={STAGE_ROWS * SCALE_FACTOR} height={STAGE_COLUMNS * SCALE_FACTOR}>
+      <Stage
+        width={STAGE_ROWS * FIELD_SIZE}
+        height={STAGE_COLUMNS * FIELD_SIZE}
+      >
         <Grid
           numberOfRows={STAGE_ROWS}
           numberOfColumns={STAGE_COLUMNS}
-          scaleFactor={SCALE_FACTOR}
+          scaleFactor={FIELD_SIZE}
         />
         <GameObjects
           objectIds={gameState.objectIds}
           objectMap={gameState.objectMap}
-          scaleFactor={SCALE_FACTOR}
+          scaleFactor={FIELD_SIZE}
         />
       </Stage>
     </CanvasWrapper>
