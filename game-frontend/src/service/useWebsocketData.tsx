@@ -1,4 +1,10 @@
-import React, { useEffect, createContext, useContext, useReducer } from 'react';
+import React, {
+  useEffect,
+  createContext,
+  useContext,
+  useReducer,
+  FC,
+} from 'react';
 import { Message } from '../../../darwin-types/messages/Message';
 import { State } from '../../../darwin-types/State';
 import { MatchUpdate } from '../../../darwin-types/messages/MatchUpdate';
@@ -32,12 +38,10 @@ function useGetWebsocketData(): State {
   return state;
 }
 
-export function WebsocketProvider(props: {
-  children: JSX.Element;
-}): JSX.Element {
+export const WebsocketProvider: FC = props => {
   const websocketData = useGetWebsocketData();
   return <WebsocketContext.Provider value={websocketData} {...props} />;
-}
+};
 
 function useWebsocketData(): State {
   return useContext(WebsocketContext);
