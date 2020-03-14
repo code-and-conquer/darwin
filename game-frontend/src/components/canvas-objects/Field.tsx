@@ -4,6 +4,7 @@ import Position from '../../../../darwin-types/Position';
 
 type Props = {
   position: Position;
+  scaleFactor: number;
 };
 
 function Field({ position }: Props): JSX.Element {
