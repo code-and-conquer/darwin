@@ -14,7 +14,7 @@ function scheduleIntents(
   return userTicks.reduce(
     (userState, userTickIntents) =>
       userTickIntents.intents.reduce(
-        (state, intent) => intent.execute(state, null),
+        (state, intent) => intent.execute(state, userTickIntents.context),
         userState
       ),
     initialState

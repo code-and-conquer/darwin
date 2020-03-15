@@ -41,8 +41,8 @@ export default class MoveIntent implements Intent {
   }
 
   private static checkBoundaries(position: Position): Position {
-    const x = Math.min(position.x, ARENA_HEIGHT);
-    const y = Math.min(position.y, ARENA_WIDTH);
+    const x = Math.min(position.x, ARENA_HEIGHT - 1);
+    const y = Math.min(position.y, ARENA_WIDTH - 1);
     return {
       x: Math.max(0, x),
       y: Math.max(0, y),
