@@ -6,6 +6,15 @@ variables:
   - group: darwin
 
 trigger:
+  branches:
+    include:
+    - master
+  paths:
+    exclude:
+    - report/report.tex
+    - docs/README.md
+
+pr:
   - master
 
 pool:
