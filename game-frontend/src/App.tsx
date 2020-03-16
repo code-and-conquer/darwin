@@ -35,7 +35,7 @@ function App(): JSX.Element {
           {isHelpDialogOpen && <HelpDialog />}
           <Button onClick={() => setIsHelpDialogOpen(!isHelpDialogOpen)}>
             {' '}
-            Help dialog
+            Help 
           </Button>
           <AppLogo src={logo} className="App-logo" alt="logo" />
           <AppTitle>Darwin is ready for React.</AppTitle>
