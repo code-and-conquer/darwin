@@ -13,10 +13,16 @@ trigger:
   paths:
     exclude:
     - report/report.tex
-    - docs/README.md
+    - README.md
 
 pr:
-  - master
+  branches:
+    include:
+    - master
+  paths:
+    exclude:
+    - report/report.tex
+    - README.md
 
 pool:
   vmImage: "ubuntu-latest"
@@ -45,7 +51,6 @@ steps:
     displayName: "test"
 
   - script: |
-      npm run test-e2e:open
       npm run test-e2e:run
     displayName: "Integration tests"
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
