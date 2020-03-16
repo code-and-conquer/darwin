@@ -6,7 +6,23 @@ variables:
   - group: darwin
 
 trigger:
-  - master
+  batch: true
+  branches:
+    include:
+    - master
+  paths:
+    exclude:
+    - report/report.tex
+    - README.md
+
+pr:
+  branches:
+    include:
+    - master
+  paths:
+    exclude:
+    - report/report.tex
+    - README.md
 
 pool:
   vmImage: "ubuntu-latest"
@@ -33,6 +49,11 @@ steps:
   - script: |
       npm run test
     displayName: "test"
+
+  - script: |
+      npm run test-e2e:run
+    displayName: "Integration tests"
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   - task: CopyFiles@2
     inputs:
       Contents: |
