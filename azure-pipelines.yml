@@ -33,6 +33,12 @@ steps:
   - script: |
       npm run test
     displayName: "test"
+
+  - script: |
+      npm run test-e2e:open
+      npm run test-e2e:run
+    displayName: "Integration tests"
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   - task: CopyFiles@2
     inputs:
       Contents: |
