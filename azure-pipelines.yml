@@ -6,6 +6,7 @@ variables:
   - group: darwin
 
 trigger:
+  batch: true
   branches:
     include:
     - master
