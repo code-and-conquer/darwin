@@ -5,9 +5,6 @@ context('Basic test', () => {
     cy.visit('/');
   });
 
-  it('should render react logo', () => {
-    cy.get('.App-logo');
-  });
   it('should render a canvas', () => {
     cy.get('canvas');
   });
