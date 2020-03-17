@@ -1,6 +1,8 @@
 import React, { useState, FC } from 'react';
 import Textarea from '../visual/Textarea';
 import { useWebsocket } from '../../service/useWebsocketData';
+import Container from './Container';
+import SaveButton from './SaveButton';
 
 const UserScript: FC = () => {
   const send = useWebsocket();
@@ -22,10 +24,12 @@ const UserScript: FC = () => {
   };
 
   return (
-    <form>
-      <Textarea onChange={onChange}></Textarea>
-      <button onClick={submit}>Send</button>
-    </form>
+    <Container>
+      <form>
+        <Textarea onChange={onChange} rows={8}></Textarea>
+        <SaveButton onClick={submit}>Save</SaveButton>
+      </form>
+    </Container>
   );
 };
 
