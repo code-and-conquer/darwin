@@ -24,7 +24,7 @@ const UserScript: FC = () => {
   };
 
   return (
-    <Container>
+    <Container data-testid="user-script-form">
       <form>
         <Textarea onChange={onChange} rows={8}></Textarea>
         <SaveButton onClick={submit}>Save</SaveButton>
