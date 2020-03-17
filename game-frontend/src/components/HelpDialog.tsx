@@ -4,13 +4,15 @@ import styled from 'styled-components';
 const Modal = styled.div`
   position: fixed;
   background: rebeccapurple;
-  color: black;
+  color: white;
   padding: 2rem;
   width: 50vw;
-  height: 70vh;
+  height: 50vh;
   z-index: 99;
   top: 50%;
   left: 50%;
+  overflow-y: auto;
+  text-align: left;
   transform: translate(-50%, -50%);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.5);
