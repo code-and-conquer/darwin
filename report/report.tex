@@ -196,7 +196,7 @@ Um die Qualitätsattribute einzuhalten, ist die Sicherstellung von Programmcode-
 \subsection{Player}
 Der Player ist der Hauptbenutzer des Spiels. Er verwendet die Software häufig. Sein Hauptziel ist es, mittels Code seine Units zu steuern, um möglichst lange im Spiel zu überleben. Da der Code die einzige Möglichkeit ist, das Spiel zu steuern möchte er den Code möglichst bequem (mittels Syntax-Highlighting) eingeben.
 \subsection{Spectator}
-Der Spectator ist ein Zuschauer des Spiels. Er ist wie der Player mit den Regeln des Spiels vertraut, möchte aber nur eine Arena sehen und nicht selbst spielen. 
+Der Spectator ist ein Zuschauer des Spiels. Er ist wie der Player mit den Regeln des Spiels vertraut, möchte aber nur eine Arena sehen und nicht selbst spielen.
 \subsection{User}
 Der User ist Player und Spectator zusammengefasst. Also alle Personen, welche das Spiel in irgendeiner Form verwenden.
 \subsection{Unit}
@@ -308,14 +308,29 @@ Manuelles Testen während der Entwicklungsphase und danach. Dieser Teil sollte s
 Zudem soll der PO durch manuelles Prüfen das Feature zum Schluss noch abnehmen.
 
 \section{Externe Schnittstellen}
+Es werden zurzeit keine externe Schnittstellen verwendet.
 
 \section{Code}
+% Vielleicht später die Recording Engine & Co.?
 
 \section{Data}
+% In den bisherigen Sektionen war der Fokus nicht primär auf die Daten gerichtet, obwohl diese in modernen Systemen eine essentielle Rolle spielen. Ziel dieser Sektion ist die Informationen zu dokumentieren, die aus Datenperspektive wichtig sind.Auch hier soll jede Sektion kurz gehalten werden. Eventuell ein Entity-Relationship Diagramm, wenn es dem Leser hilft.
+% • Wie sieht das Datenmodell aus?
+% • Wo sind die Daten gespeichert?
+% • Wer ist verantwortlich für die Daten (ownership)?
+% • Was ist das Mengengerüst? Wie viel welcher Daten fallen an?
+% • Archivierung und Backup Strategien
 
 \section{Infrastructure Architecture}
+% Während der grösste Teil des Guidebooks sich mit der Software selber beschäftigt, wird hier die physikalische/virtuelle Infrastruktur in welche die Software installiert und betrieben wird beschrie-ben. Folgende Fragen sollten hier behandelt werden:
+% • Ist eine klare Infrastruktur Architektur vorhanden?
+% • Welche Hardware (virtuell oder physikalisch) wird dazu verwendet?
+% • Ist Redundanz, Failoverund Disaster-Recovery vorgesehen?
+% • Ist die Skalierung der Infrastruktur bekannt?
+% • Wer ist zuständig für Support und Unterhalt der Infrastruktur?
+% • Wer ist verantwortlich für die Ressourcen (ownership)?•etc.
 
-\section{Installation}
+\section{Installation (Deployment)}
 
 \section{Operation und Support}
 
