@@ -175,12 +175,12 @@ besser und effizienter zu bewältigen.
 Qualitätsattribute:
 \begin{itemize}
 
-\item Performance - Das Spiel soll den eingegeben Code innerhalb weniger Minuten kompilieren und ausführen
-\item Verfügbarkeit - Der Server soll 24h am Tag laufen.
-\item Security - Eine Prüfung auf schädlichen Code sowie Standard gegen 'Javascript Injection' müssen geprüft werden, zudem muss sich jeder Benutzer authentifizieren, um die Webapplikation zu bedienen
+\item Performance - Das Spiel soll den eingegeben Code innerhalb wenigen Sekunden kompilieren und ausführen
+\item Verfügbarkeit - Der Server soll 24 Stunden am Tag laufen.
+\item Security - Eine Prüfung auf schädlichen Code sowie Standard gegen 'Javascript Injection' müssen geprüft werden, zudem muss sich jeder Benutzer authentifizieren, um die Webapplikation zu bedienen.
 \item Erweiterbarkeit - Die Software muss modular aufgebaut sein, um einzelne Funktionen und Features einfach zu erweitern
-\item Zuverlässigkeit - Das Spiel muss gewährleisten, dass es fliessend ohne grössere Unterbrüche läuft und ein fehlerhaftes/schädliches Script nicht ausführ
-\item Benutzerfreundlichkeit - Das Userinterface soll es ermöglichen, die gesuchten Infos möglichst schnell, unmittelbar und bequem bereitzustellen und es muss dem User erlauben, dass man sich auf der Seite bewegen kann, ohne auf Probleme zu stossen
+\item Zuverlässigkeit - Das Spiel muss gewährleisten, dass es fliessend ohne grössere Unterbrüche läuft und ein fehlerhaftes/schädliches Script nicht die Performance des Spiels beeinträchtigt.
+\item Benutzerfreundlichkeit - Das Userinterface soll es ermöglichen, die gesuchten Infos möglichst schnell, unmittelbar und bequem bereitzustellen und es muss dem User erlauben, dass er sich auf der Seite bewegen kann, ohne auf Probleme zu stossen.
 \item Failover / Disaster Recovery Ziele - Die Recovery Plans werden eingeschränkt auf:
 \begin{enumerate}
 \item Hardware Probleme - Es muss sichergestellt werden das bei einem CPU Ausfall
@@ -196,7 +196,9 @@ Um die Qualitätsattribute einzuhalten, ist die Sicherstellung von Programmcode-
 \subsection{Player}
 Der Player ist der Hauptbenutzer des Spiels. Er verwendet die Software häufig. Sein Hauptziel ist es, mittels Code seine Units zu steuern, um möglichst lange im Spiel zu überleben. Da der Code die einzige Möglichkeit ist, das Spiel zu steuern möchte er den Code möglichst bequem (mittels Syntax-Highlighting) eingeben.
 \subsection{Spectator}
-Der Spectator ist ein Zuschauer des Spiels. Er ist wie der Player mit den Regeln des Spiels vertraut, möchte aber nur eine Arena sehen und nicht selbst spielen. 
+Der Spectator ist ein Zuschauer des Spiels. Er ist wie der Player mit den Regeln des Spiels vertraut, möchte aber nur eine Arena sehen und nicht selbst spielen.
+\subsection{User}
+Der User ist Player und Spectator zusammengefasst. Also alle Personen, welche das Spiel in irgendeiner Form verwenden.
 \subsection{Unit}
 Die Unit ist eine logische Rolle. Ihr Ziel ist zu Überleben, kann das aber nicht selbst beeinflussen, da sie vom Player gesteuert wird. Diese Rolle vereinfacht das Schreiben von User Stories für den Spielablauf und die Ausbalanciertheit des Spiels. 
 
@@ -213,31 +215,31 @@ Die Unit ist eine logische Rolle. Ihr Ziel ist zu Überleben, kann das aber nich
 Bei unserer Software-Entwicklung werden die Prozesse von Story Beschreibung, Entwicklung, Testing und Code-Review befolgt und eingehalten.
 Ein strukturiertes Vorgehen ist zwingend, um den Durchbruch bei unserem IT-Projekt zu schaffen.
 
-Unsere Software ist unabhängig von dem Entwicklungsprozess folgenden Beschränkungen ausgesetzt.
-\begin{enumerate}
-\item Zeit: die Zeitdauer des Projekts ist eingeschränkt was sich auf 6 Sprints beläuft.
+Unsere Software ist unabhängig des Entwicklungsprozesses folgenden Beschränkungen ausgesetzt.
+\begin{itemize}
+\item Zeit: die Zeitdauer des Projekts ist eingeschränkt, was sich auf 6 Sprints beläuft.
 \item Budget und Ressourcen: Das Budget soll sich möglichst auf das Minimum beziehen und optimaler Weise jede Ressource zu 100\% ausnutzen.
 \item Technologien:
-	\begin{enumerate}
+	\begin{itemize}
 
 	\item Cloud basierende Hosting Services: Github und Azure
-	\item TypeScript:
 
-	\end{enumerate}
-\item Grösse des Entwicklungsteams: Das Team besteht aus einem Product Owner, einem Scrum master und 4 weiteren Entwicklern
-\item Kompetenzenprofil: Alle Entwickler haben bereits mehrjährige Erfahrungen mit den Technologien, welche für unsere Entwicklung eingesetzt werden.
-\end{enumerate}
+	\end{itemize}
+\item Grösse des Entwicklungsteams: Das Team besteht aus einem Product Owner, einem Scrum Master und 4 weiteren Entwicklern
+\item Kompetenzenprofil: Die Entwickler sind aktuell Teilzeitstudenten an der ZHAW und befinden sich im drittletzten Semester des Bachelorstudiengangs Informatik. Dadurch sind sie mit den Grundlagen der Objektorientierten Programmierung sowie mit den Technologien, die im Webbereich zum Einsatz kommen, vertraut. Desweiteren haben einige Entwickler bereits mehrjährige Berufserfahrung mit den Technologien React, TypeScript und Node JS.
+\item Datenpersistierung wird vernachlässigt, da es für die Zeitdauer dieses Projekts Out-of-Scope ist.
+\end{itemize}
 
 \section{Verwendete Prinzipien}
 Die Qualität einer Software hat stets oberste Priorität. Um diese bei der Entwicklung unseres Spieles
 sicherzustellen haben wir uns auf folgende Prinzipien geeinigt:
 \begin{itemize}
 \item Hohe Kohäsion und minimale Kopplung ist wichtiger Bestandteil um die Komplexität unseres
- Spieles und die Fehlerbehebung zu vereinfachen,
-\item Coding Guidlines werden für unsere Entwicklung eingesetzt und mittels Tools überprüft. So können Syntax und Code-Styling eingehalten werden.
-\item Datenbank Zugriffe können vernachlässigt werden, da unser Ziel ist die Spiele im RAM laufen zu lassen und somit eine bessere Performance zu erreichen.
-\item Fehlerbehandlungen werden grundsätzlich normal mit 'bug Stories' abgearbeitet. Bei Notfällen haben wir ein Eskalationsprotokoll um die Fehlerbehandlung effizienter zu gestallten.
-\item Anstatt direkt in den Master-Branch zu pushen wird pro User-Story ein Branch erstellt welcher mittels einem Pull-Request in den Master-Branch gemerged wird.
+ Spieles und die Fehlerbehebung zu vereinfachen.
+\item Coding Guidelines werden für unsere Entwicklung eingesetzt und mittels Eslint und TSlint sowie Pull-Request Reviews überprüft. So können Syntax und Code-Styling eingehalten werden.
+\item Fehlerbehandlungen werden grundsätzlich mittels 'Bug Stories' abgearbeitet.
+\item Anstatt direkt in den Master-Branch zu pushen wird für jede Änderung ein Branch erstellt, welcher mittels einem Pull-Request in den Master-Branch gemerged wird. So können wir sicherstellen, dass der Code und die anstehenden Änderungen den Vorstellungen des Teams entsprechen.
+\item Bevor ein Pull-Request merged wird, prüfen wir mittels einer Build-Pipeline, ob Unit und Integrationtests erfolgreich durchlaufen.
 \item Wir kommunizieren offen und ehrlich miteinander. 
 \end{itemize}
 All diese Prinzipien sind ein wichtiger Bestandteil unserer Entwicklung und werden von allen Teammitglieder stets eingehalten.
@@ -258,13 +260,13 @@ Bei Darwin handelt es sich um eine Webapplikation welche in Frontend und Backend
 Aufgrund der Erfahrung der Teammitglieder wird ausschliesslich TypeScript bzw. JavaScript eingesetzt.
 
 \subsubsection{Frontend}
-Die Usability ist ein Kernanspruch an die Applikation deshalb verwendet Darwin moderne Technologien im Frontend Bereich.
-Die Visualisierung des Spiels wird in einem 2D Canvas Context mittels Pixi.js gerendered.
+Die Usability ist ein Kernanspruch an die Applikation deshalb verwendet Darwin moderne Technologien im Frontend.
+Die Visualisierung des Spiels wird in einem 2D Canvas Context mittels Pixi.js dargestellt.
 Als UI Library wird aufgrund der Erfahrung des Teams React eingesetzt.
 
 \subsubsection{Backend}
 Für das Backend wird Node.js eingesetzt, da dieses die meistverwendete JavaScript Runtime ist und die notwendige Stabilität aufweist.
-Damit das Frontend in Realtime über den neusten Spielstand informiert wird findet die Kommunikation mittels Websockets statt.
+Damit das Frontend in Echtzeit über den neusten Spielstand informiert wird findet die Kommunikation mittels Websockets statt.
 Im Backend werden keine externen APIs verwendet und es ist insbesondere keine Persistierungsschicht angedacht.
 
 \subsection{CI /CD}
@@ -274,7 +276,7 @@ Dies soll die Entwicklungsphase beschleunigen und gewähleisten, dass stets und 
 
 Innerhalb dieser Pipeline werden folgende Schritte durchgeführt:
 \begin{itemize}
-  \item Installieren aller notwendigen Paketen
+  \item Installieren aller notwendigen Pakete
   \item Bauen der beiden Artefakten (Frontend und Backend)
   \item Durchführen der Unit Tests
   \item Erstellung eines deploybaren Paketes
@@ -306,14 +308,29 @@ Manuelles Testen während der Entwicklungsphase und danach. Dieser Teil sollte s
 Zudem soll der PO durch manuelles Prüfen das Feature zum Schluss noch abnehmen.
 
 \section{Externe Schnittstellen}
+Es werden zurzeit keine externe Schnittstellen verwendet.
 
 \section{Code}
+% Vielleicht später die Recording Engine & Co.?
 
 \section{Data}
+% In den bisherigen Sektionen war der Fokus nicht primär auf die Daten gerichtet, obwohl diese in modernen Systemen eine essentielle Rolle spielen. Ziel dieser Sektion ist die Informationen zu dokumentieren, die aus Datenperspektive wichtig sind.Auch hier soll jede Sektion kurz gehalten werden. Eventuell ein Entity-Relationship Diagramm, wenn es dem Leser hilft.
+% • Wie sieht das Datenmodell aus?
+% • Wo sind die Daten gespeichert?
+% • Wer ist verantwortlich für die Daten (ownership)?
+% • Was ist das Mengengerüst? Wie viel welcher Daten fallen an?
+% • Archivierung und Backup Strategien
 
 \section{Infrastructure Architecture}
+% Während der grösste Teil des Guidebooks sich mit der Software selber beschäftigt, wird hier die physikalische/virtuelle Infrastruktur in welche die Software installiert und betrieben wird beschrie-ben. Folgende Fragen sollten hier behandelt werden:
+% • Ist eine klare Infrastruktur Architektur vorhanden?
+% • Welche Hardware (virtuell oder physikalisch) wird dazu verwendet?
+% • Ist Redundanz, Failoverund Disaster-Recovery vorgesehen?
+% • Ist die Skalierung der Infrastruktur bekannt?
+% • Wer ist zuständig für Support und Unterhalt der Infrastruktur?
+% • Wer ist verantwortlich für die Ressourcen (ownership)?•etc.
 
-\section{Installation}
+\section{Installation (Deployment)}
 
 \section{Operation und Support}
 
