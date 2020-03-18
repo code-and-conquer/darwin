@@ -4,6 +4,8 @@ import useDialogState from '../../hooks/useDialogState';
 import Button from '../visual/Button';
 import Container from './Container';
 import HelpText from './HelpText';
+import CloseButton from '../dialog/CloseButton';
+import DialogWrapper from '../dialog/DialogWrapper';
 
 const Help: FC = () => {
   const [isOpen, open, close] = useDialogState();
@@ -13,10 +15,12 @@ const Help: FC = () => {
         <Button onClick={open}>Hilfe</Button>
       </Container>
       <Dialog isOpen={isOpen} onDismiss={close} aria-label="help">
-        <button className="close-button" onClick={close}>
-          <span>×</span>
-        </button>
-        <HelpText />
+        <DialogWrapper>
+          <CloseButton className="close-button" onClick={close}>
+            <span>×</span>
+          </CloseButton>
+          <HelpText />
+        </DialogWrapper>
       </Dialog>
     </>
   );
