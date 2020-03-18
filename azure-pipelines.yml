@@ -51,9 +51,8 @@ steps:
     displayName: "test"
 
   - script: |
-      npm run test-e2e:run
-    displayName: "Integration tests"
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+      npm run lint
+    displayName: "lint"
   - task: CopyFiles@2
     inputs:
       Contents: |
