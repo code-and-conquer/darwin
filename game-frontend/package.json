@@ -40,6 +40,7 @@
     "typescript": "~3.7.2"
   },
   "devDependencies": {
+    "@reach/dialog": "^0.9.0",
     "jest-canvas-mock": "^2.2.0",
     "jest-webgl-canvas-mock": "^0.2.3"
   }
