@@ -6,12 +6,14 @@ import AppContainer from './components/container/AppContainer';
 import ContentContainer from './components/container/ContentContainer';
 import GlobalStyle from './GlobalStyle';
 import UserScript from './components/user-script';
+import Help from './components/help';
 
 function App(): JSX.Element {
   return (
     <>
       <GlobalStyle />
       <AppContainer>
+        <Help />
         <WebsocketProvider>
           <ContentContainer>
             <Game />
