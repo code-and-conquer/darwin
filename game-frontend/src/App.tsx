@@ -8,6 +8,8 @@ import GlobalStyle from './GlobalStyle';
 import UserScript from './components/user-script';
 import Help from './components/help';
 
+import '@reach/dialog/styles.css';
+
 function App(): JSX.Element {
   return (
     <>
