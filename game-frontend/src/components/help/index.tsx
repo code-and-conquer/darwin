@@ -13,7 +13,7 @@ const Help: FC = () => {
       <Container>
         <Button onClick={open}>Hilfe</Button>
       </Container>
-      <Dialog isOpen={true || isOpen} onDismiss={close} aria-label="help">
+      <Dialog isOpen={isOpen} onDismiss={close} aria-label="help">
         <button className="close-button" onClick={close}>
           <span>×</span>
         </button>
