@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Graphics } from '@inlet/react-pixi';
+import Graphics from './Graphics';
 import { PixiGeometricFormProps } from './PixiGeometricFormProps';
 
 interface Props extends PixiGeometricFormProps {
@@ -17,9 +17,6 @@ const Square: FC<Props> = ({
   return (
     <Graphics
       draw={(g): void => {
-        // clear the graphics
-        g.clear();
-
         g.lineStyle(lineWidth, color, alpha);
 
         g.drawRect(x, y, size, size);
