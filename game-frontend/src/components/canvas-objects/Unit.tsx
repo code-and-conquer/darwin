@@ -5,6 +5,7 @@ import { FIELD_SIZE } from '../../constants/stage';
 
 type Props = {
   position: Position;
+  health: number;
 };
 
 const Unit: FC<Props> = ({ position }) => (
