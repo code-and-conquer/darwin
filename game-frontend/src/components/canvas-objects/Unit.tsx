@@ -9,13 +9,19 @@ type Props = {
   isOwn: boolean;
 };
 
-const Unit: FC<Props> = ({ position, isOwn }) => (
-  <Square
-    position={position}
-    size={FIELD_SIZE}
-    color={isOwn ? 0x70f8ba : 0xffd900}
-    lineWidth={isOwn ? 2 : 1}
-  />
+const scale = 0.8;
+const size = FIELD_SIZE * scale;
+const margin = (FIELD_SIZE - size) / 2;
+
+const Unit: FC<Props> = ({ position }) => (
+  <>
+    <Square
+      position={{ x: position.x + margin, y: position.y + margin }}
+      size={size}
+      color={0x7898fb}
+      fill={0x7898fb}
+    />
+  </>
 );
 
 export default Unit;

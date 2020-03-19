@@ -17,11 +17,10 @@ const Square: FC<Props> = ({
   const { x, y } = position;
   return (
     <Graphics
+      fill={fill}
       draw={(g): void => {
-        g.beginFill(fill);
         g.lineStyle(lineWidth, color, alpha);
         g.drawRect(x, y, size, size);
-        g.endFill();
       }}
     />
   );

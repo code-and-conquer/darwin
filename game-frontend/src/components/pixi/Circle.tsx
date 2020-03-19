@@ -17,11 +17,10 @@ const Circle: FC<Props> = ({
   const { x, y } = position;
   return (
     <Graphics
+      fill={fill}
       draw={(g): void => {
-        g.beginFill(fill);
         g.lineStyle(lineWidth, color, alpha);
         g.drawCircle(x, y, radius);
-        g.endFill();
       }}
     />
   );

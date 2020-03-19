@@ -17,6 +17,9 @@ function Game(): JSX.Element {
   return (
     <CanvasWrapper>
       <Stage
+        options={{
+          backgroundColor: 0x001437,
+        }}
         width={STAGE_ROWS * FIELD_SIZE}
         height={STAGE_COLUMNS * FIELD_SIZE}
       >
