@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import hyperid from 'hyperid';
-import { GameObject } from '../../darwin-types/GameObject';
+import { Unit } from '../../darwin-types/game-objects/Unit';
 import {
   UserContextId,
   UserExecutionContext,
@@ -41,8 +41,10 @@ export default class MainController {
 
     // generate a unit
     const unitId = this.hyperIdInstance();
-    const unit: GameObject = {
+    const unit: Unit = {
       id: unitId,
+      type: 'unit',
+      health: 100,
       position: {
         x: Math.floor(Math.random() * 20),
         y: Math.floor(Math.random() * 20),
