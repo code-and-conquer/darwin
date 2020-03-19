@@ -10,6 +10,7 @@ import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
 import performTick from './game-engine';
 import { Message } from '../../darwin-types/messages/Message';
 import { ScriptUpdate } from '../../darwin-types/messages/ScriptUpdate';
+import { GAME_OBJECT_TYPES } from '../../darwin-types/game-objects/GameObject';
 
 export const TICK_INTERVAL = 2000;
 
@@ -43,7 +44,7 @@ export default class MainController {
     const unitId = this.hyperIdInstance();
     const unit: Unit = {
       id: unitId,
-      type: 'unit',
+      type: GAME_OBJECT_TYPES.UNIT,
       health: 100,
       position: {
         x: Math.floor(Math.random() * 20),

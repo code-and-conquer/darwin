@@ -1,5 +1,6 @@
 import produce from 'immer';
 import { State } from '../../../darwin-types/State';
+import { GAME_OBJECT_TYPES } from '../../../darwin-types/game-objects/GameObject';
 
 export interface GameObject extends GameObjectWithoutType {
   type: string;
@@ -28,11 +29,11 @@ export default class StateBuilder {
   }
 
   addUnit({ id, x, y }: GameObjectWithoutType): StateBuilder {
-    return this.addObject({ id, x, y, type: 'unit' });
+    return this.addObject({ id, x, y, type: GAME_OBJECT_TYPES.UNIT });
   }
 
   addFood({ id, x, y }: GameObjectWithoutType): StateBuilder {
-    return this.addObject({ id, x, y, type: 'food' });
+    return this.addObject({ id, x, y, type: GAME_OBJECT_TYPES.FOOD });
   }
 
   build(): State {

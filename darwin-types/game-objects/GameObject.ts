@@ -7,3 +7,8 @@ export interface GameObject {
   type: string;
   position: Position;
 }
+
+export const GAME_OBJECT_TYPES = {
+  UNIT: 'unit',
+  FOOD: 'food',
+};

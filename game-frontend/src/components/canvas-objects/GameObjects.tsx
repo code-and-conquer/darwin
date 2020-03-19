@@ -6,6 +6,7 @@ import {
 } from '../../../../darwin-types/game-objects/GameObject';
 import { Unit as UnitT } from '../../../../darwin-types/game-objects/Unit';
 import Food from './Food';
+import GAME_OBJECT_TYPES from '../../constants/gameObjects';
 
 type Props = {
   objectIds: ObjectId[];
@@ -18,7 +19,7 @@ const GameObjects: FC<Props> = ({ objectIds, objectMap, scaleFactor }) => (
     {objectIds.map((objectId): JSX.Element | null => {
       const gameObject = objectMap[objectId];
       switch (gameObject.type) {
-        case 'unit': {
+        case GAME_OBJECT_TYPES.UNIT: {
           const unit = gameObject as UnitT;
           return (
             <Unit
@@ -31,7 +32,7 @@ const GameObjects: FC<Props> = ({ objectIds, objectMap, scaleFactor }) => (
             />
           );
         }
-        case 'food': {
+        case GAME_OBJECT_TYPES.FOOD: {
           const food = gameObject as UnitT;
           return (
             <Food
