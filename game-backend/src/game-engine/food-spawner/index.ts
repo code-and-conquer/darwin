@@ -1,7 +1,7 @@
 import produce from 'immer';
-import { State } from '../../../darwin-types/State';
+import { State } from '../../../../darwin-types/State';
 import spawnFood from './spawnFood';
-import { countUnits, countFood } from '../helpers/gameObjects';
+import { countUnits, countFood } from '../../helpers/gameObjects';
 
 const FOOD_TO_UNIT_RATIO = 2;
 

@@ -10,7 +10,6 @@ import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
 import performTick from './game-engine';
 import { Message } from '../../darwin-types/messages/Message';
 import { ScriptUpdate } from '../../darwin-types/messages/ScriptUpdate';
-import handleFoodSpawning from './food-spawner';
 
 export const TICK_INTERVAL = 2000;
 
@@ -97,7 +96,6 @@ export default class MainController {
       id => this.store.userContexts.userContextMap[id]
     );
     this.store.matchState = performTick(this.store.matchState, userContexts);
-    this.store.matchState = handleFoodSpawning(this.store.matchState);
     return {
       type: 'matchUpdate',
       payload: {

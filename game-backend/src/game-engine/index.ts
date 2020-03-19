@@ -3,6 +3,7 @@ import { UserExecutionContext } from '../../../darwin-types/UserContext';
 import recordIntents from './recordIntents';
 import scheduleIntents from './scheduleIntents';
 import { UserTickIntents } from './intent/Intent';
+import handleFoodSpawning from './food-spawner';
 
 /**
  * Executes all given user scripts and returns the next state object.
@@ -29,7 +30,8 @@ function performTick(state: State, scripts: UserExecutionContext[]): State {
     }
   );
 
-  return scheduleIntents(state, userTicks);
+  const newState = scheduleIntents(state, userTicks);
+  return handleFoodSpawning(newState);
 }
 
 export default performTick;
