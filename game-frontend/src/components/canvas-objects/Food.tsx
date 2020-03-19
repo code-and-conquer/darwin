@@ -7,8 +7,17 @@ type Props = {
   position: Position;
 };
 
-const Unit: FC<Props> = ({ position }) => (
-  <Circle position={position} radius={FIELD_SIZE / 2} color={0xff700b} />
+const HALF_FIELD_SIZE = FIELD_SIZE / 2;
+
+const Food: FC<Props> = ({ position }) => (
+  <Circle
+    position={{
+      x: position.x + HALF_FIELD_SIZE,
+      y: position.y + HALF_FIELD_SIZE,
+    }}
+    radius={HALF_FIELD_SIZE}
+    color={0xff700b}
+  />
 );
 
-export default Unit;
+export default Food;
