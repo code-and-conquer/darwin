@@ -31,7 +31,7 @@ export const generateFreePosition = (state: State): Position => {
   );
   const freeFields = fields.filter(
     field =>
-      !occupiedFields.find(
+      !!occupiedFields.find(
         occupiedField =>
           occupiedField.x === field.x && occupiedField.y === field.y
       )
