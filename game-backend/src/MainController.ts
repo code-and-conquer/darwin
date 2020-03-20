@@ -10,7 +10,7 @@ import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
 import performTick from './game-engine';
 import { Message } from '../../darwin-types/messages/Message';
 import { ScriptUpdate } from '../../darwin-types/messages/ScriptUpdate';
-import { GAME_OBJECT_TYPES } from '../../darwin-types/game-objects/GameObject';
+import GAME_OBJECT_TYPES from './constants/gameObjects';
 
 export const TICK_INTERVAL = 2000;
 

@@ -1,5 +1,5 @@
 import { State } from '../../../darwin-types/State';
-import { GAME_OBJECT_TYPES } from '../../../darwin-types/game-objects/GameObject';
+import GAME_OBJECT_TYPES from '../constants/gameObjects';
 
 export const countGameObjectsPerType = (state: State, type: string): number =>
   state.objectIds
