@@ -1,20 +1,26 @@
 import React, { FC } from 'react';
 import Unit from './Unit';
-import {
-  ObjectId,
-  GameObject,
-} from '../../../../darwin-types/game-objects/GameObject';
 import { Unit as UnitT } from '../../../../darwin-types/game-objects/Unit';
-import Food from './Food';
+import {
+  GameObject,
+  ObjectId,
+} from '../../../../darwin-types/game-objects/GameObject';
 import GAME_OBJECT_TYPES from '../../constants/gameObjects';
+import Food from './Food';
 
 type Props = {
   objectIds: ObjectId[];
   objectMap: Record<ObjectId, GameObject>;
+  ownUnitId: ObjectId;
   scaleFactor: number;
 };
 
-const GameObjects: FC<Props> = ({ objectIds, objectMap, scaleFactor }) => (
+const GameObjects: FC<Props> = ({
+  objectIds,
+  objectMap,
+  ownUnitId,
+  scaleFactor,
+}) => (
   <>
     {objectIds.map((objectId): JSX.Element | null => {
       const gameObject = objectMap[objectId];
@@ -29,6 +35,7 @@ const GameObjects: FC<Props> = ({ objectIds, objectMap, scaleFactor }) => (
                 x: unit.position.x * scaleFactor,
                 y: unit.position.y * scaleFactor,
               }}
+              isOwn={objectId === ownUnitId}
             />
           );
         }
