@@ -12,6 +12,7 @@ const spawnFood = (): Food => {
       x: Math.floor(Math.random() * ARENA_WIDTH),
       y: Math.floor(Math.random() * ARENA_HEIGHT),
     },
+    moveBlocking: false,
   };
   return food;
 };

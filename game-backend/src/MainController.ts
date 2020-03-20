@@ -88,6 +88,7 @@ export default class MainController {
         x: Math.floor(Math.random() * 20),
         y: Math.floor(Math.random() * 20),
       },
+      moveBlocking: true,
     };
   }
 
