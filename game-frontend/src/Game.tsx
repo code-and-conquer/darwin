@@ -1,14 +1,14 @@
 import React from 'react';
 import { Stage } from '@inlet/react-pixi';
 import CanvasWrapper from './components/visual/CanvasWrapper';
-import { useGameState } from './service/useWebsocketData';
+import { useGameState, useUserContext } from './service/useWebsocketData';
 import GameObjects from './components/canvas-objects/GameObjects';
-import { State } from '../../darwin-types/State';
 import Grid from './components/canvas-objects/Grid';
-import { STAGE_ROWS, FIELD_SIZE, STAGE_COLUMNS } from './constants/stage';
+import { FIELD_SIZE, STAGE_COLUMNS, STAGE_ROWS } from './constants/stage';
 
 function Game(): JSX.Element {
-  const gameState: State = useGameState();
+  const gameState = useGameState();
+  const userContext = useUserContext();
 
   if (!gameState) {
     return <p>Loading</p>;
@@ -28,6 +28,7 @@ function Game(): JSX.Element {
         <GameObjects
           objectIds={gameState.objectIds}
           objectMap={gameState.objectMap}
+          ownUnitId={userContext.unitId}
           scaleFactor={FIELD_SIZE}
         />
       </Stage>

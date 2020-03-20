@@ -1,5 +1,5 @@
-import produce from 'immer';
 import { Intent } from './Intent';
+import produce from '../../helper/produce';
 import { State } from '../../../../darwin-types/State';
 import { UserContext } from '../../../../darwin-types/UserContext';
 import Position from '../../../../darwin-types/Position';
