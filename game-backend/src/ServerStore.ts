@@ -7,13 +7,17 @@ import { State } from '../../darwin-types/State';
 
 export type ConnectionId = string;
 
+export interface UserEntry {
+  userContext: UserExecutionContext;
+  connections: WebSocket[];
+}
+
 export interface ServerStore {
   matchState: State;
   userContexts: {
-    userContextMap: Record<UserContextId, UserExecutionContext>;
+    userContextMap: Record<UserContextId, UserEntry>;
     userContextIds: UserContextId[];
   };
-  connections: [ConnectionId, WebSocket][];
   currentTick: number;
 }
 
@@ -27,7 +31,6 @@ export const createStore = (): ServerStore => {
       userContextIds: [],
       userContextMap: {},
     },
-    connections: [],
     currentTick: 0,
   };
 };

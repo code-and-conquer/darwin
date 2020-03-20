@@ -1,25 +1,43 @@
 import React, {
-  useEffect,
   createContext,
-  useContext,
-  useReducer,
-  useState,
   FC,
+  useContext,
+  useEffect,
+  useReducer,
 } from 'react';
 import { Message } from '../../../darwin-types/messages/Message';
 import { State } from '../../../darwin-types/State';
 import { MatchUpdate } from '../../../darwin-types/messages/MatchUpdate';
+import { UserContext } from '../../../darwin-types/UserContext';
+import { Tick } from '../../../darwin-types/Tick';
 
 type ContextState = {
   state: State;
+  userContext: UserContext;
+  meta: {
+    currentTick: Tick;
+  };
   socket: WebSocket | undefined;
 };
 
-const reducer = (state: State, action: Message): State => {
+const socketUpdateAction = (payload: WebSocket): Message => ({
+  type: 'socketUpdate',
+  payload,
+});
+
+const reducer = (state: ContextState, action: Message): ContextState => {
   switch (action.type) {
-    case 'matchUpdate': {
-      return (action as MatchUpdate).payload.state;
-    }
+    case 'socketUpdate':
+      return {
+        ...state,
+        socket: action.payload as WebSocket,
+      };
+    case 'matchUpdate':
+      return {
+        ...state,
+        ...(action as MatchUpdate).payload,
+      };
+
     default:
       return state;
   }
@@ -27,19 +45,26 @@ const reducer = (state: State, action: Message): State => {
 
 const API_URL = process.env.REACT_APP_BACKEND_URL as string;
 const emptyState: State = { objectMap: {}, objectIds: [] };
-
-const WebsocketContext = createContext<ContextState>({
+const emptyWebsocketContext: ContextState = {
   state: emptyState,
+  userContext: {
+    unitId: '',
+  },
+  meta: {
+    currentTick: 0,
+  },
   socket: undefined,
-});
+};
+
+const WebsocketContext = createContext<ContextState>(emptyWebsocketContext);
 
 function useInitWebsocket(): ContextState {
-  const [gameState, dispatch] = useReducer(reducer, emptyState);
-  const [socket, setSocket] = useState<WebSocket>();
+  const [contextState, dispatch] = useReducer(reducer, emptyWebsocketContext);
+  const { socket } = contextState;
 
   useEffect(() => {
-    setSocket(new WebSocket(API_URL));
-  }, [setSocket]);
+    dispatch(socketUpdateAction(new WebSocket(API_URL)));
+  }, [dispatch]);
 
   useEffect(() => {
     if (socket) {
@@ -50,7 +75,7 @@ function useInitWebsocket(): ContextState {
       });
     }
   }, [socket, dispatch]);
-  return { state: gameState, socket };
+  return contextState;
 }
 
 export const WebsocketProvider: FC = props => {
@@ -63,12 +88,17 @@ function useWebsocketData(): ContextState {
 }
 
 export function useGameState(): State {
-  const { state } = useContext(WebsocketContext);
+  const { state } = useWebsocketData();
   return state;
 }
 
+export function useUserContext(): UserContext {
+  const { userContext } = useWebsocketData();
+  return userContext;
+}
+
 export function useWebsocket(): (message: Message) => void {
-  const { socket } = useContext(WebsocketContext);
+  const { socket } = useWebsocketData();
 
   const send = (message: Message): void => {
     if (socket) {
@@ -77,5 +107,3 @@ export function useWebsocket(): (message: Message) => void {
   };
   return send;
 }
-
-export default useWebsocketData;
