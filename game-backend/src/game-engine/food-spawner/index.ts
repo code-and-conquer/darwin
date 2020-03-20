@@ -1,6 +1,10 @@
 import { State } from '../../../../darwin-types/State';
 import spawnFood from './spawnFood';
-import { countUnits, countFood } from '../../helpers/gameObjects';
+import {
+  countUnits,
+  countFood,
+  generateFreePosition,
+} from '../../helpers/gameObjects';
 
 const FOOD_TO_UNIT_RATIO = 2;
 
@@ -11,7 +15,8 @@ const handleFoodSpawning = (state: State): State => {
   const foodSpawnLimit = unitCount * FOOD_TO_UNIT_RATIO;
 
   if (foodCount < foodSpawnLimit) {
-    const food = spawnFood();
+    const position = generateFreePosition(state);
+    const food = spawnFood(position);
 
     return {
       ...state,

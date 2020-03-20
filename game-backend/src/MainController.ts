@@ -11,6 +11,7 @@ import performTick from './game-engine';
 import { Message } from '../../darwin-types/messages/Message';
 import { ScriptUpdate } from '../../darwin-types/messages/ScriptUpdate';
 import GAME_OBJECT_TYPES from './constants/gameObjects';
+import { generateFreePosition } from './helpers/gameObjects';
 
 export const TICK_INTERVAL = 2000;
 
@@ -42,14 +43,12 @@ export default class MainController {
 
     // generate a unit
     const unitId = this.hyperIdInstance();
+    const position = generateFreePosition(this.store.matchState);
     const unit: Unit = {
       id: unitId,
       type: GAME_OBJECT_TYPES.UNIT,
       health: 100,
-      position: {
-        x: Math.floor(Math.random() * 20),
-        y: Math.floor(Math.random() * 20),
-      },
+      position,
     };
 
     // add it to the match state
