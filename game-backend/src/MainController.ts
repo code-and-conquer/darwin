@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import hyperid from 'hyperid';
-import { GameObject } from '../../darwin-types/GameObject';
+import { Unit } from '../../darwin-types/game-objects/Unit';
 import {
   UserContextId,
   UserExecutionContext,
@@ -10,6 +10,7 @@ import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
 import performTick from './game-engine';
 import { Message } from '../../darwin-types/messages/Message';
 import { ScriptUpdate } from '../../darwin-types/messages/ScriptUpdate';
+import GAME_OBJECT_TYPES from './constants/gameObjects';
 
 export const TICK_INTERVAL = 2000;
 
@@ -41,8 +42,10 @@ export default class MainController {
 
     // generate a unit
     const unitId = this.hyperIdInstance();
-    const unit: GameObject = {
+    const unit: Unit = {
       id: unitId,
+      type: GAME_OBJECT_TYPES.UNIT,
+      health: 100,
       position: {
         x: Math.floor(Math.random() * 20),
         y: Math.floor(Math.random() * 20),

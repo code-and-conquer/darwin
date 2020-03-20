@@ -13,13 +13,13 @@ describe('MoveIntent', () => {
 
   beforeEach(() => {
     neutralPositionState = StateBuilder.buildState()
-      .addObject({ id: UNIT_ID, x: 1, y: 1 })
+      .addUnit({ id: UNIT_ID, x: 1, y: 1 })
       .build();
     lowerPositionState = StateBuilder.buildState()
-      .addObject({ id: UNIT_ID, x: 0, y: 0 })
+      .addUnit({ id: UNIT_ID, x: 0, y: 0 })
       .build();
     upperPositionState = StateBuilder.buildState()
-      .addObject({ id: UNIT_ID, x: ARENA_WIDTH - 1, y: ARENA_HEIGHT - 1 })
+      .addUnit({ id: UNIT_ID, x: ARENA_WIDTH - 1, y: ARENA_HEIGHT - 1 })
       .build();
     baseUserContext = {
       unitId: UNIT_ID,
@@ -63,8 +63,8 @@ describe('MoveIntent', () => {
 
     const newState = intent.execute(
       StateBuilder.buildState()
-        .addObject({ id: 'unit1', x: 0, y: 0 })
-        .addObject({ id: 'unit2', x: 0, y: 1 })
+        .addUnit({ id: 'unit1', x: 0, y: 0 })
+        .addUnit({ id: 'unit2', x: 0, y: 1 })
         .build(),
       baseUserContext
     );
