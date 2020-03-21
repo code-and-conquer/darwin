@@ -1,7 +1,7 @@
 import React from 'react';
 import { Stage } from '@inlet/react-pixi';
 import CanvasWrapper from './components/visual/CanvasWrapper';
-import { useGameState, useUserContext } from './service/useWebsocketData';
+import { useGameState, useUserContext } from './service/game';
 import GameObjects from './components/canvas-objects/GameObjects';
 import Grid from './components/canvas-objects/Grid';
 import { FIELD_SIZE, STAGE_COLUMNS, STAGE_ROWS } from './constants/stage';

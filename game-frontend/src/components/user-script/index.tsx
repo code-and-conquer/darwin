@@ -1,11 +1,12 @@
 import React, { useState, FC } from 'react';
 import Textarea from '../visual/Textarea';
-import { useWebsocket } from '../../service/useWebsocketData';
 import Container from './Container';
 import SaveButton from './SaveButton';
+import { useSendMessage } from '../../service/game';
+import { ScriptUpdate } from '../../../../darwin-types/messages/ScriptUpdate';
 
 const UserScript: FC = () => {
-  const send = useWebsocket();
+  const send = useSendMessage();
   const [userScript, setUserScript] = useState('');
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
@@ -15,12 +16,14 @@ const UserScript: FC = () => {
   const submit = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
 
-    send({
+    const scriptUpdate: ScriptUpdate = {
       type: 'scriptUpdate',
       payload: {
         script: userScript,
       },
-    });
+    };
+
+    send(scriptUpdate);
   };
 
   return (
