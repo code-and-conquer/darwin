@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Game from './Game';
-import { WebsocketProvider } from './service/useWebsocketData';
+import { WebsocketProvider } from './service/game';
 import AppContainer from './components/container/AppContainer';
 import ContentContainer from './components/container/ContentContainer';
 import GlobalStyle from './GlobalStyle';
