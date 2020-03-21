@@ -32,9 +32,7 @@
     "prettier-be:fix": "cd ./game-backend && npm run prettier -- --write",
     "lint": "concurrently \"npm run lint-fe\" \"npm run lint-be\"",
     "lint-fe": "cd ./game-frontend && npm run lint",
-    "lint-be": "cd ./game-backend && npm run lint",
-    "cy:run": "cypress run",
-    "cy:open": "cypress open"
+    "lint-be": "cd ./game-backend && npm run lint"
   },
   "repository": {
     "type": "git",
