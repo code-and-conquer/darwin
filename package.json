@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install-app": "concurrently -p \"[{name}]\" -n \"Root,Frontend,Backend\" -c \"grey.bold,cyan.bold,green.bold\" \"npm install\" \"npm run install-fe\" \"npm run install-be\"",
+    "install-app": "npm install && npm run install-fe && npm run install-be",
+    "install-app:conc": "concurrently -p \"[{name}]\" -n \"Root,Frontend,Backend\" -c \"grey.bold,cyan.bold,green.bold\" \"npm install\" \"npm run install-fe\" \"npm run install-be\"",
     "install-fe": "cd ./game-frontend && npm install",
     "install-be": "cd ./game-backend && npm install",
     "watch": "concurrently -p \"[{name}]\" -n \"Frontend,Backend\" -c \"cyan.bold,green.bold\" \"npm run watch-fe\" \"npm run watch-be\"",
