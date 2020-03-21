@@ -26,7 +26,6 @@ Root
 - `build` - builds frontend and backend
 - `start` - starts previously built frontend and backend
 - `test` - runs all tests, including coverage, in frontend and backend
-- `test:quick` - runs all tests, without coverage, in frontend and backend
 - `prettier` - checks frontend and backend for formatting errors
 - `prettier:fix` - checks frontend and backend for formatting errors and fixes them
 - `lint` - lints frontend and backend code
