@@ -2,7 +2,7 @@ import http from 'http';
 import url from 'url';
 import WebSocket from 'ws';
 import MainController from './MainController';
-import { ConnectionId } from './ServerStore';
+import { ConnectionId } from '../../darwin-types/Connection';
 
 function extractConnectionId(req: http.IncomingMessage): ConnectionId {
   const searchParams = new URLSearchParams(url.parse(req.url).query);

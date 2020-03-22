@@ -5,8 +5,6 @@ import {
 } from '../../darwin-types/UserContext';
 import { State } from '../../darwin-types/State';
 
-export type ConnectionId = string;
-
 export interface UserEntry {
   userContext: UserExecutionContext;
   connections: WebSocket[];

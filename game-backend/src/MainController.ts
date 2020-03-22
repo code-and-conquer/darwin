@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
 import hyperid from 'hyperid';
 import { UserContext, UserContextId } from '../../darwin-types/UserContext';
-import { ConnectionId, createStore, UserEntry } from './ServerStore';
+import { createStore, UserEntry } from './ServerStore';
 import performTick from './game-engine';
 import { Message } from '../../darwin-types/messages/Message';
 import { ScriptUpdate } from '../../darwin-types/messages/ScriptUpdate';
@@ -9,6 +9,7 @@ import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
 import GAME_OBJECT_TYPES from './constants/gameObjects';
 import { Unit } from '../../darwin-types/game-objects/Unit';
 import { ConnectionInitialization } from '../../darwin-types/messages/ConnectionInitialization';
+import { ConnectionId } from '../../darwin-types/Connection';
 
 export const TICK_INTERVAL = 2000;
 
