@@ -8,6 +8,7 @@ import { ScriptUpdate } from '../../darwin-types/messages/ScriptUpdate';
 import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
 import GAME_OBJECT_TYPES from './constants/gameObjects';
 import { Unit } from '../../darwin-types/game-objects/Unit';
+import { ConnectionInitialization } from '../../darwin-types/messages/ConnectionInitialization';
 
 export const TICK_INTERVAL = 2000;
 
@@ -23,10 +24,12 @@ export default class MainController {
 
   private tickingInterval: NodeJS.Timeout;
 
-  newConnection(ws: WebSocket, connectionId: ConnectionId): void {
+  newConnection(ws: WebSocket, requestedConnectionId: ConnectionId): void {
+    const connectionId = this.getConnectionId(requestedConnectionId);
+    MainController.sendConnectionId(ws, connectionId);
+
     ws.on('message', this.getMessageListener(connectionId));
 
-    // This will change as soon as client persistence is implemented
     const userId: UserContextId = connectionId;
     const userContext = this.store.userContexts.userContextMap[userId];
 
@@ -39,6 +42,32 @@ export default class MainController {
     if (!this.isTicking) {
       this.startTicking();
     }
+  }
+
+  /**
+   * Looks up the connection id in the store.
+   * It returns the found connectionId or generates a new one respectively.
+   * @param requestedConnectionId The connection id the client requests
+   */
+  private getConnectionId(requestedConnectionId: string): ConnectionId {
+    if (
+      requestedConnectionId &&
+      this.store.userContexts.userContextIds.indexOf(requestedConnectionId)
+    ) {
+      return requestedConnectionId;
+    }
+    return this.hyperIdInstance();
+  }
+
+  private static sendConnectionId(ws: WebSocket, connectionId: string): void {
+    ws.send(
+      JSON.stringify({
+        type: 'connectionInitialization',
+        payload: {
+          connectionId,
+        },
+      } as ConnectionInitialization)
+    );
   }
 
   private getMessageListener(connectionId: string) {

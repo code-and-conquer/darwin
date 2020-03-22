@@ -1,10 +1,15 @@
 import http from 'http';
+import url from 'url';
 import WebSocket from 'ws';
 import MainController from './MainController';
 import { ConnectionId } from './ServerStore';
 
 function extractConnectionId(req: http.IncomingMessage): ConnectionId {
-  return req.headers['sec-websocket-key'] as ConnectionId;
+  const searchParams = new URLSearchParams(url.parse(req.url).query);
+  if (searchParams.has('connectionId')) {
+    return searchParams.get('connectionId');
+  }
+  return null;
 }
 
 // initialize server
