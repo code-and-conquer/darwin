@@ -52,7 +52,7 @@ export default class MainController {
   private getConnectionId(requestedConnectionId: string): ConnectionId {
     if (
       requestedConnectionId &&
-      this.store.userContexts.userContextIds.indexOf(requestedConnectionId)
+      this.store.userContexts.userContextIds.includes(requestedConnectionId)
     ) {
       return requestedConnectionId;
     }
@@ -60,14 +60,13 @@ export default class MainController {
   }
 
   private static sendConnectionId(ws: WebSocket, connectionId: string): void {
-    ws.send(
-      JSON.stringify({
-        type: 'connectionInitialization',
-        payload: {
-          connectionId,
-        },
-      } as ConnectionInitialization)
-    );
+    const message: ConnectionInitialization = {
+      type: 'connectionInitialization',
+      payload: {
+        connectionId,
+      },
+    };
+    ws.send(JSON.stringify(message));
   }
 
   private getMessageListener(connectionId: string) {
