@@ -6,9 +6,8 @@ import {
   UserExecutionContext,
 } from '../../../darwin-types/UserContext';
 import { State } from '../../../darwin-types/State';
-import selectFoods from './state-selectors';
+import { selectFoods, selectUserUnit } from './state-selectors';
 import { Food } from '../../../darwin-types/game-objects/Food';
-import selectUserUnit from './state-selectors/userUnit-selector';
 import { Unit } from '../../../darwin-types/game-objects/Unit';
 
 export interface ScriptContext {
