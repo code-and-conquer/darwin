@@ -15,7 +15,7 @@ function performTick(state: State, scripts: UserExecutionContext[]): State {
   const userTicks = scripts.map(
     (executionContext): UserTickIntents => {
       try {
-        const intents = recordIntents(executionContext.userScript, state);
+        const intents = recordIntents(executionContext, state);
         return {
           context: executionContext,
           intents,
