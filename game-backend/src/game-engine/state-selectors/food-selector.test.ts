@@ -1,6 +1,6 @@
 import StateBuilder from '../../test-helper/StateBuilder';
 import { State } from '../../../../darwin-types/State';
-import selectFoods from './food-selector';
+import { selectFoods } from './index';
 import { GAME_OBJECT_TYPES } from '../../../../darwin-types/game-objects/GameObject';
 
 describe('selectFoods', () => {
