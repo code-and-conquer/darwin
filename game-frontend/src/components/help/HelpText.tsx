@@ -5,8 +5,7 @@ import Codeblock from './CodeBlock';
 const moveToFoodCodeExample = `
 if(foods[0].position.x > userUnit.position.x){
   move('RIGHT');
-}
-else if (foods[0].position.x < userUnit.position.x){
+} else if (foods[0].position.x < userUnit.position.x){
   move('LEFT');
 }
 `;
@@ -31,7 +30,7 @@ const HelpText: FC = () => {
         <InlineCode>'LEFT'</InlineCode>) zur Verfügung.
       </p>
       <Codeblock>move('UP')</Codeblock>
-      <h4>Ressouren kunsumieren</h4>
+      <h4>Ressouren konsumieren</h4>
       <p>
         Die Positionen der Ressourcen kannst du mithilfe der Variable{' '}
         <InlineCode>foods</InlineCode> auslesen. Deine eigene Position ist in
