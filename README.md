@@ -16,6 +16,23 @@ The backend is Node.js based and is located in `/game-backend`.
 
 The frontend uses React and is located in `/game-frontend`.
 
+## Getting Started
+
+### Prerequisites:
+
+- Node.js 12.x
+- git
+
+### Start development:
+
+`npm run install-app`
+
+`npm run watch`
+
+### Commit Rules
+
+Make sure to run the configured git hooks which apply consistent code formatting.
+
 ## Scripts
 
 For the root, the backend and the frontend folder scripts exist to help development.
