@@ -6,7 +6,6 @@ import performTick from './game-engine';
 import { Message } from '../../darwin-types/messages/Message';
 import { ScriptUpdate } from '../../darwin-types/messages/ScriptUpdate';
 import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
-import GAME_OBJECT_TYPES from './constants/gameObjects';
 import { Unit } from '../../darwin-types/game-objects/Unit';
 import { ConnectionInitialization } from '../../darwin-types/messages/ConnectionInitialization';
 import { createUnit } from './helper/gameObjects';
