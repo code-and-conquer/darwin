@@ -2,6 +2,7 @@ import WebSocket from 'ws';
 import MainController, { TICK_INTERVAL } from './MainController';
 import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
 import { Tick } from '../../darwin-types/Tick';
+import { ConnectionInitialization } from '../../darwin-types/messages/ConnectionInitialization';
 
 describe('MainController', () => {
   // Websocket mocks
@@ -20,7 +21,7 @@ describe('MainController', () => {
   let mainController: MainController;
   jest.useFakeTimers();
 
-  const parseResponseBody = (body: string): MatchUpdate => {
+  const parseResponseBody = (body: string): any => {
     return JSON.parse(body);
   };
 
@@ -28,6 +29,40 @@ describe('MainController', () => {
     mainController = new MainController();
     jest.clearAllMocks();
     jest.clearAllTimers();
+  });
+
+  it('sends a generated connection id back', () => {
+    mainController.newConnection(wsMock0 as WebSocket, 'connection0');
+    const connectionInitialization: ConnectionInitialization = parseResponseBody(
+      sendFunction0.mock.calls[0][0]
+    );
+    expect(connectionInitialization.type).toBe('connectionInitialization');
+    expect(connectionInitialization.payload.connectionId).not.toBe(
+      'connection0'
+    );
+  });
+
+  it('sends the previous connection id back', () => {
+    // first connection
+    mainController.newConnection(wsMock0 as WebSocket, 'connection0');
+    const connectionInitialization0: ConnectionInitialization = parseResponseBody(
+      sendFunction0.mock.calls[0][0]
+    );
+
+    // second one
+    mainController.newConnection(
+      wsMock1 as WebSocket,
+      connectionInitialization0.payload.connectionId
+    );
+    const connectionInitialization1: ConnectionInitialization = parseResponseBody(
+      sendFunction1.mock.calls[0][0]
+    );
+
+    // assert
+    expect(connectionInitialization1.type).toBe('connectionInitialization');
+    expect(connectionInitialization1.payload.connectionId).toBe(
+      connectionInitialization0.payload.connectionId
+    );
   });
 
   it('starts ticking', () => {
