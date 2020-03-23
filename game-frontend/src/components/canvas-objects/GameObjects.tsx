@@ -7,7 +7,6 @@ import {
 } from '../../../../darwin-types/game-objects/GameObject';
 import GAME_OBJECT_TYPES from '../../constants/gameObjects';
 import Food from './Food';
-import GAME_OBJECT_TYPES from '../../constants/gameObjects';
 
 type Props = {
   objectIds: ObjectId[];
