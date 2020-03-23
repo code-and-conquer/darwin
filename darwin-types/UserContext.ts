@@ -1,6 +1,6 @@
 import { ObjectId } from './game-objects/GameObject';
 
-export type UserContextId = string;
+export type UserId = string;
 
 export interface UserContext {
   unitId: ObjectId;

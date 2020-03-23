@@ -1,10 +1,15 @@
 import http from 'http';
+import url from 'url';
 import WebSocket from 'ws';
 import MainController from './MainController';
-import { ConnectionId } from './ServerStore';
+import { UserId } from '../../darwin-types/UserContext';
 
-function extractConnectionId(req: http.IncomingMessage): ConnectionId {
-  return req.headers['sec-websocket-key'] as ConnectionId;
+function extractUserId(req: http.IncomingMessage): UserId {
+  const searchParams = new URLSearchParams(url.parse(req.url).query);
+  if (searchParams.has('userId')) {
+    return searchParams.get('userId');
+  }
+  return null;
 }
 
 // initialize server
@@ -15,8 +20,8 @@ const WSServer = new WebSocket.Server({
 const mainController = new MainController();
 
 WSServer.on('connection', (ws: WebSocket, req: http.IncomingMessage) => {
-  const connectionId = extractConnectionId(req);
-  mainController.newConnection(ws, connectionId);
+  const userId = extractUserId(req);
+  mainController.newConnection(ws, userId);
 });
 
 // start server
