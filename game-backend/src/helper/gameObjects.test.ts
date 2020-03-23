@@ -32,28 +32,29 @@ describe('getGameObjectsPerType', () => {
     emptyState = StateBuilder.buildState().build();
   });
 
-  it('filters state with zero food and units', () => {
+  it('filters state with zero food', () => {
     const foods = getGameObjectsPerType(emptyState, GAME_OBJECT_TYPES.FOOD);
-    const units = getGameObjectsPerType(emptyState, GAME_OBJECT_TYPES.UNIT);
 
     expect(foods.length).toBe(0);
-    expect(units.length).toBe(0);
   });
 
-  it('filters state with one food and unit', () => {
+  it('filters state with one food', () => {
     const foods = getGameObjectsPerType(
       oneObjectOfEachState,
       GAME_OBJECT_TYPES.FOOD
-    );
-    const units = getGameObjectsPerType(
-      oneObjectOfEachState,
-      GAME_OBJECT_TYPES.UNIT
     );
 
     expect(foods.length).toBe(1);
     expect(foods[0].type).toBe(GAME_OBJECT_TYPES.FOOD);
     expect(foods[0].position.x).toBe(5);
     expect(foods[0].position.y).toBe(17);
+  });
+
+  it('filters state with one unit', () => {
+    const units = getGameObjectsPerType(
+      oneObjectOfEachState,
+      GAME_OBJECT_TYPES.UNIT
+    );
 
     expect(units.length).toBe(1);
     expect(units[0].type).toBe(GAME_OBJECT_TYPES.UNIT);
@@ -61,21 +62,15 @@ describe('getGameObjectsPerType', () => {
     expect(units[0].position.y).toBe(10);
   });
 
-  it('filters state with multiple objects', () => {
+  it('filters state with multiple foods and other objects', () => {
     const foods = getGameObjectsPerType(
       multipleObjectState,
       GAME_OBJECT_TYPES.FOOD
     );
-    const units = getGameObjectsPerType(
-      multipleObjectState,
-      GAME_OBJECT_TYPES.UNIT
-    );
 
     expect(foods.length).toBe(multipleObjectsCount);
-    expect(units.length).toBe(multipleObjectsCount);
     for (let i = 0; i < multipleObjectsCount; i++) {
       expect(foods[i].type).toBe(GAME_OBJECT_TYPES.FOOD);
-      expect(units[i].type).toBe(GAME_OBJECT_TYPES.UNIT);
     }
   });
 });
