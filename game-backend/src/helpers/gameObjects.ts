@@ -22,7 +22,7 @@ export const generateFreePosition = (state: State): Position => {
         ...acc,
         ...new Array(ARENA_HEIGHT)
           .fill(undefined)
-          .map((_, j) => ({ x: i, y: j })),
+          .map((omit, j) => ({ x: i, y: j })),
       ],
       []
     );
