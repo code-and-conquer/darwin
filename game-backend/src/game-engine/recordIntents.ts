@@ -1,10 +1,19 @@
 import vm, { Context, Script } from 'vm';
 import { Intent } from './intent/Intent';
 import MoveIntent, { Direction } from './intent/MoveIntent';
-import { UserScript } from '../../../darwin-types/UserContext';
+import {
+  UserScript,
+  UserExecutionContext,
+} from '../../../darwin-types/UserContext';
+import { State } from '../../../darwin-types/State';
+import { selectFoods, selectUserUnit } from './state-selectors';
+import { Food } from '../../../darwin-types/game-objects/Food';
+import { Unit } from '../../../darwin-types/game-objects/Unit';
 
 export interface ScriptContext {
   move: (direction: Direction) => void;
+  foods: Food[];
+  userUnit: Unit;
 }
 
 function createGameContext(context: ScriptContext): Context {
@@ -30,14 +39,21 @@ function runScript(userScript: UserScript, context: Context): void {
  * Executes User Script and records user intents
  * @param userScript
  */
-function recordIntents(userScript: UserScript): Intent[] {
+function recordIntents(
+  userExecutionContext: UserExecutionContext,
+  state: State
+): Intent[] {
   const intentions: Intent[] = [];
+  const foods = selectFoods(state);
+  const userUnit = selectUserUnit(state, userExecutionContext.unitId);
   const context = createGameContext({
     move: (direction: Direction) => {
       intentions.push(new MoveIntent(direction));
     },
+    foods,
+    userUnit,
   });
-  runScript(userScript, context);
+  runScript(userExecutionContext.userScript, context);
 
   return intentions;
 }

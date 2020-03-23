@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Codeblock = styled.p`
+const Codeblock = styled.pre`
   display: block;
   background: rgba(0, 0, 0, 0.05);
   color: rgb(63, 81, 181);

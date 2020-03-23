@@ -1,12 +1,21 @@
 import { State } from '../../../darwin-types/State';
-import { GAME_OBJECT_TYPES } from '../../../darwin-types/game-objects/GameObject';
+import {
+  GAME_OBJECT_TYPES,
+  GameObject,
+} from '../../../darwin-types/game-objects/GameObject';
 import Position from '../../../darwin-types/Position';
 import { ARENA_WIDTH, ARENA_HEIGHT } from '../../../darwin-types/Arena';
 
-export const countGameObjectsPerType = (state: State, type: string): number =>
+export const getGameObjectsPerType = (
+  state: State,
+  type: string
+): GameObject[] =>
   state.objectIds
     .map(id => state.objectMap[id])
-    .filter(obj => obj.type === type).length;
+    .filter(obj => obj.type === type);
+
+export const countGameObjectsPerType = (state: State, type: string): number =>
+  getGameObjectsPerType(state, type).length;
 
 export const countUnits = (state: State): number =>
   countGameObjectsPerType(state, GAME_OBJECT_TYPES.UNIT);

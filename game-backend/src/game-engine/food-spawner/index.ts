@@ -4,7 +4,7 @@ import {
   countUnits,
   countFood,
   generateFreePosition,
-} from '../../helpers/gameObjects';
+} from '../../helper/gameObjects';
 
 const FOOD_TO_UNIT_RATIO = 2;
 
