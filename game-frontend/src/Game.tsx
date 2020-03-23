@@ -19,7 +19,7 @@ function Game(): JSX.Element {
       <Stage
         options={{
           backgroundColor: 0x001437,
-          resolution: window.devicePixelRatio
+          resolution: window.devicePixelRatio,
         }}
         width={STAGE_ROWS * FIELD_SIZE}
         height={STAGE_COLUMNS * FIELD_SIZE}
