@@ -43,9 +43,7 @@ describe('MainController', () => {
       sendFunction0.mock.calls[0][0]
     );
     expect(connectionInitialization.type).toBe('connectionInitialization');
-    expect(connectionInitialization.payload.connectionId).not.toBe(
-      'connection0'
-    );
+    expect(connectionInitialization.payload.userId).not.toBe('connection0');
   });
 
   it('sends the previous connection id back', () => {
@@ -58,7 +56,7 @@ describe('MainController', () => {
     // second one
     mainController.newConnection(
       wsMock1 as WebSocket,
-      connectionInitialization0.payload.connectionId
+      connectionInitialization0.payload.userId
     );
     const connectionInitialization1 = parseConnectionInitialization(
       sendFunction1.mock.calls[0][0]
@@ -66,8 +64,8 @@ describe('MainController', () => {
 
     // assert
     expect(connectionInitialization1.type).toBe('connectionInitialization');
-    expect(connectionInitialization1.payload.connectionId).toBe(
-      connectionInitialization0.payload.connectionId
+    expect(connectionInitialization1.payload.userId).toBe(
+      connectionInitialization0.payload.userId
     );
   });
 

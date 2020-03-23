@@ -1,9 +1,9 @@
 import { Message } from './Message';
-import { ConnectionId } from '../Connection';
+import { UserId } from '../UserContext';
 
 export interface ConnectionInitialization extends Message {
   type: 'connectionInitialization';
   payload: {
-    connectionId: ConnectionId;
+    userId: UserId;
   };
 }
