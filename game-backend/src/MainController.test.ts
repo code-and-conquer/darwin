@@ -21,7 +21,13 @@ describe('MainController', () => {
   let mainController: MainController;
   jest.useFakeTimers();
 
-  const parseResponseBody = (body: string): any => {
+  const parseMatchUpdate = (body: string): MatchUpdate => {
+    return JSON.parse(body);
+  };
+
+  const parseConnectionInitialization = (
+    body: string
+  ): ConnectionInitialization => {
     return JSON.parse(body);
   };
 
@@ -33,7 +39,7 @@ describe('MainController', () => {
 
   it('sends a generated connection id back', () => {
     mainController.newConnection(wsMock0 as WebSocket, 'connection0');
-    const connectionInitialization: ConnectionInitialization = parseResponseBody(
+    const connectionInitialization = parseConnectionInitialization(
       sendFunction0.mock.calls[0][0]
     );
     expect(connectionInitialization.type).toBe('connectionInitialization');
@@ -45,7 +51,7 @@ describe('MainController', () => {
   it('sends the previous connection id back', () => {
     // first connection
     mainController.newConnection(wsMock0 as WebSocket, 'connection0');
-    const connectionInitialization0: ConnectionInitialization = parseResponseBody(
+    const connectionInitialization0 = parseConnectionInitialization(
       sendFunction0.mock.calls[0][0]
     );
 
@@ -54,7 +60,7 @@ describe('MainController', () => {
       wsMock1 as WebSocket,
       connectionInitialization0.payload.connectionId
     );
-    const connectionInitialization1: ConnectionInitialization = parseResponseBody(
+    const connectionInitialization1 = parseConnectionInitialization(
       sendFunction1.mock.calls[0][0]
     );
 
@@ -75,9 +81,7 @@ describe('MainController', () => {
     mainController.newConnection(wsMock0 as WebSocket, 'connection0');
     jest.advanceTimersByTime(TICK_INTERVAL);
 
-    const matchUpdate: MatchUpdate = parseResponseBody(
-      sendFunction0.mock.calls[1][0]
-    );
+    const matchUpdate = parseMatchUpdate(sendFunction0.mock.calls[1][0]);
     expect(matchUpdate.type).toBe('matchUpdate');
   });
 
@@ -85,9 +89,7 @@ describe('MainController', () => {
     mainController.newConnection(wsMock0 as WebSocket, 'connection0');
     jest.advanceTimersByTime(TICK_INTERVAL);
 
-    const matchUpdate: MatchUpdate = parseResponseBody(
-      sendFunction0.mock.calls[1][0]
-    );
+    const matchUpdate = parseMatchUpdate(sendFunction0.mock.calls[1][0]);
     const unitId = matchUpdate.payload.state.objectIds[0];
 
     expect(unitId).not.toBeNull();
@@ -95,16 +97,16 @@ describe('MainController', () => {
   });
 
   it('increments tick counter on each tick', () => {
-    let matchUpdate: MatchUpdate;
+    let matchUpdate;
 
     mainController.newConnection(wsMock0 as WebSocket, 'connection0');
 
     jest.advanceTimersByTime(TICK_INTERVAL);
-    matchUpdate = parseResponseBody(sendFunction0.mock.calls[1][0]);
+    matchUpdate = parseMatchUpdate(sendFunction0.mock.calls[1][0]);
     expect(matchUpdate.payload.meta.currentTick).toBe(1);
 
     jest.advanceTimersByTime(TICK_INTERVAL);
-    matchUpdate = parseResponseBody(sendFunction0.mock.calls[2][0]);
+    matchUpdate = parseMatchUpdate(sendFunction0.mock.calls[2][0]);
     expect(matchUpdate.payload.meta.currentTick).toBe(2);
   });
 
@@ -113,8 +115,8 @@ describe('MainController', () => {
     updateClient1: string,
     expectedTick: Tick
   ): void {
-    const matchUpdate0: MatchUpdate = parseResponseBody(updateClient0);
-    const matchUpdate1: MatchUpdate = parseResponseBody(updateClient1);
+    const matchUpdate0 = parseMatchUpdate(updateClient0);
+    const matchUpdate1 = parseMatchUpdate(updateClient1);
     expect(matchUpdate0.payload.state).toStrictEqual(
       matchUpdate1.payload.state
     );
