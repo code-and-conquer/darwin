@@ -8,6 +8,7 @@ import { ScriptUpdate } from '../../darwin-types/messages/ScriptUpdate';
 import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
 import GAME_OBJECT_TYPES from './constants/gameObjects';
 import { Unit } from '../../darwin-types/game-objects/Unit';
+import { generateFreePosition } from './helpers/gameObjects';
 
 export const TICK_INTERVAL = 2000;
 
@@ -84,10 +85,7 @@ export default class MainController {
       id: this.hyperIdInstance(),
       type: GAME_OBJECT_TYPES.UNIT,
       health: 100,
-      position: {
-        x: Math.floor(Math.random() * 20),
-        y: Math.floor(Math.random() * 20),
-      },
+      position: generateFreePosition(this.store.matchState),
     };
   }
 
