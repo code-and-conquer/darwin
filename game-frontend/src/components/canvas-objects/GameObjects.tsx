@@ -20,7 +20,12 @@ const sortLayerConfig = {
   [GAME_OBJECT_TYPES.FOOD]: 1,
 };
 
-const GameObjects: FC<Props> = ({ objectIds, objectMap, scaleFactor }) => (
+const GameObjects: FC<Props> = ({
+  objectIds,
+  objectMap,
+  ownUnitId,
+  scaleFactor,
+}) => (
   <>
     {objectIds
       .map(objectId => objectMap[objectId])
@@ -39,6 +44,7 @@ const GameObjects: FC<Props> = ({ objectIds, objectMap, scaleFactor }) => (
                   x: unit.position.x * scaleFactor,
                   y: unit.position.y * scaleFactor,
                 }}
+                isOwn={unit.id === ownUnitId}
               />
             );
           }
