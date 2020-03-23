@@ -3,11 +3,11 @@ import recordIntents from './recordIntents';
 import { State } from '../../../darwin-types/State';
 import { UserExecutionContext } from '../../../darwin-types/UserContext';
 
-const UNIT_ID = 'unit1';
-let emptyState: State;
-let userExecutionContext: UserExecutionContext;
-
 describe('recordIntents', () => {
+  const UNIT_ID = 'unit1';
+  let emptyState: State;
+  let userExecutionContext: UserExecutionContext;
+
   beforeEach(() => {
     emptyState = StateBuilder.buildState().build();
     userExecutionContext = {
