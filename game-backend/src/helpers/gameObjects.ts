@@ -14,7 +14,7 @@ export const countUnits = (state: State): number =>
 export const countFood = (state: State): number =>
   countGameObjectsPerType(state, GAME_OBJECT_TYPES.FOOD);
 
-export const generateFreePosition = (state: State): Position => {
+export const getFreeFields = (state: State) => {
   const fields: Position[] = new Array(ARENA_WIDTH)
     .fill(undefined)
     .reduce(
@@ -26,17 +26,25 @@ export const generateFreePosition = (state: State): Position => {
       ],
       []
     );
-  const occupiedFields: Position[] = state.objectIds.map(
-    id => state.objectMap[id].position
+  const occupiedFields: Record<string, boolean> = state.objectIds.reduce(
+    (acc, id) => {
+      const pos = state.objectMap[id].position;
+      return {
+        ...acc,
+        [`${pos.x}:${pos.y}`]: true,
+      };
+    },
+    {}
   );
   const freeFields = fields.filter(
-    field =>
-      !!occupiedFields.find(
-        occupiedField =>
-          occupiedField.x === field.x && occupiedField.y === field.y
-      )
+    field => !occupiedFields[`${field.x}:${field.y}`]
   );
 
+  return freeFields;
+};
+
+export const generateFreePosition = (state: State): Position => {
+  const freeFields = getFreeFields(state);
   const freeFieldsCount = freeFields.length;
   const randomIndex = Math.floor(Math.random() * freeFieldsCount);
   const freeRandomPosition = freeFields[randomIndex];
