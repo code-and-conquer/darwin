@@ -1,13 +1,14 @@
 import WebSocket from 'ws';
 import hyperid from 'hyperid';
-import { UserContext, UserContextId } from '../../darwin-types/UserContext';
-import { ConnectionId, createStore, UserEntry } from './ServerStore';
+import { UserContext, UserId } from '../../darwin-types/UserContext';
+import { createStore, UserEntry } from './ServerStore';
 import performTick from './game-engine';
 import { Message } from '../../darwin-types/messages/Message';
 import { ScriptUpdate } from '../../darwin-types/messages/ScriptUpdate';
 import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
 import GAME_OBJECT_TYPES from './constants/gameObjects';
 import { Unit } from '../../darwin-types/game-objects/Unit';
+import { ConnectionInitialization } from '../../darwin-types/messages/ConnectionInitialization';
 
 export const TICK_INTERVAL = 2000;
 
@@ -23,11 +24,12 @@ export default class MainController {
 
   private tickingInterval: NodeJS.Timeout;
 
-  newConnection(ws: WebSocket, connectionId: ConnectionId): void {
-    ws.on('message', this.getMessageListener(connectionId));
+  newConnection(ws: WebSocket, requestedUserId: UserId): void {
+    const userId = this.getUserId(requestedUserId);
+    MainController.sendUserId(ws, userId);
 
-    // This will change as soon as client persistence is implemented
-    const userId: UserContextId = connectionId;
+    ws.on('message', this.getMessageListener(userId));
+
     const userContext = this.store.userContexts.userContextMap[userId];
 
     if (userContext === undefined) {
@@ -41,12 +43,37 @@ export default class MainController {
     }
   }
 
-  private getMessageListener(connectionId: string) {
+  /**
+   * Looks up the connection id in the store.
+   * It returns the found userId or generates a new one respectively.
+   * @param requestedUserId The connection id the client requests
+   */
+  private getUserId(requestedUserId: string): UserId {
+    if (
+      requestedUserId &&
+      this.store.userContexts.userContextIds.includes(requestedUserId)
+    ) {
+      return requestedUserId;
+    }
+    return this.hyperIdInstance();
+  }
+
+  private static sendUserId(ws: WebSocket, userId: UserId): void {
+    const message: ConnectionInitialization = {
+      type: 'connectionInitialization',
+      payload: {
+        userId,
+      },
+    };
+    ws.send(JSON.stringify(message));
+  }
+
+  private getMessageListener(userId: string) {
     return (data: string): void => {
       const message = JSON.parse(data) as Message;
       switch (message.type) {
         case 'scriptUpdate':
-          this.handleUserScript(connectionId, message as ScriptUpdate);
+          this.handleUserScript(userId, message as ScriptUpdate);
           break;
         default:
           break;
@@ -91,11 +118,11 @@ export default class MainController {
     };
   }
 
-  handleUserScript(userContextId: UserContextId, message: ScriptUpdate): void {
+  handleUserScript(userContextId: UserId, message: ScriptUpdate): void {
     this.updateUserScript(userContextId, message.payload.script);
   }
 
-  updateUserScript(userContextId: UserContextId, script: string): void {
+  updateUserScript(userContextId: UserId, script: string): void {
     this.store.userContexts.userContextMap[
       userContextId
     ].userContext.userScript.script = script;

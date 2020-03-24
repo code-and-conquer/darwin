@@ -1,11 +1,6 @@
 import WebSocket from 'ws';
-import {
-  UserContextId,
-  UserExecutionContext,
-} from '../../darwin-types/UserContext';
+import { UserId, UserExecutionContext } from '../../darwin-types/UserContext';
 import { State } from '../../darwin-types/State';
-
-export type ConnectionId = string;
 
 export interface UserEntry {
   userContext: UserExecutionContext;
@@ -15,8 +10,8 @@ export interface UserEntry {
 export interface ServerStore {
   matchState: State;
   userContexts: {
-    userContextMap: Record<UserContextId, UserEntry>;
-    userContextIds: UserContextId[];
+    userContextMap: Record<UserId, UserEntry>;
+    userContextIds: UserId[];
   };
   currentTick: number;
 }
