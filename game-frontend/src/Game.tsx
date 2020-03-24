@@ -17,7 +17,10 @@ function Game(): JSX.Element {
   return (
     <CanvasWrapper>
       <Stage
-        options={{ resolution: window.devicePixelRatio }}
+        options={{
+          backgroundColor: 0x001437,
+          resolution: window.devicePixelRatio
+        }}
         width={STAGE_ROWS * FIELD_SIZE}
         height={STAGE_COLUMNS * FIELD_SIZE}
       >

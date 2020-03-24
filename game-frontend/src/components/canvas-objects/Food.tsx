@@ -15,8 +15,9 @@ const Food: FC<Props> = ({ position }) => (
       x: position.x + HALF_FIELD_SIZE,
       y: position.y + HALF_FIELD_SIZE,
     }}
-    radius={HALF_FIELD_SIZE}
-    color={0xff700b}
+    radius={HALF_FIELD_SIZE / 2}
+    color={0xb8fb3c}
+    fill={0xb8fb3c}
   />
 );
 
