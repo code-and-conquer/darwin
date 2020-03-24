@@ -6,6 +6,7 @@ import {
 import Position from '../../../darwin-types/Position';
 import { ARENA_WIDTH, ARENA_HEIGHT } from '../../../darwin-types/Arena';
 
+
 export const getGameObjectsPerType = (
   state: State,
   type: string

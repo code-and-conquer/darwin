@@ -4,6 +4,7 @@ import { GAME_OBJECT_TYPES } from '../../../darwin-types/game-objects/GameObject
 import { getGameObjectsPerType, getFreeFields } from './gameObjects';
 import { ARENA_HEIGHT, ARENA_WIDTH } from '../../../darwin-types/Arena';
 
+
 describe('getGameObjectsPerType', () => {
   const FOOD_ID = 'FOODID1';
   const UNIT_ID = 'unit1';
