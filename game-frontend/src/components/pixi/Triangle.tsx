@@ -3,11 +3,11 @@ import Graphics from './Graphics';
 import { PixiGeometricFormProps } from './PixiGeometricFormProps';
 
 interface Props extends PixiGeometricFormProps {
-  radius: number;
+  size: number;
 }
 
-const Circle: FC<Props> = ({
-  radius,
+const Triangle: FC<Props> = ({
+  size,
   position,
   color = 0xffffff,
   fill = undefined,
@@ -15,15 +15,19 @@ const Circle: FC<Props> = ({
   lineWidth = 1,
 }) => {
   const { x, y } = position;
+
   return (
     <Graphics
       fill={fill}
       draw={(g): void => {
         g.lineStyle(lineWidth, color, alpha);
-        g.drawCircle(x, y, radius);
+        g.moveTo(x, y);
+        g.lineTo(x + size / 2, y + size);
+        g.lineTo(x - size / 2, y + size);
+        g.lineTo(x, y);
       }}
     />
   );
 };
 
-export default Circle;
+export default Triangle;
