@@ -2,6 +2,7 @@ import produce from '../helper/produce';
 import { State } from '../../../darwin-types/State';
 import { GAME_OBJECT_TYPES } from '../../../darwin-types/game-objects/GameObject';
 import Position from '../../../darwin-types/Position';
+import { createUnit, createFood } from '../helper/gameObjects';
 
 export interface GameObject {
   id: string;
@@ -32,24 +33,16 @@ export default class StateBuilder {
     return this;
   }
 
-  addUnit({ id, x, y, moveBlocking = true }: AddGameObject): StateBuilder {
+  addUnit({ id, x, y }: AddGameObject): StateBuilder {
     const position = { x, y };
-    return this.addObject({
-      id,
-      position,
-      type: GAME_OBJECT_TYPES.UNIT,
-      moveBlocking,
-    });
+    const unit = createUnit({ id, position });
+    return this.addObject(unit);
   }
 
-  addFood({ id, x, y, moveBlocking = false }: AddGameObject): StateBuilder {
+  addFood({ id, x, y }: AddGameObject): StateBuilder {
     const position = { x, y };
-    return this.addObject({
-      id,
-      position,
-      type: GAME_OBJECT_TYPES.FOOD,
-      moveBlocking,
-    });
+    const food = createFood({ id, position });
+    return this.addObject(food);
   }
 
   build(): State {
