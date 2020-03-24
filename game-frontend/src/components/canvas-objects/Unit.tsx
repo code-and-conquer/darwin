@@ -3,6 +3,7 @@ import Square from '../pixi/Square';
 import Triangle from '../pixi/Triangle';
 import Position from '../../../../darwin-types/Position';
 import { FIELD_SIZE } from '../../constants/stage';
+import Parallelogram from '../pixi/Parallelogram';
 
 type Props = {
   position: Position;
@@ -19,7 +20,7 @@ const triangleSize = FIELD_SIZE * triangleScale;
 const triangleMargin = (FIELD_SIZE - triangleSize) / 2;
 
 const Unit: FC<Props> = ({ position, isOwn }) => {
-  const color = isOwn ? 0x7898fb : 0xffd900;
+  const color = isOwn ? 0x2e00af : 0xff193b;
   return (
     <>
       <Square
@@ -31,14 +32,23 @@ const Unit: FC<Props> = ({ position, isOwn }) => {
         color={color}
         fill={color}
       />
+      <Parallelogram
+        alpha={0.2}
+        fill={0x000000}
+        position={{
+          x: position.x + squareMargin,
+          y: position.y + squareMargin,
+        }}
+        size={squareSize}
+      />
       <Triangle
         position={{
           x: position.x + FIELD_SIZE / 2,
           y: position.y + triangleMargin,
         }}
         size={triangleSize}
-        color={0xff2079}
-        fill={0xff2079}
+        color={color}
+        fill={color}
       />
     </>
   );
