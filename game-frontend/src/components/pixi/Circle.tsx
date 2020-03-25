@@ -18,8 +18,9 @@ const Circle: FC<Props> = ({
   return (
     <Graphics
       fill={fill}
+      alpha={alpha}
       draw={(g): void => {
-        g.lineStyle(lineWidth, color, alpha);
+        g.lineStyle(lineWidth, color);
         g.drawCircle(x, y, radius);
       }}
     />
