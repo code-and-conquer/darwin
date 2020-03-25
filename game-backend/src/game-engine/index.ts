@@ -4,14 +4,6 @@ import recordIntents from './recordIntents';
 import scheduleIntents from './scheduleIntents';
 import { UserTickIntents } from './intent/Intent';
 import handleFoodSpawning from './food-spawner';
-import { UnitType, Unit } from '../../../darwin-types/game-objects/Unit';
-import {
-  GAME_OBJECT_TYPES,
-  GameObject,
-} from '../../../darwin-types/game-objects/GameObject';
-import { HEALTH_LOSS_RATE } from '../constants/gameObjects';
-import produce from '../../src/helper/produce';
-import { ObjectId } from '../../../darwin-types/game-objects/GameObject';
 import { updateHealth } from './health-mechanics/unitUtils';
 
 const handleGameMechanics = (state: State, userTicks: UserTickIntents[]) =>
