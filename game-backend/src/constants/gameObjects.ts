@@ -10,3 +10,5 @@ const GAME_OBJECT_TYPES: {
 };
 
 export default GAME_OBJECT_TYPES;
+
+export const HEALTH_LOSS_RATE = 0.95;

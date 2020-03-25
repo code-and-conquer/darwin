@@ -4,6 +4,10 @@ import recordIntents from './recordIntents';
 import scheduleIntents from './scheduleIntents';
 import { UserTickIntents } from './intent/Intent';
 import handleFoodSpawning from './food-spawner';
+import { updateHealth } from './health-mechanics/unitUtils';
+
+const handleGameMechanics = (state: State, userTicks: UserTickIntents[]) =>
+  handleFoodSpawning(updateHealth(scheduleIntents(state, userTicks)));
 
 /**
  * Executes all given user scripts and returns the next state object.
@@ -29,9 +33,7 @@ function performTick(state: State, scripts: UserExecutionContext[]): State {
       }
     }
   );
-
-  const newState = scheduleIntents(state, userTicks);
-  return handleFoodSpawning(newState);
+  return handleGameMechanics(state, userTicks);
 }
 
 export default performTick;
