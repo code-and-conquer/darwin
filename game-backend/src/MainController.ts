@@ -110,7 +110,6 @@ export default class MainController {
   generateUnit(): Unit {
     const unit = createUnit({
       id: this.hyperIdInstance(),
-      health: 100,
       position: generateFreePosition(this.store.matchState),
     });
     return unit;
