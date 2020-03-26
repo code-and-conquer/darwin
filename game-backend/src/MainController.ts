@@ -7,6 +7,7 @@ import { Message } from '../../darwin-types/messages/Message';
 import { ScriptUpdate } from '../../darwin-types/messages/ScriptUpdate';
 import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
 import { Unit } from '../../darwin-types/game-objects/Unit';
+import { generateFreePosition } from './helper/fields';
 import { ConnectionInitialization } from '../../darwin-types/messages/ConnectionInitialization';
 import { createUnit } from './helper/gameObjects';
 
@@ -109,10 +110,7 @@ export default class MainController {
   generateUnit(): Unit {
     const unit = createUnit({
       id: this.hyperIdInstance(),
-      position: {
-        x: Math.floor(Math.random() * 20),
-        y: Math.floor(Math.random() * 20),
-      },
+      position: generateFreePosition(this.store.matchState),
     });
     return unit;
   }
