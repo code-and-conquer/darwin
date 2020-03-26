@@ -4,10 +4,12 @@ import recordIntents from './recordIntents';
 import scheduleIntents from './scheduleIntents';
 import { UserTickIntents } from './intent/Intent';
 import handleFoodSpawning from './food-spawner';
-import { updateHealth } from './health-mechanics/unitUtils';
+import updateHealth from './health-mechanics/unitUtils';
 
-const handleGameMechanics = (state: State, userTicks: UserTickIntents[]) =>
-  handleFoodSpawning(updateHealth(scheduleIntents(state, userTicks)));
+const handleGameMechanics = (
+  state: State,
+  userTicks: UserTickIntents[]
+): State => handleFoodSpawning(updateHealth(scheduleIntents(state, userTicks)));
 
 /**
  * Executes all given user scripts and returns the next state object.
