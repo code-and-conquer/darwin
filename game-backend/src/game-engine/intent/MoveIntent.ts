@@ -56,7 +56,9 @@ export default class MoveIntent implements Intent {
       .map(id => state.objectMap[id])
       .find(
         object =>
-          object.position.x === position.x && object.position.y === position.y
+          object.moveBlocking &&
+          object.position.x === position.x &&
+          object.position.y === position.y
       );
     const hasConflictingObject = conflictingObject !== undefined;
     return produce(state, draft => {

@@ -1,18 +1,15 @@
 import hyperid from 'hyperid';
-import { ARENA_WIDTH, ARENA_HEIGHT } from '../../../../darwin-types/Arena';
 import { Food } from '../../../../darwin-types/game-objects/Food';
+import Position from '../../../../darwin-types/Position';
+import { createFood } from '../../helper/gameObjects';
 
 const generateId = hyperid();
 
-const spawnFood = (): Food => {
-  const food: Food = {
+const spawnFood = (position: Position): Food => {
+  const food: Food = createFood({
     id: generateId(),
-    type: 'food',
-    position: {
-      x: Math.floor(Math.random() * ARENA_WIDTH),
-      y: Math.floor(Math.random() * ARENA_HEIGHT),
-    },
-  };
+    position,
+  });
   return food;
 };
 

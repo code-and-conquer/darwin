@@ -6,6 +6,7 @@ export interface GameObject {
   id: ObjectId;
   type: string;
   position: Position;
+  moveBlocking: boolean;
 }
 
 export const GAME_OBJECT_TYPES = {

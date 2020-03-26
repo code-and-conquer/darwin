@@ -32,6 +32,7 @@
     "semi": "off",
     "@typescript-eslint/semi": ["error"],
     "spaced-comment": ["error", "always", { "markers": ["/"] }],
+    "no-shadow": ["error", { "allow": ["_"] }],
     "no-restricted-syntax": [
       "error",
       {
