@@ -40,8 +40,8 @@ export const createUnit = ({
   id,
   position,
   health,
-  moveBlocking: false,
-  type: GAME_OBJECT_TYPES.FOOD,
+  moveBlocking: true,
+  type: GAME_OBJECT_TYPES.UNIT,
 });
 
 export const countGameObjectsPerType = (state: State, type: string): number =>
