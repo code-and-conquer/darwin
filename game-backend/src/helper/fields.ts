@@ -3,7 +3,6 @@ import Position from '../../../darwin-types/Position';
 import { ARENA_WIDTH, ARENA_HEIGHT } from '../../../darwin-types/Arena';
 
 export const getFreeFields = (state: State): Position[] => {
-  /* eslint no-shadow: ["error", { "allow": ["_"] }]*/
   const fields: Position[] = new Array(ARENA_WIDTH)
     .fill(undefined)
     .reduce(
