@@ -73,6 +73,21 @@ describe('MoveIntent', () => {
     expect(newState.objectMap.unit2.position.y).toBe(1);
   });
 
+  it('handles non-blocking position conflicts', () => {
+    const intent = new MoveIntent(Direction.Down);
+
+    const newState = intent.execute(
+      StateBuilder.buildState()
+        .addUnit({ id: 'unit1', x: 0, y: 0 })
+        .addFood({ id: 'food1', x: 0, y: 1 })
+        .build(),
+      baseUserContext
+    );
+
+    expect(newState.objectMap[UNIT_ID].position.y).toBe(1);
+    expect(newState.objectMap.food1.position.y).toBe(1);
+  });
+
   it('handles lower y system boundaries', () => {
     const intent = new MoveIntent(Direction.Up);
 
