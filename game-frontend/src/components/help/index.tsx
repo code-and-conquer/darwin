@@ -16,7 +16,7 @@ const Help: FC = () => {
       <Dialog isOpen={isOpen} onDismiss={close} aria-label="help">
         <DialogWrapper>
           <Button className="close-button" onClick={close}>
-            <span>×</span>
+            <span>Close</span>
           </Button>
           <HelpText />
         </DialogWrapper>

@@ -1,5 +1,7 @@
 import React, { useState, FC } from 'react';
-import Textarea from '../visual/Textarea';
+// import ReactDOM from 'react-dom';
+import Editor from '@monaco-editor/react';
+// import Textarea from '../visual/Textarea';
 import Container from './Container';
 import SaveButton from './SaveButton';
 import { useSendMessage } from '../../service/game';
@@ -29,7 +31,8 @@ const UserScript: FC = () => {
   return (
     <Container data-testid="user-script-form">
       <form>
-        <Textarea onChange={onChange} rows={8}></Textarea>
+        {/* <Textarea onChange={onChange} rows={8}></Textarea> */}
+        <Editor height="50vh" language="javascript" theme="dark" />
         <SaveButton onClick={submit}>Save</SaveButton>
       </form>
     </Container>

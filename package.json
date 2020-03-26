@@ -40,7 +40,10 @@
     "url": "https://github.com/code-and-conquer/darwin/issues"
   },
   "homepage": "https://github.com/code-and-conquer/darwin#readme",
-  "dependencies": {},
+  "dependencies": {
+    "@monaco-editor/react": "^3.1.2",
+    "monaco-editor": "^0.20.0"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.22.0",
     "@typescript-eslint/parser": "^2.22.0",
