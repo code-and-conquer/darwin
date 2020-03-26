@@ -1,10 +1,7 @@
 import { State } from '../../../../darwin-types/State';
 import spawnFood from './spawnFood';
-import {
-  countUnits,
-  countFood,
-  generateFreePosition,
-} from '../../helper/gameObjects';
+import { countUnits, countFood } from '../../helper/gameObjects';
+import { generateFreePosition } from '../../helper/fields';
 
 const FOOD_TO_UNIT_RATIO = 2;
 

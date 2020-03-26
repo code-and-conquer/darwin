@@ -8,7 +8,7 @@ import { ScriptUpdate } from '../../darwin-types/messages/ScriptUpdate';
 import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
 import GAME_OBJECT_TYPES from './constants/gameObjects';
 import { Unit } from '../../darwin-types/game-objects/Unit';
-import { generateFreePosition } from './helper/gameObjects';
+import { generateFreePosition } from './helper/fields';
 import { ConnectionInitialization } from '../../darwin-types/messages/ConnectionInitialization';
 
 export const TICK_INTERVAL = 2000;
