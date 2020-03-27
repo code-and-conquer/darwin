@@ -9,8 +9,11 @@ import {
   removeGameObject,
 } from '../../helper/gameObjects';
 import produce from '../../helper/produce';
+import handleFoodSpawning from '../food-spawner';
+import { UserTickIntents } from '../intent/Intent';
+import scheduleIntents from '../scheduleIntents';
 
-export default function updateHealth(state: State): State {
+export function updateHealth(state: State): State {
   return produce(state, draft => {
     const units = getGameObjectsPerType(state, GAME_OBJECT_TYPES.UNIT);
     units.forEach((gameObject: Unit) => {
@@ -22,3 +25,10 @@ export default function updateHealth(state: State): State {
     });
   });
 }
+
+const handleGameMechanics = (
+  state: State,
+  userTicks: UserTickIntents[]
+): State => handleFoodSpawning(updateHealth(scheduleIntents(state, userTicks)));
+
+export default handleGameMechanics;

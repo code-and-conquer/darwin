@@ -1,15 +1,8 @@
 import { State } from '../../../darwin-types/State';
 import { UserExecutionContext } from '../../../darwin-types/UserContext';
 import recordIntents from './recordIntents';
-import scheduleIntents from './scheduleIntents';
 import { UserTickIntents } from './intent/Intent';
-import handleFoodSpawning from './food-spawner';
-import updateHealth from './health-mechanics/unitUtils';
-
-const handleGameMechanics = (
-  state: State,
-  userTicks: UserTickIntents[]
-): State => handleFoodSpawning(updateHealth(scheduleIntents(state, userTicks)));
+import handleGameMechanics from './mechanics';
 
 /**
  * Executes all given user scripts and returns the next state object.

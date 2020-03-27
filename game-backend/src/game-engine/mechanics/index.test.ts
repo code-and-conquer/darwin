@@ -1,6 +1,6 @@
 import StateBuilder from '../../test-helper/StateBuilder';
-import updateHealth from './unitUtils';
 import { Unit } from '../../../../darwin-types/game-objects/Unit';
+import { updateHealth } from './index';
 
 describe('UnitHealthState', () => {
   it('handles unit health state', () => {
@@ -10,12 +10,12 @@ describe('UnitHealthState', () => {
 
     const updatedState = updateHealth(state);
     const unitUpdated: Unit = updatedState.objectMap.test1 as Unit;
-    expect(unitUpdated.health).toBe(90);
+    expect(unitUpdated.health).toBe(95);
   });
 
   it('Unit is removed from board', () => {
     const state = StateBuilder.buildState()
-      .addUnit({ id: 'test1', x: 1, y: 1, health: 10 })
+      .addUnit({ id: 'test1', x: 1, y: 1, health: 5 })
       .build();
 
     const updatedState = updateHealth(state);
