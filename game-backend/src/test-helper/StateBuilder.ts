@@ -16,6 +16,10 @@ export interface AddGameObject {
   moveBlocking?: boolean;
 }
 
+interface AddGameObjectUnit extends AddGameObject {
+  health?: number;
+}
+
 export default class StateBuilder {
   constructor(private state: State) {
     return this;
@@ -32,9 +36,9 @@ export default class StateBuilder {
     return this;
   }
 
-  addUnit({ id, x, y }: AddGameObject): StateBuilder {
+  addUnit({ id, x, y, health }: AddGameObjectUnit): StateBuilder {
     const position = { x, y };
-    const unit = createUnit({ id, position });
+    const unit = createUnit({ id, position, health });
     return this.addObject(unit);
   }
 

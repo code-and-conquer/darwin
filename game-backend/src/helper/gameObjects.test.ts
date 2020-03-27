@@ -1,7 +1,7 @@
 import StateBuilder from '../test-helper/StateBuilder';
 import { State } from '../../../darwin-types/State';
 import { GAME_OBJECT_TYPES } from '../../../darwin-types/game-objects/GameObject';
-import { getGameObjectsPerType } from './gameObjects';
+import { getGameObjectsPerType, removeGameObject } from './gameObjects';
 
 describe('getGameObjectsPerType', () => {
   const FOOD_ID = 'FOODID1';
@@ -72,5 +72,21 @@ describe('getGameObjectsPerType', () => {
     for (let i = 0; i < multipleObjectsCount; i++) {
       expect(foods[i].type).toBe(GAME_OBJECT_TYPES.FOOD);
     }
+  });
+});
+
+describe('removeGameObject', () => {
+  it('should remove the object by the given id', () => {
+    const UNIT_ID = 'UNIT_ID';
+    const FOOD_ID = 'FOOD_ID';
+    const state = StateBuilder.buildState()
+      .addFood({ id: FOOD_ID, x: 5, y: 17 })
+      .addUnit({ id: UNIT_ID, x: 2, y: 10 })
+      .build();
+
+    const newState = removeGameObject(state, UNIT_ID);
+    expect(newState.objectIds).not.toContain(UNIT_ID);
+    expect(newState.objectMap[UNIT_ID]).toBeFalsy();
+    expect(newState.objectMap[FOOD_ID]).toBeTruthy();
   });
 });

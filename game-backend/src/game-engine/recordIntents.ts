@@ -1,6 +1,7 @@
 import vm, { Context, Script } from 'vm';
 import { Intent } from './intent/Intent';
 import MoveIntent, { Direction } from './intent/MoveIntent';
+import ConsumeIntent from './intent/ConsumeIntent';
 import {
   UserScript,
   UserExecutionContext,
@@ -12,6 +13,7 @@ import { Unit } from '../../../darwin-types/game-objects/Unit';
 
 export interface ScriptContext {
   move: (direction: Direction) => void;
+  consume: () => void;
   foods: Food[];
   userUnit: Unit;
 }
@@ -49,6 +51,9 @@ function recordIntents(
   const context = createGameContext({
     move: (direction: Direction) => {
       intentions.push(new MoveIntent(direction));
+    },
+    consume: () => {
+      intentions.push(new ConsumeIntent());
     },
     foods,
     userUnit,

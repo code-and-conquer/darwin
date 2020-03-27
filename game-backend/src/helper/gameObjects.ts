@@ -2,10 +2,11 @@ import { State } from '../../../darwin-types/State';
 import {
   GameObject,
   GAME_OBJECT_TYPES,
+  ObjectId,
 } from '../../../darwin-types/game-objects/GameObject';
 import { Food } from '../../../darwin-types/game-objects/Food';
 import Position from '../../../darwin-types/Position';
-import { Unit } from '../../../darwin-types/game-objects/Unit';
+import { Unit, INITIAL_HEALTH } from '../../../darwin-types/game-objects/Unit';
 
 export const getGameObjectsPerType = (
   state: State,
@@ -31,7 +32,7 @@ export const createFood = ({
 export const createUnit = ({
   id,
   position,
-  health = 100,
+  health = INITIAL_HEALTH,
 }: {
   id: string;
   position: Position;
@@ -43,6 +44,24 @@ export const createUnit = ({
   moveBlocking: true,
   type: GAME_OBJECT_TYPES.UNIT,
 });
+
+const getObjectById = (state: State, id: ObjectId): GameObject =>
+  state.objectMap[id];
+
+export const getFood = (state: State, id: ObjectId): Food =>
+  getObjectById(state, id) as Food;
+export const getUnit = (state: State, id: ObjectId): Unit =>
+  getObjectById(state, id) as Unit;
+
+export const removeGameObject = (state: State, idToDelete: ObjectId): State => {
+  const { [idToDelete]: omit, ...newObjectMap } = state.objectMap;
+
+  return {
+    ...state,
+    objectIds: state.objectIds.filter(id => id !== idToDelete),
+    objectMap: newObjectMap,
+  };
+};
 
 export const countGameObjectsPerType = (state: State, type: string): number =>
   getGameObjectsPerType(state, type).length;
