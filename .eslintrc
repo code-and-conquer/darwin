@@ -21,7 +21,6 @@
     }
   },
   "rules": {
-    "import/no-extraneous-dependencies": ["error", {"packageDir": path.join(__dirname, './')}]
     "import/extensions": ["error", "never"],
     "import/no-unresolved": "off",
     "no-plusplus": "off",

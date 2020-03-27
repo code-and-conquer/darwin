@@ -33,7 +33,7 @@ const UserScript: FC = () => {
       <form>
         {/* <Textarea onChange={onChange} rows={8}></Textarea> */}
         <Editor height="50vh" language="javascript" theme="dark" />
-        <SaveButton onClick={submit}>Save</SaveButton>
+        <SaveButton onClick={submit}>Speichern</SaveButton>
       </form>
     </Container>
   );

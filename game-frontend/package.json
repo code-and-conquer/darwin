@@ -41,6 +41,8 @@
     "react-scripts": "3.4.0",
     "styled-components": "^5.0.1",
     "typescript": "~3.7.2",
+    "@monaco-editor/react": "^3.1.2",
+    "monaco-editor": "^0.20.0",
     "use-persisted-state": "^0.3.0"
   },
   "devDependencies": {
