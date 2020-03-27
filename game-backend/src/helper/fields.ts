@@ -1,6 +1,7 @@
 import { State } from '../../../darwin-types/State';
 import Position from '../../../darwin-types/Position';
 import { ARENA_WIDTH, ARENA_HEIGHT } from '../../../darwin-types/Arena';
+import { GameObject } from '../../../darwin-types/game-objects/GameObject';
 
 export const getFlatFieldArray = (): Position[] =>
   new Array(ARENA_WIDTH)
@@ -15,12 +16,19 @@ export const getFlatFieldArray = (): Position[] =>
       []
     );
 
-export const getOccupiedFieldMap = (state: State): Record<string, boolean> =>
-  state.objectIds.reduce((acc, id) => {
-    const pos = state.objectMap[id].position;
+export const createKeyFromPosition = (pos: Position): string =>
+  `${pos.x}:${pos.y}`;
+
+export const getOccupiedFieldMap = (
+  state: State
+): Record<string, GameObject[]> =>
+  state.objectIds.reduce((acc: Record<string, GameObject[]>, id) => {
+    const obj = state.objectMap[id];
+    const pos = obj.position;
+    const key = createKeyFromPosition(pos);
     return {
       ...acc,
-      [`${pos.x}:${pos.y}`]: true,
+      [key]: [...(acc[key] || []), obj],
     };
   }, {});
 

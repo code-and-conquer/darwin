@@ -4,6 +4,7 @@ import {
   getFreeFields,
   getFlatFieldArray,
   getOccupiedFieldMap,
+  createKeyFromPosition,
 } from './fields';
 import { ARENA_HEIGHT, ARENA_WIDTH } from '../../../darwin-types/Arena';
 
@@ -18,14 +19,28 @@ describe('getFlatFieldArray', () => {
 
 describe('getOccupiedFieldMap', () => {
   it('should return an object containing occupied fields', () => {
+    const unitId = 'UNIT_ID';
+    const foodId = 'FOOD_ID';
     const state: State = StateBuilder.buildState()
-      .addUnit({ id: 'UNIT_ID', x: 1, y: 1 })
-      .addFood({ id: 'FOOD_1_ID', x: 2, y: 2 })
+      .addUnit({ id: unitId, x: 1, y: 1 })
+      .addFood({ id: foodId, x: 2, y: 2 })
       .build();
 
+    const unit = state.objectMap[unitId];
+    const food = state.objectMap[foodId];
+
+    const unitPosKey = createKeyFromPosition(unit.position);
+    const foodPosKey = createKeyFromPosition(food.position);
+
     const occupiedFieldMap = getOccupiedFieldMap(state);
-    expect(occupiedFieldMap['1:1']).toBe(true);
-    expect(occupiedFieldMap['2:2']).toBe(true);
+    expect(occupiedFieldMap[unitPosKey]).toBeTruthy();
+    expect(occupiedFieldMap[unitPosKey]).toEqual(
+      expect.arrayContaining([unit])
+    );
+    expect(occupiedFieldMap[foodPosKey]).toBeTruthy();
+    expect(occupiedFieldMap[foodPosKey]).toEqual(
+      expect.arrayContaining([food])
+    );
     expect(occupiedFieldMap['1:2']).toBeFalsy();
   });
 });
