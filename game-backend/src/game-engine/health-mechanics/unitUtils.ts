@@ -1,7 +1,9 @@
 import { State } from '../../../../darwin-types/State';
 import { GAME_OBJECT_TYPES } from '../../../../darwin-types/game-objects/GameObject';
-import { Unit } from '../../../../darwin-types/game-objects/Unit';
-import { HEALTH_LOSS_RATE } from '../../constants/gameObjects';
+import {
+  Unit,
+  HEALTH_LOSS_RATE,
+} from '../../../../darwin-types/game-objects/Unit';
 import { getGameObjectsPerType } from '../../helper/gameObjects';
 import produce from '../../helper/produce';
 

@@ -1,20 +1,22 @@
 import produce from '../helper/produce';
 import { State } from '../../../darwin-types/State';
-import { GAME_OBJECT_TYPES } from '../../../darwin-types/game-objects/GameObject';
+import Position from '../../../darwin-types/Position';
+import { createUnit, createFood } from '../helper/gameObjects';
 
-export interface GameObject extends GameObjectWithoutType {
+export interface GameObject {
+  id: string;
   type: string;
+  position: Position;
+  moveBlocking: boolean;
 }
-export interface GameObjectWithoutType {
+export interface AddGameObject {
   id: string;
   x: number;
   y: number;
-  restOfProps?: Record<string, any>;
+  moveBlocking?: boolean;
 }
-export interface UnitProps {
-  id: string;
-  x: number;
-  y: number;
+
+interface AddGameObjectUnit extends AddGameObject {
   health?: number;
 }
 
@@ -23,31 +25,27 @@ export default class StateBuilder {
     return this;
   }
 
-  addObject({ id, x, y, type, restOfProps }: GameObject): StateBuilder {
+  addObject({ id, ...props }: GameObject): StateBuilder {
     this.state = produce(this.state, draft => {
       draft.objectMap[id] = {
         id,
-        type,
-        position: { x, y },
-        ...restOfProps,
+        ...props,
       };
       draft.objectIds.push(id);
     });
     return this;
   }
 
-  addUnit({ id, x, y, health = 100 }: UnitProps): StateBuilder {
-    return this.addObject({
-      id,
-      x,
-      y,
-      restOfProps: { health },
-      type: GAME_OBJECT_TYPES.UNIT,
-    });
+  addUnit({ id, x, y, health }: AddGameObjectUnit): StateBuilder {
+    const position = { x, y };
+    const unit = createUnit({ id, position, health });
+    return this.addObject(unit);
   }
 
-  addFood({ id, x, y }: GameObjectWithoutType): StateBuilder {
-    return this.addObject({ id, x, y, type: GAME_OBJECT_TYPES.FOOD });
+  addFood({ id, x, y }: AddGameObject): StateBuilder {
+    const position = { x, y };
+    const food = createFood({ id, position });
+    return this.addObject(food);
   }
 
   build(): State {

@@ -37,8 +37,8 @@ const HelpText: FC = () => {
         der Variable <InlineCode>userUnit</InlineCode> verfügbar. Beispielsweise
         kannst du deine Unit mit diesem Code an die X-Position einer Ressource
         bewegen:
-        <Codeblock>{moveToFoodCodeExample}</Codeblock>
       </p>
+      <Codeblock>{moveToFoodCodeExample}</Codeblock>
     </>
   );
 };
