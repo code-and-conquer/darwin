@@ -5,7 +5,7 @@ import {
 } from '../../../darwin-types/game-objects/GameObject';
 import { Food } from '../../../darwin-types/game-objects/Food';
 import Position from '../../../darwin-types/Position';
-import { Unit } from '../../../darwin-types/game-objects/Unit';
+import { Unit, INITIAL_HEALTH } from '../../../darwin-types/game-objects/Unit';
 
 export const getGameObjectsPerType = (
   state: State,
@@ -31,7 +31,7 @@ export const createFood = ({
 export const createUnit = ({
   id,
   position,
-  health = 100,
+  health = INITIAL_HEALTH,
 }: {
   id: string;
   position: Position;
