@@ -15,10 +15,14 @@ const handleGameMechanics = (
  * Executes all given user scripts and returns the next state object.
  *
  * @param state
- * @param scripts
+ * @param contexts
  */
-function performTick(state: State, scripts: UserExecutionContext[]): State {
-  const userTicks = scripts.map(
+function performTick(state: State, contexts: UserExecutionContext[]): State {
+  // This line removes the user context with no units
+  const filteredContexts = contexts.filter(context =>
+    state.objectIds.includes(context.unitId)
+  );
+  const userTicks = filteredContexts.map(
     (executionContext): UserTickIntents => {
       try {
         const intents = recordIntents(executionContext, state);
