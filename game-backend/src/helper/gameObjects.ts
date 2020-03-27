@@ -53,6 +53,16 @@ export const getFood = (state: State, id: ObjectId): Food =>
 export const getUnit = (state: State, id: ObjectId): Unit =>
   getObjectById(state, id) as Unit;
 
+export const removeGameObject = (state: State, idToDelete: ObjectId): State => {
+  const { [idToDelete]: omit, ...newObjectMap } = state.objectMap;
+
+  return {
+    ...state,
+    objectIds: state.objectIds.filter(id => id !== idToDelete),
+    objectMap: newObjectMap,
+  };
+};
+
 export const countGameObjectsPerType = (state: State, type: string): number =>
   getGameObjectsPerType(state, type).length;
 
