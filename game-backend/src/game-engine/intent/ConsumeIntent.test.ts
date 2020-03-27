@@ -3,7 +3,7 @@ import StateBuilder from '../../test-helper/StateBuilder';
 import { State } from '../../../../darwin-types/State';
 import { UserContext } from '../../../../darwin-types/UserContext';
 import { Unit, MAX_HEALTH } from '../../../../darwin-types/game-objects/Unit';
-import { Food } from '../../../../darwin-types/game-objects/Food';
+import { getUnit, getFood } from '../../helper/gameObjects';
 
 describe('ConsumeIntent', () => {
   const unitId1 = 'UNIT_ID_1';
@@ -30,9 +30,9 @@ describe('ConsumeIntent', () => {
       .addUnit({ id: unitId3, x: 5, y: 5, health: 20 })
       .build();
 
-    originalUnit1 = state.objectMap[unitId1] as Unit;
-    originalUnit2 = state.objectMap[unitId2] as Unit;
-    originalUnit3 = state.objectMap[unitId3] as Unit;
+    originalUnit1 = getUnit(state, unitId1);
+    originalUnit2 = getUnit(state, unitId2);
+    originalUnit3 = getUnit(state, unitId3);
 
     userContext1 = {
       unitId: unitId1,
@@ -49,11 +49,11 @@ describe('ConsumeIntent', () => {
     const intent = new ConsumeIntent();
 
     const newState = intent.execute(state, userContext1);
-    const unit1 = newState.objectMap[unitId1] as Unit;
-    const unit2 = newState.objectMap[unitId2] as Unit;
+    const unit1 = getUnit(state, unitId1);
+    const unit2 = getUnit(state, unitId2);
 
-    const food1 = newState.objectMap[foodId1] as Food;
-    const food2 = newState.objectMap[foodId2] as Food;
+    const food1 = getFood(state, foodId1);
+    const food2 = getFood(state, foodId2);
 
     expect(unit1.health).toBe(originalUnit1.health + FOOD_REGENERATION_VALUE);
     expect(unit2.health).toBe(originalUnit2.health);
@@ -67,13 +67,11 @@ describe('ConsumeIntent', () => {
     const intent = new ConsumeIntent();
 
     const newState = intent.execute(state, userContext2);
-    const unit1 = newState.objectMap[unitId1] as Unit;
-    const unit2 = newState.objectMap[unitId2] as Unit;
+    const unit2 = getUnit(newState, unitId2);
 
-    const food1 = newState.objectMap[foodId1] as Food;
-    const food2 = newState.objectMap[foodId2] as Food;
+    const food1 = getFood(newState, foodId1);
+    const food2 = getFood(newState, foodId2);
 
-    expect(unit1.health).toBe(originalUnit1.health);
     expect(unit2.health).toBe(MAX_HEALTH);
     expect(food1).toBeTruthy();
     expect(food2).toBeFalsy();
@@ -83,7 +81,7 @@ describe('ConsumeIntent', () => {
     const intent = new ConsumeIntent();
 
     const newState = intent.execute(state, userContext3);
-    const unit3 = newState.objectMap[unitId3] as Unit;
+    const unit3 = getUnit(newState, unitId3);
 
     expect(unit3.health).toBe(originalUnit3.health);
   });
