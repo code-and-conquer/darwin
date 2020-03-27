@@ -10,8 +10,13 @@ import produce from '../../helper/produce';
 export default function updateHealth(state: State): State {
   return produce(state, draft => {
     const units = getGameObjectsPerType(state, GAME_OBJECT_TYPES.UNIT);
-    units.forEach((unit: Unit) => {
-      (draft.objectMap[unit.id] as Unit).health -= HEALTH_LOSS_RATE;
+    units.forEach((gameObject: Unit) => {
+      const unit = draft.objectMap[gameObject.id] as Unit;
+      unit.health -= HEALTH_LOSS_RATE;
+      if (unit.health === 0) {
+        delete draft.objectMap[gameObject.id];
+        draft.objectIds = draft.objectIds.filter(id => id !== gameObject.id);
+      }
     });
   });
 }
