@@ -49,11 +49,11 @@ describe('ConsumeIntent', () => {
     const intent = new ConsumeIntent();
 
     const newState = intent.execute(state, lowHealth);
-    const unit1 = getUnit(state, unitId1);
-    const unit2 = getUnit(state, unitId2);
+    const unit1 = getUnit(newState, unitId1);
+    const unit2 = getUnit(newState, unitId2);
 
-    const food1 = getFood(state, foodId1);
-    const food2 = getFood(state, foodId2);
+    const food1 = getFood(newState, foodId1);
+    const food2 = getFood(newState, foodId2);
 
     expect(unit1.health).toBe(lowHealthUnit.health + FOOD_REGENERATION_VALUE);
     expect(unit2.health).toBe(overflowHealthUnit.health);
