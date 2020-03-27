@@ -8,14 +8,9 @@ describe('UnitHealthState', () => {
       .addUnit({ id: 'test1', x: 1, y: 1, health: 100 })
       .build();
 
-    const expectedState = StateBuilder.buildState()
-      .addUnit({ id: 'test1', x: 1, y: 1, health: 90 })
-      .build();
-
     const updatedState = updateHealth(state);
     const unitUpdated: Unit = updatedState.objectMap.test1 as Unit;
-    const unitExpected: Unit = expectedState.objectMap.test1 as Unit;
-    expect(unitUpdated.health).toBe(unitExpected.health);
+    expect(unitUpdated.health).toBe(90);
   });
 
   it('Unit is removed from board', () => {

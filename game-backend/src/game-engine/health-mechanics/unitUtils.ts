@@ -4,7 +4,10 @@ import {
   Unit,
   HEALTH_LOSS_RATE,
 } from '../../../../darwin-types/game-objects/Unit';
-import { getGameObjectsPerType } from '../../helper/gameObjects';
+import {
+  getGameObjectsPerType,
+  removeGameObject,
+} from '../../helper/gameObjects';
 import produce from '../../helper/produce';
 
 export default function updateHealth(state: State): State {
@@ -13,9 +16,8 @@ export default function updateHealth(state: State): State {
     units.forEach((gameObject: Unit) => {
       const unit = draft.objectMap[gameObject.id] as Unit;
       unit.health -= HEALTH_LOSS_RATE;
-      if (unit.health === 0) {
-        delete draft.objectMap[gameObject.id];
-        draft.objectIds = draft.objectIds.filter(id => id !== gameObject.id);
+      if (unit.health <= 0) {
+        removeGameObject(draft, gameObject.id);
       }
     });
   });
