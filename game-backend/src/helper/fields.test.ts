@@ -5,6 +5,7 @@ import {
   getFlatFieldArray,
   getOccupiedFieldMap,
   createKeyFromPosition,
+  getObjectsOnField,
 } from './fields';
 import { ARENA_HEIGHT, ARENA_WIDTH } from '../../../darwin-types/Arena';
 
@@ -14,6 +15,39 @@ describe('getFlatFieldArray', () => {
   it('should return an array with areas dimension', () => {
     const fieldArray = getFlatFieldArray();
     expect(fieldArray.length).toEqual(ARENA_SIZE);
+  });
+});
+
+describe('getObjectsOnField', () => {
+  it('should return an array with objects on given position', () => {
+    const unitId = 'UNIT_ID';
+    const foodId1 = 'FOOD_ID_1';
+    const foodId2 = 'FOOD_ID_2';
+    const state: State = StateBuilder.buildState()
+      .addUnit({ id: unitId, x: 1, y: 1 })
+      .addFood({ id: foodId1, x: 2, y: 2 })
+      .addFood({ id: foodId2, x: 1, y: 1 })
+      .build();
+
+    const unit = state.objectMap[unitId];
+    const food1 = state.objectMap[foodId1];
+    const food2 = state.objectMap[foodId2];
+
+    const objectsOnFieldOneOne = getObjectsOnField(state, { x: 1, y: 1 });
+    const objectsOnFieldTwoTwo = getObjectsOnField(state, { x: 2, y: 2 });
+    const objectsOnEmptyField = getObjectsOnField(state, { x: 3, y: 3 });
+
+    expect(objectsOnEmptyField).toBeFalsy();
+
+    expect(objectsOnFieldOneOne.length).toEqual(2);
+    expect(objectsOnFieldOneOne).toEqual(expect.arrayContaining([unit, food2]));
+    expect(objectsOnFieldOneOne).toEqual(expect.not.arrayContaining([food1]));
+
+    expect(objectsOnFieldTwoTwo.length).toEqual(1);
+    expect(objectsOnFieldTwoTwo).toEqual(
+      expect.not.arrayContaining([unit, food2])
+    );
+    expect(objectsOnFieldTwoTwo).toEqual(expect.arrayContaining([food1]));
   });
 });
 

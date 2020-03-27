@@ -32,6 +32,11 @@ export const getOccupiedFieldMap = (
     };
   }, {});
 
+export const getObjectsOnField = (
+  state: State,
+  position: Position
+): GameObject[] => getOccupiedFieldMap(state)[createKeyFromPosition(position)];
+
 export const getFreeFields = (state: State): Position[] => {
   const fields = getFlatFieldArray();
   const occupiedFields = getOccupiedFieldMap(state);
