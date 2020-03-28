@@ -80,4 +80,13 @@ describe('ConsumeIntent', () => {
 
     expect(unit3.health).toBe(noReachableFoodUnit.health);
   });
+
+  it('handles dead units', () => {
+    const intent = new ConsumeIntent();
+
+    const emptyState = StateBuilder.buildState().build();
+    const newState = intent.execute(emptyState, lowHealth);
+
+    expect(newState).toBe(emptyState);
+  });
 });

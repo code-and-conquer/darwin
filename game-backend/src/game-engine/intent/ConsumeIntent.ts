@@ -6,7 +6,7 @@ import { Unit, MAX_HEALTH } from '../../../../darwin-types/game-objects/Unit';
 import { getObjectsOnField } from '../../helper/fields';
 import { GAME_OBJECT_TYPES } from '../../../../darwin-types/game-objects/GameObject';
 import { Food } from '../../../../darwin-types/game-objects/Food';
-import { removeGameObject } from '../../helper/gameObjects';
+import { getUnit, removeGameObject } from '../../helper/gameObjects';
 
 export const FOOD_REGENERATION_VALUE = 20;
 /* eslint class-methods-use-this: ["error", { "exceptMethods": ["execute"] }] */
@@ -29,7 +29,10 @@ export default class ConsumeIntent implements Intent {
 
   execute(state: State, userContext: UserContext): State {
     return produce(state, draft => {
-      const unit = draft.objectMap[userContext.unitId] as Unit;
+      const unit = getUnit(draft, userContext.unitId);
+      if (!unit) {
+        return;
+      }
       const consumable = ConsumeIntent.getConsumableInReach(state, unit);
       const canConsume = !!consumable;
 

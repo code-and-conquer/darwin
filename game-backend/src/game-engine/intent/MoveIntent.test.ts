@@ -3,6 +3,7 @@ import StateBuilder from '../../test-helper/StateBuilder';
 import { ARENA_HEIGHT, ARENA_WIDTH } from '../../../../darwin-types/Arena';
 import { UserContext } from '../../../../darwin-types/UserContext';
 import { State } from '../../../../darwin-types/State';
+import ConsumeIntent from './ConsumeIntent';
 
 describe('MoveIntent', () => {
   const UNIT_ID = 'unit1';
@@ -118,5 +119,14 @@ describe('MoveIntent', () => {
     const newState = intent.execute(upperPositionState, baseUserContext);
 
     expect(newState.objectMap[UNIT_ID].position.x).toBe(ARENA_WIDTH - 1);
+  });
+
+  it('handles dead units', () => {
+    const intent = new ConsumeIntent();
+
+    const emptyState = StateBuilder.buildState().build();
+    const newState = intent.execute(emptyState, baseUserContext);
+
+    expect(newState).toBe(emptyState);
   });
 });
