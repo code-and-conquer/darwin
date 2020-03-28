@@ -7,10 +7,9 @@ import {
   UserExecutionContext,
 } from '../../../darwin-types/UserContext';
 import { State } from '../../../darwin-types/State';
-import { selectFoods, selectUserUnit } from './state-selectors';
+import { selectFoods, selectUserUnit, getNearestFood } from './state-selectors';
 import { Food } from '../../../darwin-types/game-objects/Food';
 import { Unit } from '../../../darwin-types/game-objects/Unit';
-import { getNearestFood } from '../helper/gameObjects';
 
 export interface ScriptContext {
   move: (direction: Direction) => void;

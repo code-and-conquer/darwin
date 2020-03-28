@@ -63,20 +63,6 @@ export const removeGameObject = (state: State, idToDelete: ObjectId): State => {
   };
 };
 
-export const getNearestFood = (state: State, unit: Unit): Food => {
-  const foods = getGameObjectsPerType(state, GAME_OBJECT_TYPES.FOOD);
-  const sortedFoods = foods
-    .map(food => ({
-      food,
-      distance:
-        Math.abs(food.position.x - unit.position.x) +
-        Math.abs(food.position.y - unit.position.y),
-    }))
-    .sort((a, b) => (a.distance < b.distance ? -1 : 1));
-  const nearestFood = sortedFoods.length > 0 ? sortedFoods[0].food : undefined;
-  return nearestFood;
-};
-
 export const countGameObjectsPerType = (state: State, type: string): number =>
   getGameObjectsPerType(state, type).length;
 

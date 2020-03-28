@@ -1,13 +1,7 @@
 import StateBuilder from '../test-helper/StateBuilder';
 import { State } from '../../../darwin-types/State';
 import { GAME_OBJECT_TYPES } from '../../../darwin-types/game-objects/GameObject';
-import {
-  getFood,
-  getGameObjectsPerType,
-  removeGameObject,
-  getNearestFood,
-  getUnit,
-} from './gameObjects';
+import { getGameObjectsPerType, removeGameObject } from './gameObjects';
 
 describe('getGameObjectsPerType', () => {
   const FOOD_ID = 'FOODID1';
@@ -94,37 +88,5 @@ describe('removeGameObject', () => {
     expect(newState.objectIds).not.toContain(UNIT_ID);
     expect(newState.objectMap[UNIT_ID]).toBeFalsy();
     expect(newState.objectMap[FOOD_ID]).toBeTruthy();
-  });
-});
-
-describe('getNearestFood', () => {
-  it('should get nearest food resource', () => {
-    const UNIT_ID = 'UNIT_ID';
-    const FOOD_ID1 = 'FOOD_ID1';
-    const FOOD_ID2 = 'FOOD_ID2';
-    const FOOD_ID3 = 'FOOD_ID3';
-    const FOOD_ID4 = 'FOOD_ID4';
-    const state = StateBuilder.buildState()
-      .addFood({ id: FOOD_ID1, x: 5, y: 17 })
-      .addFood({ id: FOOD_ID2, x: 5, y: 12 })
-      .addFood({ id: FOOD_ID3, x: 15, y: 17 })
-      .addFood({ id: FOOD_ID4, x: 4, y: 11 })
-      .addUnit({ id: UNIT_ID, x: 2, y: 10 })
-      .build();
-
-    const unit = getUnit(state, UNIT_ID);
-    const expectedNearestFood = getFood(state, FOOD_ID4);
-    const food = getNearestFood(state, unit);
-    expect(food).toBe(expectedNearestFood);
-  });
-  it('should not fail, if no food is available', () => {
-    const UNIT_ID = 'UNIT_ID';
-    const state = StateBuilder.buildState()
-      .addUnit({ id: UNIT_ID, x: 2, y: 10 })
-      .build();
-
-    const unit = getUnit(state, UNIT_ID);
-    const food = getNearestFood(state, unit);
-    expect(food).toBeFalsy();
   });
 });
