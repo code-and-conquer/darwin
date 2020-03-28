@@ -1,5 +1,8 @@
 import scheduleIntents from './scheduleIntents';
 import { State } from '../../../darwin-types/State';
+import StateBuilder from '../test-helper/StateBuilder';
+import { getUnit, getFood } from '../helper/gameObjects';
+import MoveIntent, { Direction } from './intent/MoveIntent';
 
 describe('scheduleIntents', () => {
   const getDummyState = (): State => ({
@@ -27,5 +30,35 @@ describe('scheduleIntents', () => {
     ]);
 
     expect(newState).toBe(state);
+  });
+
+  it('makes sure no state objects gets mutated', () => {
+    const UNIT_ID = 'UNIT_ID';
+    const FOOD_ID = 'FOOD_ID';
+    const state = StateBuilder.buildState()
+      .addUnit({ id: UNIT_ID, x: 1 })
+      .addFood({ id: FOOD_ID, x: 10 })
+      .build();
+    const newState = scheduleIntents(state, [
+      {
+        context: {
+          userScript: {
+            script: `
+                userUnit.position.x = 8;
+                nearestFood.position.x = 8;
+                move('RIGHT')
+              `,
+          },
+          unitId: UNIT_ID,
+        },
+        intents: [new MoveIntent(Direction.Right)],
+      },
+    ]);
+
+    const unit = getUnit(newState, UNIT_ID);
+    const food = getFood(newState, FOOD_ID);
+
+    expect(unit.position.x).toBe(2);
+    expect(food.position.x).toBe(10);
   });
 });
