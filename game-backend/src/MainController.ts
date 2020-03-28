@@ -1,32 +1,33 @@
 import WebSocket from 'ws';
 import hyperid from 'hyperid';
-import { UserContext, UserId } from '../../darwin-types/UserContext';
-import { createStore, UserEntry } from './ServerStore';
-import performTick from './game-engine';
+import { UserId } from '../../darwin-types/UserContext';
 import { Message } from '../../darwin-types/messages/Message';
 import { ScriptUpdate } from '../../darwin-types/messages/ScriptUpdate';
 import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
-import { Unit } from '../../darwin-types/game-objects/Unit';
-import { generateFreePosition } from './helper/fields';
 import { ConnectionInitialization } from '../../darwin-types/messages/ConnectionInitialization';
-import { createUnit } from './helper/gameObjects';
+import GameController from './GameController';
+import { createServerStore } from './createServerStore';
 
-export const TICK_INTERVAL = 2000;
+// time until a new game will be started after previous one terminated
+export const GAME_RESTART_TIME = 10000;
 
-/**
- * Main controller, which handles new connections and stores match data and other server data.
- */
 export default class MainController {
+  private store = createServerStore();
+
   private hyperIdInstance = hyperid();
 
-  private store = createStore();
+  private gameController: GameController;
 
-  private isTicking = false;
-
-  private tickingInterval: NodeJS.Timeout;
+  constructor() {
+    this.gameController = new GameController(
+      this.getMatchUpdateExecutor(),
+      this.getTerminateExecutor()
+    );
+  }
 
   newConnection(ws: WebSocket, requestedUserId: UserId): void {
     const userId = this.getUserId(requestedUserId);
+
     MainController.sendUserId(ws, userId);
 
     ws.on('message', this.getMessageListener(userId));
@@ -36,12 +37,33 @@ export default class MainController {
     if (userContext === undefined) {
       this.addNewUserContext(ws, userId);
     } else {
-      userContext.connections.push(ws);
+      userContext.push(ws);
     }
+  }
 
-    if (!this.isTicking) {
-      this.startTicking();
-    }
+  private getMatchUpdateExecutor(): (
+    userId: UserId,
+    matchUpdate: MatchUpdate
+  ) => void {
+    return (userId: UserId, matchUpdate: MatchUpdate): void => {
+      this.store.userContexts.userContextMap[userId].forEach(ws => {
+        ws.send(JSON.stringify(matchUpdate));
+      });
+    };
+  }
+
+  private getTerminateExecutor(): () => void {
+    return (): void => {
+      setTimeout(() => {
+        this.gameController = new GameController(
+          this.getMatchUpdateExecutor(),
+          this.getTerminateExecutor()
+        );
+        this.store.userContexts.userContextIds.forEach(id => {
+          this.gameController.appendUser(id);
+        });
+      }, GAME_RESTART_TIME);
+    };
   }
 
   /**
@@ -82,102 +104,15 @@ export default class MainController {
     };
   }
 
-  private addNewUserContext(ws: WebSocket, userId: string): void {
-    const unit = this.generateUnit();
-    this.addUnitToMatchState(unit);
-    const userCtx: UserEntry = {
-      userContext: {
-        unitId: unit.id,
-        userScript: {
-          script: '',
-        },
-      },
-      connections: [ws],
-    };
-    this.addUserEntryToStore(userId, userCtx);
-  }
-
-  private addUserEntryToStore(userId: string, userCtx: UserEntry): void {
-    this.store.userContexts.userContextMap[userId] = userCtx;
-    this.store.userContexts.userContextIds.push(userId);
-  }
-
-  private addUnitToMatchState(unit: Unit): void {
-    this.store.matchState.objectMap[unit.id] = unit;
-    this.store.matchState.objectIds.push(unit.id);
-  }
-
-  generateUnit(): Unit {
-    const unit = createUnit({
-      id: this.hyperIdInstance(),
-      position: generateFreePosition(this.store.matchState),
+  private handleUserScript(userContextId: UserId, message: ScriptUpdate): void {
+    this.gameController.setScript(userContextId, {
+      script: message.payload.script,
     });
-    return unit;
   }
 
-  handleUserScript(userContextId: UserId, message: ScriptUpdate): void {
-    this.updateUserScript(userContextId, message.payload.script);
-  }
-
-  updateUserScript(userContextId: UserId, script: string): void {
-    this.store.userContexts.userContextMap[
-      userContextId
-    ].userContext.userScript.script = script;
-  }
-
-  private startTicking(): void {
-    this.isTicking = true;
-    this.tickingInterval = setInterval(this.getTickExecutor(), TICK_INTERVAL);
-  }
-
-  private getTickExecutor() {
-    return (): void => {
-      this.performTick();
-      this.notifyUsers();
-    };
-  }
-
-  private notifyUsers(): void {
-    this.store.userContexts.userContextIds
-      .map(id => this.store.userContexts.userContextMap[id])
-      .forEach(userEntry => {
-        const matchUpdate = this.generateMatchUpdate(
-          MainController.getPlainUserContext(userEntry.userContext)
-        );
-        userEntry.connections.forEach(ws => {
-          ws.send(JSON.stringify(matchUpdate));
-        });
-      });
-  }
-
-  private static getPlainUserContext(userContext: UserContext): UserContext {
-    return {
-      unitId: userContext.unitId,
-    };
-  }
-
-  private generateMatchUpdate(userContext: UserContext): MatchUpdate {
-    return {
-      type: 'matchUpdate',
-      payload: {
-        state: this.store.matchState,
-        userContext,
-        meta: {
-          currentTick: this.store.currentTick,
-        },
-      },
-    };
-  }
-
-  private performTick(): void {
-    this.store.currentTick++;
-    const userContexts = this.store.userContexts.userContextIds
-      .map(id => this.store.userContexts.userContextMap[id])
-      .map(userEntry => userEntry.userContext);
-    this.store.matchState = performTick(this.store.matchState, userContexts);
-  }
-
-  private stopTicking(): void {
-    clearInterval(this.tickingInterval);
+  private addNewUserContext(ws: WebSocket, userId: UserId): void {
+    this.store.userContexts.userContextMap[userId] = [ws];
+    this.store.userContexts.userContextIds.push(userId);
+    this.gameController.appendUser(userId);
   }
 }

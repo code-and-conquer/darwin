@@ -1,8 +1,16 @@
 import WebSocket from 'ws';
-import MainController, { TICK_INTERVAL } from './MainController';
+import MainController, { GAME_RESTART_TIME } from './MainController';
 import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
-import { Tick } from '../../darwin-types/Tick';
 import { ConnectionInitialization } from '../../darwin-types/messages/ConnectionInitialization';
+import * as GameController from './GameController';
+import { UserId } from '../../darwin-types/UserContext';
+import StateBuilder from './test-helper/StateBuilder';
+import { ScriptUpdate } from '../../darwin-types/messages/ScriptUpdate';
+
+jest.mock('./GameController');
+
+const mocked = GameController as jest.Mocked<typeof GameController>;
+const GameControllerMock = mocked.default;
 
 describe('MainController', () => {
   // Websocket mocks
@@ -19,6 +27,11 @@ describe('MainController', () => {
   };
 
   let mainController: MainController;
+  let sendMatchUpdate: (userId: UserId, matchUpdate: MatchUpdate) => void;
+  let terminate: () => void;
+
+  let fakeMatchUpdate: MatchUpdate;
+
   jest.useFakeTimers();
 
   const parseMatchUpdate = (body: string): MatchUpdate => {
@@ -32,9 +45,26 @@ describe('MainController', () => {
   };
 
   beforeEach(() => {
-    mainController = new MainController();
     jest.clearAllMocks();
     jest.clearAllTimers();
+
+    mainController = new MainController();
+    // eslint-disable-next-line prefer-destructuring
+    sendMatchUpdate = GameControllerMock.mock.calls[0][0];
+    // eslint-disable-next-line prefer-destructuring
+    terminate = GameControllerMock.mock.calls[0][1];
+
+    const state = StateBuilder.buildState()
+      .addUnit({ id: 'unit1' })
+      .build();
+    fakeMatchUpdate = {
+      type: 'matchUpdate',
+      payload: {
+        state,
+        userContext: { unitId: 'unit1' },
+        meta: { currentTick: null },
+      },
+    };
   });
 
   it('sends a generated connection id back', () => {
@@ -53,7 +83,7 @@ describe('MainController', () => {
       sendFunction0.mock.calls[0][0]
     );
 
-    // second one
+    // second connection
     mainController.newConnection(
       wsMock1 as WebSocket,
       connectionInitialization0.payload.userId
@@ -69,78 +99,55 @@ describe('MainController', () => {
     );
   });
 
-  it('starts ticking', () => {
-    mainController.newConnection(wsMock0 as WebSocket, 'connection0');
-    jest.advanceTimersByTime(TICK_INTERVAL);
-    expect(setInterval).toBeCalledTimes(1);
-  });
-
-  it('sends a matchUpdate', () => {
-    mainController.newConnection(wsMock0 as WebSocket, 'connection0');
-    jest.advanceTimersByTime(TICK_INTERVAL);
+  it('forwards a matchUpdate to the client', () => {
+    mainController.newConnection(wsMock0 as WebSocket, '');
+    const {
+      payload: { userId },
+    } = parseConnectionInitialization(sendFunction0.mock.calls[0][0]);
+    sendMatchUpdate(userId, fakeMatchUpdate);
 
     const matchUpdate = parseMatchUpdate(sendFunction0.mock.calls[1][0]);
-    expect(matchUpdate.type).toBe('matchUpdate');
+    expect(matchUpdate.type).toBe(fakeMatchUpdate.type);
   });
 
-  it('sends correct states on tick', () => {
-    mainController.newConnection(wsMock0 as WebSocket, 'connection0');
-    jest.advanceTimersByTime(TICK_INTERVAL);
+  it('forwards a scriptUpdate to the GameController', () => {
+    mainController.newConnection(wsMock0 as WebSocket, '');
+    const onListener = onFunction.mock.calls[0][1];
+    const scriptUpdate: ScriptUpdate = {
+      type: 'scriptUpdate',
+      payload: { script: 'try()' },
+    };
+    onListener(JSON.stringify(scriptUpdate));
 
-    const matchUpdate = parseMatchUpdate(sendFunction0.mock.calls[1][0]);
-    const unitId = matchUpdate.payload.state.objectIds[0];
-
-    expect(unitId).not.toBeNull();
-    expect(matchUpdate.payload.state.objectMap[unitId]).toBeDefined();
+    const mockInstance = GameControllerMock.mock.instances[0];
+    const setScriptMock = mockInstance.setScript as jest.Mock;
+    const updateCall = setScriptMock.mock.calls[0][1];
+    expect(updateCall.script).toBe(scriptUpdate.payload.script);
   });
 
-  it('increments tick counter on each tick', () => {
-    let matchUpdate;
+  it('sends the same update to multiple connections of the same user', () => {
+    mainController.newConnection(wsMock0 as WebSocket, '');
+    const {
+      payload: { userId },
+    } = parseConnectionInitialization(sendFunction0.mock.calls[0][0]);
+    mainController.newConnection(wsMock1 as WebSocket, userId);
 
-    mainController.newConnection(wsMock0 as WebSocket, 'connection0');
+    sendMatchUpdate(userId, fakeMatchUpdate);
 
-    jest.advanceTimersByTime(TICK_INTERVAL);
-    matchUpdate = parseMatchUpdate(sendFunction0.mock.calls[1][0]);
-    expect(matchUpdate.payload.meta.currentTick).toBe(1);
-
-    jest.advanceTimersByTime(TICK_INTERVAL);
-    matchUpdate = parseMatchUpdate(sendFunction0.mock.calls[2][0]);
-    expect(matchUpdate.payload.meta.currentTick).toBe(2);
-  });
-
-  function assertStatesMatch(
-    updateClient0: string,
-    updateClient1: string,
-    expectedTick: Tick
-  ): void {
-    const matchUpdate0 = parseMatchUpdate(updateClient0);
-    const matchUpdate1 = parseMatchUpdate(updateClient1);
+    const matchUpdate0 = parseMatchUpdate(sendFunction0.mock.calls[1][0]);
+    const matchUpdate1 = parseMatchUpdate(sendFunction1.mock.calls[1][0]);
     expect(matchUpdate0.payload.state).toStrictEqual(
       matchUpdate1.payload.state
     );
-    expect(matchUpdate0.payload.userContext.unitId).not.toBe(
+    expect(matchUpdate0.payload.userContext.unitId).toBe(
       matchUpdate1.payload.userContext.unitId
     );
-    expect(matchUpdate0.payload.meta.currentTick).toBe(expectedTick);
-    expect(matchUpdate1.payload.meta.currentTick).toBe(expectedTick);
-  }
+  });
 
-  it('sends the same state to multiple clients', () => {
-    mainController.newConnection(wsMock0 as WebSocket, 'connection0');
-    mainController.newConnection(wsMock1 as WebSocket, 'connection1');
+  it('restarts a game when the previous has finished', () => {
+    terminate();
+    jest.advanceTimersByTime(GAME_RESTART_TIME);
 
-    jest.advanceTimersByTime(TICK_INTERVAL);
-    jest.advanceTimersByTime(TICK_INTERVAL);
-
-    assertStatesMatch(
-      sendFunction0.mock.calls[1][0],
-      sendFunction1.mock.calls[1][0],
-      1
-    );
-    assertStatesMatch(
-      sendFunction0.mock.calls[2][0],
-      sendFunction1.mock.calls[2][0],
-      2
-    );
+    expect(GameControllerMock.mock.calls.length).toBe(2);
   });
 });

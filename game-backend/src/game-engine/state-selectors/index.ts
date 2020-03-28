@@ -1,4 +1,4 @@
-import selectFoods from './food-selector';
-import selectUserUnit from './userUnit-selector';
+import { selectFoods, getNearestFood } from './foodSelector';
+import selectUserUnit from './userUnitSelector';
 
-export { selectFoods, selectUserUnit };
+export { selectFoods, getNearestFood, selectUserUnit };
