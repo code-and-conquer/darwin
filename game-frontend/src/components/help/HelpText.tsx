@@ -39,6 +39,10 @@ const HelpText: FC = () => {
         bewegen:
       </p>
       <Codeblock>{moveToFoodCodeExample}</Codeblock>
+      <p>
+        Um die Ressource an deiner Position zu konsumieren, führe{' '}
+        <InlineCode>consume()</InlineCode> aus.
+      </p>
     </>
   );
 };
