@@ -7,7 +7,7 @@ import {
   UserExecutionContext,
 } from '../../../darwin-types/UserContext';
 import { State } from '../../../darwin-types/State';
-import { selectFoods, selectUserUnit } from './state-selectors';
+import { selectFoods, selectUserUnit, getNearestFood } from './state-selectors';
 import { Food } from '../../../darwin-types/game-objects/Food';
 import { Unit } from '../../../darwin-types/game-objects/Unit';
 
@@ -15,6 +15,7 @@ export interface ScriptContext {
   move: (direction: Direction) => void;
   consume: () => void;
   foods: Food[];
+  nearestFood: Food;
   userUnit: Unit;
 }
 
@@ -55,6 +56,7 @@ function recordIntents(
     consume: () => {
       intentions.push(new ConsumeIntent());
     },
+    nearestFood: getNearestFood(state, userUnit),
     foods,
     userUnit,
   });

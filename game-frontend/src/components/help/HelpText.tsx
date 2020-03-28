@@ -3,9 +3,9 @@ import InlineCode from './InlineCode';
 import Codeblock from './CodeBlock';
 
 const moveToFoodCodeExample = `
-if(foods[0].position.x > userUnit.position.x){
+if(nearestFood.position.x > userUnit.position.x){
   move('RIGHT');
-} else if (foods[0].position.x < userUnit.position.x){
+} else if (nearestFood.position.x < userUnit.position.x){
   move('LEFT');
 }
 `;
@@ -33,8 +33,10 @@ const HelpText: FC = () => {
       <h4>Ressouren konsumieren</h4>
       <p>
         Die Positionen der Ressourcen kannst du mithilfe der Variable{' '}
-        <InlineCode>foods</InlineCode> auslesen. Deine eigene Position ist in
-        der Variable <InlineCode>userUnit</InlineCode> verfügbar. Beispielsweise
+        <InlineCode>foods</InlineCode> auslesen. In der Variable{' '}
+        <InlineCode>nearestFood</InlineCode> findest du die Food-Resource,
+        welche am nächsten bei deiner Unit ist. Deine eigene Position ist in der
+        Variable <InlineCode>userUnit</InlineCode> verfügbar. Beispielsweise
         kannst du deine Unit mit diesem Code an die X-Position einer Ressource
         bewegen:
       </p>
