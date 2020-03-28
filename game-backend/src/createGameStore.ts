@@ -1,22 +1,16 @@
-import WebSocket from 'ws';
-import { UserId, UserExecutionContext } from '../../darwin-types/UserContext';
 import { State } from '../../darwin-types/State';
+import { UserExecutionContext, UserId } from '../../darwin-types/UserContext';
 
-export interface UserEntry {
-  userContext: UserExecutionContext;
-  connections: WebSocket[];
-}
-
-export interface ServerStore {
+export interface GameStore {
   matchState: State;
   userContexts: {
-    userContextMap: Record<UserId, UserEntry>;
+    userContextMap: Record<UserId, UserExecutionContext>;
     userContextIds: UserId[];
   };
   currentTick: number;
 }
 
-export const createStore = (): ServerStore => {
+export const createGameStore = (): GameStore => {
   return {
     matchState: {
       objectIds: [],
