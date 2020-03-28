@@ -11,8 +11,8 @@ export interface GameObject {
 }
 export interface AddGameObject {
   id: string;
-  x: number;
-  y: number;
+  x?: number;
+  y?: number;
   moveBlocking?: boolean;
 }
 
@@ -36,13 +36,13 @@ export default class StateBuilder {
     return this;
   }
 
-  addUnit({ id, x, y, health }: AddGameObjectUnit): StateBuilder {
+  addUnit({ id, x = 1, y = 1, health }: AddGameObjectUnit): StateBuilder {
     const position = { x, y };
     const unit = createUnit({ id, position, health });
     return this.addObject(unit);
   }
 
-  addFood({ id, x, y }: AddGameObject): StateBuilder {
+  addFood({ id, x = 1, y = 1 }: AddGameObject): StateBuilder {
     const position = { x, y };
     const food = createFood({ id, position });
     return this.addObject(food);

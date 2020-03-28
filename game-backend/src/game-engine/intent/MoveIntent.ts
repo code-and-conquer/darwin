@@ -4,6 +4,7 @@ import { State } from '../../../../darwin-types/State';
 import { UserContext } from '../../../../darwin-types/UserContext';
 import Position from '../../../../darwin-types/Position';
 import { ARENA_HEIGHT, ARENA_WIDTH } from '../../../../darwin-types/Arena';
+import { getUnit } from '../../helper/gameObjects';
 
 export enum Direction {
   Up = 'UP',
@@ -50,7 +51,10 @@ export default class MoveIntent implements Intent {
   }
 
   execute(state: State, userContext: UserContext): State {
-    const unit = state.objectMap[userContext.unitId];
+    const unit = getUnit(state, userContext.unitId);
+    if (!unit) {
+      return state;
+    }
     const position = MoveIntent.checkBoundaries(this.move(unit.position));
     const conflictingObject = state.objectIds
       .map(id => state.objectMap[id])

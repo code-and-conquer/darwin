@@ -1,6 +1,6 @@
 import handleFoodSpawning from './index';
-import StateBuilder from '../../test-helper/StateBuilder';
-import { State } from '../../../../darwin-types/State';
+import StateBuilder from '../../../test-helper/StateBuilder';
+import { State } from '../../../../../darwin-types/State';
 
 describe('Food Spawning', () => {
   const UNIT_ID = 'unit1';
