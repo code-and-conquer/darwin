@@ -7,6 +7,8 @@ import GameObjects from './components/canvas-objects/GameObjects';
 import Grid from './components/canvas-objects/Grid';
 import { FIELD_SIZE, STAGE_COLUMNS, STAGE_ROWS } from './constants/stage';
 import Rectangle from './components/pixi/Rectangle';
+import Firework from './components/pixi/Firework';
+import GAME_OBJECT_TYPES from './constants/gameObjects';
 
 const width = STAGE_ROWS * FIELD_SIZE;
 const height = STAGE_COLUMNS * FIELD_SIZE;
@@ -26,6 +28,14 @@ function Game(): JSX.Element {
 
   const isDead = hasJoinedGame && !isLiving;
 
+  const isOnlyOnePlayerLeft =
+    gameState.objectIds
+      .map(id => gameState.objectMap[id])
+      .filter(gameObject => gameObject.type === GAME_OBJECT_TYPES.UNIT)
+      .length === 1;
+
+  const hasWon = isLiving && isOnlyOnePlayerLeft;
+
   if (!hasJoinedGame) {
     return <p>Warten...</p>;
   }
@@ -36,35 +46,38 @@ function Game(): JSX.Element {
   }
 
   return (
-    <CanvasWrapper>
-      <Stage
-        options={{
-          resolution: window.devicePixelRatio,
-        }}
-        width={width}
-        height={height}
-      >
-        <Container filters={isDead ? [colorMatrix] : []}>
-          <Rectangle
-            fill={0x191919}
-            width={width}
-            height={height}
-            position={{ x: 0, y: 0 }}
-          />
-          <Grid
-            numberOfRows={STAGE_ROWS}
-            numberOfColumns={STAGE_COLUMNS}
-            scaleFactor={FIELD_SIZE}
-          />
-          <GameObjects
-            objectIds={gameState.objectIds}
-            objectMap={gameState.objectMap}
-            ownUnitId={userContext.unitId}
-            scaleFactor={FIELD_SIZE}
-          />
-        </Container>
-      </Stage>
-    </CanvasWrapper>
+    <>
+      <CanvasWrapper>
+        <Stage
+          options={{
+            resolution: window.devicePixelRatio,
+          }}
+          width={width}
+          height={height}
+        >
+          <Container filters={isDead ? [colorMatrix] : []}>
+            {hasWon ? <Firework /> : null}
+            <Rectangle
+              fill={0x191919}
+              width={width}
+              height={height}
+              position={{ x: 0, y: 0 }}
+            />
+            <Grid
+              numberOfRows={STAGE_ROWS}
+              numberOfColumns={STAGE_COLUMNS}
+              scaleFactor={FIELD_SIZE}
+            />
+            <GameObjects
+              objectIds={gameState.objectIds}
+              objectMap={gameState.objectMap}
+              ownUnitId={userContext.unitId}
+              scaleFactor={FIELD_SIZE}
+            />
+          </Container>
+        </Stage>
+      </CanvasWrapper>
+    </>
   );
 }
 
