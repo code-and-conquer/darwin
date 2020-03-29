@@ -1,7 +1,8 @@
-import React, { useState, FC, useEffect, useCallback } from 'react';
+import React, { useState, FC, useEffect, useRef, useCallback } from 'react';
 import {
   ControlledEditor,
   ControlledEditorOnChange,
+  EditorDidMount,
 } from '@monaco-editor/react';
 import monacoEditor from 'monaco-editor/esm/vs/editor/editor.api';
 import Container from './Container';
@@ -11,50 +12,60 @@ import { ScriptUpdate } from '../../../../darwin-types/messages/ScriptUpdate';
 
 const UserScript: FC = () => {
   const send = useSendMessage();
+  const currentUserScript = useRef('');
   const [userScript, setUserScript] = useState('');
-  const [editorRef, setEditorRef] = useState(null);
+  const [editorRef, setEditorRef] = useState<
+    monacoEditor.editor.IStandaloneCodeEditor
+  >();
 
   const onChange: ControlledEditorOnChange = (
-    ev: monacoEditor.editor.IModelContentChangedEvent,
+    _ev: monacoEditor.editor.IModelContentChangedEvent,
     value: string | undefined
   ): void => {
-    setUserScript(value as string);
+    if (typeof value !== 'undefined') {
+      setUserScript(value);
+    }
   };
 
-  const submit = (e: any): void => {
-    e.preventDefault();
-
+  const submit = useCallback(() => {
     const scriptUpdate: ScriptUpdate = {
       type: 'scriptUpdate',
       payload: {
-        script: userScript,
+        script: currentUserScript.current,
       },
     };
 
     send(scriptUpdate);
+  }, [send]);
+
+  const reactSubmit = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
+    e.preventDefault();
+    submit();
   };
 
-  const handleEditorDidMount = (_: any, editor: any) => {
+  const handleEditorDidMount: EditorDidMount = (_getEditorValue, editor) => {
     setEditorRef(editor);
   };
 
   useEffect(() => {
+    currentUserScript.current = userScript;
+  }, [userScript]);
+
+  useEffect(() => {
     if (editorRef) {
-      (editorRef as any).addAction({
+      editorRef.addAction({
         // An unique identifier of the contributed action.
         id: 'my-unique-id',
 
         // A label of the action that will be presented to the user.
-        label: 'My Label!!!',
+        label: 'Speichern und Hochladen',
 
         // An optional array of keybindings for the action.
+        // TODO: flip will fix that
+        // eslint-disable-next-line no-bitwise
         keybindings: [2048 | 49],
-
-        // A precondition for this action.
-        precondition: null,
-
-        // A rule to evaluate on top of the precondition in order to dispatch the keybindings.
-        keybindingContext: null,
 
         contextMenuGroupId: 'navigation',
 
@@ -62,13 +73,10 @@ const UserScript: FC = () => {
 
         // Method that will be executed when the action is triggered.
         // @param editor The editor instance is passed in as a convinience
-        run: () => {
-          submit({ preventDefault: () => {} });
-          return null;
-        },
+        run: submit,
       });
     }
-  }, [editorRef]);
+  }, [editorRef, submit]);
 
   return (
     <Container data-testid="user-script-form">
@@ -80,7 +88,7 @@ const UserScript: FC = () => {
           theme="dark"
           editorDidMount={handleEditorDidMount}
         />
-        <SaveButton onClick={submit}>Speichern</SaveButton>
+        <SaveButton onClick={reactSubmit}>Speichern</SaveButton>
       </form>
     </Container>
   );
