@@ -18,8 +18,8 @@ const Food: FC<Props> = ({ position }) => (
         y: position.y + HALF_FIELD_SIZE,
       }}
       radius={radius}
-      color={0xb8fb3c}
-      fill={0xb8fb3c}
+      color={0x5aa1ff}
+      fill={0x5aa1ff}
     />
     <Circle
       position={{
