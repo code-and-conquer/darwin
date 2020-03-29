@@ -40,9 +40,7 @@
     "url": "https://github.com/code-and-conquer/darwin/issues"
   },
   "homepage": "https://github.com/code-and-conquer/darwin#readme",
-  "dependencies": {
-    "npm": "^6.14.4"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.22.0",
     "@typescript-eslint/parser": "^2.22.0",
