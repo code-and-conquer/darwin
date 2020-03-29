@@ -20,7 +20,7 @@ const triangleSize = FIELD_SIZE * triangleScale;
 const triangleMargin = (FIELD_SIZE - triangleSize) / 2;
 
 const Unit: FC<Props> = ({ position, isOwn }) => {
-  const color = isOwn ? 0x2e00af : 0xff193b;
+  const color = isOwn ? 0x2ec655 : 0xff193b;
   return (
     <>
       <Square
