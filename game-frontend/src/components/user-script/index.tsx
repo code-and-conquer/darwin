@@ -70,6 +70,16 @@ const UserScript: FC = () => {
     }
   }, [editorRef]);
 
+  // function asdf(param1) {
+  //   return param1
+  // }
+
+  // (param1) => {
+  //   return param1
+  // }
+
+  // (param1) => param1
+
   return (
     <Container data-testid="user-script-form">
       <form>
