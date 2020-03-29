@@ -46,7 +46,7 @@ function Game(): JSX.Element {
       >
         <Container filters={isDead ? [colorMatrix] : []}>
           <Rectangle
-            fill={0x001437}
+            fill={0x191919}
             width={width}
             height={height}
             position={{ x: 0, y: 0 }}
