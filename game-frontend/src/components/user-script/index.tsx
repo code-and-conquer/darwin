@@ -18,10 +18,7 @@ const UserScript: FC = () => {
     monacoEditor.editor.IStandaloneCodeEditor
   >();
 
-  const onChange: ControlledEditorOnChange = (
-    _ev: monacoEditor.editor.IModelContentChangedEvent,
-    value: string | undefined
-  ): void => {
+  const onChange: ControlledEditorOnChange = (_ev, value): void => {
     if (typeof value !== 'undefined') {
       setUserScript(value);
     }
@@ -57,7 +54,7 @@ const UserScript: FC = () => {
     if (editorRef) {
       editorRef.addAction({
         // An unique identifier of the contributed action.
-        id: 'my-unique-id',
+        id: 'saveAndUpload',
 
         // A label of the action that will be presented to the user.
         label: 'Speichern und Hochladen',
@@ -66,13 +63,8 @@ const UserScript: FC = () => {
         // TODO: flip will fix that
         // eslint-disable-next-line no-bitwise
         keybindings: [2048 | 49],
-
         contextMenuGroupId: 'navigation',
-
         contextMenuOrder: 1.5,
-
-        // Method that will be executed when the action is triggered.
-        // @param editor The editor instance is passed in as a convinience
         run: submit,
       });
     }
