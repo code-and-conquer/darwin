@@ -32,11 +32,12 @@ export const useSaveHotKey = (
   const saveRef = useRef(save);
   const SAVE_ACTION_ID = 'DARWIN_SAVE';
 
+  const editor = editorRef.current;
   useEffect(() => {
-    if (editorRef && editorRef.current && monacoInstance) {
-      const editorSaveAction = editorRef.current.getAction(SAVE_ACTION_ID);
+    if (editor && monacoInstance) {
+      const editorSaveAction = editor.getAction(SAVE_ACTION_ID);
       if (!editorSaveAction || saveRef.current !== save) {
-        editorRef.current.addAction({
+        editor.addAction({
           id: SAVE_ACTION_ID,
           label: 'Speichern',
           keybindings: [
@@ -48,5 +49,5 @@ export const useSaveHotKey = (
         saveRef.current = save;
       }
     }
-  }, [editorRef, save, monacoInstance]);
+  }, [editor, save, monacoInstance]);
 };
