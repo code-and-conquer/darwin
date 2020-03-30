@@ -3,11 +3,11 @@ import { monaco, EditorDidMount } from '@monaco-editor/react';
 import monacoEditor from 'monaco-editor/esm/vs/editor/editor.api';
 
 export type MonacoInstance = typeof monacoEditor;
-type EditorRef = React.MutableRefObject<
-  monacoEditor.editor.IStandaloneCodeEditor | undefined
->;
+type Editor = monacoEditor.editor.IStandaloneCodeEditor;
+type EditorRef = React.MutableRefObject<Editor | undefined>;
+
 export const useHandleEditorRef = (): [EditorRef, EditorDidMount] => {
-  const editorRef = useRef<monacoEditor.editor.IStandaloneCodeEditor>();
+  const editorRef: EditorRef = useRef();
   const didMount: EditorDidMount = (_, editor) => {
     editorRef.current = editor;
   };
@@ -26,7 +26,7 @@ export const useMonacoInstance = (): MonacoInstance | undefined => {
 
 export const useSaveHotKey = (
   editorRef: EditorRef,
-  save: (editor: monacoEditor.editor.ICodeEditor) => void
+  save: (editor: Editor) => void
 ): void => {
   const monacoInstance = useMonacoInstance();
   const SAVE_ACTION_ID = 'DARWIN_SAVE';
