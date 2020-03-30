@@ -4,6 +4,7 @@ import Triangle from '../pixi/Triangle';
 import Position from '../../../../darwin-types/Position';
 import { FIELD_SIZE } from '../../constants/stage';
 import Parallelogram from '../pixi/Parallelogram';
+import HealthBar from './HealthBar';
 
 type Props = {
   position: Position;
@@ -19,7 +20,7 @@ const triangleScale = 0.4;
 const triangleSize = FIELD_SIZE * triangleScale;
 const triangleMargin = (FIELD_SIZE - triangleSize) / 2;
 
-const Unit: FC<Props> = ({ position, isOwn }) => {
+const Unit: FC<Props> = ({ position, isOwn, health }) => {
   const color = isOwn ? 0x2ec655 : 0xff193b;
   return (
     <>
@@ -50,6 +51,7 @@ const Unit: FC<Props> = ({ position, isOwn }) => {
         color={color}
         fill={color}
       />
+      <HealthBar position={position} health={health} />
     </>
   );
 };
