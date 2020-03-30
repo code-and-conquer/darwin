@@ -29,12 +29,13 @@ export const useSaveHotKey = (
   save: (editor: Editor) => void
 ): void => {
   const monacoInstance = useMonacoInstance();
+  const saveRef = useRef(save);
   const SAVE_ACTION_ID = 'DARWIN_SAVE';
 
   useEffect(() => {
     if (editorRef && editorRef.current && monacoInstance) {
       const editorSaveAction = editorRef.current.getAction(SAVE_ACTION_ID);
-      if (!editorSaveAction || editorSaveAction.run !== save) {
+      if (!editorSaveAction || saveRef.current !== save) {
         editorRef.current.addAction({
           id: SAVE_ACTION_ID,
           label: 'Speichern',
@@ -44,6 +45,7 @@ export const useSaveHotKey = (
           ],
           run: save,
         });
+        saveRef.current = save;
       }
     }
   }, [editorRef, save, monacoInstance]);
