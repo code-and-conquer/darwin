@@ -26,7 +26,7 @@ export const useMonacoInstance = (): MonacoInstance | undefined => {
 
 export const useSaveHotKey = (
   editorRef: EditorRef,
-  save: (value: string) => void
+  save: (editor: monacoEditor.editor.ICodeEditor) => void
 ): void => {
   const monacoInstance = useMonacoInstance();
   const SAVE_ACTION_ID = 'DARWIN_SAVE';
@@ -42,9 +42,7 @@ export const useSaveHotKey = (
             // eslint-disable-next-line no-bitwise
             monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KEY_S,
           ],
-          run: editor => {
-            save(editor.getValue());
-          },
+          run: save,
         });
       }
     }
