@@ -7,6 +7,7 @@ const AppContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 
   background: url(${background}) #333333;
   background-repeat: no-repeat;
