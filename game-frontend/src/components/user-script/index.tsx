@@ -1,4 +1,4 @@
-import React, { useState, FC, useCallback } from 'react';
+import React, { useState, FC, useMemo } from 'react';
 import { ControlledEditorOnChange } from '@monaco-editor/react';
 import Container from './Container';
 import SaveButton from './SaveButton';
@@ -10,19 +10,22 @@ const UserScript: FC = () => {
   const sendMessage = useSendMessage();
   const [userScript, setUserScript] = useState('');
 
-  const saveScript = useCallback(() => {
-    const scriptUpdate: ScriptUpdate = {
-      type: 'scriptUpdate',
-      payload: {
-        script: userScript,
-      },
-    };
-    sendMessage(scriptUpdate);
-  }, [sendMessage, userScript]);
+  const saveScript = useMemo(
+    () => (script: string): void => {
+      const scriptUpdate: ScriptUpdate = {
+        type: 'scriptUpdate',
+        payload: {
+          script,
+        },
+      };
+      sendMessage(scriptUpdate);
+    },
+    [sendMessage]
+  );
 
   const onClick = (e: React.MouseEvent): void => {
     e.preventDefault();
-    saveScript();
+    saveScript(userScript);
   };
 
   const onChange: ControlledEditorOnChange = (_ev, value) => {

@@ -7,7 +7,7 @@ import { useSaveHotKey, useHandleEditorRef } from './monaco-helper';
 
 const Editor: FC<{
   onChange: ControlledEditorOnChange;
-  save: () => void;
+  save: (script: string) => void;
 }> = ({ onChange, save }) => {
   const [editorRef, handleEditorDidMount] = useHandleEditorRef();
 

@@ -24,23 +24,29 @@ export const useMonacoInstance = (): MonacoInstance | undefined => {
   return monacoInstance;
 };
 
-export const useSaveHotKey = (editorRef: EditorRef, save: () => void): void => {
+export const useSaveHotKey = (
+  editorRef: EditorRef,
+  save: (value: string) => void
+): void => {
   const monacoInstance = useMonacoInstance();
+  const SAVE_ACTION_ID = 'DARWIN_SAVE';
 
   useEffect(() => {
     if (editorRef && editorRef.current && monacoInstance) {
-      const m = monacoInstance as MonacoInstance;
-      editorRef.current.addAction({
-        // An unique identifier of the contributed action.
-        id: 'saveAndUpload',
-
-        // A label of the action that will be presented to the user.
-        label: 'Speichern und Hochladen',
-
-        // eslint-disable-next-line no-bitwise
-        keybindings: [m.KeyMod.CtrlCmd | m.KeyCode.KEY_S],
-        run: save,
-      });
+      const editorSaveAction = editorRef.current.getAction(SAVE_ACTION_ID);
+      if (!editorSaveAction || editorSaveAction.run !== save) {
+        editorRef.current.addAction({
+          id: SAVE_ACTION_ID,
+          label: 'Speichern',
+          keybindings: [
+            // eslint-disable-next-line no-bitwise
+            monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.KEY_S,
+          ],
+          run: editor => {
+            save(editor.getValue());
+          },
+        });
+      }
     }
   }, [editorRef, save, monacoInstance]);
 };
