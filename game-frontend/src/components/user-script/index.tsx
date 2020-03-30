@@ -28,7 +28,7 @@ const UserScript: FC = () => {
     saveScript(userScript);
   };
 
-  const onChange: ControlledEditorOnChange = (_ev, value) => {
+  const onChange: ControlledEditorOnChange = (_, value) => {
     setUserScript(value || '');
   };
 
