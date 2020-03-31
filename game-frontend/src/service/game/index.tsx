@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { Message } from '../../../../darwin-types/messages/Message';
 import { State } from '../../../../darwin-types/State';
 import { UserContext } from '../../../../darwin-types/UserContext';
@@ -22,10 +22,14 @@ export function useUserContext(): UserContext {
 export function useSendMessage(): (message: Message) => void {
   const { socket } = useWebsocketContext();
 
-  const send = (message: Message): void => {
-    if (socket) {
-      socket.send(JSON.stringify(message));
-    }
-  };
+  const send = useMemo(
+    () => (message: Message): void => {
+      if (socket) {
+        socket.send(JSON.stringify(message));
+      }
+    },
+    [socket]
+  );
+
   return send;
 }

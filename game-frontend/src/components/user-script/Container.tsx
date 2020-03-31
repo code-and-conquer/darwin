@@ -5,9 +5,9 @@ const Container = styled.div`
   max-height: 33%;
   position: relative;
 
-  form,
-  textarea {
+  form {
     height: 100%;
+    overflow: hidden;
   }
 `;
 

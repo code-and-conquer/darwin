@@ -1,36 +1,42 @@
-import React, { useState, FC } from 'react';
-import Textarea from '../visual/Textarea';
+import React, { useState, FC, useMemo } from 'react';
+import { ControlledEditorOnChange } from '@monaco-editor/react';
 import Container from './Container';
 import SaveButton from './SaveButton';
 import { useSendMessage } from '../../service/game';
 import { ScriptUpdate } from '../../../../darwin-types/messages/ScriptUpdate';
+import Editor from './Editor';
 
 const UserScript: FC = () => {
-  const send = useSendMessage();
+  const sendMessage = useSendMessage();
   const [userScript, setUserScript] = useState('');
 
-  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-    setUserScript(e.target.value);
+  const saveScript = useMemo(
+    () => (script: string): void => {
+      const scriptUpdate: ScriptUpdate = {
+        type: 'scriptUpdate',
+        payload: {
+          script,
+        },
+      };
+      sendMessage(scriptUpdate);
+    },
+    [sendMessage]
+  );
+
+  const onClick = (e: React.MouseEvent): void => {
+    e.preventDefault();
+    saveScript(userScript);
   };
 
-  const submit = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    e.preventDefault();
-
-    const scriptUpdate: ScriptUpdate = {
-      type: 'scriptUpdate',
-      payload: {
-        script: userScript,
-      },
-    };
-
-    send(scriptUpdate);
+  const onChange: ControlledEditorOnChange = (_, value) => {
+    setUserScript(value || '');
   };
 
   return (
     <Container data-testid="user-script-form">
       <form>
-        <Textarea onChange={onChange} rows={8}></Textarea>
-        <SaveButton onClick={submit}>Save</SaveButton>
+        <Editor onChange={onChange} save={saveScript} />
+        <SaveButton onClick={onClick}>Speichern</SaveButton>
       </form>
     </Container>
   );
