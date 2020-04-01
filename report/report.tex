@@ -128,7 +128,12 @@ Die Steuerung durch den Code erlaubt uns,
 den Schwerpunkt des Gameplays stärker auf die Vorausplanung und langfristigen Strategien
 zu legen und reaktives Gameplay in den Hintergrund zu stellen.
 
-% (Eventuell ein 'game play' Bild reinpasten)
+\begin{figure}[h]
+  \caption{Darwin Gameplay}
+  \centering
+  \includegraphics[width=0.95\textwidth]{./img/darwin-gameplay}
+\end{figure}
+
 Da in unserem Team niemand Erfahrung mit Grafikdesign hat, möchten wird das Gametheme möglichst einfach halten. Alle Objekte im Spiel 
 werden als geometrische Form dargestellt, welche allenfalls kleine Modifikationen (zum Beispiel ein rotes Dreieck mit einem
 Punkt in der Mitte) aufweisen. So wird die Darstellung des Spiels einfacher, bleibt aber trotzdem noch ansprechend. 
@@ -153,8 +158,7 @@ Das Spiel richtet sich auf leidenschaftliche und engagierte Software Entwickler 
 Die essenziellen Komponenten des Spieles sind einerseits das Backend, das es erlaubt den vom Spieler verfassten Code auszuführen und andererseits die Grafik, die es dem Benutzer ersichtlich macht, was für Auswirkungen sein Code hat. Zusätzlich dazu braucht es ein faires Game Balancing, welches ermöglicht verschiedenste Strategien zu verfolgen, um im Spiel zu gewinnen:
 
 \begin{itemize}
-  \item Ein Spieler kann ein Match ausschreiben und ein anderer kann diesem beitreten. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/41/}{\#41 Match lobbies}
-  \item Zuschauer können einem beliebigen Match beitreten, ohne dass sie Einheiten kontrollieren können. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/43/}{\#43 Spectators}
+  \item Zuschauer können einem Match beitreten, ohne dass sie Einheiten kontrollieren können. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/43/}{\#43 Spectators}
   \item Die Spieler und Zuschauer können das Match visuell mitverfolgen. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/21/}{\#21 Arena Update}
   \item Die Spieler können das Spiel mittels Code steuern. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/42/}{\#42 Code controls}
   \item Der Spieler kann die Spielregeln sowie eine Liste aller verfügbaren Aktionen der Einheiten abrufen. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/22/}{\#22 Help}
@@ -237,7 +241,7 @@ sicherzustellen haben wir uns auf folgende Prinzipien geeinigt:
 \item Coding Guidelines werden für unsere Entwicklung eingesetzt und mittels Eslint und TSlint sowie Pull-Request Reviews überprüft. So können Syntax und Code-Styling eingehalten werden.
 \item Fehlerbehandlungen werden grundsätzlich mittels 'Bug Stories' abgearbeitet.
 \item Anstatt direkt in den Master-Branch zu pushen wird für jede Änderung ein Branch erstellt, welcher mittels einem Pull-Request in den Master-Branch gemerged wird. So können wir sicherstellen, dass der Code und die anstehenden Änderungen den Vorstellungen des Teams entsprechen.
-\item Bevor ein Pull-Request merged wird, prüfen wir mittels einer Build-Pipeline, ob Unit und Integrationtests erfolgreich durchlaufen.
+\item Bevor ein Pull-Request merged wird, prüfen wir mittels einer Build-Pipeline, ob die Unittests erfolgreich durchlaufen.
 \item Wir kommunizieren offen und ehrlich miteinander. 
 \end{itemize}
 All diese Prinzipien sind ein wichtiger Bestandteil unserer Entwicklung und werden von allen Teammitglieder stets eingehalten.
@@ -248,7 +252,7 @@ All diese Prinzipien sind ein wichtiger Bestandteil unserer Entwicklung und werd
 \item Dokumentation aktualisiert
 \item Es wurde ein Code Review durchgeführt oder der Code wurde im Pair Programming erarbeitet
 \item Coding Guidelines und Standards wurden eingehalten
-\item Unit- und Integrationstests wurden erfolgreich durchgeführt
+\item Unittests wurden erfolgreich durchgeführt
 \item Es sind keine kritischen Bugs offen
 \end{itemize}
 
@@ -293,13 +297,13 @@ Unit Tests werden automatisiert bei jedem Build und Pull Request ausgeführt.
 Als Framework wird Jest von Facebook verwendet. Dieses ist in der Javascript-Welt sehr verbreitet und im Team ist damit bereits Know-How vorhanden.
 Beim Unit Testing werden einzelne Einheiten isoliert getestet und sowohl im Frontend als auch im Backend separat ausgeführt.
 
-\subsubsection{Integration Testing}
-Integration Tests, die durchgeführt werden, während der Entwicklung und vor einem PR zum Überprüfen der Akzeptanzkriterien.
-Für die End-to-End-Tests wird Cypress verwendet. Auch hier ist damit bereits wertvolle Erfahrung im Team vorhanden
-und löste bislang immer Zufriedenheit bei der Benutzung aus.
-Integration Tests prüfen das Zusammenspiel der Applikation und überprüft die Gesamtfunktionalität.
-Die Applikation wird dabei aus der Sicht eines Benutzers automatisiert getestet und Testfälle basieren
-auf den Akzeptanzkriterien der User Stories.
+% \subsubsection{Integration Testing}
+% Integration Tests, die durchgeführt werden, während der Entwicklung und vor einem PR zum Überprüfen der Akzeptanzkriterien.
+% Für die End-to-End-Tests wird Cypress verwendet. Auch hier ist damit bereits wertvolle Erfahrung im Team vorhanden
+% und löste bislang immer Zufriedenheit bei der Benutzung aus.
+% Integration Tests prüfen das Zusammenspiel der Applikation und überprüft die Gesamtfunktionalität.
+% Die Applikation wird dabei aus der Sicht eines Benutzers automatisiert getestet und Testfälle basieren
+% auf den Akzeptanzkriterien der User Stories.
 
 \subsubsection{Manuelles Testing}
 Manuelles Testen während der Entwicklungsphase und danach. Dieser Teil sollte so klein wie möglich gehalten werden, um die Qualität zu gewährleisten. Manuelles Testing wird vom Entwickler während und nach der Entwicklung durchgeführt.
@@ -309,6 +313,15 @@ Zudem soll der PO durch manuelles Prüfen das Feature zum Schluss noch abnehmen.
 Es werden zurzeit keine externe Schnittstellen verwendet.
 
 \section{Code}
+Die Befehle welche der Player absetzen kann um das Spiel zu beeinflussen werden alle mittels einer RecordingEngine als Absichten (Intents) aufgezeichnet.
+Dadurch ist es möglich Konflikte (Zum Beispiel zwei Units auf dem gleichen Feld) zu verhindern indem die Intents nacheinander ausgeführt werden. 
+Nachfolgend ein Klassendiagramm der Intents:
+\begin{figure}[h]
+  \caption{Klassendiagramm Intents}
+  \centering
+  \includegraphics[width=0.7\textwidth]{./img/Intent}
+\end{figure}
+%\includegraphics[width=0.7\textwidth]{./img/Intent.svg}
 % Vielleicht später die Recording Engine & Co.?
 
 \section{Data}
@@ -356,6 +369,17 @@ Es werden zurzeit keine externe Schnittstellen verwendet.
 \item Ursprung des Koordinatensystems für die Berechnung der Befehle und die Darstellung des Spiels ist oben links 
 mit steigenden Koordinaten nach rechts und unten. Da wir für die Darstellung des Spiels Canvas verwenden und das den
 Ursprung oben links hat, haben wir uns entschieden das so durch die ganze Applikation hinweg so zu machen. 
+\end{itemize}
+\item 18.03.2020
+\begin{itemize}
+\item Wir werden ab sofort ein Bi-Daily Meeting im Slack durchführen, dadurch soll klarer werden wer an was bis wann arbeitet.
+\item Wir möchten vermehrt auf Pairprogramming und 1:1 Zuweisung von erfahrenem und neueinsteigendem Entwickler um so 
+Wissensunterschiede möglichst schnell auszugleichen. 
+\end{itemize}
+\item 20.03.2020
+\begin{itemize}
+\item Matchlobbies werden vorerst nicht unterstützt. Diese Funktion bringt momentan nur einen geringen Mehrwert und wird daher auf unbestimmte
+ Zeit verschoben.
 \end{itemize}
 \end{itemize}
 
