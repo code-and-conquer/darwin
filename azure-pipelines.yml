@@ -53,9 +53,12 @@ steps:
   - task: CopyFiles@2
     inputs:
       Contents: |
+        **/darwin-types/dist/**
+        **/darwin-types/package.json
         **/game-frontend/build/**
         **/game-frontend/package.json
         **/game-backend/dist/**
+        **/game-backend/node_modules/**
         **/game-backend/package.json
       TargetFolder: "$(Build.ArtifactStagingDirectory)"
   - task: PublishBuildArtifacts@1
