@@ -1,9 +1,9 @@
 import React, { useState, FC, useMemo } from 'react';
 import { ControlledEditorOnChange } from '@monaco-editor/react';
+import { ScriptUpdate } from '@darwin/types';
 import Container from './Container';
 import SaveButton from './SaveButton';
 import { useSendMessage } from '../../service/game';
-import { ScriptUpdate } from '../../../../darwin-types/messages/ScriptUpdate';
 import Editor from './Editor';
 
 const UserScript: FC = () => {

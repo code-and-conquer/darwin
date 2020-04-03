@@ -1,5 +1,5 @@
+import { State } from '@darwin/types';
 import { UserTickIntents } from './intent/Intent';
-import { State } from '../../../darwin-types/State';
 
 /**
  * Execute all Intents for a given tick.

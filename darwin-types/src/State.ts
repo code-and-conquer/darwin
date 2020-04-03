@@ -1,4 +1,4 @@
-import { GameObject, ObjectId } from './game-objects/GameObject';
+import { GameObject, ObjectId } from './game-objects';
 
 export interface State {
   objectMap: Record<ObjectId, GameObject>;

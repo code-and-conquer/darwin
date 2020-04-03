@@ -4,17 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install-app": "npm install && npm run install-fe && npm run install-be",
-    "install-app:conc": "concurrently -p \"[{name}]\" -n \"Root,Frontend,Backend\" -c \"grey.bold,cyan.bold,green.bold\" \"npm install\" \"npm run install-fe\" \"npm run install-be\"",
-    "install-fe": "cd ./game-frontend && npm install",
-    "install-be": "cd ./game-backend && npm install",
-    "watch": "concurrently -p \"[{name}]\" -n \"Frontend,Backend\" -c \"cyan.bold,green.bold\" \"npm run watch-fe\" \"npm run watch-be\"",
+    "install-app": "npm install && lerna bootstrap",
+    "watch": "npx lerna run watch --parallel",
     "watch-fe": "cd ./game-frontend && npm run watch",
     "watch-be": "cd ./game-backend && npm run watch",
-    "build": "npm run build-fe && npm run build-be",
+    "build": "npm run build-types && npm run build-fe && npm run build-be",
+    "build-types": "cd ./darwin-types && cross-env NODE_ENV=production npm run build",
     "build-fe": "cd ./game-frontend && cross-env NODE_ENV=production npm run build",
     "build-be": "cd ./game-backend && cross-env NODE_ENV=production npm run build",
-    "start": "concurrently -p \"[{name}]\" -n \"Frontend,Backend\" -c \"cyan.bold,green.bold\" \"npm run start-fe\" \"npm run start-be\"",
+    "start": "npx lerna run start --parallel",
     "start-fe": "cd ./game-frontend && cross-env NODE_ENV=production npm run start",
     "start-be": "cd ./game-backend && cross-env NODE_ENV=production npm run start",
     "test": "npm run test-fe && npm run test-be",
@@ -26,7 +24,7 @@
     "prettier:fix": "npm run prettier-be:fix && npm run prettier-fe:fix",
     "prettier-fe:fix": "cd ./game-frontend && npm run prettier -- --write",
     "prettier-be:fix": "cd ./game-backend && npm run prettier -- --write",
-    "lint": "concurrently \"npm run lint-fe\" \"npm run lint-be\"",
+    "lint": "npx lerna run lint",
     "lint-fe": "cd ./game-frontend && npm run lint",
     "lint-be": "cd ./game-backend && npm run lint"
   },
@@ -40,7 +38,6 @@
     "url": "https://github.com/code-and-conquer/darwin/issues"
   },
   "homepage": "https://github.com/code-and-conquer/darwin#readme",
-  "dependencies": {},
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.22.0",
     "@typescript-eslint/parser": "^2.22.0",
@@ -55,6 +52,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
+    "lerna": "^3.20.2",
     "prettier": "1.19.1",
     "typescript": "^3.8.3"
   }

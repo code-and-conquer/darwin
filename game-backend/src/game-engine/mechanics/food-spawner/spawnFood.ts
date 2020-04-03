@@ -1,6 +1,5 @@
 import hyperid from 'hyperid';
-import { Food } from '../../../../../darwin-types/game-objects/Food';
-import Position from '../../../../../darwin-types/Position';
+import { Position, Food } from '@darwin/types';
 import { createFood } from '../../../helper/gameObjects';
 
 const generateId = hyperid();

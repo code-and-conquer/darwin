@@ -10,8 +10,8 @@ import Rectangle from './components/pixi/Rectangle';
 import Firework from './components/pixi/Firework';
 import GAME_OBJECT_TYPES from './constants/gameObjects';
 
-const width = STAGE_ROWS * FIELD_SIZE;
-const height = STAGE_COLUMNS * FIELD_SIZE;
+const width = STAGE_COLUMNS * FIELD_SIZE;
+const height = STAGE_ROWS * FIELD_SIZE;
 
 function Game(): JSX.Element {
   const [hasJoinedGame, setHasJoinedGame] = useState(false);

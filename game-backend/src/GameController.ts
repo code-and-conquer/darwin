@@ -1,16 +1,16 @@
 import hyperid from 'hyperid';
 import {
+  GAME_OBJECT_TYPES,
+  MatchUpdate,
+  Unit,
   UserContext,
   UserExecutionContext,
   UserId,
   UserScript,
-} from '../../darwin-types/UserContext';
-import { Unit } from '../../darwin-types/game-objects/Unit';
+} from '@darwin/types';
 import { createUnit, getGameObjectsPerType } from './helper/gameObjects';
 import { generateFreePosition } from './helper/fields';
-import { GAME_OBJECT_TYPES } from '../../darwin-types/game-objects/GameObject';
 import performTick from './game-engine';
-import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
 import { createGameStore } from './createGameStore';
 
 export const TICK_INTERVAL = 2000;

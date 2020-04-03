@@ -1,8 +1,7 @@
-import { State } from '../../../../darwin-types/State';
+import { MAX_HEALTH, State } from '@darwin/types';
 import StateBuilder from '../../test-helper/StateBuilder';
 import handleHunger, { HEALTH_LOSS_RATE } from './hunger-handler';
 import { getUnit } from '../../helper/gameObjects';
-import { MAX_HEALTH } from '../../../../darwin-types/game-objects/Unit';
 
 describe('Hunger Handling', () => {
   const UNIT_ID = 'unit1';

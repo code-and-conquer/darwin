@@ -1,11 +1,14 @@
+import {
+  State,
+  UserContext,
+  Unit,
+  MAX_HEALTH,
+  GAME_OBJECT_TYPES,
+  Food,
+} from '@darwin/types';
 import { Intent } from './Intent';
 import produce from '../../helper/produce';
-import { State } from '../../../../darwin-types/State';
-import { UserContext } from '../../../../darwin-types/UserContext';
-import { Unit, MAX_HEALTH } from '../../../../darwin-types/game-objects/Unit';
 import { getObjectsOnField } from '../../helper/fields';
-import { GAME_OBJECT_TYPES } from '../../../../darwin-types/game-objects/GameObject';
-import { Food } from '../../../../darwin-types/game-objects/Food';
 import { getUnit, removeGameObject } from '../../helper/gameObjects';
 
 export const FOOD_REGENERATION_VALUE = 20;

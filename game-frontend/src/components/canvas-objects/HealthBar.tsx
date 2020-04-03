@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import Position from '../../../../darwin-types/Position';
+import { Position } from '@darwin/types';
 import { FIELD_SIZE } from '../../constants/stage';
 import Rectangle from '../pixi/Rectangle';
 

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
+import { Position } from '@darwin/types';
 import Square from '../pixi/Square';
-import Position from '../../../../darwin-types/Position';
 import { FIELD_SIZE } from '../../constants/stage';
 
 type Props = {

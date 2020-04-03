@@ -1,9 +1,12 @@
+import {
+  ARENA_HEIGHT,
+  ARENA_WIDTH,
+  State,
+  UserContext,
+  Position,
+} from '@darwin/types';
 import { Intent } from './Intent';
 import produce from '../../helper/produce';
-import { State } from '../../../../darwin-types/State';
-import { UserContext } from '../../../../darwin-types/UserContext';
-import Position from '../../../../darwin-types/Position';
-import { ARENA_HEIGHT, ARENA_WIDTH } from '../../../../darwin-types/Arena';
 import { getUnit } from '../../helper/gameObjects';
 
 export enum Direction {

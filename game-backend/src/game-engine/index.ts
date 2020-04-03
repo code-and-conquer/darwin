@@ -1,5 +1,4 @@
-import { State } from '../../../darwin-types/State';
-import { UserExecutionContext } from '../../../darwin-types/UserContext';
+import { State, UserExecutionContext } from '@darwin/types';
 import recordIntents from './recordIntents';
 import scheduleIntents from './scheduleIntents';
 import { UserTickIntents } from './intent/Intent';

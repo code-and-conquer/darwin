@@ -1,5 +1,5 @@
+import { State } from '@darwin/types';
 import scheduleIntents from './scheduleIntents';
-import { State } from '../../../darwin-types/State';
 import StateBuilder from '../test-helper/StateBuilder';
 import { getUnit, getFood } from '../helper/gameObjects';
 import MoveIntent, { Direction } from './intent/MoveIntent';

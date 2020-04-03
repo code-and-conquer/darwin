@@ -1,5 +1,5 @@
+import { State } from '@darwin/types';
 import StateBuilder from '../../test-helper/StateBuilder';
-import { State } from '../../../../darwin-types/State';
 import { selectUserUnit } from './index';
 
 describe('selectUserUnit', () => {

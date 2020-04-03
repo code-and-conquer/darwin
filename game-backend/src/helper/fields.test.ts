@@ -1,5 +1,5 @@
+import { ARENA_HEIGHT, ARENA_WIDTH, State } from '@darwin/types';
 import StateBuilder from '../test-helper/StateBuilder';
-import { State } from '../../../darwin-types/State';
 import {
   getFreeFields,
   getFlatFieldArray,
@@ -7,7 +7,6 @@ import {
   createKeyFromPosition,
   getObjectsOnField,
 } from './fields';
-import { ARENA_HEIGHT, ARENA_WIDTH } from '../../../darwin-types/Arena';
 
 const ARENA_SIZE = ARENA_HEIGHT * ARENA_WIDTH;
 

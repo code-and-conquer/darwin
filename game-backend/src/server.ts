@@ -1,8 +1,8 @@
 import http from 'http';
 import url from 'url';
 import WebSocket from 'ws';
+import { UserId } from '@darwin/types';
 import MainController from './MainController';
-import { UserId } from '../../darwin-types/UserContext';
 
 function extractUserId(req: http.IncomingMessage): UserId {
   const searchParams = new URLSearchParams(url.parse(req.url).query);

@@ -1,10 +1,12 @@
 import WebSocket from 'ws';
 import hyperid from 'hyperid';
-import { UserId } from '../../darwin-types/UserContext';
-import { Message } from '../../darwin-types/messages/Message';
-import { ScriptUpdate } from '../../darwin-types/messages/ScriptUpdate';
-import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
-import { ConnectionInitialization } from '../../darwin-types/messages/ConnectionInitialization';
+import {
+  ConnectionInitialization,
+  MatchUpdate,
+  Message,
+  ScriptUpdate,
+  UserId,
+} from '@darwin/types';
 import GameController from './GameController';
 import { createServerStore } from './createServerStore';
 

@@ -1,7 +1,10 @@
-import { State } from '../../../darwin-types/State';
-import Position from '../../../darwin-types/Position';
-import { ARENA_WIDTH, ARENA_HEIGHT } from '../../../darwin-types/Arena';
-import { GameObject } from '../../../darwin-types/game-objects/GameObject';
+import {
+  State,
+  Position,
+  ARENA_HEIGHT,
+  ARENA_WIDTH,
+  GameObject,
+} from '@darwin/types';
 
 export const getFlatFieldArray = (): Position[] =>
   new Array(ARENA_WIDTH)

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
+import { Position } from '@darwin/types';
 import Square from '../pixi/Square';
 import Triangle from '../pixi/Triangle';
-import Position from '../../../../darwin-types/Position';
 import { FIELD_SIZE } from '../../constants/stage';
 import Parallelogram from '../pixi/Parallelogram';
 import HealthBar from './HealthBar';

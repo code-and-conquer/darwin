@@ -1,4 +1,4 @@
-import { State } from '../../../../darwin-types/State';
+import { State } from '@darwin/types';
 import { GameObject } from '../../test-helper/StateBuilder';
 import { getGameObjectsPerType } from '../../helper/gameObjects';
 

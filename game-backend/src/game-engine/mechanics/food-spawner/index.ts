@@ -1,4 +1,4 @@
-import { State } from '../../../../../darwin-types/State';
+import { State } from '@darwin/types';
 import spawnFood from './spawnFood';
 import { countUnits, countFood } from '../../../helper/gameObjects';
 import { generateFreePosition } from '../../../helper/fields';

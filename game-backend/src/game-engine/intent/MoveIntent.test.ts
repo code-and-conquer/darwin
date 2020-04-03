@@ -1,8 +1,7 @@
+import { ARENA_HEIGHT, ARENA_WIDTH, State, UserContext } from '@darwin/types';
 import MoveIntent, { Direction } from './MoveIntent';
 import StateBuilder from '../../test-helper/StateBuilder';
-import { ARENA_HEIGHT, ARENA_WIDTH } from '../../../../darwin-types/Arena';
-import { UserContext } from '../../../../darwin-types/UserContext';
-import { State } from '../../../../darwin-types/State';
+
 import ConsumeIntent from './ConsumeIntent';
 
 describe('MoveIntent', () => {

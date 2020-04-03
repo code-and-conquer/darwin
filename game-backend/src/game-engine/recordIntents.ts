@@ -1,16 +1,16 @@
 import vm, { Context, Script } from 'vm';
+import {
+  UserScript,
+  UserExecutionContext,
+  State,
+  Food,
+  Unit,
+} from '@darwin/types';
 import deepClone from '../helper/deepClone';
 import { Intent } from './intent/Intent';
 import MoveIntent, { Direction } from './intent/MoveIntent';
 import ConsumeIntent from './intent/ConsumeIntent';
-import {
-  UserScript,
-  UserExecutionContext,
-} from '../../../darwin-types/UserContext';
-import { State } from '../../../darwin-types/State';
 import { selectFoods, selectUserUnit, getNearestFood } from './state-selectors';
-import { Food } from '../../../darwin-types/game-objects/Food';
-import { Unit } from '../../../darwin-types/game-objects/Unit';
 
 interface ScriptContextMethods {
   move: (direction: Direction) => void;

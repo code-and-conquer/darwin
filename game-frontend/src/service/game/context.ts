@@ -6,6 +6,7 @@ import {
   useRef,
 } from 'react';
 import createPersistedState from 'use-persisted-state';
+import { ConnectionInitialization, Message, UserId } from '@darwin/types';
 import {
   API_URL,
   ContextState,
@@ -13,9 +14,6 @@ import {
   socketUpdateAction,
 } from './types';
 import reducer from './reducer';
-import { Message } from '../../../../darwin-types/messages/Message';
-import { ConnectionInitialization } from '../../../../darwin-types/messages/ConnectionInitialization';
-import { UserId } from '../../../../darwin-types/UserContext';
 
 const USER_ID_QUERY_PARAM = 'userId';
 const useUserId = createPersistedState(USER_ID_QUERY_PARAM);

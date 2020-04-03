@@ -1,12 +1,13 @@
-import { State } from '../../../darwin-types/State';
 import {
-  GameObject,
+  Food,
   GAME_OBJECT_TYPES,
+  GameObject,
+  INITIAL_HEALTH,
   ObjectId,
-} from '../../../darwin-types/game-objects/GameObject';
-import { Food } from '../../../darwin-types/game-objects/Food';
-import Position from '../../../darwin-types/Position';
-import { Unit, INITIAL_HEALTH } from '../../../darwin-types/game-objects/Unit';
+  State,
+  Unit,
+  Position,
+} from '@darwin/types';
 
 export const getGameObjectsPerType = (
   state: State,

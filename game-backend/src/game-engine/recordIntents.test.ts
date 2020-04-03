@@ -1,7 +1,6 @@
+import { State, UserExecutionContext } from '@darwin/types';
 import StateBuilder from '../test-helper/StateBuilder';
 import recordIntents from './recordIntents';
-import { State } from '../../../darwin-types/State';
-import { UserExecutionContext } from '../../../darwin-types/UserContext';
 
 describe('recordIntents', () => {
   const UNIT_ID = 'unit1';

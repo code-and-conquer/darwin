@@ -1,4 +1,4 @@
-import { ObjectId } from './game-objects/GameObject';
+import { ObjectId } from './game-objects';
 
 export type UserId = string;
 

@@ -1,4 +1,4 @@
-import { State } from '../../../../darwin-types/State';
+import { State } from '@darwin/types';
 import handleFoodSpawning from './food-spawner';
 import handleHunger from './hunger-handler';
 
