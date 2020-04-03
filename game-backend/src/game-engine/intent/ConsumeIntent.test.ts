@@ -1,8 +1,6 @@
+import { MAX_HEALTH, State, Unit, UserContext } from '@darwin/types';
 import ConsumeIntent, { FOOD_REGENERATION_VALUE } from './ConsumeIntent';
 import StateBuilder from '../../test-helper/StateBuilder';
-import { State } from '../../../../darwin-types/State';
-import { UserContext } from '../../../../darwin-types/UserContext';
-import { Unit, MAX_HEALTH } from '../../../../darwin-types/game-objects/Unit';
 import { getUnit, getFood } from '../../helper/gameObjects';
 
 describe('ConsumeIntent', () => {

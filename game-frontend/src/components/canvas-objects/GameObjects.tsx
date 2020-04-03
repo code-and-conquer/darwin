@@ -1,10 +1,6 @@
 import React, { FC } from 'react';
+import { GameObject, ObjectId, Unit as UnitT } from '@darwin/types';
 import Unit from './Unit';
-import { Unit as UnitT } from '../../../../darwin-types/game-objects/Unit';
-import {
-  GameObject,
-  ObjectId,
-} from '../../../../darwin-types/game-objects/GameObject';
 import GAME_OBJECT_TYPES from '../../constants/gameObjects';
 import Food from './Food';
 

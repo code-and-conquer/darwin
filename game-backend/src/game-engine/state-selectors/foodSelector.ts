@@ -1,9 +1,6 @@
-import { State } from '../../../../darwin-types/State';
-import { Food } from '../../../../darwin-types/game-objects/Food';
-import { GAME_OBJECT_TYPES } from '../../../../darwin-types/game-objects/GameObject';
-import { getGameObjectsPerType } from '../../helper/gameObjects';
-import { Unit } from '../../../../darwin-types/game-objects/Unit';
+import { Food, GAME_OBJECT_TYPES, State, Unit } from '@darwin/types';
 import getNearestObjectOfType from './helper';
+import { getGameObjectsPerType } from '../../helper/gameObjects';
 
 export const selectFoods = (state: State): Food[] => {
   return getGameObjectsPerType(state, GAME_OBJECT_TYPES.FOOD);

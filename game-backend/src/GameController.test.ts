@@ -1,8 +1,6 @@
-import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
+import { MatchUpdate, State, Tick } from '@darwin/types';
 import GameController, { TICK_INTERVAL } from './GameController';
-import { Tick } from '../../darwin-types/Tick';
 import performTick from './game-engine';
-import { State } from '../../darwin-types/State';
 import StateBuilder from './test-helper/StateBuilder';
 
 jest.mock('./game-engine');

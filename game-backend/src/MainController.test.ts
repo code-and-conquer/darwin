@@ -1,11 +1,14 @@
 import WebSocket from 'ws';
+import {
+  ConnectionInitialization,
+  MatchUpdate,
+  ScriptUpdate,
+  UserId,
+} from '@darwin/types';
 import MainController, { GAME_RESTART_TIME } from './MainController';
-import { MatchUpdate } from '../../darwin-types/messages/MatchUpdate';
-import { ConnectionInitialization } from '../../darwin-types/messages/ConnectionInitialization';
+
 import * as GameController from './GameController';
-import { UserId } from '../../darwin-types/UserContext';
 import StateBuilder from './test-helper/StateBuilder';
-import { ScriptUpdate } from '../../darwin-types/messages/ScriptUpdate';
 
 jest.mock('./GameController');
 

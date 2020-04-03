@@ -1,7 +1,5 @@
 import React, { FC, useMemo } from 'react';
-import { Message } from '../../../../darwin-types/messages/Message';
-import { State } from '../../../../darwin-types/State';
-import { UserContext } from '../../../../darwin-types/UserContext';
+import { State, UserContext, Message } from '@darwin/types';
 import { useWebsocket, useWebsocketContext, WebsocketContext } from './context';
 
 export const WebsocketProvider: FC = props => {

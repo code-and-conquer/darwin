@@ -1,4 +1,4 @@
-import Position from '../../../../darwin-types/Position';
+import { Position } from '@darwin/types';
 
 export type PixiGeometricFormProps = {
   position: Position;

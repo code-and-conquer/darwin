@@ -1,5 +1,4 @@
-import { Message } from '../../../../darwin-types/messages/Message';
-import { MatchUpdate } from '../../../../darwin-types/messages/MatchUpdate';
+import { Message, MatchUpdate } from '@darwin/types';
 import { ContextState } from './types';
 
 const reducer = (state: ContextState, action: Message): ContextState => {

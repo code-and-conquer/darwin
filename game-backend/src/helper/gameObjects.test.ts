@@ -1,6 +1,5 @@
+import { State, GAME_OBJECT_TYPES } from '@darwin/types';
 import StateBuilder from '../test-helper/StateBuilder';
-import { State } from '../../../darwin-types/State';
-import { GAME_OBJECT_TYPES } from '../../../darwin-types/game-objects/GameObject';
 import { getGameObjectsPerType, removeGameObject } from './gameObjects';
 
 describe('getGameObjectsPerType', () => {

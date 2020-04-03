@@ -1,7 +1,4 @@
-import { State } from '../../../../darwin-types/State';
-import { UserContext } from '../../../../darwin-types/UserContext';
-import { Tick } from '../../../../darwin-types/Tick';
-import { Message } from '../../../../darwin-types/messages/Message';
+import { State, Tick, UserContext, Message } from '@darwin/types';
 
 export type ContextState = {
   state: State;

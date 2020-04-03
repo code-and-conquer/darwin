@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import Position from '../../../../darwin-types/Position';
+import { Position } from '@darwin/types';
 import Field from './Field';
 
 type Props = {

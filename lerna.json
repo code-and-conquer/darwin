@@ -1,0 +1,8 @@
+{
+  "packages": [
+    "darwin-types",
+    "game-backend",
+    "game-frontend"
+  ],
+  "version": "0.1.0"
+}

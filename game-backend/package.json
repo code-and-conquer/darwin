@@ -8,7 +8,7 @@
     "watch-node": "nodemon dist/server.js",
     "build": "npm run build-ts",
     "build-ts": "tsc",
-    "start": "node dist/game-backend/src/server.js",
+    "start": "node dist/server.js",
     "test": "jest --forceExit --coverage --verbose",
     "watch-test": "npm run test -- --watchAll",
     "prettier": "prettier \"src/**/*.{js,ts}\" --check",
@@ -28,6 +28,7 @@
     "typescript": "~3.7.2"
   },
   "dependencies": {
+    "@darwin/types": "*",
     "hyperid": "^2.0.3",
     "immer": "^6.0.1",
     "ws": "^7.2.1"

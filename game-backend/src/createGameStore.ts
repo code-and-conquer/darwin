@@ -1,5 +1,4 @@
-import { State } from '../../darwin-types/State';
-import { UserExecutionContext, UserId } from '../../darwin-types/UserContext';
+import { State, UserExecutionContext, UserId } from '@darwin/types';
 
 export interface GameStore {
   matchState: State;

@@ -1,5 +1,4 @@
-import { UnitType } from '../../../darwin-types/game-objects/Unit';
-import { FoodType } from '../../../darwin-types/game-objects/Food';
+import { FoodType, UnitType } from '@darwin/types';
 
 const GAME_OBJECT_TYPES: {
   UNIT: UnitType;

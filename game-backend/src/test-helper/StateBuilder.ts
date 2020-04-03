@@ -1,6 +1,5 @@
+import { State, Position } from '@darwin/types';
 import produce from '../helper/produce';
-import { State } from '../../../darwin-types/State';
-import Position from '../../../darwin-types/Position';
 import { createUnit, createFood } from '../helper/gameObjects';
 
 export interface GameObject {

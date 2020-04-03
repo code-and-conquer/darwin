@@ -1,8 +1,4 @@
-import { State } from '../../../../darwin-types/State';
-import {
-  UserContext,
-  UserExecutionContext,
-} from '../../../../darwin-types/UserContext';
+import { State, UserContext, UserExecutionContext } from '@darwin/types';
 
 /**
  * Represents an action dispatched by a user script.

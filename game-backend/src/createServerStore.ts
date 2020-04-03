@@ -1,5 +1,5 @@
 import WebSocket from 'ws';
-import { UserId } from '../../darwin-types/UserContext';
+import { UserId } from '@darwin/types';
 
 export interface ServerStore {
   userContexts: {

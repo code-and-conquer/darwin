@@ -1,0 +1,15 @@
+{
+  "name": "@darwin/types",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "files": ["dist"],
+  "private": true,
+  "dependencies": {
+    "typescript": "~3.7.2"
+  }
+}
