@@ -19,8 +19,9 @@ const Triangle: FC<Props> = ({
   return (
     <Graphics
       fill={fill}
+      alpha={alpha}
       draw={(g): void => {
-        g.lineStyle(lineWidth, color, alpha);
+        g.lineStyle(lineWidth, color);
         g.moveTo(x, y);
         g.lineTo(x + size / 2, y + size);
         g.lineTo(x - size / 2, y + size);
