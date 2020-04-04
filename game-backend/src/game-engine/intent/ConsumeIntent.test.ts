@@ -1,9 +1,16 @@
-import { MAX_HEALTH, State, Unit, UserContext } from '@darwin/types';
-import ConsumeIntent, { FOOD_REGENERATION_VALUE } from './ConsumeIntent';
+import {
+  MAX_HEALTH,
+  State,
+  Unit,
+  UserContext,
+  ATTRIBUTES,
+} from '@darwin/types';
+import ConsumeIntent from './ConsumeIntent';
 import StateBuilder from '../../test-helper/StateBuilder';
-import { getUnit, getFood } from '../../helper/gameObjects';
+import { getUnit, getFood, getPowerUp } from '../../helper/gameObjects';
+import { FOOD_REGENERATION_VALUE } from '../mechanics/food-spawner/createFood';
 
-describe('ConsumeIntent', () => {
+describe('ConsumeIntent on Food', () => {
   const unitId1 = 'UNIT_ID_1';
   const unitId2 = 'UNIT_ID_2';
   const unitId3 = 'UNIT_ID_3';
@@ -43,7 +50,7 @@ describe('ConsumeIntent', () => {
     };
   });
 
-  it('handles consume properly', () => {
+  it('handles food consume properly', () => {
     const intent = new ConsumeIntent();
 
     const newState = intent.execute(state, lowHealth);
@@ -86,5 +93,70 @@ describe('ConsumeIntent', () => {
     const newState = intent.execute(emptyState, lowHealth);
 
     expect(newState).toBe(emptyState);
+  });
+});
+
+describe('ConsumeIntent on Powerup', () => {
+  const unitId1 = 'UNIT_ID_1';
+  const unitId2 = 'UNIT_ID_2';
+  const powerUpId1 = 'POWER_UP_ID_1';
+  const powerUpId2 = 'POWER_UP_ID_2';
+
+  let state: State;
+  let normalContext: UserContext;
+  let maxedContext: UserContext;
+
+  beforeEach(() => {
+    state = StateBuilder.buildState()
+      .addUnit({ id: unitId1, x: 1, y: 1 })
+      .addPowerUp({
+        id: powerUpId1,
+        x: 1,
+        y: 1,
+        subType: ATTRIBUTES.ENDURANCE_BOOST,
+      })
+      .addUnit({
+        id: unitId2,
+        x: 2,
+        y: 2,
+        attributes: { [ATTRIBUTES.ENDURANCE_BOOST]: 2 },
+      })
+      .addPowerUp({
+        id: powerUpId2,
+        x: 2,
+        y: 2,
+        subType: ATTRIBUTES.ENDURANCE_BOOST,
+      })
+      .build();
+
+    normalContext = {
+      unitId: unitId1,
+    };
+    maxedContext = {
+      unitId: unitId2,
+    };
+  });
+
+  it('handles powerup consume properly', () => {
+    const intent = new ConsumeIntent();
+
+    const newState = intent.execute(state, normalContext);
+    const unit1 = getUnit(newState, unitId1);
+    const powerup1 = getPowerUp(newState, powerUpId1);
+
+    expect(unit1.attributes[ATTRIBUTES.ENDURANCE_BOOST]).toBe(1);
+    expect(powerup1).toBeFalsy();
+    expect(newState.objectIds).not.toContain(powerup1);
+  });
+  it('respects attributes max value', () => {
+    const intent = new ConsumeIntent();
+
+    const newState = intent.execute(state, maxedContext);
+    const maxedUnit = getUnit(newState, unitId2);
+    const powerUp2 = getPowerUp(newState, powerUpId2);
+
+    expect(maxedUnit.attributes[ATTRIBUTES.ENDURANCE_BOOST]).toBe(2);
+    expect(powerUp2).toBeTruthy();
+    expect(newState.objectIds).toContain(powerUpId2);
   });
 });
