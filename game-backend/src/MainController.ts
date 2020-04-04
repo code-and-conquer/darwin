@@ -34,12 +34,14 @@ export default class MainController {
 
     ws.on('message', this.getMessageListener(userId));
 
-    const userContext = this.store.userContexts.userContextMap[userId];
+    const userConnection = this.store.userConnnections.userConnectionMap[
+      userId
+    ];
 
-    if (userContext === undefined) {
-      this.addNewUserContext(ws, userId);
+    if (userConnection === undefined) {
+      this.storeNewUserConnection(ws, userId);
     } else {
-      userContext.push(ws);
+      userConnection.push(ws);
     }
   }
 
@@ -48,7 +50,7 @@ export default class MainController {
     matchUpdate: MatchUpdate
   ) => void {
     return (userId: UserId, matchUpdate: MatchUpdate): void => {
-      this.store.userContexts.userContextMap[userId].forEach(ws => {
+      this.store.userConnnections.userConnectionMap[userId].forEach(ws => {
         ws.send(JSON.stringify(matchUpdate));
       });
     };
@@ -61,7 +63,7 @@ export default class MainController {
           this.getMatchUpdateExecutor(),
           this.getTerminateExecutor()
         );
-        this.store.userContexts.userContextIds.forEach(id => {
+        this.store.userConnnections.userConnectionIds.forEach(id => {
           this.gameController.appendUser(id);
         });
       }, GAME_RESTART_TIME);
@@ -112,9 +114,9 @@ export default class MainController {
     });
   }
 
-  private addNewUserContext(ws: WebSocket, userId: UserId): void {
-    this.store.userContexts.userContextMap[userId] = [ws];
-    this.store.userContexts.userContextIds.push(userId);
+  private storeNewUserConnection(ws: WebSocket, userId: UserId): void {
+    this.store.userConnnections.userConnectionMap[userId] = [ws];
+    this.store.userConnnections.userConnectionIds.push(userId);
     this.gameController.appendUser(userId);
   }
 }

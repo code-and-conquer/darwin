@@ -2,17 +2,17 @@ import WebSocket from 'ws';
 import { UserId } from '@darwin/types';
 
 export interface ServerStore {
-  userContexts: {
-    userContextMap: Record<UserId, WebSocket[]>;
-    userContextIds: UserId[];
+  userConnnections: {
+    userConnectionMap: Record<UserId, WebSocket[]>;
+    userConnectionIds: UserId[];
   };
 }
 
 export const createServerStore = (): ServerStore => {
   return {
-    userContexts: {
-      userContextIds: [],
-      userContextMap: {},
+    userConnnections: {
+      userConnectionIds: [],
+      userConnectionMap: {},
     },
   };
 };
