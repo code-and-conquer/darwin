@@ -45,6 +45,15 @@ const HelpText: FC = () => {
         Um die Ressource an deiner Position zu konsumieren, führe{' '}
         <InlineCode>consume()</InlineCode> aus.
       </p>
+      <h4>Attackieren</h4>
+      <p>
+        Die Positionen deiner Feinde kannst du mithilfe der Variable{' '}
+        <InlineCode>enemyUnits</InlineCode> auslesen. In der Variable{' '}
+        <InlineCode>nearestEnemyUnit</InlineCode> findest du den Feind, welcher
+        am nächsten bei deiner Unit ist. Durch einen ähnlichen Code wie beim
+        Beispiel wie man sich zu einer Food-Ressource bewegen kann, kannst du
+        dich auch einem Feind nähern.
+      </p>
     </>
   );
 };
