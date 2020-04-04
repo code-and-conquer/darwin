@@ -17,35 +17,6 @@ export const getGameObjectsPerType = (
     .map(id => state.objectMap[id])
     .filter(obj => obj.type === type);
 
-export const createFood = ({
-  id,
-  position,
-}: {
-  id: string;
-  position: Position;
-}): Food => ({
-  id,
-  position,
-  moveBlocking: false,
-  type: GAME_OBJECT_TYPES.FOOD,
-});
-
-export const createUnit = ({
-  id,
-  position,
-  health = INITIAL_HEALTH,
-}: {
-  id: string;
-  position: Position;
-  health?: number;
-}): Unit => ({
-  id,
-  position,
-  health,
-  moveBlocking: true,
-  type: GAME_OBJECT_TYPES.UNIT,
-});
-
 const getObjectById = (state: State, id: ObjectId): GameObject =>
   state.objectMap[id];
 
