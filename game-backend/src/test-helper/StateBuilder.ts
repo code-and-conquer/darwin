@@ -1,6 +1,7 @@
 import { State, Position } from '@darwin/types';
 import produce from '../helper/produce';
-import { createUnit, createFood } from '../helper/gameObjects';
+import createUnit from '../helper/createUnit';
+import createFood from '../game-engine/mechanics/food-spawner/createFood';
 
 export interface GameObject {
   id: string;

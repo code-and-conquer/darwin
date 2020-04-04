@@ -8,10 +8,11 @@ import {
   UserId,
   UserScript,
 } from '@darwin/types';
-import { createUnit, getGameObjectsPerType } from './helper/gameObjects';
+import { getGameObjectsPerType } from './helper/gameObjects';
 import { generateFreePosition } from './helper/fields';
 import performTick from './game-engine';
 import { createGameStore } from './createGameStore';
+import createUnit from './helper/createUnit';
 
 export const TICK_INTERVAL = 2000;
 
