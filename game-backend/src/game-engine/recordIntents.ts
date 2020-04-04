@@ -13,6 +13,8 @@ import {
   selectNearestEnemyUnit,
 } from './state-selectors';
 
+import selectPowerUps from './state-selectors/powerUpSelector';
+
 interface ScriptContextMethods {
   move: (direction: Direction) => void;
   consume: () => void;
