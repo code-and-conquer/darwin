@@ -15,7 +15,7 @@ export const INITIAL_ATTRIBUTES: Attributes = {
 
 export type AttributeBoundary = { max: number; min: number };
 export type AttributeName = keyof Attributes;
-export type AttributeBoundaries = Record<keyof Attributes, AttributeBoundary>;
+export type AttributeBoundaries = Record<AttributeName, AttributeBoundary>;
 
 export const ATTRIBUTE_BOUNDARIES: AttributeBoundaries = {
   [ATTRIBUTES.ENDURANCE_BOOST]: { max: 2, min: -2 },
