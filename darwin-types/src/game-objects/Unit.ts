@@ -8,4 +8,5 @@ export const INITIAL_HEALTH = MAX_HEALTH;
 export interface Unit extends GameObject {
   type: UnitType;
   health: number;
+  isConsumable: false;
 }

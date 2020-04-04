@@ -7,9 +7,11 @@ export interface GameObject {
   type: string;
   position: Position;
   moveBlocking: boolean;
+  isConsumable: boolean;
 }
 
 export const GAME_OBJECT_TYPES = {
   UNIT: 'unit',
   FOOD: 'food',
+  POWER_UP: 'powerUp',
 };

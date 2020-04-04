@@ -8,6 +8,7 @@ export interface GameObject {
   type: string;
   position: Position;
   moveBlocking: boolean;
+  isConsumable: boolean;
 }
 export interface AddGameObject {
   id: string;
