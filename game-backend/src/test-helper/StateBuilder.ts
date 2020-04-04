@@ -1,4 +1,4 @@
-import { State, Position } from '@darwin/types';
+import { State, Position, Attributes } from '@darwin/types';
 import produce from '../helper/produce';
 import createUnit from '../helper/createUnit';
 import createFood from '../game-engine/mechanics/food-spawner/createFood';
@@ -19,6 +19,7 @@ export interface AddGameObject {
 
 interface AddGameObjectUnit extends AddGameObject {
   health?: number;
+  attributes?: Attributes;
 }
 
 export default class StateBuilder {
@@ -37,9 +38,9 @@ export default class StateBuilder {
     return this;
   }
 
-  addUnit({ id, x = 1, y = 1, health }: AddGameObjectUnit): StateBuilder {
+  addUnit({ x = 1, y = 1, ...props }: AddGameObjectUnit): StateBuilder {
     const position = { x, y };
-    const unit = createUnit({ id, position, health });
+    const unit = createUnit({ position, ...props });
     return this.addObject(unit);
   }
 
