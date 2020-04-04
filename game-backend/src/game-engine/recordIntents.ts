@@ -11,6 +11,7 @@ import { Intent } from './intent/Intent';
 import MoveIntent, { Direction } from './intent/MoveIntent';
 import ConsumeIntent from './intent/ConsumeIntent';
 import { selectFoods, selectUserUnit, getNearestFood } from './state-selectors';
+import selectPowerUps from './state-selectors/powerUpSelector';
 
 interface ScriptContextMethods {
   move: (direction: Direction) => void;
@@ -56,12 +57,14 @@ function recordIntents(
 ): Intent[] {
   const intentions: Intent[] = [];
   const foods = selectFoods(state);
+  const powerUps = selectPowerUps(state);
   const userUnit = selectUserUnit(state, userExecutionContext.unitId);
   const nearestFood = getNearestFood(state, userUnit);
 
   const variables: ScriptContextVariables = deepClone({
     nearestFood,
     foods,
+    powerUps,
     userUnit,
   });
 
