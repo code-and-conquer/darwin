@@ -1,8 +1,16 @@
 import React, { FC } from 'react';
-import { GameObject, ObjectId, Unit as UnitT } from '@darwin/types';
+import {
+  GameObject,
+  ObjectId,
+  Unit as UnitT,
+  Food as FoodT,
+  PowerUp as PowerUpT,
+} from '@darwin/types';
 import Unit from './Unit';
 import GAME_OBJECT_TYPES from '../../constants/gameObjects';
 import Food from './Food';
+
+import PowerUp from './PowerUp';
 
 type Props = {
   objectIds: ObjectId[];
@@ -45,13 +53,26 @@ const GameObjects: FC<Props> = ({
             );
           }
           case GAME_OBJECT_TYPES.FOOD: {
-            const food = gameObject as UnitT;
+            const food = gameObject as FoodT;
             return (
               <Food
                 key={food.id}
                 position={{
                   x: food.position.x * scaleFactor,
                   y: food.position.y * scaleFactor,
+                }}
+              />
+            );
+          }
+          case GAME_OBJECT_TYPES.POWER_UP: {
+            const powerUp = gameObject as PowerUpT;
+            return (
+              <PowerUp
+                key={powerUp.id}
+                subType={powerUp.subType}
+                position={{
+                  x: powerUp.position.x * scaleFactor,
+                  y: powerUp.position.y * scaleFactor,
                 }}
               />
             );
