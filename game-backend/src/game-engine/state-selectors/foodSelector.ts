@@ -3,7 +3,7 @@ import getNearestObjectOfType from './helper';
 import { getGameObjectsPerType } from '../../helper/gameObjects';
 
 export const selectFoods = (state: State): Food[] => {
-  return getGameObjectsPerType(state, GAME_OBJECT_TYPES.FOOD);
+  return getGameObjectsPerType<Food>(state, GAME_OBJECT_TYPES.FOOD);
 };
 
 export const getNearestFood = (state: State, unit: Unit): Food => {

@@ -9,13 +9,13 @@ import {
   Position,
 } from '@darwin/types';
 
-export const getGameObjectsPerType = (
+export const getGameObjectsPerType = <T extends GameObject>(
   state: State,
   type: string
-): GameObject[] =>
+): T[] =>
   state.objectIds
     .map(id => state.objectMap[id])
-    .filter(obj => obj.type === type);
+    .filter(obj => obj.type === type) as T[];
 
 const getObjectById = (state: State, id: ObjectId): GameObject =>
   state.objectMap[id];
