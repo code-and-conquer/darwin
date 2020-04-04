@@ -5,6 +5,7 @@ import {
   ARENA_WIDTH,
   GameObject,
 } from '@darwin/types';
+import pickRandom from './array';
 
 export const getFlatFieldArray = (): Position[] =>
   new Array(ARENA_WIDTH)
@@ -52,9 +53,7 @@ export const getFreeFields = (state: State): Position[] => {
 
 export const generateFreePosition = (state: State): Position => {
   const freeFields = getFreeFields(state);
-  const freeFieldsCount = freeFields.length;
-  const randomIndex = Math.floor(Math.random() * freeFieldsCount);
-  const freeRandomPosition = freeFields[randomIndex];
+  const freeRandomPosition = pickRandom(freeFields);
 
   return freeRandomPosition;
 };
