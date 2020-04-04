@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Stage } from '@inlet/react-pixi';
 import * as PIXI from 'pixi.js';
+import { GAME_OBJECT_TYPES } from '@darwin/types';
 import CanvasWrapper from './components/visual/CanvasWrapper';
 import { useGameState, useUserContext } from './service/game';
 import GameObjects from './components/canvas-objects/GameObjects';
@@ -8,7 +9,6 @@ import Grid from './components/canvas-objects/Grid';
 import { FIELD_SIZE, STAGE_COLUMNS, STAGE_ROWS } from './constants/stage';
 import Rectangle from './components/pixi/Rectangle';
 import Firework from './components/pixi/Firework';
-import GAME_OBJECT_TYPES from './constants/gameObjects';
 
 const width = STAGE_COLUMNS * FIELD_SIZE;
 const height = STAGE_ROWS * FIELD_SIZE;

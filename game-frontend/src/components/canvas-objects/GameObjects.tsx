@@ -5,9 +5,9 @@ import {
   Unit as UnitT,
   Food as FoodT,
   PowerUp as PowerUpT,
+  GAME_OBJECT_TYPES,
 } from '@darwin/types';
 import Unit from './Unit';
-import GAME_OBJECT_TYPES from '../../constants/gameObjects';
 import Food from './Food';
 
 import PowerUp from './PowerUp';
