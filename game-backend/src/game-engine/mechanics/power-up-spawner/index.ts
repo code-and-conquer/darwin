@@ -1,7 +1,7 @@
 import { State } from '@darwin/types';
 import spawnPowerUp from './spawnPowerUp';
 import { countUnits, countPowerUps } from '../../../helper/gameObjects';
-import spawn from '../spawn';
+import handleSpawning from '../handleSpawning';
 
 const POWER_UP_TO_UNIT_RATIO = 0.5;
 
@@ -11,7 +11,12 @@ const handlePowerUpSpawning = (state: State): State => {
 
   const limit = unitCount * POWER_UP_TO_UNIT_RATIO;
 
-  return spawn({ limit, count: powerUpCount, spawner: spawnPowerUp, state });
+  return handleSpawning({
+    limit,
+    count: powerUpCount,
+    spawner: spawnPowerUp,
+    state,
+  });
 };
 
 export default handlePowerUpSpawning;

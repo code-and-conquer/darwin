@@ -9,7 +9,7 @@ type params = {
   spawner: (position: Position) => GameObject;
 };
 
-const spawn = ({ limit, count, spawner, state }: params): State => {
+const handleSpawning = ({ limit, count, spawner, state }: params): State => {
   if (count < limit) {
     const position = generateFreePosition(state);
     const gameObject = spawner(position);
@@ -23,4 +23,4 @@ const spawn = ({ limit, count, spawner, state }: params): State => {
   return state;
 };
 
-export default spawn;
+export default handleSpawning;
