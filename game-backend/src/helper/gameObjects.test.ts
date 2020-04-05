@@ -1,11 +1,6 @@
 import { State, GAME_OBJECT_TYPES } from '@darwin/types';
 import StateBuilder from '../test-helper/StateBuilder';
-import {
-  getGameObjectsPerType,
-  removeGameObject,
-  getConsumablesFromState,
-} from './gameObjects';
-import { ATTRIBUTES } from '../../../darwin-types/src/game-objects/Unit';
+import { getGameObjectsPerType, removeGameObject } from './gameObjects';
 
 describe('getGameObjectsPerType', () => {
   const FOOD_ID = 'FOODID1';
@@ -36,22 +31,25 @@ describe('getGameObjectsPerType', () => {
     emptyState = StateBuilder.buildState().build();
   });
 
-  it('filters state with zero food', () => {
-    const foods = getGameObjectsPerType(emptyState, GAME_OBJECT_TYPES.FOOD);
-
-    expect(foods.length).toBe(0);
-  });
-
-  it('filters state with one food', () => {
-    const foods = getGameObjectsPerType(
-      oneObjectOfEachState,
-      GAME_OBJECT_TYPES.FOOD
+  it('filters state with zero consumables', () => {
+    const consumables = getGameObjectsPerType(
+      emptyState,
+      GAME_OBJECT_TYPES.CONSUMABLE
     );
 
-    expect(foods.length).toBe(1);
-    expect(foods[0].type).toBe(GAME_OBJECT_TYPES.FOOD);
-    expect(foods[0].position.x).toBe(5);
-    expect(foods[0].position.y).toBe(17);
+    expect(consumables.length).toBe(0);
+  });
+
+  it('filters state with one consumable', () => {
+    const consumables = getGameObjectsPerType(
+      oneObjectOfEachState,
+      GAME_OBJECT_TYPES.CONSUMABLE
+    );
+
+    expect(consumables.length).toBe(1);
+    expect(consumables[0].type).toBe(GAME_OBJECT_TYPES.CONSUMABLE);
+    expect(consumables[0].position.x).toBe(5);
+    expect(consumables[0].position.y).toBe(17);
   });
 
   it('filters state with one unit', () => {
@@ -67,14 +65,14 @@ describe('getGameObjectsPerType', () => {
   });
 
   it('filters state with multiple foods and other objects', () => {
-    const foods = getGameObjectsPerType(
+    const consumables = getGameObjectsPerType(
       multipleObjectState,
-      GAME_OBJECT_TYPES.FOOD
+      GAME_OBJECT_TYPES.CONSUMABLE
     );
 
-    expect(foods.length).toBe(multipleObjectsCount);
+    expect(consumables.length).toBe(multipleObjectsCount);
     for (let i = 0; i < multipleObjectsCount; i++) {
-      expect(foods[i].type).toBe(GAME_OBJECT_TYPES.FOOD);
+      expect(consumables[i].type).toBe(GAME_OBJECT_TYPES.CONSUMABLE);
     }
   });
 });
@@ -92,28 +90,5 @@ describe('removeGameObject', () => {
     expect(newState.objectIds).not.toContain(UNIT_ID);
     expect(newState.objectMap[UNIT_ID]).toBeFalsy();
     expect(newState.objectMap[FOOD_ID]).toBeTruthy();
-  });
-});
-
-describe('getConsumablesFromState', () => {
-  it('should return only consumables', () => {
-    const UNIT_ID = 'UNIT_ID';
-    const FOOD_ID = 'FOOD_ID';
-    const POWER_UP_ID = 'POWER_UP_ID';
-    const state = StateBuilder.buildState()
-      .addFood({ id: FOOD_ID, x: 5, y: 17 })
-      .addUnit({ id: UNIT_ID, x: 2, y: 10 })
-      .addPowerUp({
-        id: POWER_UP_ID,
-        x: 2,
-        y: 11,
-        subType: ATTRIBUTES.ENDURANCE_BOOST,
-      })
-      .build();
-
-    const consumables = getConsumablesFromState(state);
-    consumables.forEach(consumable => {
-      expect(consumable.isConsumable).toBe(true);
-    });
   });
 });

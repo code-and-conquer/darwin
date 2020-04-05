@@ -3,14 +3,13 @@ import {
   GameObject,
   ObjectId,
   Unit as UnitT,
-  Food as FoodT,
-  PowerUp as PowerUpT,
+  Consumable as ConsumableT,
   GAME_OBJECT_TYPES,
 } from '@darwin/types';
 import Unit from './Unit';
-import Food from './Food';
 
-import PowerUp from './PowerUp';
+import Consumable from './consumable';
+import scalePosition from '../../helper/scalePosition';
 
 type Props = {
   objectIds: ObjectId[];
@@ -21,15 +20,10 @@ type Props = {
 
 const sortLayerConfig = {
   [GAME_OBJECT_TYPES.UNIT]: 2,
-  [GAME_OBJECT_TYPES.FOOD]: 1,
+  [GAME_OBJECT_TYPES.CONSUMABLE]: 1,
 };
 
-const GameObjects: FC<Props> = ({
-  objectIds,
-  objectMap,
-  ownUnitId,
-  scaleFactor,
-}) => (
+const GameObjects: FC<Props> = ({ objectIds, objectMap, ownUnitId }) => (
   <>
     {objectIds
       .map(objectId => objectMap[objectId])
@@ -44,38 +38,15 @@ const GameObjects: FC<Props> = ({
               <Unit
                 key={unit.id}
                 health={unit.health}
-                position={{
-                  x: unit.position.x * scaleFactor,
-                  y: unit.position.y * scaleFactor,
-                }}
+                position={scalePosition(unit.position)}
                 isOwn={unit.id === ownUnitId}
               />
             );
           }
-          case GAME_OBJECT_TYPES.FOOD: {
-            const food = gameObject as FoodT;
-            return (
-              <Food
-                key={food.id}
-                position={{
-                  x: food.position.x * scaleFactor,
-                  y: food.position.y * scaleFactor,
-                }}
-              />
-            );
-          }
-          case GAME_OBJECT_TYPES.POWER_UP: {
-            const powerUp = gameObject as PowerUpT;
-            return (
-              <PowerUp
-                key={powerUp.id}
-                subType={powerUp.subType}
-                position={{
-                  x: powerUp.position.x * scaleFactor,
-                  y: powerUp.position.y * scaleFactor,
-                }}
-              />
-            );
+          case GAME_OBJECT_TYPES.CONSUMABLE: {
+            const consumable = gameObject as ConsumableT;
+            console.log('rendering a consumable', consumable);
+            return <Consumable key={consumable.id} consumable={consumable} />;
           }
           default:
             return null;

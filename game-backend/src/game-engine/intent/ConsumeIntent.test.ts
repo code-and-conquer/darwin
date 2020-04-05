@@ -7,8 +7,9 @@ import {
 } from '@darwin/types';
 import ConsumeIntent from './ConsumeIntent';
 import StateBuilder from '../../test-helper/StateBuilder';
-import { getUnit, getFood, getPowerUp } from '../../helper/gameObjects';
+import { getUnit } from '../../helper/gameObjects';
 import { FOOD_REGENERATION_VALUE } from '../mechanics/food-spawner/createFood';
+import { getConsumable } from '../../helper/consumables';
 
 describe('ConsumeIntent on Food', () => {
   const unitId1 = 'UNIT_ID_1';
@@ -57,8 +58,8 @@ describe('ConsumeIntent on Food', () => {
     const unit1 = getUnit(newState, unitId1);
     const unit2 = getUnit(newState, unitId2);
 
-    const food1 = getFood(newState, foodId1);
-    const food2 = getFood(newState, foodId2);
+    const food1 = getConsumable(newState, foodId1);
+    const food2 = getConsumable(newState, foodId2);
 
     expect(unit1.health).toBe(lowHealthUnit.health + FOOD_REGENERATION_VALUE);
     expect(unit2.health).toBe(overflowHealthUnit.health);
@@ -142,7 +143,7 @@ describe('ConsumeIntent on Powerup', () => {
 
     const newState = intent.execute(state, normalContext);
     const unit1 = getUnit(newState, unitId1);
-    const powerup1 = getPowerUp(newState, powerUpId1);
+    const powerup1 = getConsumable(newState, powerUpId1);
 
     expect(unit1.attributes[ATTRIBUTES.ENDURANCE_BOOST]).toBe(1);
     expect(powerup1).toBeFalsy();
@@ -153,7 +154,7 @@ describe('ConsumeIntent on Powerup', () => {
 
     const newState = intent.execute(state, maxedContext);
     const maxedUnit = getUnit(newState, unitId2);
-    const powerUp2 = getPowerUp(newState, powerUpId2);
+    const powerUp2 = getConsumable(newState, powerUpId2);
 
     expect(maxedUnit.attributes[ATTRIBUTES.ENDURANCE_BOOST]).toBe(2);
     expect(powerUp2).toBeTruthy();

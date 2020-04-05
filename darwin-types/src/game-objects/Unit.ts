@@ -6,7 +6,7 @@ export const MAX_HEALTH = 100;
 export const INITIAL_HEALTH = MAX_HEALTH;
 
 export const ATTRIBUTES = {
-  ENDURANCE_BOOST: 'enduranceBoost' as 'enduranceBoost',
+  ENDURANCE_BOOST: 'ENDURANCE_BOOST' as 'ENDURANCE_BOOST',
 };
 
 export const INITIAL_ATTRIBUTES: Attributes = {

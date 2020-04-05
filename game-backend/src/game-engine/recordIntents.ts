@@ -1,5 +1,11 @@
 import vm, { Context, Script } from 'vm';
-import { UserScript, UserExecutionContext, State, Unit } from '@darwin/types';
+import {
+  UserScript,
+  UserExecutionContext,
+  State,
+  Unit,
+  Consumable,
+} from '@darwin/types';
 import deepClone from '../helper/deepClone';
 import { Intent } from './intent/Intent';
 import MoveIntent, { Direction } from './intent/MoveIntent';
@@ -13,16 +19,14 @@ import {
   selectNearestEnemyUnit,
 } from './state-selectors';
 
-import selectPowerUps from './state-selectors/powerUpSelector';
-
 interface ScriptContextMethods {
   move: (direction: Direction) => void;
   consume: () => void;
 }
 
 interface ScriptContextVariables {
-  foods: Food[];
-  nearestFood: Food;
+  foods: Consumable[];
+  nearestFood: Consumable;
   userUnit: Unit;
   enemyUnits: Unit[];
   nearestEnemyUnit: Unit;

@@ -1,7 +1,8 @@
 import { State } from '@darwin/types';
 import spawnPowerUp from './spawnPowerUp';
-import { countUnits, countPowerUps } from '../../../helper/gameObjects';
+import { countUnits } from '../../../helper/gameObjects';
 import handleSpawning from '../handleSpawning';
+import { countPowerUps } from '../../../helper/consumables';
 
 const POWER_UP_TO_UNIT_RATIO = 0.5;
 

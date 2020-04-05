@@ -5,7 +5,7 @@ import StateBuilder from '../../../test-helper/StateBuilder';
 describe('PowerUp Spawning', () => {
   const UNIT_1_ID = 'unit1';
   const UNIT_2_ID = 'unit2';
-  const POWER_UP_1_ID = 'food1';
+  const POWER_UP_1_ID = 'powerUp1';
 
   it('spawns a powerup object if there is space for it', () => {
     const state: State = StateBuilder.buildState()

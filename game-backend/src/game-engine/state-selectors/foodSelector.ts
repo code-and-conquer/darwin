@@ -1,11 +1,15 @@
-import { Food, GAME_OBJECT_TYPES, State, Unit } from '@darwin/types';
-import getNearestObjectOfType from './helper';
-import { getGameObjectsPerType } from '../../helper/gameObjects';
+import { Consumable, State, Unit, CONSUMABLE_CATEGORIES } from '@darwin/types';
+import { getNearestConsumableOfCategory } from './helper';
+import { getConsumablesPerCategory } from '../../helper/consumables';
 
-export const selectFoods = (state: State): Food[] => {
-  return getGameObjectsPerType<Food>(state, GAME_OBJECT_TYPES.FOOD);
+export const selectFoods = (state: State): Consumable[] => {
+  return getConsumablesPerCategory(state, CONSUMABLE_CATEGORIES.POWER_UP);
 };
 
-export const getNearestFood = (state: State, unit: Unit): Food => {
-  return getNearestObjectOfType<Food>(state, unit, GAME_OBJECT_TYPES.FOOD);
+export const getNearestFood = (state: State, unit: Unit): Consumable => {
+  return getNearestConsumableOfCategory(
+    state,
+    unit,
+    CONSUMABLE_CATEGORIES.RESOURCE
+  );
 };

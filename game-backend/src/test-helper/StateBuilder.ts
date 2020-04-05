@@ -1,8 +1,9 @@
 import { State, Position, Attributes } from '@darwin/types';
 import produce from '../helper/produce';
-import { createPowerUpHelper } from '../game-engine/mechanics/power-up-spawner/createPowerUp';
+import createPowerUp from '../game-engine/mechanics/power-up-spawner/createPowerUp';
 import createUnit from '../helper/createUnit';
 import createFood from '../game-engine/mechanics/food-spawner/createFood';
+import { PowerUpType } from '../../../darwin-types/src/game-objects/Consumable';
 
 export interface GameObject {
   id: string;
@@ -24,7 +25,7 @@ interface AddGameObjectUnit extends AddGameObject {
 }
 
 interface AddGameObjectPowerUp extends AddGameObject {
-  subType: string;
+  subType: PowerUpType;
 }
 
 export default class StateBuilder {
@@ -62,7 +63,7 @@ export default class StateBuilder {
     subType,
   }: AddGameObjectPowerUp): StateBuilder {
     const position = { x, y };
-    const food = createPowerUpHelper({ id, position, subType });
+    const food = createPowerUp({ id, position, subType });
     return this.addObject(food);
   }
 

@@ -12,6 +12,5 @@ export interface GameObject {
 
 export const GAME_OBJECT_TYPES = {
   UNIT: 'unit',
-  FOOD: 'food',
-  POWER_UP: 'powerUp',
+  CONSUMABLE: 'consumable',
 };

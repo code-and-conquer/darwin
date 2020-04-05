@@ -1,8 +1,9 @@
 import { State } from '@darwin/types';
 import scheduleIntents from './scheduleIntents';
 import StateBuilder from '../test-helper/StateBuilder';
-import { getUnit, getFood } from '../helper/gameObjects';
+import { getUnit } from '../helper/gameObjects';
 import MoveIntent, { Direction } from './intent/MoveIntent';
+import { getConsumable } from '../helper/consumables';
 
 describe('scheduleIntents', () => {
   const getDummyState = (): State => ({
@@ -56,7 +57,7 @@ describe('scheduleIntents', () => {
     ]);
 
     const unit = getUnit(newState, UNIT_ID);
-    const food = getFood(newState, FOOD_ID);
+    const food = getConsumable(newState, FOOD_ID);
 
     expect(unit.position.x).toBe(2);
     expect(food.position.x).toBe(10);

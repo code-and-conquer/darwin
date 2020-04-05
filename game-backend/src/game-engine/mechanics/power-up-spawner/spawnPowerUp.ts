@@ -1,16 +1,17 @@
 import hyperid from 'hyperid';
-import { PowerUp, Position } from '@darwin/types';
-import { powerUpSpawners } from './createPowerUp';
+import { Consumable, Position, powerUpTypes } from '@darwin/types';
 import pickRandom from '../../../helper/array';
+import createPowerUp from './createPowerUp';
 
 const generateId = hyperid();
 
-const spawnPowerUp = (position: Position): PowerUp => {
-  const createRandomPowerUp = pickRandom(powerUpSpawners);
+const spawnPowerUp = (position: Position): Consumable => {
+  const randomPowerUpType = pickRandom(powerUpTypes);
 
-  const powerUp: PowerUp = createRandomPowerUp({
+  const powerUp = createPowerUp({
     id: generateId(),
     position,
+    subType: randomPowerUpType,
   });
   return powerUp;
 };

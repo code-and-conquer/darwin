@@ -1,6 +1,7 @@
 import StateBuilder from '../../test-helper/StateBuilder';
-import { getFood, getUnit } from '../../helper/gameObjects';
+import { getUnit } from '../../helper/gameObjects';
 import { getNearestFood } from './foodSelector';
+import { getConsumable } from '../../helper/consumables';
 
 describe('getNearestFood', () => {
   it('should get nearest food resource', () => {
@@ -18,7 +19,7 @@ describe('getNearestFood', () => {
       .build();
 
     const unit = getUnit(state, UNIT_ID);
-    const expectedNearestFood = getFood(state, FOOD_ID4);
+    const expectedNearestFood = getConsumable(state, FOOD_ID4);
     const food = getNearestFood(state, unit);
     expect(food).toBe(expectedNearestFood);
   });

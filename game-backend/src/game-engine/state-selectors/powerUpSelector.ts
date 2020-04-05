@@ -1,9 +1,9 @@
-import { State, GAME_OBJECT_TYPES, PowerUp } from '@darwin/types';
+import { State, CONSUMABLE_CATEGORIES, Consumable } from '@darwin/types';
 
-import { getGameObjectsPerType } from '../../helper/gameObjects';
+import { getConsumablesPerCategory } from '../../helper/consumables';
 
-const selectPowerUps = (state: State): PowerUp[] => {
-  return getGameObjectsPerType(state, GAME_OBJECT_TYPES.POWER_UP) as PowerUp[];
+const selectPowerUps = (state: State): Consumable[] => {
+  return getConsumablesPerCategory(state, CONSUMABLE_CATEGORIES.POWER_UP);
 };
 
 export default selectPowerUps;
