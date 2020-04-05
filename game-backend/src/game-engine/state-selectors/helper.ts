@@ -6,7 +6,6 @@ import {
 } from '@darwin/types';
 import { getConsumablesPerCategory } from '../../helper/consumables';
 import { getGameObjectsPerType } from '../../helper/gameObjects';
-
 const getGameObjesctsSortedByPosition = <T extends GameObject>(
   objects: T[],
   gameObject: GameObject

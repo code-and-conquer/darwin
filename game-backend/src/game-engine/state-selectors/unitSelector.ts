@@ -13,7 +13,7 @@ const selectEnemyUnits = (state: State, unitID: ObjectId): Unit[] => {
 };
 
 const selectNearestEnemyUnit = (state: State, unit: Unit): Unit => {
-  return getNearestObjectOfType(state, unit, GAME_OBJECT_TYPES.UNIT);
+  return getNearestObjectOfType<Unit>(state, unit, GAME_OBJECT_TYPES.UNIT);
 };
 
 export { selectUserUnit, selectEnemyUnits, selectNearestEnemyUnit };
