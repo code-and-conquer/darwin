@@ -5,7 +5,7 @@ import {
   ATTRIBUTES,
 } from '@darwin/types';
 import StateBuilder from '../../test-helper/StateBuilder';
-import handleHunger, { HEALTH_LOSS_RATE } from './hunger-handler';
+import handleHunger from './hunger-handler';
 import { getUnit } from '../../helper/gameObjects';
 
 describe('Hunger Handling', () => {
@@ -48,15 +48,5 @@ describe('Hunger Handling', () => {
     expect(getUnit(newState, UNIT_ID1).health).toBe(97);
     expect(getUnit(newState, UNIT_ID2).health).toBe(99);
     expect(getUnit(newState, UNIT_ID3).health).toBe(95);
-  });
-
-  it('removes dead units', () => {
-    const state: State = StateBuilder.buildState()
-      .addUnit({ id: UNIT_ID1, health: HEALTH_LOSS_RATE })
-      .build();
-
-    const newState = handleHunger(state);
-
-    expect(getUnit(newState, UNIT_ID1)).toBeUndefined();
   });
 });

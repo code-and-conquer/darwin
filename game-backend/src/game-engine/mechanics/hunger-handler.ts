@@ -1,9 +1,6 @@
 import { State, Unit, GAME_OBJECT_TYPES, ATTRIBUTES } from '@darwin/types';
 import produce from '../../helper/produce';
-import {
-  getGameObjectsPerType,
-  removeGameObject,
-} from '../../helper/gameObjects';
+import { getGameObjectsPerType } from '../../helper/gameObjects';
 
 export const HEALTH_LOSS_RATE = 3;
 // Disable no-param-reassign due to immer.js handling
@@ -11,17 +8,10 @@ export const HEALTH_LOSS_RATE = 3;
 
 function handleHunger(state: State): State {
   return produce(state, draft => {
-    getGameObjectsPerType(state, GAME_OBJECT_TYPES.UNIT).forEach(
-      (unit: Unit) => {
-        unit.health -=
-          HEALTH_LOSS_RATE - unit.attributes[ATTRIBUTES.ENDURANCE_BOOST];
-        if (unit.health <= 0) {
-          const { objectIds, objectMap } = removeGameObject(draft, unit.id);
-          draft.objectMap = objectMap;
-          draft.objectIds = objectIds;
-        }
-      }
-    );
+    getGameObjectsPerType<Unit>(draft, GAME_OBJECT_TYPES.UNIT).forEach(unit => {
+      unit.health -=
+        HEALTH_LOSS_RATE - unit.attributes[ATTRIBUTES.ENDURANCE_BOOST];
+    });
   });
 }
 

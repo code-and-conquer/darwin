@@ -2,8 +2,14 @@ import { State } from '@darwin/types';
 import handleFoodSpawning from './food-spawner';
 import handlePowerUpSpawning from './power-up-spawner';
 import handleHunger from './hunger-handler';
+import handleDeath from './death-handler';
 
-const HANDLERS = [handleHunger, handleFoodSpawning, handlePowerUpSpawning];
+const HANDLERS = [
+  handleHunger,
+  handleDeath,
+  handleFoodSpawning,
+  handlePowerUpSpawning,
+];
 
 function handleGameMechanics(state: State): State {
   return HANDLERS.reduce(
