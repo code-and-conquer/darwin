@@ -9,6 +9,7 @@ const getNearestObjectOfType = <T extends GameObject>(
 ): T => {
   const objects = getGameObjectsPerType(state, type) as T[];
   const sortedObjects = objects
+    .filter(gameObject => gameObject.id !== object.id)
     .map(obj => ({
       obj,
       distance:
