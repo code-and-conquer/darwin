@@ -78,7 +78,7 @@ export default class MainController {
   private getUserId(requestedUserId: string): UserId {
     if (
       requestedUserId &&
-      this.store.userContexts.userContextIds.includes(requestedUserId)
+      this.store.userConnnections.userConnectionIds.includes(requestedUserId)
     ) {
       return requestedUserId;
     }
