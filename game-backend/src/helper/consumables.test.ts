@@ -1,6 +1,6 @@
+import { ATTRIBUTES } from '@darwin/types';
 import StateBuilder from '../test-helper/StateBuilder';
 import { getConsumablesFromState } from './consumables';
-import { ATTRIBUTES } from '../../../darwin-types/src/game-objects/Unit';
 
 describe('getConsumablesFromState', () => {
   it('should return only consumables', () => {

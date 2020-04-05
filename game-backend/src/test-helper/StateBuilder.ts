@@ -1,9 +1,8 @@
-import { State, Position, Attributes } from '@darwin/types';
+import { State, Position, Attributes, PowerUpType } from '@darwin/types';
 import produce from '../helper/produce';
 import createPowerUp from '../game-engine/mechanics/power-up-spawner/createPowerUp';
 import createUnit from '../helper/createUnit';
 import createFood from '../game-engine/mechanics/food-spawner/createFood';
-import { PowerUpType } from '../../../darwin-types/src/game-objects/Consumable';
 
 export interface GameObject {
   id: string;
