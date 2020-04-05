@@ -19,7 +19,7 @@ describe('selectUserUnit', () => {
       .build();
     multipleUnitStateBuilder = StateBuilder.buildState();
     for (let i = 1; i <= multipleUnitCount; i++) {
-      multipleUnitStateBuilder.addFood({ id: `UNIT_${i}`, x: i, y: i });
+      multipleUnitStateBuilder.addUnit({ id: `UNIT_${i}`, x: i, y: i });
     }
     multipleUnitState = multipleUnitStateBuilder
       .addUnit({ id: UNIT_ID, x: 0, y: 0 })
@@ -38,7 +38,7 @@ describe('selectUserUnit', () => {
     expect(unit.id).toBe(UNIT_ID);
   });
 
-  it('selects the correct unit if there multiple', () => {
+  it('selects the correct unit if there are multiple', () => {
     const unit = selectUserUnit(multipleUnitState, UNIT_ID);
 
     expect(unit.id).toBe(UNIT_ID);
@@ -60,19 +60,18 @@ describe('selectNearestEnemyUnit', () => {
       .addUnit({ id: USER_UNIT_ID, x: 2, y: 10 })
       .build();
     const unit = getUnit(state, USER_UNIT_ID);
-    const expectedNearestEnemyUnit = getUnit(state, UNIT_ID4);
 
     const enemyUnit = selectNearestEnemyUnit(state, unit);
 
-    expect(enemyUnit).toBe(expectedNearestEnemyUnit);
+    expect(enemyUnit.id).toBe(UNIT_ID4);
   });
   it('should not fail, if no enemy unit is available', () => {
-    const USEER_UNIT_ID = 'USER_UNIT_ID';
+    const USER_UNIT_ID = 'USER_UNIT_ID';
     const state = StateBuilder.buildState()
-      .addUnit({ id: USEER_UNIT_ID, x: 2, y: 10 })
+      .addUnit({ id: USER_UNIT_ID, x: 2, y: 10 })
       .build();
 
-    const unit = getUnit(state, USEER_UNIT_ID);
+    const unit = getUnit(state, USER_UNIT_ID);
     const enemyUnit = selectNearestEnemyUnit(state, unit);
     expect(enemyUnit).toBeFalsy();
   });
