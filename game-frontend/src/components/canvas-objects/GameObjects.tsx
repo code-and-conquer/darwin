@@ -45,7 +45,6 @@ const GameObjects: FC<Props> = ({ objectIds, objectMap, ownUnitId }) => (
           }
           case GAME_OBJECT_TYPES.CONSUMABLE: {
             const consumable = gameObject as ConsumableT;
-            console.log('rendering a consumable', consumable);
             return <Consumable key={consumable.id} consumable={consumable} />;
           }
           default:
