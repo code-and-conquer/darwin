@@ -28,11 +28,12 @@ export default class ConsumeIntent implements Intent {
     state: State,
     unit: Unit
   ): Consumable | null {
-    const objectsOnPosition = getObjectsOnField(state, unit.position);
+    const objectsOnPosition = getObjectsOnField<Consumable>(
+      state,
+      unit.position
+    );
     const consumable = objectsOnPosition
-      ? (objectsOnPosition.find(
-          obj => obj.type === GameObjectTypes.Food
-        ) as Consumable)
+      ? objectsOnPosition.find(obj => obj.type === GameObjectTypes.Food)
       : null;
     return consumable;
   }
