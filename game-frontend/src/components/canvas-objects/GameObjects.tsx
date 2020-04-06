@@ -1,7 +1,12 @@
 import React, { FC } from 'react';
-import { GameObject, ObjectId, Unit as UnitT } from '@darwin/types';
+import {
+  GameObject,
+  ObjectId,
+  Unit as UnitT,
+  Consumable as ConsumableT,
+  GameObjectTypes,
+} from '@darwin/types';
 import Unit from './Unit';
-import GAME_OBJECT_TYPES from '../../constants/gameObjects';
 import Food from './Food';
 
 type Props = {
@@ -11,9 +16,10 @@ type Props = {
   scaleFactor: number;
 };
 
-const sortLayerConfig = {
-  [GAME_OBJECT_TYPES.UNIT]: 2,
-  [GAME_OBJECT_TYPES.FOOD]: 1,
+const sortLayerConfig: Record<GameObjectTypes, number> = {
+  unit: 2,
+  food: 1,
+  enduranceBoost: 1,
 };
 
 const GameObjects: FC<Props> = ({
@@ -30,7 +36,7 @@ const GameObjects: FC<Props> = ({
       )
       .map((gameObject): JSX.Element | null => {
         switch (gameObject.type) {
-          case GAME_OBJECT_TYPES.UNIT: {
+          case GameObjectTypes.Unit: {
             const unit = gameObject as UnitT;
             return (
               <Unit
@@ -44,8 +50,8 @@ const GameObjects: FC<Props> = ({
               />
             );
           }
-          case GAME_OBJECT_TYPES.FOOD: {
-            const food = gameObject as UnitT;
+          case GameObjectTypes.Food: {
+            const food = gameObject as ConsumableT;
             return (
               <Food
                 key={food.id}

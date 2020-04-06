@@ -1,10 +1,10 @@
-import { State, Position } from '@darwin/types';
+import { State, Position, Attributes, GameObjectTypes } from '@darwin/types';
 import produce from '../helper/produce';
 import { createUnit, createFood } from '../helper/gameObjects';
 
 export interface GameObject {
   id: string;
-  type: string;
+  type: GameObjectTypes;
   position: Position;
   moveBlocking: boolean;
 }
@@ -17,6 +17,7 @@ export interface AddGameObject {
 
 interface AddGameObjectUnit extends AddGameObject {
   health?: number;
+  attributes?: Attributes;
 }
 
 export default class StateBuilder {
@@ -35,9 +36,15 @@ export default class StateBuilder {
     return this;
   }
 
-  addUnit({ id, x = 1, y = 1, health }: AddGameObjectUnit): StateBuilder {
+  addUnit({
+    id,
+    x = 1,
+    y = 1,
+    health,
+    attributes,
+  }: AddGameObjectUnit): StateBuilder {
     const position = { x, y };
-    const unit = createUnit({ id, position, health });
+    const unit = createUnit({ id, position, health, attributes });
     return this.addObject(unit);
   }
 

@@ -1,4 +1,4 @@
-import { State, GAME_OBJECT_TYPES } from '@darwin/types';
+import { State, GameObjectTypes } from '@darwin/types';
 import StateBuilder from '../test-helper/StateBuilder';
 import { getGameObjectsPerType, removeGameObject } from './gameObjects';
 
@@ -32,7 +32,7 @@ describe('getGameObjectsPerType', () => {
   });
 
   it('filters state with zero food', () => {
-    const foods = getGameObjectsPerType(emptyState, GAME_OBJECT_TYPES.FOOD);
+    const foods = getGameObjectsPerType(emptyState, GameObjectTypes.Food);
 
     expect(foods.length).toBe(0);
   });
@@ -40,11 +40,11 @@ describe('getGameObjectsPerType', () => {
   it('filters state with one food', () => {
     const foods = getGameObjectsPerType(
       oneObjectOfEachState,
-      GAME_OBJECT_TYPES.FOOD
+      GameObjectTypes.Food
     );
 
     expect(foods.length).toBe(1);
-    expect(foods[0].type).toBe(GAME_OBJECT_TYPES.FOOD);
+    expect(foods[0].type).toBe(GameObjectTypes.Food);
     expect(foods[0].position.x).toBe(5);
     expect(foods[0].position.y).toBe(17);
   });
@@ -52,11 +52,11 @@ describe('getGameObjectsPerType', () => {
   it('filters state with one unit', () => {
     const units = getGameObjectsPerType(
       oneObjectOfEachState,
-      GAME_OBJECT_TYPES.UNIT
+      GameObjectTypes.Unit
     );
 
     expect(units.length).toBe(1);
-    expect(units[0].type).toBe(GAME_OBJECT_TYPES.UNIT);
+    expect(units[0].type).toBe(GameObjectTypes.Unit);
     expect(units[0].position.x).toBe(2);
     expect(units[0].position.y).toBe(10);
   });
@@ -64,12 +64,12 @@ describe('getGameObjectsPerType', () => {
   it('filters state with multiple foods and other objects', () => {
     const foods = getGameObjectsPerType(
       multipleObjectState,
-      GAME_OBJECT_TYPES.FOOD
+      GameObjectTypes.Food
     );
 
     expect(foods.length).toBe(multipleObjectsCount);
     for (let i = 0; i < multipleObjectsCount; i++) {
-      expect(foods[i].type).toBe(GAME_OBJECT_TYPES.FOOD);
+      expect(foods[i].type).toBe(GameObjectTypes.Food);
     }
   });
 });
