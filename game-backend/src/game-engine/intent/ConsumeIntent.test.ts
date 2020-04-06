@@ -1,7 +1,8 @@
-import { MAX_HEALTH, State, Unit, UserContext } from '@darwin/types';
-import ConsumeIntent, { FOOD_REGENERATION_VALUE } from './ConsumeIntent';
+import { State, Unit, UserContext } from '@darwin/types';
+import ConsumeIntent from './ConsumeIntent';
 import StateBuilder from '../../test-helper/StateBuilder';
 import { getUnit, getFood } from '../../helper/gameObjects';
+import { FOOD_REGENERATION_VALUE } from '../mechanics/food-spawner/consumeFood';
 
 describe('ConsumeIntent', () => {
   const unitId1 = 'UNIT_ID_1';
@@ -12,7 +13,6 @@ describe('ConsumeIntent', () => {
 
   let state: State;
   let lowHealth: UserContext;
-  let overflowHealth: UserContext;
   let noReachableFood: UserContext;
 
   let lowHealthUnit: Unit;
@@ -34,9 +34,6 @@ describe('ConsumeIntent', () => {
 
     lowHealth = {
       unitId: unitId1,
-    };
-    overflowHealth = {
-      unitId: unitId2,
     };
     noReachableFood = {
       unitId: unitId3,
@@ -61,30 +58,12 @@ describe('ConsumeIntent', () => {
     expect(newState.objectIds).toContain(foodId2);
   });
 
-  it('respects max health value', () => {
-    const intent = new ConsumeIntent();
-
-    const newState = intent.execute(state, overflowHealth);
-    const unit2 = getUnit(newState, unitId2);
-
-    expect(unit2.health).toBe(MAX_HEALTH);
-  });
-
-  it('does not heal if no food is in reach', () => {
+  it('does nothing if no consumable is in reach', () => {
     const intent = new ConsumeIntent();
 
     const newState = intent.execute(state, noReachableFood);
     const unit3 = getUnit(newState, unitId3);
 
     expect(unit3.health).toBe(noReachableFoodUnit.health);
-  });
-
-  it('handles dead units', () => {
-    const intent = new ConsumeIntent();
-
-    const emptyState = StateBuilder.buildState().build();
-    const newState = intent.execute(emptyState, lowHealth);
-
-    expect(newState).toBe(emptyState);
   });
 });
