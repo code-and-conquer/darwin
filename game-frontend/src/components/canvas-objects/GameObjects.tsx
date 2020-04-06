@@ -8,6 +8,7 @@ import {
 } from '@darwin/types';
 import Unit from './Unit';
 import Food from './Food';
+import PowerUp from './Powerup';
 
 type Props = {
   objectIds: ObjectId[];
@@ -61,6 +62,10 @@ const GameObjects: FC<Props> = ({
                 }}
               />
             );
+          }
+          case GameObjectTypes.EnduranceBoost: {
+            const powerup = gameObject as ConsumableT;
+            return <PowerUp key={powerup.id} consumable={powerup} />;
           }
           default:
             return null;
