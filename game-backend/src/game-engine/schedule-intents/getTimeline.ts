@@ -1,6 +1,7 @@
 import { UserTickIntents } from '../intent/Intent';
 import produce from '../../helper/produce';
 import { ExecutionTimeline, PER_TICK_ENERGY } from './types';
+import { shuffleArray } from '../../helper/array';
 
 export function mapToTimeline(userTicks: UserTickIntents[]): ExecutionTimeline {
   return userTicks.reduce(
@@ -25,19 +26,6 @@ export function mapToTimeline(userTicks: UserTickIntents[]): ExecutionTimeline {
     },
     { map: {}, accessors: [] }
   );
-}
-
-/**
- * Implementation of
- * https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
- */
-export function shuffleArray<T>(originalArray: T[]): T[] {
-  const array: T[] = [...originalArray];
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
 }
 
 export function shuffleTimelineIntentEntries(
