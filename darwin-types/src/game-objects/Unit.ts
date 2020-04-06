@@ -1,7 +1,5 @@
-import { GameObject, GAME_OBJECT_TYPES } from './GameObject';
+import { GameObject, GameObjectTypes } from './GameObject';
 import { Attributes } from './Attributes';
-
-export type UnitType = typeof GAME_OBJECT_TYPES.UNIT;
 
 export const MAX_HEALTH = 100;
 export const INITIAL_HEALTH = MAX_HEALTH;
@@ -10,7 +8,7 @@ export const INITIAL_ATTRIBUTES: Attributes = {
 };
 
 export interface Unit extends GameObject {
-  type: UnitType;
+  type: GameObjectTypes.Unit;
   health: number;
   attributes: Attributes;
 }

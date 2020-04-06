@@ -1,4 +1,4 @@
-import { State, Unit, GAME_OBJECT_TYPES } from '@darwin/types';
+import { State, Unit, GameObjectTypes } from '@darwin/types';
 import produce from '../../helper/produce';
 import {
   getGameObjectsPerType,
@@ -7,7 +7,7 @@ import {
 
 function handleDeath(state: State): State {
   return produce(state, draft => {
-    getGameObjectsPerType(draft, GAME_OBJECT_TYPES.UNIT)
+    getGameObjectsPerType(draft, GameObjectTypes.Unit)
       .filter((unit: Unit) => unit.health <= 0)
       .forEach(unit => {
         const { objectIds, objectMap } = removeGameObject(draft, unit.id);

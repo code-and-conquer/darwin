@@ -2,14 +2,15 @@ import { Position } from '../Position';
 
 export type ObjectId = string;
 
+export enum GameObjectTypes {
+  Unit = 'unit',
+  Food = 'food',
+  enduranceBoost = 'enduranceBoost',
+}
+
 export interface GameObject {
   id: ObjectId;
-  type: string;
+  type: GameObjectTypes;
   position: Position;
   moveBlocking: boolean;
 }
-
-export const GAME_OBJECT_TYPES = {
-  UNIT: 'unit',
-  FOOD: 'food',
-};

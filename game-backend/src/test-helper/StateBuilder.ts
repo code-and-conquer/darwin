@@ -1,10 +1,10 @@
-import { State, Position, Attributes } from '@darwin/types';
+import { State, Position, Attributes, GameObjectTypes } from '@darwin/types';
 import produce from '../helper/produce';
 import { createUnit, createFood } from '../helper/gameObjects';
 
 export interface GameObject {
   id: string;
-  type: string;
+  type: GameObjectTypes;
   position: Position;
   moveBlocking: boolean;
 }

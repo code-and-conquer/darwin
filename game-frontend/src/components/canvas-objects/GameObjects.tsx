@@ -4,9 +4,9 @@ import {
   ObjectId,
   Unit as UnitT,
   Consumable as ConsumableT,
+  GAME_OBJECT_TYPES,
 } from '@darwin/types';
 import Unit from './Unit';
-import GAME_OBJECT_TYPES from '../../constants/gameObjects';
 import Food from './Food';
 
 type Props = {
@@ -16,9 +16,10 @@ type Props = {
   scaleFactor: number;
 };
 
-const sortLayerConfig = {
-  [GAME_OBJECT_TYPES.UNIT]: 2,
-  [GAME_OBJECT_TYPES.FOOD]: 1,
+const sortLayerConfig: Record<GAME_OBJECT_TYPES, number> = {
+  unit: 2,
+  food: 1,
+  endurancePowerup: 1,
 };
 
 const GameObjects: FC<Props> = ({

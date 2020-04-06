@@ -1,7 +1,7 @@
 import {
   Attributes,
   Consumable,
-  GAME_OBJECT_TYPES,
+  GameObjectTypes,
   GameObject,
   INITIAL_HEALTH,
   INITIAL_ATTRIBUTES,
@@ -29,7 +29,7 @@ export const createFood = ({
   id,
   position,
   moveBlocking: false,
-  type: GAME_OBJECT_TYPES.FOOD,
+  type: GameObjectTypes.Food,
 });
 
 export const createUnit = ({
@@ -48,7 +48,7 @@ export const createUnit = ({
   health,
   attributes,
   moveBlocking: true,
-  type: GAME_OBJECT_TYPES.UNIT,
+  type: GameObjectTypes.Unit,
 });
 
 const getObjectById = (state: State, id: ObjectId): GameObject =>
@@ -73,7 +73,7 @@ export const countGameObjectsPerType = (state: State, type: string): number =>
   getGameObjectsPerType(state, type).length;
 
 export const countUnits = (state: State): number =>
-  countGameObjectsPerType(state, GAME_OBJECT_TYPES.UNIT);
+  countGameObjectsPerType(state, GameObjectTypes.Unit);
 
 export const countFood = (state: State): number =>
-  countGameObjectsPerType(state, GAME_OBJECT_TYPES.FOOD);
+  countGameObjectsPerType(state, GameObjectTypes.Food);

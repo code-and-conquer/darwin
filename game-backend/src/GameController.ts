@@ -1,6 +1,6 @@
 import hyperid from 'hyperid';
 import {
-  GAME_OBJECT_TYPES,
+  GameObjectTypes,
   MatchUpdate,
   Unit,
   UserContext,
@@ -84,7 +84,7 @@ export default class GameController {
       this.notifyUsers();
       const units = getGameObjectsPerType(
         this.store.matchState,
-        GAME_OBJECT_TYPES.UNIT
+        GameObjectTypes.Unit
       );
       const lessThanTwoPlayersLeft = units.length < 2;
       if (lessThanTwoPlayersLeft) {

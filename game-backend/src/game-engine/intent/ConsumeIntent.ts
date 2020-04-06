@@ -3,7 +3,7 @@ import {
   UserContext,
   Unit,
   MAX_HEALTH,
-  GAME_OBJECT_TYPES,
+  GameObjectTypes,
   Consumable,
 } from '@darwin/types';
 import { Intent } from './Intent';
@@ -28,7 +28,9 @@ export default class ConsumeIntent implements Intent {
   ): Consumable | null {
     const objectsOnPosition = getObjectsOnField(state, unit.position);
     const consumable = objectsOnPosition
-      ? objectsOnPosition.find(obj => obj.type === GAME_OBJECT_TYPES.FOOD)
+      ? (objectsOnPosition.find(
+          obj => obj.type === GameObjectTypes.Food
+        ) as Consumable)
       : null;
     return consumable;
   }

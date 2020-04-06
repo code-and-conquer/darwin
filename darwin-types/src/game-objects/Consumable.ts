@@ -1,6 +1,5 @@
-import { GameObject, GAME_OBJECT_TYPES } from './GameObject';
+import { GameObject, GameObjectTypes } from './GameObject';
 
-export type FoodType = typeof GAME_OBJECT_TYPES.FOOD;
 export interface Consumable extends GameObject {
-  type: FoodType;
+  type: GameObjectTypes.Food | GameObjectTypes.enduranceBoost;
 }
