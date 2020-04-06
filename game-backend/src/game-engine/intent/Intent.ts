@@ -1,4 +1,6 @@
-import { State, UserContext, UserExecutionContext } from '@darwin/types';
+import { State, UserContext } from '@darwin/types';
+
+export type IntentCost = number;
 
 /**
  * Represents an action dispatched by a user script.
@@ -8,12 +10,13 @@ import { State, UserContext, UserExecutionContext } from '@darwin/types';
  */
 export interface Intent {
   execute: (state: State, userContext: UserContext) => State;
+  cost: IntentCost;
 }
 
 /**
  * Stores the intents of a user during a single tick.
  */
 export interface UserTickIntents {
-  context: UserExecutionContext;
+  context: UserContext;
   intents: Intent[];
 }

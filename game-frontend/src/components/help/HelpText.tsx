@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import InlineCode from './InlineCode';
 import Codeblock from './CodeBlock';
+import CostEmoji from './CostEmoji';
 
 const moveToFoodCodeExample = `
 if(nearestFood.position.x > userUnit.position.x){
@@ -21,7 +22,15 @@ const HelpText: FC = () => {
         Die <InlineCode>Unit</InlineCode> ist deine Figur, mit welcher du dich
         ins Abenteuer stürzst.
       </p>
-      <h4>Bewegen</h4>
+      <h4>Aktionspunkte</h4>
+      <p>
+        Jeder Befehl kostet Aktionspunkte. Pro Runde hast du 3 Aktionspunkte.
+        Bei jedem Befehl steht wieviel eine Ausführung kostet (z.B.:{' '}
+        <CostEmoji /> 1).
+      </p>
+      <h4>
+        Bewegen | <CostEmoji /> 1
+      </h4>
       <p>
         Um deine <InlineCode>Unit</InlineCode> zu Bewegen, steht dir die{' '}
         <InlineCode>move</InlineCode>
@@ -30,7 +39,9 @@ const HelpText: FC = () => {
         <InlineCode>'LEFT'</InlineCode>) zur Verfügung.
       </p>
       <Codeblock>move('UP')</Codeblock>
-      <h4>Ressouren konsumieren</h4>
+      <h4>
+        Ressouren konsumieren | <CostEmoji /> 3
+      </h4>
       <p>
         Die Positionen der Ressourcen kannst du mithilfe der Variable{' '}
         <InlineCode>foods</InlineCode> auslesen. In der Variable{' '}
