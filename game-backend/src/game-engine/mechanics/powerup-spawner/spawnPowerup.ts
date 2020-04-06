@@ -1,15 +1,18 @@
 import hyperid from 'hyperid';
 import { Position, Consumable } from '@darwin/types';
-import { createFood } from '../../../helper/gameObjects';
+import createPowerup from './createPowerup';
+import { powerupList } from './powerups/index';
+import { pickRandom } from '../../../helper/array';
 
 const generateId = hyperid();
 
-const spawnFood = (position: Position): Consumable => {
-  const food: Consumable = createFood({
+const spawnPowerup = (position: Position): Consumable => {
+  const powerup: Consumable = createPowerup({
     id: generateId(),
     position,
+    type: pickRandom(powerupList),
   });
-  return food;
+  return powerup;
 };
 
-export default spawnFood;
+export default spawnPowerup;
