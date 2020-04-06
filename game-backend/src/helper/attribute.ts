@@ -1,6 +1,6 @@
 import { AttributeName, Unit } from '@darwin/types';
 
-const ATTRIBUTE_BOUNDARIES: Record<
+export const ATTRIBUTE_BOUNDARIES: Record<
   AttributeName,
   { min: number; max: number }
 > = {
