@@ -1,5 +1,10 @@
 import React, { FC } from 'react';
-import { GameObject, ObjectId, Unit as UnitT } from '@darwin/types';
+import {
+  GameObject,
+  ObjectId,
+  Unit as UnitT,
+  Consumable as ConsumableT,
+} from '@darwin/types';
 import Unit from './Unit';
 import GAME_OBJECT_TYPES from '../../constants/gameObjects';
 import Food from './Food';
@@ -45,7 +50,7 @@ const GameObjects: FC<Props> = ({
             );
           }
           case GAME_OBJECT_TYPES.FOOD: {
-            const food = gameObject as UnitT;
+            const food = gameObject as ConsumableT;
             return (
               <Food
                 key={food.id}

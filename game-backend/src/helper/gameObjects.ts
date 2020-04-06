@@ -1,6 +1,6 @@
 import {
   Attributes,
-  Food,
+  Consumable,
   GAME_OBJECT_TYPES,
   GameObject,
   INITIAL_HEALTH,
@@ -25,7 +25,7 @@ export const createFood = ({
 }: {
   id: string;
   position: Position;
-}): Food => ({
+}): Consumable => ({
   id,
   position,
   moveBlocking: false,
@@ -54,8 +54,8 @@ export const createUnit = ({
 const getObjectById = (state: State, id: ObjectId): GameObject =>
   state.objectMap[id];
 
-export const getFood = (state: State, id: ObjectId): Food =>
-  getObjectById(state, id) as Food;
+export const getFood = (state: State, id: ObjectId): Consumable =>
+  getObjectById(state, id) as Consumable;
 export const getUnit = (state: State, id: ObjectId): Unit =>
   getObjectById(state, id) as Unit;
 

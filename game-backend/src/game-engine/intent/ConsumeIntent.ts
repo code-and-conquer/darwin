@@ -4,7 +4,7 @@ import {
   Unit,
   MAX_HEALTH,
   GAME_OBJECT_TYPES,
-  Food,
+  Consumable,
 } from '@darwin/types';
 import { Intent } from './Intent';
 import produce from '../../helper/produce';
@@ -22,7 +22,10 @@ export default class ConsumeIntent implements Intent {
     return Math.min(health + FOOD_REGENERATION_VALUE, MAX_HEALTH);
   }
 
-  private static getConsumableInReach(state: State, unit: Unit): Food | null {
+  private static getConsumableInReach(
+    state: State,
+    unit: Unit
+  ): Consumable | null {
     const objectsOnPosition = getObjectsOnField(state, unit.position);
     const consumable = objectsOnPosition
       ? objectsOnPosition.find(obj => obj.type === GAME_OBJECT_TYPES.FOOD)

@@ -1,11 +1,11 @@
 import hyperid from 'hyperid';
-import { Position, Food } from '@darwin/types';
+import { Position, Consumable } from '@darwin/types';
 import { createFood } from '../../../helper/gameObjects';
 
 const generateId = hyperid();
 
-const spawnFood = (position: Position): Food => {
-  const food: Food = createFood({
+const spawnFood = (position: Position): Consumable => {
+  const food: Consumable = createFood({
     id: generateId(),
     position,
   });
