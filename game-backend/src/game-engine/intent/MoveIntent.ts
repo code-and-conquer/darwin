@@ -1,9 +1,9 @@
 import {
   ARENA_HEIGHT,
   ARENA_WIDTH,
+  Position,
   State,
   UserContext,
-  Position,
 } from '@darwin/types';
 import { Intent } from './Intent';
 import produce from '../../helper/produce';
@@ -20,6 +20,8 @@ export enum Direction {
  * Represents the intent to move the player around.
  */
 export default class MoveIntent implements Intent {
+  cost = 1;
+
   constructor(private direction: Direction) {}
 
   private move(originalPosition: Position): Position {

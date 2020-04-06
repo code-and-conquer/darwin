@@ -1,10 +1,10 @@
 import {
-  State,
-  UserContext,
-  Unit,
-  MAX_HEALTH,
-  GAME_OBJECT_TYPES,
   Food,
+  GAME_OBJECT_TYPES,
+  MAX_HEALTH,
+  State,
+  Unit,
+  UserContext,
 } from '@darwin/types';
 import { Intent } from './Intent';
 import produce from '../../helper/produce';
@@ -18,6 +18,8 @@ export const FOOD_REGENERATION_VALUE = 20;
  * Represents the intent to consume a food object.
  */
 export default class ConsumeIntent implements Intent {
+  cost = 3;
+
   private static heal(health: number): number {
     return Math.min(health + FOOD_REGENERATION_VALUE, MAX_HEALTH);
   }
