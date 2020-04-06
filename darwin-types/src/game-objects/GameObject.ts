@@ -5,7 +5,7 @@ export type ObjectId = string;
 export enum GameObjectTypes {
   Unit = 'unit',
   Food = 'food',
-  enduranceBoost = 'enduranceBoost',
+  EnduranceBoost = 'enduranceBoost',
 }
 
 export interface GameObject {
