@@ -13,7 +13,7 @@ function handleHunger(state: State): State {
   return produce(state, draft => {
     getGameObjectsPerType(state, GAME_OBJECT_TYPES.UNIT).forEach(
       (unit: Unit) => {
-        unit.health -= HEALTH_LOSS_RATE;
+        unit.health -= HEALTH_LOSS_RATE - unit.attributes.enduranceBoost;
         if (unit.health <= 0) {
           const { objectIds, objectMap } = removeGameObject(draft, unit.id);
           draft.objectMap = objectMap;
