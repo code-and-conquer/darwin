@@ -3,6 +3,7 @@ import { Consumable as ConsumableT, PowerupType } from '@darwin/types';
 import Circle from '../pixi/Circle';
 import { FIELD_SIZE } from '../../constants/stage';
 import Square from '../pixi/Square';
+import scalePosition from '../../helper/scalePosition';
 
 type Props = {
   consumable: ConsumableT;
@@ -21,28 +22,32 @@ const COLOR_MAP: Record<PowerupType, number> = {
   enduranceBoost: 0x05bf96,
 };
 
-const PowerUp: FC<Props> = ({ consumable }) => (
-  <>
-    <Square
-      position={{
-        x: consumable.position.x + squareMargin,
-        y: consumable.position.y + squareMargin,
-      }}
-      size={squareSize}
-      fill={COLOR_MAP[consumable.type as PowerupType]}
-      color={COLOR_MAP[consumable.type as PowerupType]}
-    />
-    <Circle
-      position={{
-        x: consumable.position.x + HALF_FIELD_SIZE,
-        y: consumable.position.y + HALF_FIELD_SIZE,
-      }}
-      radius={radius}
-      color={COLOR_MAP[consumable.type as PowerupType]}
-      fill={0x000000}
-      alpha={0.3}
-    />
-  </>
-);
+const PowerUp: FC<Props> = ({ consumable }) => {
+  const color = COLOR_MAP[consumable.type as PowerupType];
+  const position = scalePosition(consumable.position);
+  return (
+    <>
+      <Square
+        position={{
+          x: position.x + squareMargin,
+          y: position.y + squareMargin,
+        }}
+        size={squareSize}
+        fill={color}
+        color={color}
+      />
+      <Circle
+        position={{
+          x: position.x + HALF_FIELD_SIZE,
+          y: position.y + HALF_FIELD_SIZE,
+        }}
+        radius={radius}
+        color={color}
+        fill={0x000000}
+        alpha={0.3}
+      />
+    </>
+  );
+};
 
 export default PowerUp;
