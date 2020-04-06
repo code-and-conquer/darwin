@@ -17,14 +17,4 @@ describe('Hunger Handling', () => {
       MAX_HEALTH - HEALTH_LOSS_RATE
     );
   });
-
-  it('removes dead units', () => {
-    const state: State = StateBuilder.buildState()
-      .addUnit({ id: UNIT_ID, health: HEALTH_LOSS_RATE })
-      .build();
-
-    const newState = handleHunger(state);
-
-    expect(getUnit(newState, UNIT_ID)).toBeUndefined();
-  });
 });
