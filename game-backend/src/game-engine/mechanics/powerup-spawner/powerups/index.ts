@@ -5,6 +5,6 @@ const powerupMap: Record<PowerupType, Consume> = {
   enduranceBoost: consumeEnduranceBoost,
 };
 
-export const powerupList = Object.keys(powerupMap);
+export const powerupList = Object.keys(powerupMap) as PowerupType[];
 
 export default powerupMap;
