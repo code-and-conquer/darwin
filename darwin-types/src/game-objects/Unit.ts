@@ -1,11 +1,14 @@
-import { GameObject, GAME_OBJECT_TYPES } from './GameObject';
-
-export type UnitType = typeof GAME_OBJECT_TYPES.UNIT;
+import { GameObject, GameObjectTypes } from './GameObject';
+import { Attributes } from './Attributes';
 
 export const MAX_HEALTH = 100;
 export const INITIAL_HEALTH = MAX_HEALTH;
+export const INITIAL_ATTRIBUTES: Attributes = {
+  enduranceBoost: 0,
+};
 
 export interface Unit extends GameObject {
-  type: UnitType;
+  type: GameObjectTypes.Unit;
   health: number;
+  attributes: Attributes;
 }

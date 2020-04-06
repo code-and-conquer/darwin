@@ -3,7 +3,7 @@ import {
   UserScript,
   UserExecutionContext,
   State,
-  Food,
+  Consumable,
   Unit,
 } from '@darwin/types';
 import deepClone from '../helper/deepClone';
@@ -24,8 +24,8 @@ interface ScriptContextMethods {
 }
 
 interface ScriptContextVariables {
-  foods: Food[];
-  nearestFood: Food;
+  foods: Consumable[];
+  nearestFood: Consumable;
   userUnit: Unit;
   enemyUnits: Unit[];
   nearestEnemyUnit: Unit;

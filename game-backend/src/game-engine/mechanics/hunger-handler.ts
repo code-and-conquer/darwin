@@ -1,4 +1,4 @@
-import { State, Unit, GAME_OBJECT_TYPES } from '@darwin/types';
+import { State, Unit, GameObjectTypes } from '@darwin/types';
 import produce from '../../helper/produce';
 import {
   getGameObjectsPerType,
@@ -11,16 +11,14 @@ export const HEALTH_LOSS_RATE = 3;
 
 function handleHunger(state: State): State {
   return produce(state, draft => {
-    getGameObjectsPerType(state, GAME_OBJECT_TYPES.UNIT).forEach(
-      (unit: Unit) => {
-        unit.health -= HEALTH_LOSS_RATE;
-        if (unit.health <= 0) {
-          const { objectIds, objectMap } = removeGameObject(draft, unit.id);
-          draft.objectMap = objectMap;
-          draft.objectIds = objectIds;
-        }
+    getGameObjectsPerType(state, GameObjectTypes.Unit).forEach((unit: Unit) => {
+      unit.health -= HEALTH_LOSS_RATE - unit.attributes.enduranceBoost;
+      if (unit.health <= 0) {
+        const { objectIds, objectMap } = removeGameObject(draft, unit.id);
+        draft.objectMap = objectMap;
+        draft.objectIds = objectIds;
       }
-    );
+    });
   });
 }
 

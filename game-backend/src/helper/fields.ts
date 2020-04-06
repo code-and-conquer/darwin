@@ -22,11 +22,11 @@ export const getFlatFieldArray = (): Position[] =>
 export const createKeyFromPosition = (pos: Position): string =>
   `${pos.x}:${pos.y}`;
 
-export const getOccupiedFieldMap = (
+export const getOccupiedFieldMap = <T extends GameObject>(
   state: State
-): Record<string, GameObject[]> =>
-  state.objectIds.reduce((acc: Record<string, GameObject[]>, id) => {
-    const obj = state.objectMap[id];
+): Record<string, T[]> =>
+  state.objectIds.reduce((acc: Record<string, T[]>, id) => {
+    const obj = state.objectMap[id] as T;
     const pos = obj.position;
     const key = createKeyFromPosition(pos);
     return {
@@ -35,10 +35,10 @@ export const getOccupiedFieldMap = (
     };
   }, {});
 
-export const getObjectsOnField = (
+export const getObjectsOnField = <T extends GameObject>(
   state: State,
   position: Position
-): GameObject[] => getOccupiedFieldMap(state)[createKeyFromPosition(position)];
+): T[] => getOccupiedFieldMap<T>(state)[createKeyFromPosition(position)];
 
 export const getFreeFields = (state: State): Position[] => {
   const fields = getFlatFieldArray();
