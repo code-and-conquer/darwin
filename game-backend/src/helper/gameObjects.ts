@@ -1,8 +1,10 @@
 import {
+  Attributes,
   Food,
   GAME_OBJECT_TYPES,
   GameObject,
   INITIAL_HEALTH,
+  INITIAL_ATTRIBUTES,
   ObjectId,
   State,
   Unit,
@@ -34,14 +36,17 @@ export const createUnit = ({
   id,
   position,
   health = INITIAL_HEALTH,
+  attributes = INITIAL_ATTRIBUTES,
 }: {
   id: string;
   position: Position;
   health?: number;
+  attributes?: Attributes;
 }): Unit => ({
   id,
   position,
   health,
+  attributes,
   moveBlocking: true,
   type: GAME_OBJECT_TYPES.UNIT,
 });
