@@ -1,6 +1,6 @@
 import { State, UserExecutionContext } from '@darwin/types';
 import recordIntents from './recordIntents';
-import scheduleIntents from './scheduleIntents';
+import scheduleIntents from './schedule-intents';
 import { UserTickIntents } from './intent/Intent';
 import handleGameMechanics from './mechanics';
 

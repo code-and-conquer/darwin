@@ -18,6 +18,8 @@ export const FOOD_REGENERATION_VALUE = 20;
  * Represents the intent to consume a food object.
  */
 export default class ConsumeIntent implements Intent {
+  cost = 3;
+
   private static heal(health: number): number {
     return Math.min(health + FOOD_REGENERATION_VALUE, MAX_HEALTH);
   }
