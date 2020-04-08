@@ -1,4 +1,4 @@
-import { shuffleArray } from './array';
+import { shuffleArray, pickRandom } from './array';
 
 describe('shuffleArray', () => {
   /**
@@ -26,5 +26,27 @@ describe('shuffleArray', () => {
     };
 
     testStringDistribution.forEach(occurence => expectDifference(occurence));
+  });
+});
+
+describe('pickRandom', () => {
+  /**
+   * Tests pick count of an element based on probability.
+   * This test asserts that each element was a picked as often as the others with a high probability.
+   */
+  it('picks fairly', () => {
+    const array = [0, 1, 2, 3];
+
+    const pickDistribution = [0, 0, 0, 0];
+    for (let i = 0; i < 1000; i++) {
+      const random = pickRandom(array);
+      pickDistribution[random]++;
+    }
+
+    const least = Math.min(...pickDistribution);
+    const most = Math.max(...pickDistribution);
+    const difference = most - least;
+
+    expect(difference).toBeLessThan(100);
   });
 });
