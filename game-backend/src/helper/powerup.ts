@@ -1,16 +1,11 @@
-import {
-  State,
-  Consumable,
-  GameObjectTypes,
-  Consume,
-  GameObject,
-} from '@darwin/types';
+import { State, Consumable, GameObject } from '@darwin/types';
 import powerupMap from '../game-engine/mechanics/powerup-spawner/powerups/index';
 
+const isPowerUp = (obj: GameObject): obj is Consumable =>
+  obj.type in powerupMap;
+
 export const filterPowerups = (objects: GameObject[]): Consumable[] =>
-  objects.filter(
-    obj => !!(powerupMap as Record<GameObjectTypes, Consume>)[obj.type]
-  ) as Consumable[];
+  objects.filter(isPowerUp);
 
 export const getPowerups = (state: State): Consumable[] =>
   filterPowerups(state.objectIds.map(id => state.objectMap[id]));
