@@ -1,5 +1,5 @@
 import { GameObject, GameObjectTypes, ObjectId } from './GameObject';
-import PowerupType from './Powerup';
+import { PowerupType } from './Powerup';
 import { UserContext } from '../UserContext';
 import { State } from '../State';
 
