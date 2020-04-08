@@ -50,8 +50,13 @@ const GameObjects: FC<Props> = ({ objectIds, objectMap, ownUnitId }) => (
             );
           }
           case GameObjectTypes.EnduranceBoost: {
-            const powerup = gameObject as ConsumableT;
-            return <PowerUp key={powerup.id} consumable={powerup} />;
+            return (
+              <PowerUp
+                key={gameObject.id}
+                color={0x05bf96}
+                position={scalePosition(gameObject.position)}
+              />
+            );
           }
           default:
             return null;

@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
-import { Consumable as ConsumableT, PowerupType } from '@darwin/types';
+import { Position } from '@darwin/types';
 import Circle from '../pixi/Circle';
 import { FIELD_SIZE } from '../../constants/stage';
 import Square from '../pixi/Square';
-import scalePosition from '../../helper/scalePosition';
 
 type Props = {
-  consumable: ConsumableT;
+  color: number;
+  position: Position;
 };
 
 const HALF_FIELD_SIZE = FIELD_SIZE / 2;
@@ -17,14 +17,7 @@ const squareMargin = (FIELD_SIZE - squareSize) / 2;
 
 const radius = HALF_FIELD_SIZE * 0.3;
 
-// Color inspiration: https://coolors.co/337fe6-f46547-05bf96-fcb136-a07be6
-const COLOR_MAP: Record<PowerupType, number> = {
-  enduranceBoost: 0x05bf96,
-};
-
-const PowerUp: FC<Props> = ({ consumable }) => {
-  const color = COLOR_MAP[consumable.type as PowerupType];
-  const position = scalePosition(consumable.position);
+const PowerUp: FC<Props> = ({ color, position }) => {
   return (
     <>
       <Square
