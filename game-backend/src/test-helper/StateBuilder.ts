@@ -4,6 +4,7 @@ import {
   Attributes,
   GameObjectTypes,
   PowerupType,
+  INITIAL_ATTRIBUTES,
 } from '@darwin/types';
 import produce from '../helper/produce';
 import { createUnit, createFood } from '../helper/gameObjects';
@@ -24,7 +25,7 @@ export interface AddGameObject {
 
 interface AddGameObjectUnit extends AddGameObject {
   health?: number;
-  attributes?: Attributes;
+  attributes?: Partial<Attributes>;
 }
 
 interface AddGameObjectPowerup extends AddGameObject {
@@ -55,7 +56,12 @@ export default class StateBuilder {
     attributes,
   }: AddGameObjectUnit): StateBuilder {
     const position = { x, y };
-    const unit = createUnit({ id, position, health, attributes });
+    const unit = createUnit({
+      id,
+      position,
+      health,
+      attributes: { ...INITIAL_ATTRIBUTES, ...attributes },
+    });
     return this.addObject(unit);
   }
 
