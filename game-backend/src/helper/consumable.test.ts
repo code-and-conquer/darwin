@@ -3,10 +3,10 @@ import { createFood, createUnit } from './gameObjects';
 import createPowerup from '../game-engine/mechanics/powerup-spawner/createPowerup';
 import { isConsumable, filterConsumables } from './consumable';
 
-const food = createFood({ id: 'unit', position: { x: 1, y: 1 } });
+const food = createFood({ id: 'food', position: { x: 1, y: 1 } });
 const unit = createUnit({ id: 'unit', position: { x: 1, y: 1 } });
 const powerup = createPowerup({
-  id: 'unit',
+  id: 'powerup',
   position: { x: 1, y: 1 },
   type: GameObjectTypes.EnduranceBoost,
 });
