@@ -1,8 +1,8 @@
+import { GameObjectTypes } from '@darwin/types';
 import StateBuilder from '../../test-helper/StateBuilder';
 import { getUnit } from '../../helper/gameObjects';
 import { getNearestPowerup } from './powerupSelector';
 import { getConsumable } from '../../helper/consumable';
-import { GameObjectTypes } from '../../../../darwin-types/src/game-objects/GameObject';
 
 describe('getNearestPowerup', () => {
   it('should get nearest powerup resource', () => {

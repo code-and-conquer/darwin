@@ -21,6 +21,7 @@ const sortLayerConfig: Record<GameObjectTypes, number> = {
   unit: 2,
   food: 1,
   enduranceBoost: 1,
+  teleport: 1,
 };
 
 const GameObjects: FC<Props> = ({ objectIds, objectMap, ownUnitId }) => (
@@ -54,6 +55,15 @@ const GameObjects: FC<Props> = ({ objectIds, objectMap, ownUnitId }) => (
               <PowerUp
                 key={gameObject.id}
                 color={0x05bf96}
+                position={scalePosition(gameObject.position)}
+              />
+            );
+          }
+          case GameObjectTypes.Teleport: {
+            return (
+              <PowerUp
+                key={gameObject.id}
+                color={0xFFC0CB}
                 position={scalePosition(gameObject.position)}
               />
             );
