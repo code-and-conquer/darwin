@@ -1,3 +1,4 @@
+%use XeLaTeX
 \documentclass[11pt,a4paper,titlepage]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[german]{babel}
@@ -8,14 +9,18 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage[onehalfspacing]{setspace}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\graphicspath{{./img/}}
 \usepackage{titlepic}
+
+\titlepic{\includegraphics[width=\textwidth]{darwin.png}}
 
 \author{Michael Schaufelberger (Product Owner)\\
 Filip Kašiković (Scrum Master)\\
-Raphael Mailänder,\\
-Simon Stucki,\\
-Berli Marc,\\
+Raphael Mailänder\\
+Simon Stucki\\
+Berli Marc\\
 Ferenc Kuntić}
 
 
@@ -33,31 +38,58 @@ Ferenc Kuntić}
 
 %250 wörter
 % Einleitung: Definiere Problematik und begründe Revelanz der Untersuchung
-In der heutigen Zeit haben sich Videospiele als Teil unserer Gesellschaft stark gefestigt und ein teil unseres Alltags geworden. Die Wirtschaft und Präsenz der Spielindustrie wächst vom Jahr zu Jahr stetig an und bildet ein sehr lukratives Geschäftsumfeld. Erträge und Umsätze in Milliardenhöhe sind keine Besonderheit. Unternehmen mit hunderten von Mitarbeitern versuchen im Schnelltempo spiele verschiedenster Art auf den Markt zu bringen. 
+In der heutigen Zeit haben sich Videospiele als Teil unserer Gesellschaft stark gefestigt und ein teil unseres Alltags geworden. Die Wirtschaft und Präsenz der Spielindustrie wächst vom Jahr zu Jahr stetig an und bildet ein sehr lukratives Geschäftsumfeld. Erträge und Umsätze in Milliardenhöhe sind keine Besonderheit. Unternehmen mit hunderten von Mitarbeitern versuchen im Schnelltempo Spiele verschiedenster Art auf den Markt zu bringen. 
 Deswegen stellt sich uns die Frage, wie gestalten wir ein attraktives Spiel? Was ist die Zielgruppe? Wie kann ich die Spieler für das Spiel begeistern? Welche Qualitäten braucht das Spiel?
-Um all diese fragen beantworten zu können braucht es ein fundiertes Konzept, gute Überlegungen und ein gutes Team und obwohl die Konkurrenz sehr gross ist sehen wir die Möglichkeit mit einem Interaktiven Multiplayer Spiel den Durchbruch zu schaffen.
+Um all diese Fragen beantworten zu können braucht es ein fundiertes Konzept, gute Überlegungen und ein gutes Team und obwohl die Konkurrenz sehr gross ist, sehen wir die Möglichkeit mit einem interaktiven Multiplayer-Spiel den Durchbruch zu schaffen.
 
 % Methodische Einordnung: Art und Ziel der Arbeit (Umfrage, Analyse, Test, etc)
-Ziel dieser Arbeit ist es ein Innovatives und erfinderisches Spiel zu entwickeln das sowohl logisches denken wie technisches Interesse fördert. Das Ziel des Spieles ist es Spieleinheiten mit kleinen Code Abschnitten zu steuern und der Einzige überlebende zu sein.
+Ziel dieser Arbeit ist es, ein Innovatives und erfinderisches Spiel zu entwickeln, das sowohl logisches Denken wie technisches Interesse fördert. Das Ziel des Spieles ist es, Spieleinheiten mit kleinen Code-Abschnitten zu steuern und der einzige Überlebende zu sein.
 
 % Vorgehen:  Typische Fragestellungen werden genannt oder ein Testbeispiel wird beschrieben
-Bei der Entwicklung werden modernste Technologien eingesetzt. Für den Frontend Bereich haben wir uns für React entscheiden, da es uns ermöglicht die Applikation einfach zu Skalieren. Für die Realisierung des Backends setzen wir Node und Typescript ein, da es uns erlaubt die Applikation modularer zu bauen und es eine grosse Community besitzt.
-Für das Projektmanagement im Spiel haben wir uns für Scrum als agilen Prozess entscheiden.
+Bei der Entwicklung werden modernste Technologien eingesetzt. Für den Frontend-Bereich haben wir uns für React entscheiden, da es uns ermöglicht die Applikation einfach zu Skalieren. Für die Realisierung des Backends setzen wir Node und Typescript ein, da es uns erlaubt die Applikation modularer zu bauen und es eine grosse Community besitzt.
+Für das Projektmanagement der Entwicklung haben wir uns für Scrum als agilen Prozess entscheiden.
 
 % Ergebnis: Beschreibt wichtigste Resultalte, Erkenntnisse, offene Fragen
-Das Ergebnis des Projekt Darwin ist es ein Funktionierendes Spiel zu entwickeln in dem mehrere Spieler gegeneinander antreten können.
+Das Ergebnis des ''Projekt Darwin'' ist ein funktionierendes Spiel, in dem mehrere Spieler gegeneinander antreten können.
 
 \end{abstract}
 
 \tableofcontents
 
 \section{Einleitung}
-todo einleitungstext
+\subsection{Ausgangslage}
+\begin{itemize}
+\item bestehende arbeiten / literatur
+\item stand der technik / bisherige lösungen des problems, deren grenzen
+\end{itemize}
+
+\subsection{Zielsetzung}
+\begin{itemize}
+\item ziel der arbeit
+\item verweis auf offizielle aufgabenstellung im anhang
+\item übersicht über die arbeit, stellt die folgenden teile kurz vor
+\item angaben um zielpublikum, nennt das vorausgesetzte wissen
+\item terminologie, definition der verwendeten begriffe
+\end{itemize}
 
 \section{Resultate}
-todo resultatetext
+Zusammenfassung der Resultate
 
 \section{Diskussion und Ausblick}
-todo diskussion
+\begin{itemize}
+\item Bespricht die erzielten ergebnisse bezüglich erwartbarkeit, aussagekraft, relevant
+\item interpretation und validierung der resultate
+\item rückblick auf aufgabenstellung, erreicht oder nicht
+\item wie kann an die resultate angeschlossen werden (weitere forschungsarbeiten), welche chancen bieten die resultate
+\end{itemize}
+
+\section{Literaturverzeichnis}
+Grundmuster Harvard-System:
+
+Deutsch:\\
+Name, Vorname (Jahreszahl): \textit{Titel. Unertitel.} ev. Vorname Name (Hrsg.), ev. Bd., ev. Auflage. Verlagsort: Verlag 
+
+Englisch:\\
+Author surname, Initials. (Year). title. ed. City: Publisher, p.Pages Used.
 
 \end{document}
