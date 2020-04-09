@@ -1,6 +1,14 @@
-import { State, Position, Attributes, GameObjectTypes } from '@darwin/types';
+import {
+  State,
+  Position,
+  Attributes,
+  GameObjectTypes,
+  PowerupType,
+  INITIAL_ATTRIBUTES,
+} from '@darwin/types';
 import produce from '../helper/produce';
 import { createUnit, createFood } from '../helper/gameObjects';
+import createPowerup from '../game-engine/mechanics/powerup-spawner/createPowerup';
 
 export interface GameObject {
   id: string;
@@ -17,7 +25,11 @@ export interface AddGameObject {
 
 interface AddGameObjectUnit extends AddGameObject {
   health?: number;
-  attributes?: Attributes;
+  attributes?: Partial<Attributes>;
+}
+
+interface AddGameObjectPowerup extends AddGameObject {
+  type: PowerupType;
 }
 
 export default class StateBuilder {
@@ -44,7 +56,12 @@ export default class StateBuilder {
     attributes,
   }: AddGameObjectUnit): StateBuilder {
     const position = { x, y };
-    const unit = createUnit({ id, position, health, attributes });
+    const unit = createUnit({
+      id,
+      position,
+      health,
+      attributes: { ...INITIAL_ATTRIBUTES, ...attributes },
+    });
     return this.addObject(unit);
   }
 
@@ -52,6 +69,12 @@ export default class StateBuilder {
     const position = { x, y };
     const food = createFood({ id, position });
     return this.addObject(food);
+  }
+
+  addPowerup({ id, x = 1, y = 1, type }: AddGameObjectPowerup): StateBuilder {
+    const position = { x, y };
+    const powerup = createPowerup({ id, position, type });
+    return this.addObject(powerup);
   }
 
   build(): State {

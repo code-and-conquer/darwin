@@ -11,6 +11,10 @@ import { Intent } from './intent/Intent';
 import MoveIntent, { Direction } from './intent/MoveIntent';
 import ConsumeIntent from './intent/ConsumeIntent';
 import {
+  selectPowerups,
+  getNearestPowerup,
+} from './state-selectors/powerupSelector';
+import {
   selectFoods,
   selectUserUnit,
   getNearestFood,
@@ -68,6 +72,8 @@ function recordIntents(
   const nearestFood = getNearestFood(state, userUnit);
   const enemyUnits = selectEnemyUnits(state, userExecutionContext.unitId);
   const nearestEnemyUnit = selectNearestEnemyUnit(state, userUnit);
+  const powerups = selectPowerups(state);
+  const nearestPowerup = getNearestPowerup(state, userUnit);
 
   const variables: ScriptContextVariables = deepClone({
     nearestFood,
@@ -75,6 +81,8 @@ function recordIntents(
     userUnit,
     enemyUnits,
     nearestEnemyUnit,
+    powerups,
+    nearestPowerup,
   });
 
   const methods: ScriptContextMethods = {

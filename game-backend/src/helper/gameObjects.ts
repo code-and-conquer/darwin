@@ -51,8 +51,10 @@ export const createUnit = ({
   type: GameObjectTypes.Unit,
 });
 
-const getObjectById = (state: State, id: ObjectId): GameObject =>
-  state.objectMap[id];
+export const getObjectById = <T extends GameObject>(
+  state: State,
+  id: ObjectId
+): T => state.objectMap[id] as T;
 
 export const getFood = (state: State, id: ObjectId): Consumable =>
   getObjectById(state, id) as Consumable;
