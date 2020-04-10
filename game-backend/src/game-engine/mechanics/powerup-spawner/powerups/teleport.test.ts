@@ -3,6 +3,7 @@ import StateBuilder from '../../../../test-helper/StateBuilder';
 import { getUnit } from '../../../../helper/gameObjects';
 import consumeTeleport from './teleport';
 import { Position } from '../../../../../../darwin-types/dist/Position';
+import { getConsumable } from '../../../../helper/consumable';
 
 describe('teleport powerup consumption', () => {
   const NORMAL_UNIT_ID = 'unit';
@@ -20,14 +21,12 @@ describe('teleport powerup consumption', () => {
   const state: State = StateBuilder.buildState()
     .addUnit({
       id: NORMAL_UNIT_ID,
-      x: 1,
-      y: 1,
+      ...initialPosition,
       attributes: {},
     })
     .addPowerup({
       id: POWERUP_ID,
-      x: 3,
-      y: 3,
+      ...initialPosition,
       type: GameObjectTypes.Teleport,
     })
     .build();
@@ -36,7 +35,14 @@ describe('teleport powerup consumption', () => {
     const newState = consumeTeleport(POWERUP_ID, state, normalUserContext);
 
     const unit = getUnit(newState, NORMAL_UNIT_ID);
+    const powerup = getConsumable(newState, POWERUP_ID);
 
-    expect(unit.position).not.toBe(initialPosition);
+    const hasCoordinateChange = (): boolean => {
+      const unitCurrentPosition = unit.position;
+      return unitCurrentPosition.x === initialPosition.x || unitCurrentPosition.y === initialPosition.y;
+    };
+
+    expect(hasCoordinateChange).toBeTruthy();
+    expect(powerup).toBeUndefined();
   });
 });
