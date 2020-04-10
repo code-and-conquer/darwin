@@ -63,7 +63,7 @@ const GameObjects: FC<Props> = ({ objectIds, objectMap, ownUnitId }) => (
             return (
               <PowerUp
                 key={gameObject.id}
-                color={0xFFC0CB}
+                color={0xffc0cb}
                 position={scalePosition(gameObject.position)}
               />
             );
