@@ -9,10 +9,7 @@ import {
 } from '@darwin/types';
 import GameController from './GameController';
 import { createServerStore } from './createServerStore';
-import {
-  WebSocketWithStatus,
-  pingWebSocketConnection as checkWebSocketConnection,
-} from './helper/heartbeat';
+import { WebSocketWithStatus } from './helper/heartbeat';
 
 // time until a new game will be started after previous one terminated
 export const GAME_RESTART_TIME = 10000;
@@ -63,7 +60,6 @@ export default class MainController {
   private getTerminateExecutor(): () => void {
     return (): void => {
       // ping all websocket connections
-      this.pingAllConnections();
       setTimeout(() => {
         this.removeInactiveUsers();
 
@@ -76,16 +72,6 @@ export default class MainController {
         });
       }, GAME_RESTART_TIME);
     };
-  }
-
-  private pingAllConnections(): void {
-    this.store.userConnnections.userConnectionIds.forEach(userId => {
-      this.store.userConnnections.userConnectionMap[userId].forEach(
-        (ws: WebSocketWithStatus) => {
-          checkWebSocketConnection(ws);
-        }
-      );
-    });
   }
 
   /**

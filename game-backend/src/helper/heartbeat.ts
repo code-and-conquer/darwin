@@ -14,7 +14,7 @@ function heartbeat(): void {
 
 export function initHeartbeatInterval(wsServer: WebSocket.Server): void {
   if (!interval) {
-    interval = setInterval(function ping() {
+    interval = setInterval(() => {
       wsServer.clients.forEach((ws: WebSocketWithStatus) => {
         if (!ws.isAlive) {
           ws.terminate();
@@ -33,11 +33,4 @@ export function initHeartbeatInterval(wsServer: WebSocket.Server): void {
 export function initHeartbeatCheck(connection: WebSocketWithStatus): void {
   connection.isAlive = true;
   connection.on('pong', heartbeat);
-}
-
-export function pingWebSocketConnection(ws: WebSocketWithStatus): void {
-  if (ws.isAlive) {
-    ws.isAlive = false;
-    ws.ping();
-  }
 }
