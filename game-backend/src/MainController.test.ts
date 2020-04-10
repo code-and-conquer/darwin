@@ -21,7 +21,7 @@ describe('MainController', () => {
   const sendFunction1 = jest.fn();
   const sendFunctionDead = jest.fn();
   const onFunction = jest.fn();
-  const pingFunctionAlive = jest.fn().mockImplementation(function() {
+  const pingFunctionAlive = jest.fn().mockImplementation(function ping() {
     this.isAlive = true;
   });
   const pingFunctionDead = jest.fn();
@@ -175,7 +175,7 @@ describe('MainController', () => {
       payload: { userId: userId0 },
     } = parseConnectionInitialization(sendFunction0.mock.calls[0][0]);
     mainController.newConnection(wsMockDead as WebSocket, '');
-    
+
     terminate();
     jest.advanceTimersByTime(GAME_RESTART_TIME);
     const mockInstance = GameControllerMock.mock.instances[1];

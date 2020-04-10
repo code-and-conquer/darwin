@@ -5,7 +5,7 @@ export interface WebSocketWithStatus extends WebSocket {
   isAlive?: boolean;
 }
 
-const WEBSOCKET_HEARTBEAT_INTERVAL = 3000;
+export const WEBSOCKET_HEARTBEAT_INTERVAL = 3000;
 let interval: NodeJS.Timeout;
 
 function heartbeat(): void {
