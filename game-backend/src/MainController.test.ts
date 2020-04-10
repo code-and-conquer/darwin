@@ -1,4 +1,4 @@
-import WebSocket from 'ws';
+import WebSocket, { CLOSED, OPEN } from 'ws';
 import {
   ConnectionInitialization,
   MatchUpdate,
@@ -29,6 +29,7 @@ describe('MainController', () => {
     send: sendFunction0,
     on: onFunction,
     ping: pingFunctionAlive,
+    readyState: OPEN,
     isAlive: true,
   };
   const wsMock1: unknown = {
@@ -36,12 +37,14 @@ describe('MainController', () => {
     on: onFunction,
     ping: pingFunctionAlive,
     isAlive: true,
+    readyState: OPEN,
   };
   const wsMockDead: unknown = {
     send: sendFunctionDead,
     on: onFunction,
     ping: pingFunctionDead,
     isAlive: false,
+    readyState: CLOSED,
   };
 
   let mainController: MainController;

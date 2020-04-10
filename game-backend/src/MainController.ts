@@ -1,4 +1,4 @@
-import WebSocket from 'ws';
+import WebSocket, { OPEN } from 'ws';
 import hyperid from 'hyperid';
 import {
   ConnectionInitialization,
@@ -9,7 +9,6 @@ import {
 } from '@darwin/types';
 import GameController from './GameController';
 import { createServerStore } from './createServerStore';
-import { WebSocketWithStatus } from './helper/heartbeat';
 
 // time until a new game will be started after previous one terminated
 export const GAME_RESTART_TIME = 10000;
@@ -59,7 +58,6 @@ export default class MainController {
 
   private getTerminateExecutor(): () => void {
     return (): void => {
-      // ping all websocket connections
       setTimeout(() => {
         this.removeInactiveUsers();
 
@@ -83,10 +81,10 @@ export default class MainController {
     this.store.userConnnections.userConnectionIds.forEach(userId => {
       const foundAliveConnections = this.store.userConnnections.userConnectionMap[
         userId
-      ].filter((ws: WebSocketWithStatus) => {
-        return ws.isAlive;
+      ].some((ws: WebSocket) => {
+        return ws.readyState === OPEN;
       });
-      if (foundAliveConnections.length <= 0) {
+      if (!foundAliveConnections) {
         this.removeStoredUser(userId);
       }
     });
