@@ -5,7 +5,7 @@ import { getConsumable } from '../../../../helper/consumable';
 import { ATTRIBUTE_BOUNDARIES } from '../../../../helper/attribute';
 import consumeHealthRegenBoost from './healthRegenBoost';
 
-describe('enduranceBoost powerup consumption', () => {
+describe('healthRegenBoost powerup consumption', () => {
   const NORMAL_UNIT_ID = 'unit1';
   const MAXED_UNIT_ID = 'unit2';
   const POWERUP_ID = 'powerup1';
