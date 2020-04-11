@@ -1,10 +1,12 @@
 import { AttributeName, Unit } from '@darwin/types';
+import { FOOD_REGENERATION_VALUE } from '../game-engine/mechanics/food-spawner/consumeFood';
 
 export const ATTRIBUTE_BOUNDARIES: Record<
   AttributeName,
   { min: number; max: number }
 > = {
   enduranceBoost: { min: -2, max: 2 },
+  healthRegenBoost: { min: 0, max: FOOD_REGENERATION_VALUE },
 };
 
 export const getAttributeValue = (
