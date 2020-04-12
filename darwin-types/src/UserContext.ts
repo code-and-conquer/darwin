@@ -15,7 +15,5 @@ export interface UserScript {
   script: string;
 }
 
-export interface UserStore {
-  // "unknown" because the user is allowed to store anything in there.
-  store: Record<string, unknown>;
-}
+// "unknown" because the user is allowed to store anything in there.
+export type UserStore = Record<string, unknown>;
