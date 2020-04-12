@@ -38,6 +38,7 @@ export default class GameController {
       userScript: {
         script: '',
       },
+      store: {},
     };
 
     this.store.userContexts.userContextMap[userId] = userCtx;
