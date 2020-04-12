@@ -1,4 +1,4 @@
-import WebSocket from 'ws';
+import WebSocket, { CLOSED, OPEN } from 'ws';
 import {
   ConnectionInitialization,
   MatchUpdate,
@@ -19,14 +19,32 @@ describe('MainController', () => {
   // Websocket mocks
   const sendFunction0 = jest.fn();
   const sendFunction1 = jest.fn();
+  const sendFunctionDead = jest.fn();
   const onFunction = jest.fn();
+  const pingFunctionAlive = jest.fn().mockImplementation(function ping() {
+    this.isAlive = true;
+  });
+  const pingFunctionDead = jest.fn();
   const wsMock0: unknown = {
     send: sendFunction0,
     on: onFunction,
+    ping: pingFunctionAlive,
+    readyState: OPEN,
+    isAlive: true,
   };
   const wsMock1: unknown = {
     send: sendFunction1,
     on: onFunction,
+    ping: pingFunctionAlive,
+    isAlive: true,
+    readyState: OPEN,
+  };
+  const wsMockDead: unknown = {
+    send: sendFunctionDead,
+    on: onFunction,
+    ping: pingFunctionDead,
+    isAlive: false,
+    readyState: CLOSED,
   };
 
   let mainController: MainController;
@@ -152,5 +170,20 @@ describe('MainController', () => {
     jest.advanceTimersByTime(GAME_RESTART_TIME);
 
     expect(GameControllerMock.mock.calls.length).toBe(2);
+  });
+
+  it('removes inactive users from store', () => {
+    mainController.newConnection(wsMock0 as WebSocket, '');
+    const {
+      payload: { userId: userId0 },
+    } = parseConnectionInitialization(sendFunction0.mock.calls[0][0]);
+    mainController.newConnection(wsMockDead as WebSocket, '');
+
+    terminate();
+    jest.advanceTimersByTime(GAME_RESTART_TIME);
+    const mockInstance = GameControllerMock.mock.instances[1];
+    const appendUserMock = mockInstance.appendUser as jest.Mock;
+    expect(appendUserMock.mock.calls.length).toBe(1);
+    expect(appendUserMock.mock.calls[0][0]).toBe(userId0);
   });
 });
