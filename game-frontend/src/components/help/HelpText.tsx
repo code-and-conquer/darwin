@@ -31,7 +31,7 @@ const HelpText: FC = () => {
       <h3>Spielfiguren</h3>
       <h4>Unit</h4>
       <p>
-        Deine <InlineCode>Unit</InlineCode> (grün markiert) ist deine Figur, mit
+        Die grün markierte <InlineCode>Unit</InlineCode> ist deine Figur, mit
         welcher du dich ins Abenteuer stürzst. Ziel ist es durch Aufsammeln von
         Ressourcen und Attackieren von Gegnern (rot markiert) der einzig
         Überlebende zu sein.
