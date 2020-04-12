@@ -7,6 +7,7 @@ import { getConsumable } from '../../../helper/consumable';
 describe('food consumption', () => {
   const NORMAL_UNIT_ID = 'unit1';
   const MAXED_UNIT_ID = 'unit2';
+  const BOOSTED_UNIT_ID = 'unit3';
   const FOOD_ID = 'food1';
 
   const normalUserContext: UserContext = {
@@ -14,6 +15,9 @@ describe('food consumption', () => {
   };
   const maxedUserContext: UserContext = {
     unitId: MAXED_UNIT_ID,
+  };
+  const boostedUserContext: UserContext = {
+    unitId: BOOSTED_UNIT_ID,
   };
 
   const state: State = StateBuilder.buildState()
@@ -28,6 +32,15 @@ describe('food consumption', () => {
       x: 2,
       y: 2,
       health: MAX_HEALTH,
+    })
+    .addUnit({
+      id: BOOSTED_UNIT_ID,
+      x: 4,
+      y: 4,
+      health: 20,
+      attributes: {
+        healthRegenBoost: 10,
+      },
     })
     .addFood({
       id: FOOD_ID,
@@ -59,5 +72,13 @@ describe('food consumption', () => {
 
     expect(food).toBeUndefined();
     expect(newState.objectIds).not.toContain(FOOD_ID);
+  });
+
+  it('should restore more health if healthRegenBoost is active', () => {
+    const newState = consumeFood(FOOD_ID, state, boostedUserContext);
+
+    const unit = getUnit(newState, BOOSTED_UNIT_ID);
+
+    expect(unit.health).toBe(50);
   });
 });

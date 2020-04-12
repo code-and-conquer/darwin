@@ -7,7 +7,10 @@ export const FOOD_REGENERATION_VALUE = 20;
 const consumeFood: Consume = (id, state, userContext) => {
   return produce(state, draft => {
     const unit = getUnit(draft, userContext.unitId);
-    unit.health = Math.min(unit.health + FOOD_REGENERATION_VALUE, MAX_HEALTH);
+    unit.health = Math.min(
+      unit.health + FOOD_REGENERATION_VALUE + unit.attributes.healthRegenBoost,
+      MAX_HEALTH
+    );
 
     const { objectIds, objectMap } = removeGameObject(draft, id);
     draft.objectMap = objectMap;

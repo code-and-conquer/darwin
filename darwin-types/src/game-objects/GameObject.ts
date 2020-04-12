@@ -7,6 +7,7 @@ export enum GameObjectTypes {
   Food = 'food',
   EnduranceBoost = 'enduranceBoost',
   Teleport = 'teleport',
+  HealthRegenBoost = 'healthRegenBoost',
 }
 
 export interface GameObject {
