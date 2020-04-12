@@ -5,6 +5,7 @@ import {
   State,
   Consumable,
   Unit,
+  UserStore,
 } from '@darwin/types';
 import deepClone from '../helper/deepClone';
 import { Intent } from './intent/Intent';
@@ -37,7 +38,9 @@ interface ScriptContextVariables {
 
 export interface ScriptContext
   extends ScriptContextMethods,
-    ScriptContextVariables {}
+    ScriptContextVariables {
+  store: UserStore;
+}
 
 function createGameContext(context: ScriptContext): Context {
   return vm.createContext(context);
@@ -97,6 +100,7 @@ function recordIntents(
   const context = createGameContext({
     ...methods,
     ...variables,
+    store: userExecutionContext.store,
   });
   runScript(userExecutionContext.userScript, context);
 

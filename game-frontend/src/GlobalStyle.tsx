@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle`
    font-family: sans-serif;
    height: 100%;
    font-family: Roboto;
+   line-height: 1.5;
  }
 
  * {
