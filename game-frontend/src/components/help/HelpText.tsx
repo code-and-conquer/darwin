@@ -11,17 +11,38 @@ if(nearestFood.position.x > userUnit.position.x){
 }
 `;
 
+const storeCodeExample = `
+if (typeof store.timesMovedLeft === 'undefined') {
+    store.timesMovedLeft = 0;
+}
+if (store.timesMovedLeft < 3) {
+    move("LEFT");
+    store.timesMovedLeft++;
+} else {
+    move("RIGHT");
+}
+`;
+
 const HelpText: FC = () => {
   return (
     <>
       <h2>Hilfe</h2>
-      <p>Ziel des Spiel ist es, am längsten zu Überleben.</p>
-      <h3>API</h3>
+      <p>Ziel des Spiel ist es, am längsten zu überleben.</p>
+      <h3>Spielfiguren</h3>
       <h4>Unit</h4>
       <p>
-        Die <InlineCode>Unit</InlineCode> ist deine Figur, mit welcher du dich
-        ins Abenteuer stürzst.
+        Deine <InlineCode>Unit</InlineCode> (grün markiert) ist deine Figur, mit
+        welcher du dich ins Abenteuer stürzst. Ziel ist es durch Aufsammeln von
+        Ressourcen und Attackieren von Gegnern (rot markiert) der einzig
+        Überlebende zu sein.
       </p>
+      <h3>API</h3>
+      <h4>Zwischenspeicher</h4>
+      <p>
+        Mittels der <InlineCode>store</InlineCode> Variable kannst du berechnete
+        Resultate über verschiedene Ticks hinweg speichern.
+      </p>
+      <Codeblock>{storeCodeExample}</Codeblock>
       <h4>Aktionspunkte</h4>
       <p>
         Jeder Befehl kostet Aktionspunkte. Pro Runde hast du 3 Aktionspunkte.
@@ -29,7 +50,7 @@ const HelpText: FC = () => {
         <CostEmoji /> 1).
       </p>
       <h4>
-        Bewegen | <CostEmoji /> 1
+        Bewegen - <CostEmoji /> 1
       </h4>
       <p>
         Um deine <InlineCode>Unit</InlineCode> zu Bewegen, steht dir die{' '}
@@ -40,7 +61,7 @@ const HelpText: FC = () => {
       </p>
       <Codeblock>move('UP')</Codeblock>
       <h4>
-        Ressouren konsumieren | <CostEmoji /> 3
+        Ressouren konsumieren - <CostEmoji /> 3
       </h4>
       <p>
         Die Positionen der Ressourcen kannst du mithilfe der Variable{' '}
