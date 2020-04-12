@@ -1,11 +1,16 @@
-import { State, GameObjectTypes, UserContext } from '@darwin/types';
+import {
+  State,
+  GameObjectTypes,
+  UserContext,
+  AttributeName,
+} from '@darwin/types';
 import StateBuilder from '../../../../test-helper/StateBuilder';
 import { getUnit } from '../../../../helper/gameObjects';
 import { getConsumable } from '../../../../helper/consumable';
 import { ATTRIBUTE_BOUNDARIES } from '../../../../helper/attribute';
-import consumeHealthRegenBoost from './healthRegenBoost';
+import createAttributePowerupConsumer from './createAttributePowerupConsumer';
 
-describe('healthRegenBoost powerup consumption', () => {
+describe('createAttributePowerupConsumer', () => {
   const NORMAL_UNIT_ID = 'unit1';
   const MAXED_UNIT_ID = 'unit2';
   const POWERUP_ID = 'powerup1';
@@ -26,19 +31,24 @@ describe('healthRegenBoost powerup consumption', () => {
     })
     .addUnit({
       id: MAXED_UNIT_ID,
-      x: 2,
-      y: 2,
+      x: 1,
+      y: 1,
       attributes: {
         healthRegenBoost: ATTRIBUTE_BOUNDARIES.healthRegenBoost.max,
       },
     })
     .addPowerup({
       id: POWERUP_ID,
-      x: 3,
-      y: 3,
+      x: 1,
+      y: 1,
       type: GameObjectTypes.HealthRegenBoost,
     })
     .build();
+
+  const consumeHealthRegenBoost = createAttributePowerupConsumer(
+    AttributeName.HealthRegenBoost,
+    currentBoost => currentBoost + 5
+  );
 
   it('should enhance units attribute when consumed and remove powerup', () => {
     const newState = consumeHealthRegenBoost(
@@ -50,7 +60,7 @@ describe('healthRegenBoost powerup consumption', () => {
     const unit = getUnit(newState, NORMAL_UNIT_ID);
     const powerup = getConsumable(newState, POWERUP_ID);
 
-    expect(unit.attributes.healthRegenBoost).toBe(10);
+    expect(unit.attributes.healthRegenBoost).toBe(5);
     expect(powerup).toBeUndefined();
     expect(newState.objectIds).not.toContain(POWERUP_ID);
   });
