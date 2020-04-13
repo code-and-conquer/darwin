@@ -116,12 +116,24 @@ const HelpText: FC = () => {
           Teleportiert die Unit auf ein zufälliges anderes freies Feld.
         </li>
         <li>
-          <p style={{ color: `#d7ff9e` }}> Health Regeneration: </p>
-          Konsumieren von Ressourcen hat einen stärkeren Effekt
+          <p>
+            {' '}
+            Lebensregeneration:{' '}
+            <OneFieldStage>
+              <PowerUp color={0xd7ff9e} position={{ x: 0, y: 0 }}></PowerUp>
+            </OneFieldStage>
+          </p>
+          Durch konsumieren von Food-Ressourcen regeneriert die Unit mehr Leben.
         </li>
         <li>
-          <p style={{ color: `#05bf96` }}> Endurance: </p> Die Unit verliert
-          weniger Leben pro Tick
+          <p>
+            {' '}
+            Ausdauer:{' '}
+            <OneFieldStage>
+              <PowerUp color={0x05bf96} position={{ x: 0, y: 0 }}></PowerUp>
+            </OneFieldStage>
+          </p>{' '}
+          Die Unit verliert weniger Leben pro Tick
         </li>
       </ul>
     </>
