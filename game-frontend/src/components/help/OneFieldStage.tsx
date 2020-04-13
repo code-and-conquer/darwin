@@ -17,7 +17,11 @@ const Container = styled.div`
 
 const OneFieldStage: FC = ({ children }) => (
   <Container>
-    <Stage width={FIELD_SIZE} height={FIELD_SIZE}>
+    <Stage
+      width={FIELD_SIZE}
+      height={FIELD_SIZE}
+      options={{ backgroundColor: 0xffffff }}
+    >
       {children}
     </Stage>
   </Container>
