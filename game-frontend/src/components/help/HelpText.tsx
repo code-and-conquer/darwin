@@ -1,7 +1,10 @@
 import React, { FC } from 'react';
+import { Stage } from '@inlet/react-pixi';
 import InlineCode from './InlineCode';
 import Codeblock from './CodeBlock';
 import CostEmoji from './CostEmoji';
+import { FIELD_SIZE } from '../../constants/stage';
+import PowerUp from '../canvas-objects/Powerup';
 
 const moveToFoodCodeExample = `
 if(nearestFood.position.x > userUnit.position.x){
@@ -32,15 +35,15 @@ const HelpText: FC = () => {
       <h4>Unit</h4>
       <p>
         Die grün markierte <InlineCode>Unit</InlineCode> ist deine Figur, mit
-        welcher du dich ins Abenteuer stürzst. Ziel ist es durch Aufsammeln von
-        Ressourcen und Attackieren von Gegnern (rot markiert) der einzig
+        welcher du dich ins Abenteuer stürzst. Ziel ist es, durch Aufsammeln von
+        Ressourcen und Attackieren von Gegnern (rot markiert) der letzte
         Überlebende zu sein.
       </p>
       <h3>API</h3>
       <h4>Zwischenspeicher</h4>
       <p>
         Mittels der <InlineCode>store</InlineCode> Variable kannst du berechnete
-        Resultate über verschiedene Ticks hinweg speichern.
+        Resultate über verschiedene Runden hinweg speichern.
       </p>
       <Codeblock>{storeCodeExample}</Codeblock>
       <h4>Aktionspunkte</h4>
@@ -55,18 +58,18 @@ const HelpText: FC = () => {
       <p>
         Um deine <InlineCode>Unit</InlineCode> zu Bewegen, steht dir die{' '}
         <InlineCode>move</InlineCode>
-        -Funktion mit den vier Himmelsrichtungen (<InlineCode>'UP'</InlineCode>,
+        -Funktion mit den vier Richtungen (<InlineCode>'UP'</InlineCode>,
         <InlineCode>'RIGHT'</InlineCode>,<InlineCode>'DOWN'</InlineCode>,
         <InlineCode>'LEFT'</InlineCode>) zur Verfügung.
       </p>
       <Codeblock>move('UP')</Codeblock>
       <h4>
-        Ressouren konsumieren - <CostEmoji /> 3
+        Ressourcen konsumieren - <CostEmoji /> 3
       </h4>
       <p>
         Die Positionen der Ressourcen kannst du mithilfe der Variable{' '}
         <InlineCode>foods</InlineCode> auslesen. In der Variable{' '}
-        <InlineCode>nearestFood</InlineCode> findest du die Food-Resource,
+        <InlineCode>nearestFood</InlineCode> findest du die Food-Ressource,
         welche am nächsten bei deiner Unit ist. Deine eigene Position ist in der
         Variable <InlineCode>userUnit</InlineCode> verfügbar. Beispielsweise
         kannst du deine Unit mit diesem Code an die X-Position einer Ressource
@@ -93,8 +96,8 @@ const HelpText: FC = () => {
       </p>
       <ul>
         <li>
-          <p style={{ color: `#ffc0cb` }}>Teleport:</p> Bewegt die Unit an ein
-          zufälliges Spielfeld
+          <p style={{ color: `#ffc0cb` }}>Teleport:</p>
+          Teleportiert die Unit auf ein zufälliges anderes freies Feld.
         </li>
         <li>
           <p style={{ color: `#d7ff9e` }}> Health Regeneration: </p>
