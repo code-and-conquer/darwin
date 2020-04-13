@@ -88,8 +88,8 @@ const HelpText: FC = () => {
       </p>
       <h4>Power-ups</h4>
       <p>
-        Mit dem Konsumieren eines Powerups kann sich der Spieler ein Vorteil
-        verschaffen und die fähigkeiten seiner Unit verstärken.
+        Mit dem Konsumieren eines Powerups kann sich der Spieler einen Vorteil
+        verschaffen und die Fähigkeiten seiner Unit verstärken.
       </p>
       <ul>
         <li>
@@ -97,12 +97,12 @@ const HelpText: FC = () => {
           zufälliges Spielfeld
         </li>
         <li>
-          <p style={{ color: `#d7ff9e` }}> Health-regeneration: </p>
-          Konsumieren von resourcen hat einen stärkeren Effekt
+          <p style={{ color: `#d7ff9e` }}> Health Regeneration: </p>
+          Konsumieren von Ressourcen hat einen stärkeren Effekt
         </li>
         <li>
-          <p style={{ color: `#05bf96` }}> Endurence: </p> Die Unit verliert
-          weniger leben pro Tick
+          <p style={{ color: `#05bf96` }}> Endurance: </p> Die Unit verliert
+          weniger Leben pro Tick
         </li>
       </ul>
     </>
