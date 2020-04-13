@@ -37,13 +37,13 @@ const HelpText: FC = () => {
       <p>
         Die grün markierte <InlineCode>Unit</InlineCode>{' '}
         <OneFieldStage>
-          <Unit isOwn={true} position={{ x: 0, y: 0 }} health={100}></Unit>
+          <Unit isOwn={true} position={{ x: 0, y: 0 }} health={100} />
         </OneFieldStage>{' '}
         ist deine Figur, mit welcher du dich ins Abenteuer stürzst. Ziel ist es,
         durch Aufsammeln von Ressourcen und Attackieren von Gegnern (rot
         markiert){' '}
         <OneFieldStage>
-          <Unit isOwn={false} position={{ x: 0, y: 0 }} health={100}></Unit>
+          <Unit isOwn={false} position={{ x: 0, y: 0 }} health={100} />
         </OneFieldStage>{' '}
         der letzte Überlebende zu sein.
       </p>
@@ -77,7 +77,7 @@ const HelpText: FC = () => {
       <p>
         Die Positionen der Ressourcen{' '}
         <OneFieldStage>
-          <Food position={{ x: 0, y: 0 }}></Food>
+          <Food position={{ x: 0, y: 0 }} />
         </OneFieldStage>{' '}
         kannst du mithilfe der Variable <InlineCode>foods</InlineCode> auslesen.
         In der Variable <InlineCode>nearestFood</InlineCode> findest du die
@@ -105,37 +105,29 @@ const HelpText: FC = () => {
         Mit dem Konsumieren eines Powerups kann sich der Spieler einen Vorteil
         verschaffen und die Fähigkeiten seiner Unit verstärken.
       </p>
-      <ul>
-        <li>
-          <p>
-            Teleport:{' '}
-            <OneFieldStage>
-              <PowerUp color={0xffc0cb} position={{ x: 0, y: 0 }}></PowerUp>
-            </OneFieldStage>
-          </p>
-          Teleportiert die Unit auf ein zufälliges anderes freies Feld.
-        </li>
-        <li>
-          <p>
-            {' '}
-            Lebensregeneration:{' '}
-            <OneFieldStage>
-              <PowerUp color={0xd7ff9e} position={{ x: 0, y: 0 }}></PowerUp>
-            </OneFieldStage>
-          </p>
-          Durch konsumieren von Food-Ressourcen regeneriert die Unit mehr Leben.
-        </li>
-        <li>
-          <p>
-            {' '}
-            Ausdauer:{' '}
-            <OneFieldStage>
-              <PowerUp color={0x05bf96} position={{ x: 0, y: 0 }}></PowerUp>
-            </OneFieldStage>
-          </p>{' '}
-          Die Unit verliert weniger Leben pro Tick
-        </li>
-      </ul>
+      <h5>
+        Teleport{' '}
+        <OneFieldStage>
+          <PowerUp color={0xffc0cb} position={{ x: 0, y: 0 }} />
+        </OneFieldStage>
+      </h5>
+      <p>Teleportiert die Unit auf ein zufälliges anderes freies Feld.</p>
+      <h5>
+        Lebensregeneration{' '}
+        <OneFieldStage>
+          <PowerUp color={0xd7ff9e} position={{ x: 0, y: 0 }} />
+        </OneFieldStage>
+      </h5>
+      <p>
+        Durch konsumieren von Food-Ressourcen regeneriert die Unit mehr Leben.
+      </p>
+      <h5>
+        Ausdauer{' '}
+        <OneFieldStage>
+          <PowerUp color={0x05bf96} position={{ x: 0, y: 0 }} />
+        </OneFieldStage>
+      </h5>
+      <p>Die Unit verliert weniger Leben pro Tick.</p>
     </>
   );
 };
