@@ -4,6 +4,8 @@ import Codeblock from './CodeBlock';
 import CostEmoji from './CostEmoji';
 import PowerUp from '../canvas-objects/Powerup';
 import OneFieldStage from './OneFieldStage';
+import Unit from '../canvas-objects/Unit';
+import Food from '../canvas-objects/Food';
 
 const moveToFoodCodeExample = `
 if(nearestFood.position.x > userUnit.position.x){
@@ -33,10 +35,17 @@ const HelpText: FC = () => {
       <h3>Spielfiguren</h3>
       <h4>Unit</h4>
       <p>
-        Die grün markierte <InlineCode>Unit</InlineCode> ist deine Figur, mit
-        welcher du dich ins Abenteuer stürzst. Ziel ist es, durch Aufsammeln von
-        Ressourcen und Attackieren von Gegnern (rot markiert) der letzte
-        Überlebende zu sein.
+        Die grün markierte <InlineCode>Unit</InlineCode>{' '}
+        <OneFieldStage>
+          <Unit isOwn={true} position={{ x: 0, y: 0 }} health={100}></Unit>
+        </OneFieldStage>{' '}
+        ist deine Figur, mit welcher du dich ins Abenteuer stürzst. Ziel ist es,
+        durch Aufsammeln von Ressourcen und Attackieren von Gegnern (rot
+        markiert){' '}
+        <OneFieldStage>
+          <Unit isOwn={false} position={{ x: 0, y: 0 }} health={100}></Unit>
+        </OneFieldStage>{' '}
+        der letzte Überlebende zu sein.
       </p>
       <h3>API</h3>
       <h4>Zwischenspeicher</h4>
@@ -66,13 +75,16 @@ const HelpText: FC = () => {
         Ressourcen konsumieren - <CostEmoji /> 3
       </h4>
       <p>
-        Die Positionen der Ressourcen kannst du mithilfe der Variable{' '}
-        <InlineCode>foods</InlineCode> auslesen. In der Variable{' '}
-        <InlineCode>nearestFood</InlineCode> findest du die Food-Ressource,
-        welche am nächsten bei deiner Unit ist. Deine eigene Position ist in der
-        Variable <InlineCode>userUnit</InlineCode> verfügbar. Beispielsweise
-        kannst du deine Unit mit diesem Code an die X-Position einer Ressource
-        bewegen:
+        Die Positionen der Ressourcen{' '}
+        <OneFieldStage>
+          <Food position={{ x: 0, y: 0 }}></Food>
+        </OneFieldStage>{' '}
+        kannst du mithilfe der Variable <InlineCode>foods</InlineCode> auslesen.
+        In der Variable <InlineCode>nearestFood</InlineCode> findest du die
+        Food-Ressource, welche am nächsten bei deiner Unit ist. Deine eigene
+        Position ist in der Variable <InlineCode>userUnit</InlineCode>{' '}
+        verfügbar. Beispielsweise kannst du deine Unit mit diesem Code an die
+        X-Position einer Ressource bewegen:
       </p>
       <Codeblock>{moveToFoodCodeExample}</Codeblock>
       <p>
