@@ -1,12 +1,5 @@
 import WebSocket, { OPEN } from 'ws';
-import hyperid from 'hyperid';
-import {
-  ConnectionInitialization,
-  MatchUpdate,
-  Message,
-  ScriptUpdate,
-  UserId,
-} from '@darwin/types';
+import { MatchUpdate, Message, ScriptUpdate, UserId } from '@darwin/types';
 import GameController from './GameController';
 import { createServerStore } from './createServerStore';
 
@@ -15,8 +8,6 @@ export const GAME_RESTART_TIME = 10000;
 
 export default class MainController {
   private store = createServerStore();
-
-  private hyperIdInstance = hyperid();
 
   private gameController: GameController;
 
@@ -27,11 +18,7 @@ export default class MainController {
     );
   }
 
-  newConnection(ws: WebSocket, requestedUserId: UserId): void {
-    const userId = this.getUserId(requestedUserId);
-
-    MainController.sendUserId(ws, userId);
-
+  newConnection(ws: WebSocket, userId: UserId): void {
     ws.on('message', this.getMessageListener(userId));
 
     const userConnection = this.store.userConnnections.userConnectionMap[
@@ -95,31 +82,6 @@ export default class MainController {
       id => id !== userId
     );
     delete this.store.userConnnections.userConnectionMap[userId];
-  }
-
-  /**
-   * Looks up the connection id in the store.
-   * It returns the found userId or generates a new one respectively.
-   * @param requestedUserId The connection id the client requests
-   */
-  private getUserId(requestedUserId: string): UserId {
-    if (
-      requestedUserId &&
-      this.store.userConnnections.userConnectionIds.includes(requestedUserId)
-    ) {
-      return requestedUserId;
-    }
-    return this.hyperIdInstance();
-  }
-
-  private static sendUserId(ws: WebSocket, userId: UserId): void {
-    const message: ConnectionInitialization = {
-      type: 'connectionInitialization',
-      payload: {
-        userId,
-      },
-    };
-    ws.send(JSON.stringify(message));
   }
 
   private getMessageListener(userId: string) {
