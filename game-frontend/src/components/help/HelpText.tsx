@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
-import { Stage } from '@inlet/react-pixi';
 import InlineCode from './InlineCode';
 import Codeblock from './CodeBlock';
 import CostEmoji from './CostEmoji';
-import { FIELD_SIZE } from '../../constants/stage';
 import PowerUp from '../canvas-objects/Powerup';
+import OneFieldStage from './OneFieldStage';
 
 const moveToFoodCodeExample = `
 if(nearestFood.position.x > userUnit.position.x){
@@ -96,7 +95,12 @@ const HelpText: FC = () => {
       </p>
       <ul>
         <li>
-          <p style={{ color: `#ffc0cb` }}>Teleport:</p>
+          <p>
+            Teleport:{' '}
+            <OneFieldStage>
+              <PowerUp color={0xffc0cb} position={{ x: 0, y: 0 }}></PowerUp>
+            </OneFieldStage>
+          </p>
           Teleportiert die Unit auf ein zufälliges anderes freies Feld.
         </li>
         <li>
