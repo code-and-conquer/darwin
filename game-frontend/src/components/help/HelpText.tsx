@@ -86,6 +86,25 @@ const HelpText: FC = () => {
         Beispiel wie man sich zu einer Food-Ressource bewegen kann, kannst du
         dich auch einem Feind nähern.
       </p>
+      <h4>Power-ups</h4>
+      <p>
+        Mit dem Konsumieren eines Powerups kann sich der Spieler ein Vorteil
+        verschaffen und die fähigkeiten seiner Unit verstärken.
+      </p>
+      <ul>
+        <li>
+          <p style={{ color: `#ffc0cb` }}>Teleport:</p> Bewegt die Unit an ein
+          zufälliges Spielfeld
+        </li>
+        <li>
+          <p style={{ color: `#d7ff9e` }}> Health-regeneration: </p>
+          Konsumieren von resourcen hat einen stärkeren Effekt
+        </li>
+        <li>
+          <p style={{ color: `#05bf96` }}> Endurence: </p> Die Unit verliert
+          weniger leben pro Tick
+        </li>
+      </ul>
     </>
   );
 };
