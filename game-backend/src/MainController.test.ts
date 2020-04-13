@@ -1,10 +1,5 @@
 import WebSocket, { CLOSED, OPEN } from 'ws';
-import {
-  ConnectionInitialization,
-  MatchUpdate,
-  ScriptUpdate,
-  UserId,
-} from '@darwin/types';
+import { MatchUpdate, ScriptUpdate, UserId } from '@darwin/types';
 import MainController, { GAME_RESTART_TIME } from './MainController';
 
 import * as GameController from './GameController';
@@ -59,12 +54,6 @@ describe('MainController', () => {
     return JSON.parse(body);
   };
 
-  const parseConnectionInitialization = (
-    body: string
-  ): ConnectionInitialization => {
-    return JSON.parse(body);
-  };
-
   beforeEach(() => {
     jest.clearAllMocks();
     jest.clearAllTimers();
@@ -88,46 +77,13 @@ describe('MainController', () => {
     };
   });
 
-  it('sends a generated connection id back', () => {
-    mainController.newConnection(wsMock0 as WebSocket, 'connection0');
-    const connectionInitialization = parseConnectionInitialization(
-      sendFunction0.mock.calls[0][0]
-    );
-    expect(connectionInitialization.type).toBe('connectionInitialization');
-    expect(connectionInitialization.payload.userId).not.toBe('connection0');
-  });
-
-  it('sends the previous connection id back', () => {
-    // first connection
-    mainController.newConnection(wsMock0 as WebSocket, 'connection0');
-    const connectionInitialization0 = parseConnectionInitialization(
-      sendFunction0.mock.calls[0][0]
-    );
-
-    // second connection
-    mainController.newConnection(
-      wsMock1 as WebSocket,
-      connectionInitialization0.payload.userId
-    );
-    const connectionInitialization1 = parseConnectionInitialization(
-      sendFunction1.mock.calls[0][0]
-    );
-
-    // assert
-    expect(connectionInitialization1.type).toBe('connectionInitialization');
-    expect(connectionInitialization1.payload.userId).toBe(
-      connectionInitialization0.payload.userId
-    );
-  });
-
   it('forwards a matchUpdate to the client', () => {
-    mainController.newConnection(wsMock0 as WebSocket, '');
-    const {
-      payload: { userId },
-    } = parseConnectionInitialization(sendFunction0.mock.calls[0][0]);
+    const userId = 'user1';
+    mainController.newConnection(wsMock0 as WebSocket, userId);
+
     sendMatchUpdate(userId, fakeMatchUpdate);
 
-    const matchUpdate = parseMatchUpdate(sendFunction0.mock.calls[1][0]);
+    const matchUpdate = parseMatchUpdate(sendFunction0.mock.calls[0][0]);
     expect(matchUpdate.type).toBe(fakeMatchUpdate.type);
   });
 
@@ -147,16 +103,14 @@ describe('MainController', () => {
   });
 
   it('sends the same update to multiple connections of the same user', () => {
-    mainController.newConnection(wsMock0 as WebSocket, '');
-    const {
-      payload: { userId },
-    } = parseConnectionInitialization(sendFunction0.mock.calls[0][0]);
+    const userId = 'user1';
+    mainController.newConnection(wsMock0 as WebSocket, userId);
     mainController.newConnection(wsMock1 as WebSocket, userId);
 
     sendMatchUpdate(userId, fakeMatchUpdate);
 
-    const matchUpdate0 = parseMatchUpdate(sendFunction0.mock.calls[1][0]);
-    const matchUpdate1 = parseMatchUpdate(sendFunction1.mock.calls[1][0]);
+    const matchUpdate0 = parseMatchUpdate(sendFunction0.mock.calls[0][0]);
+    const matchUpdate1 = parseMatchUpdate(sendFunction1.mock.calls[0][0]);
     expect(matchUpdate0.payload.state).toStrictEqual(
       matchUpdate1.payload.state
     );
@@ -173,17 +127,15 @@ describe('MainController', () => {
   });
 
   it('removes inactive users from store', () => {
-    mainController.newConnection(wsMock0 as WebSocket, '');
-    const {
-      payload: { userId: userId0 },
-    } = parseConnectionInitialization(sendFunction0.mock.calls[0][0]);
-    mainController.newConnection(wsMockDead as WebSocket, '');
+    const userId = 'user1';
+    mainController.newConnection(wsMock0 as WebSocket, userId);
+    mainController.newConnection(wsMockDead as WebSocket, 'user2');
 
     terminate();
     jest.advanceTimersByTime(GAME_RESTART_TIME);
     const mockInstance = GameControllerMock.mock.instances[1];
     const appendUserMock = mockInstance.appendUser as jest.Mock;
     expect(appendUserMock.mock.calls.length).toBe(1);
-    expect(appendUserMock.mock.calls[0][0]).toBe(userId0);
+    expect(appendUserMock.mock.calls[0][0]).toBe(userId);
   });
 });

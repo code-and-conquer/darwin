@@ -11,10 +11,7 @@ import {
 
 function extractUserId(req: http.IncomingMessage): UserId {
   const searchParams = new URLSearchParams(url.parse(req.url).query);
-  if (searchParams.has('userId')) {
-    return searchParams.get('userId');
-  }
-  return null;
+  return searchParams.get('userId');
 }
 
 // initialize server
