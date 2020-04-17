@@ -91,14 +91,21 @@ const HelpText: FC = () => {
         Um die Ressource an deiner Position zu konsumieren, führe{' '}
         <InlineCode>consume()</InlineCode> aus.
       </p>
-      <h4>Attackieren</h4>
+      <h4>
+        Attackieren - <CostEmoji /> 2
+      </h4>
       <p>
         Die Positionen deiner Feinde kannst du mithilfe der Variable{' '}
         <InlineCode>enemyUnits</InlineCode> auslesen. In der Variable{' '}
         <InlineCode>nearestEnemyUnit</InlineCode> findest du den Feind, welcher
-        am nächsten bei deiner Unit ist. Durch einen ähnlichen Code wie beim
-        Beispiel wie man sich zu einer Food-Ressource bewegen kann, kannst du
-        dich auch einem Feind nähern.
+        am nächsten bei deiner Unit ist.
+      </p>
+      <p>
+        Mittels dem <InlineCode>attack</InlineCode>-Command kannst du einen
+        Gegner attackieren, welcher in Reichweite ist. Du Kannst das Unit-Objekt
+        deiner Wahl als übergabe Parameter mitgeben. Die{' '}
+        <InlineCode>nearestEnemyUnit</InlineCode> ist als default-Wert gesetzt.
+        <Codeblock>attack(nearestEnemyUnit)</Codeblock>
       </p>
       <h4>Power-ups</h4>
       <p>
