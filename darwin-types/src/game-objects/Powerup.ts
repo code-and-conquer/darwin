@@ -1,5 +1,6 @@
-enum PowerupTypes {
-  enduranceBoost = 'enduranceBoost',
-}
+import { GameObjectTypes } from './GameObject';
 
-export default PowerupTypes;
+export type PowerupType =
+  | GameObjectTypes.EnduranceBoost
+  | GameObjectTypes.Teleport
+  | GameObjectTypes.HealthRegenBoost;

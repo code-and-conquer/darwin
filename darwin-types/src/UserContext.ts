@@ -8,8 +8,12 @@ export interface UserContext {
 
 export interface UserExecutionContext extends UserContext {
   userScript: UserScript;
+  store: UserStore;
 }
 
 export interface UserScript {
   script: string;
 }
+
+// "unknown" because the user is allowed to store anything in there.
+export type UserStore = Record<string, unknown>;

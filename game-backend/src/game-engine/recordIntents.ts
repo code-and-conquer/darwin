@@ -5,11 +5,16 @@ import {
   State,
   Consumable,
   Unit,
+  UserStore,
 } from '@darwin/types';
 import deepClone from '../helper/deepClone';
 import { Intent } from './intent/Intent';
 import MoveIntent, { Direction } from './intent/MoveIntent';
 import ConsumeIntent from './intent/ConsumeIntent';
+import {
+  selectPowerups,
+  getNearestPowerup,
+} from './state-selectors/powerupSelector';
 import {
   selectFoods,
   selectUserUnit,
@@ -33,7 +38,9 @@ interface ScriptContextVariables {
 
 export interface ScriptContext
   extends ScriptContextMethods,
-    ScriptContextVariables {}
+    ScriptContextVariables {
+  store: UserStore;
+}
 
 function createGameContext(context: ScriptContext): Context {
   return vm.createContext(context);
@@ -68,6 +75,8 @@ function recordIntents(
   const nearestFood = getNearestFood(state, userUnit);
   const enemyUnits = selectEnemyUnits(state, userExecutionContext.unitId);
   const nearestEnemyUnit = selectNearestEnemyUnit(state, userUnit);
+  const powerups = selectPowerups(state);
+  const nearestPowerup = getNearestPowerup(state, userUnit);
 
   const variables: ScriptContextVariables = deepClone({
     nearestFood,
@@ -75,6 +84,8 @@ function recordIntents(
     userUnit,
     enemyUnits,
     nearestEnemyUnit,
+    powerups,
+    nearestPowerup,
   });
 
   const methods: ScriptContextMethods = {
@@ -89,6 +100,7 @@ function recordIntents(
   const context = createGameContext({
     ...methods,
     ...variables,
+    store: userExecutionContext.store,
   });
   runScript(userExecutionContext.userScript, context);
 

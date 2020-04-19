@@ -2,16 +2,22 @@ import {
   State,
   UserContext,
   Unit,
-  MAX_HEALTH,
-  GameObjectTypes,
   Consumable,
+  ConsumableType,
+  Consume,
 } from '@darwin/types';
+import { filterConsumables } from '../../helper/consumable';
 import { Intent } from './Intent';
-import produce from '../../helper/produce';
 import { getObjectsOnField } from '../../helper/fields';
-import { getUnit, removeGameObject } from '../../helper/gameObjects';
+import { getUnit } from '../../helper/gameObjects';
+import powerupMap from '../mechanics/powerup-spawner/powerups';
+import consumeFood from '../mechanics/food-spawner/consumeFood';
 
-export const FOOD_REGENERATION_VALUE = 20;
+const consumeMap: Record<ConsumableType, Consume> = {
+  food: consumeFood,
+  ...powerupMap,
+};
+
 /* eslint class-methods-use-this: ["error", { "exceptMethods": ["execute"] }] */
 
 /**
@@ -20,39 +26,28 @@ export const FOOD_REGENERATION_VALUE = 20;
 export default class ConsumeIntent implements Intent {
   cost = 3;
 
-  private static heal(health: number): number {
-    return Math.min(health + FOOD_REGENERATION_VALUE, MAX_HEALTH);
-  }
-
   private static getConsumableInReach(
     state: State,
     unit: Unit
   ): Consumable | null {
-    const objectsOnPosition = getObjectsOnField<Consumable>(
-      state,
-      unit.position
-    );
+    const objectsOnPosition = getObjectsOnField(state, unit.position);
     const consumable = objectsOnPosition
-      ? objectsOnPosition.find(obj => obj.type === GameObjectTypes.Food)
+      ? filterConsumables(objectsOnPosition)[0]
       : null;
     return consumable;
   }
 
   execute(state: State, userContext: UserContext): State {
-    return produce(state, draft => {
-      const unit = getUnit(draft, userContext.unitId);
-      if (!unit) {
-        return;
-      }
-      const consumable = ConsumeIntent.getConsumableInReach(state, unit);
-      const canConsume = !!consumable;
+    const unit = getUnit(state, userContext.unitId);
 
-      if (canConsume) {
-        unit.health = ConsumeIntent.heal(unit.health);
-        const { objectIds, objectMap } = removeGameObject(draft, consumable.id);
-        draft.objectMap = objectMap;
-        draft.objectIds = objectIds;
-      }
-    });
+    if (!unit) {
+      return state;
+    }
+    const consumable = ConsumeIntent.getConsumableInReach(state, unit);
+    const canConsume = !!consumable;
+
+    return canConsume
+      ? consumeMap[consumable.type](consumable.id, state, userContext)
+      : state;
   }
 }

@@ -8,26 +8,24 @@ import {
 } from '@darwin/types';
 import Unit from './Unit';
 import Food from './Food';
+import PowerUp from './Powerup';
+import scalePosition from '../../helper/scalePosition';
 
 type Props = {
   objectIds: ObjectId[];
   objectMap: Record<ObjectId, GameObject>;
   ownUnitId: ObjectId;
-  scaleFactor: number;
 };
 
 const sortLayerConfig: Record<GameObjectTypes, number> = {
   unit: 2,
   food: 1,
   enduranceBoost: 1,
+  healthRegenBoost: 1,
+  teleport: 1,
 };
 
-const GameObjects: FC<Props> = ({
-  objectIds,
-  objectMap,
-  ownUnitId,
-  scaleFactor,
-}) => (
+const GameObjects: FC<Props> = ({ objectIds, objectMap, ownUnitId }) => (
   <>
     {objectIds
       .map(objectId => objectMap[objectId])
@@ -42,10 +40,7 @@ const GameObjects: FC<Props> = ({
               <Unit
                 key={unit.id}
                 health={unit.health}
-                position={{
-                  x: unit.position.x * scaleFactor,
-                  y: unit.position.y * scaleFactor,
-                }}
+                position={scalePosition(unit.position)}
                 isOwn={unit.id === ownUnitId}
               />
             );
@@ -53,12 +48,33 @@ const GameObjects: FC<Props> = ({
           case GameObjectTypes.Food: {
             const food = gameObject as ConsumableT;
             return (
-              <Food
-                key={food.id}
-                position={{
-                  x: food.position.x * scaleFactor,
-                  y: food.position.y * scaleFactor,
-                }}
+              <Food key={food.id} position={scalePosition(food.position)} />
+            );
+          }
+          case GameObjectTypes.EnduranceBoost: {
+            return (
+              <PowerUp
+                key={gameObject.id}
+                color={0x05bf96}
+                position={scalePosition(gameObject.position)}
+              />
+            );
+          }
+          case GameObjectTypes.Teleport: {
+            return (
+              <PowerUp
+                key={gameObject.id}
+                color={0xffc0cb}
+                position={scalePosition(gameObject.position)}
+              />
+            );
+          }
+          case GameObjectTypes.HealthRegenBoost: {
+            return (
+              <PowerUp
+                key={gameObject.id}
+                color={0xd7ff9e}
+                position={scalePosition(gameObject.position)}
               />
             );
           }

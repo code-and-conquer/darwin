@@ -14,6 +14,7 @@ describe('recordIntents', () => {
       userScript: {
         script: '',
       },
+      store: {},
     };
   });
 

@@ -72,7 +72,6 @@ function Game(): JSX.Element {
               objectIds={gameState.objectIds}
               objectMap={gameState.objectMap}
               ownUnitId={userContext.unitId}
-              scaleFactor={FIELD_SIZE}
             />
           </Container>
         </Stage>

@@ -3,13 +3,15 @@ import url from 'url';
 import WebSocket from 'ws';
 import { UserId } from '@darwin/types';
 import MainController from './MainController';
+import {
+  initHeartbeatInterval,
+  initHeartbeatCheck,
+  WebSocketWithStatus,
+} from './helper/heartbeat';
 
 function extractUserId(req: http.IncomingMessage): UserId {
   const searchParams = new URLSearchParams(url.parse(req.url).query);
-  if (searchParams.has('userId')) {
-    return searchParams.get('userId');
-  }
-  return null;
+  return searchParams.get('userId');
 }
 
 // initialize server
@@ -19,10 +21,15 @@ const WSServer = new WebSocket.Server({
 });
 const mainController = new MainController();
 
-WSServer.on('connection', (ws: WebSocket, req: http.IncomingMessage) => {
-  const userId = extractUserId(req);
-  mainController.newConnection(ws, userId);
-});
+initHeartbeatInterval(WSServer);
+WSServer.on(
+  'connection',
+  (ws: WebSocketWithStatus, req: http.IncomingMessage) => {
+    const userId = extractUserId(req);
+    initHeartbeatCheck(ws);
+    mainController.newConnection(ws, userId);
+  }
+);
 
 // start server
 server.listen(8080, '0.0.0.0');

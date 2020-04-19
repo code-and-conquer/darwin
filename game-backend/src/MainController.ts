@@ -1,12 +1,5 @@
-import WebSocket from 'ws';
-import hyperid from 'hyperid';
-import {
-  ConnectionInitialization,
-  MatchUpdate,
-  Message,
-  ScriptUpdate,
-  UserId,
-} from '@darwin/types';
+import WebSocket, { OPEN } from 'ws';
+import { MatchUpdate, Message, ScriptUpdate, UserId } from '@darwin/types';
 import GameController from './GameController';
 import { createServerStore } from './createServerStore';
 
@@ -15,8 +8,6 @@ export const GAME_RESTART_TIME = 10000;
 
 export default class MainController {
   private store = createServerStore();
-
-  private hyperIdInstance = hyperid();
 
   private gameController: GameController;
 
@@ -27,19 +18,17 @@ export default class MainController {
     );
   }
 
-  newConnection(ws: WebSocket, requestedUserId: UserId): void {
-    const userId = this.getUserId(requestedUserId);
-
-    MainController.sendUserId(ws, userId);
-
+  newConnection(ws: WebSocket, userId: UserId): void {
     ws.on('message', this.getMessageListener(userId));
 
-    const userContext = this.store.userContexts.userContextMap[userId];
+    const userConnection = this.store.userConnnections.userConnectionMap[
+      userId
+    ];
 
-    if (userContext === undefined) {
-      this.addNewUserContext(ws, userId);
+    if (userConnection === undefined) {
+      this.storeNewUserConnection(ws, userId);
     } else {
-      userContext.push(ws);
+      userConnection.push(ws);
     }
   }
 
@@ -48,7 +37,7 @@ export default class MainController {
     matchUpdate: MatchUpdate
   ) => void {
     return (userId: UserId, matchUpdate: MatchUpdate): void => {
-      this.store.userContexts.userContextMap[userId].forEach(ws => {
+      this.store.userConnnections.userConnectionMap[userId].forEach(ws => {
         ws.send(JSON.stringify(matchUpdate));
       });
     };
@@ -57,11 +46,13 @@ export default class MainController {
   private getTerminateExecutor(): () => void {
     return (): void => {
       setTimeout(() => {
+        this.removeInactiveUsers();
+
         this.gameController = new GameController(
           this.getMatchUpdateExecutor(),
           this.getTerminateExecutor()
         );
-        this.store.userContexts.userContextIds.forEach(id => {
+        this.store.userConnnections.userConnectionIds.forEach(id => {
           this.gameController.appendUser(id);
         });
       }, GAME_RESTART_TIME);
@@ -69,28 +60,28 @@ export default class MainController {
   }
 
   /**
-   * Looks up the connection id in the store.
-   * It returns the found userId or generates a new one respectively.
-   * @param requestedUserId The connection id the client requests
+   * Remove users from store if there is not at least one connection alive
+   * @private
+   * @memberof MainController
    */
-  private getUserId(requestedUserId: string): UserId {
-    if (
-      requestedUserId &&
-      this.store.userContexts.userContextIds.includes(requestedUserId)
-    ) {
-      return requestedUserId;
-    }
-    return this.hyperIdInstance();
+  private removeInactiveUsers(): void {
+    this.store.userConnnections.userConnectionIds.forEach(userId => {
+      const foundAliveConnections = this.store.userConnnections.userConnectionMap[
+        userId
+      ].some((ws: WebSocket) => {
+        return ws.readyState === OPEN;
+      });
+      if (!foundAliveConnections) {
+        this.removeStoredUser(userId);
+      }
+    });
   }
 
-  private static sendUserId(ws: WebSocket, userId: UserId): void {
-    const message: ConnectionInitialization = {
-      type: 'connectionInitialization',
-      payload: {
-        userId,
-      },
-    };
-    ws.send(JSON.stringify(message));
+  private removeStoredUser(userId: UserId): void {
+    this.store.userConnnections.userConnectionIds = this.store.userConnnections.userConnectionIds.filter(
+      id => id !== userId
+    );
+    delete this.store.userConnnections.userConnectionMap[userId];
   }
 
   private getMessageListener(userId: string) {
@@ -112,9 +103,9 @@ export default class MainController {
     });
   }
 
-  private addNewUserContext(ws: WebSocket, userId: UserId): void {
-    this.store.userContexts.userContextMap[userId] = [ws];
-    this.store.userContexts.userContextIds.push(userId);
+  private storeNewUserConnection(ws: WebSocket, userId: UserId): void {
+    this.store.userConnnections.userConnectionMap[userId] = [ws];
+    this.store.userConnnections.userConnectionIds.push(userId);
     this.gameController.appendUser(userId);
   }
 }
