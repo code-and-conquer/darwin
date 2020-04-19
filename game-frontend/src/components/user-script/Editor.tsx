@@ -6,6 +6,12 @@ import {
 import monacoEditor from 'monaco-editor/esm/vs/editor/editor.api';
 import { useSaveHotKey, useHandleEditorRef } from './monaco-helper';
 
+const editorOptions: monacoEditor.editor.IEditorConstructionOptions = {
+  minimap: {
+    enabled: false,
+  },
+};
+
 const Editor: FC<{
   onChange: ControlledEditorOnChange;
   save: (script: string) => void;
@@ -27,6 +33,7 @@ const Editor: FC<{
       language="javascript"
       theme="dark"
       editorDidMount={handleEditorDidMount}
+      options={editorOptions}
     />
   );
 };

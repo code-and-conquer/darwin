@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 const ContentContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
+  flex-flow: column;
+  flex-shrink: 1;
+  overflow-y: auto;
   padding: 20px;
 `;
 
