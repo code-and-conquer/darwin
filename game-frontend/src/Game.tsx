@@ -9,6 +9,7 @@ import Grid from './components/canvas-objects/Grid';
 import { FIELD_SIZE, STAGE_COLUMNS, STAGE_ROWS } from './constants/stage';
 import Rectangle from './components/pixi/Rectangle';
 import Firework from './components/pixi/Firework';
+import WaitingDialog from './components/WaitingDialog';
 
 const width = STAGE_COLUMNS * FIELD_SIZE;
 const height = STAGE_ROWS * FIELD_SIZE;
@@ -37,7 +38,12 @@ function Game(): JSX.Element {
   const hasWon = isLiving && isOnlyOnePlayerLeft;
 
   if (!hasJoinedGame) {
-    return <p>Warten...</p>;
+    return (
+      <>
+        <WaitingDialog hasJoinedGame={hasJoinedGame} />
+        <p>Warten...</p>
+      </>
+    );
   }
 
   const colorMatrix = new PIXI.filters.ColorMatrixFilter();
