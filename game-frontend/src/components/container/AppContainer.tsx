@@ -6,7 +6,6 @@ const AppContainer = styled.div`
   display: flex;
   overflow-y: auto;
 
-  text-align: center;
   background: url(${background}) #333333;
   background-repeat: no-repeat;
   background-position: center;
