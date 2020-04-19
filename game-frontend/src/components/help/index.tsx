@@ -12,16 +12,7 @@ const Help: FC = () => {
     <>
       <Container>
         <HelpText />
-        {/* <Button onClick={open}>Hilfe</Button> */}
       </Container>
-      {/* <Dialog isOpen={isOpen} onDismiss={close} aria-label="help">
-        <DialogWrapper>
-          <Button className="close-button" onClick={close}>
-            <span>×</span>
-          </Button>
-          <HelpText />
-        </DialogWrapper>
-      </Dialog> */}
     </>
   );
 };
