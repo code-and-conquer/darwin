@@ -10,7 +10,7 @@ type Props = {
 };
 
 function WaitingDialog(props: Props): JSX.Element {
-  const [isOpen, open, close] = useDialogState(true);
+  const [isOpen, , close] = useDialogState(true);
 
   return (
     <Dialog
