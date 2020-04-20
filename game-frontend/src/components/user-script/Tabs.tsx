@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ControlledEditorOnChange } from '@monaco-editor/react';
 import Tab from './Tab';
 import Editor from './Editor';
+import ErrorLog from './ErrorLog';
 
 const Container = styled.div`
   width: 100%;
@@ -40,7 +41,7 @@ const Tabs: FC<{
     },
     errors: {
       name: 'Fehler',
-      component: <div>Gugus</div>,
+      component: <ErrorLog />,
     },
   };
 
