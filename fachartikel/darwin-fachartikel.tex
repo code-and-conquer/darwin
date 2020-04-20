@@ -54,13 +54,10 @@ Das Ergebnis des ''Projekt Darwin'' ist ein funktionierendes Spiel, in dem mehre
 
 \end{abstract}
 
-\tableofcontents
-
 \newpage
 
 \section{Einleitung}
 \subsection{Ausgangslage}
-%TODO FILIP eventuell ein paar kleine bilder vom spiel?
 
 % bestehende arbeiten/Literatur
 % stand der technik / bisherige Lösungen des Problems, deren Grenzen
@@ -84,14 +81,12 @@ Um diese Shortcomings zu adressieren, haben wir ''Projekt Darwin'' entwickelt.
 
 Ziel von ''Projekt Darwin'' ist es, sowohl den Spielspass zu maximieren, als auch die algorithmische, logische Denkweise zu fördern. Das Spiel soll sowohl von Kindern als auch Erwachsenen gespielt werden können, wobei die Grafik insbesondere keine ''kindliche'' (z.B. sehr bunt) sein soll.\\
 Das Spiel in seiner jetzigen Version lässt sich mit wenigen Kommandos spielen, weshalb die technischen Vorkenntnisse minimal sein können.\\
- In einer zukünftigen Version könnte man das verwendete Set an Kommandos in höheren Levels erweitern, so dass die Komplexität zunimmt und der Spieler im Laufe der Zeit dazu lernen kann.
+In einer zukünftigen Version könnte man das verwendete Set an Kommandos in höheren Levels erweitern, so dass die Komplexität zunimmt und der Spieler im Laufe der Zeit dazu lernen kann.
 
 Ein weiteres, erklärtes Ziel des Projektes war es, die Kompetenzen des Entwicklungsteams bzgl. Agiler Software-Entwicklung aufzubauen und zu trainieren.
 
-\subsection{Terminologie}
+\newpage
 
-
-%TODO FILIP text korrektur
 \section{Resultate}
 % Zusammenfassung der Resultate. Beschreibung der Lösung z. B. gemäss Report?
 In diesem Kapitel werden die Resultate und Ergebnisse unseres Projektes präsentiert.
@@ -101,14 +96,12 @@ Es wird auf die einzelnen Bausteine unserer Applikation detaillierter eingegange
 \subsection{TypeScript / Node.js}
 TypeScript ist eine Programmiersprache die von Microsoft entwickelt wurde [1]. Es ermöglicht uns, unsere Applikation Modularer zu gestalten und einen besseren Überblick über die Funktionalität zu haben.\\
 Da es sich bei Darwin um eine Webapplikation handelt, welche in Frontend und Backend aufgeteilt ist, haben wir uns aufgrund der Erfahrung der Teammitglieder auf das ausschliessliche Einsetzen von TypeScript bzw. JavaScript entschieden.
-
 Mit Node.js können wir das Frontend sowie Backend einfach zusammenlegen und den Entwicklungsprozess verbessern. Es ist die meistverwendete JavaScript Runtime und erweist die notwendige Stabilität für unser Projekt Darwin.
 
 \subsection{React / 2D Canvas}
 React ist eine JavaScript-Bibliothek deren Ziel es ist, die Entwicklung von User Interfaces zu vereinfachen. Es wurde 2013 von Facebook entwickelt und ist in der App-Entwicklung mittlerweile stark verbreitet.
 Die API von React ist sehr kompakt und besteht aus 4 Komponenten: Components, JSX, State und Props [3].
 Aufgrund der bestehenden Erfahrung des Teams und einer sehr grossen Community fiel uns der Entscheid React zu benutzen einfach.
-
 Für die Visualisierung des Spiels und deren Objekte setzen wir 2D Canvas Context mittels Pixi.js ein. Da wir das Spiel selber gestaltet haben ist das Einsetzen der Canvas API am besten geeignet, da man es einfach erlernen kann und es nur minimale mathematische Kenntnisse für die Entwicklung voraussetzt.
 
 \subsection{Lerna / Monorepo}
@@ -121,6 +114,15 @@ Beim Unit Testing werden einzelne Einheiten isoliert getestet und sowohl im Fron
 
 \subsection{Scrum}
 Um den Entwicklungsprozess strukturiert und effizient zu gestalten haben wir uns für Scrum entschieden. Ein agiles Umfeld wie Scrum hilft uns, die stetig auftretenden Probleme besser und schneller zu bewältigen.
+
+
+\subsection{Workflow / CI|CD}
+Der Entwicklungsprozess stellt für uns oberste priorität dar, deswegen haben wir beschlossen eine Build- sowie eine Releasepipeline einzurichten. Diese ermöglicht es, Pull-Requests automatisch zu testen und bei einem erfolgten merge automatisiert zu releasen und deployen.
+Damit soll die Entwicklungsphase beschleunigen und gewähleisten, dass stets und ausschliesslich funktionierender Code deployed wird.
+
+\includegraphics{workflow.png}
+
+\newpage
 
 \section{Diskussion und Ausblick}
 % Bespricht die erzielten ergebnisse bezüglich erwartbarkeit, aussagekraft, relevanz
@@ -135,7 +137,6 @@ Darwin wurde gemäss unserer Planung erfolgreich umgesetzt. Wir haben alle Funkt
 
 Das UI gliedert sich in ein Spielfeld und eine Textinput-Area, durch die der Spieler den Spielverlauf steuern kann. Es ist innerhalb des Spiels eine detaillierte Hilfeseite mit Beispielen jederzeit abrufbar. Dies ist sehr hilfreich vorallem für Programmier-Anfänger, schliesslich soll man durch das Spiel auch lernen zu Programmieren.
 
-%TODO aktuellen Screenshot einfügen
 \includegraphics[width=\textwidth]{darwin-gameplay.png}
 
 
