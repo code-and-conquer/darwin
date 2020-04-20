@@ -123,22 +123,57 @@ Beim Unit Testing werden einzelne Einheiten isoliert getestet und sowohl im Fron
 Um den Entwicklungsprozess strukturiert und effizient zu gestalten haben wir uns für Scrum entschieden. Ein agiles Umfeld wie Scrum hilft uns, die stetig auftretenden Probleme besser und schneller zu bewältigen.
 
 \section{Diskussion und Ausblick}
-%TODO FILIP
-Darwin wurde gemäss unserer Plannung erfolgreich umgesetzt.
-
-
 % Bespricht die erzielten ergebnisse bezüglich erwartbarkeit, aussagekraft, relevanz
 % interpretation und validierung der resultate
 % rückblick auf aufgabenstellung, erreicht oder nicht
 % wie kann an die resultate angeschlossen werden (weitere forschungsarbeiten), welche chancen bieten die resultate
 %
+
+Darwin wurde gemäss unserer Planung erfolgreich umgesetzt. Wir haben alle Funktionen implementiert und können ein lauffähiges Spiel präsentieren.
+
+\subsection{UI}
+
+Das UI gliedert sich in ein Spielfeld und eine Textinput-Area, durch die der Spieler den Spielverlauf steuern kann. Es ist innerhalb des Spiels eine detaillierte Hilfeseite mit Beispielen jederzeit abrufbar. Dies ist sehr hilfreich vorallem für Programmier-Anfänger, schliesslich soll man durch das Spiel auch lernen zu Programmieren.
+
+%TODO aktuellen Screenshot einfügen
+\includegraphics[width=\textwidth]{darwin-gameplay.png}
+
+
 \subsection{Spielfeld}
+
+Das Spielfeld besteht aus kleinen Quadraten, die entweder leer oder mit geometrischen Figuren gefüllt sind. Die geometrischen Formen haben folgende Bedeutung:
+\begin{itemize}
+\item Grünes Quadrat: Der aktuelle Spieler ("ich")
+\item Rotes Quadrat: Anderer Spieler ("Gegner")
+\item Balken über den Quadraten: Gesundheitszustand der Spieler ("Health")
+\item Blauer Kreis: Nahrung
+\item Kleine Quadrate (verschiedene Farben): "Power-Ups"
+\end{itemize}
+
+Die Darstellung der Icons auf dem Spielfeld wurde zu Beginn etwas aufwändiger geplant, jedoch bald verworfen. Die komplexe Darstellung hätte zwar ein historisches Thema ins Spiel gebracht, jedoch inhaltlich keinen Mehrwert geliefert. Die jetzt verwendeten geometrischen Formen sind sehr klar, für den Spieler gut erkennbar und passen auch insgesamt gut zur Grafik. Wir sind deshalb mit dieser Anpassung zufrieden.
+
 \includegraphics[width=\textwidth]{game1.png}
 
 \subsection{Spielführung}
+
+Gespielt wird mittels Eingabe von Code, z.B. \texttt{move('LEFT')}. Ziel ist es, als letzter zu überleben. Um am Leben zu bleiben, muss man Nahrung aufsammeln und konsumieren. Man kann sich Vorteile verschaffen durch das Konsumieren von Power-Ups. Bewegt man sich auf ein Feld auf dem der andere Spieler sich befindet, attackiert man diesen.
+
+Die Regeln des Spiels sind sehr einfach gehalten, damit kann sich der Spieler auf das Wesentliche konzentieren, nämlich das Coden zu erlernen und seine Strategie in Code umzusetzen.
+
 \includegraphics[width=\textwidth]{game2.png}
 
 \subsection{Ausblick}
+
+Es gibt diverse Erweiterungsmöglichkeiten für das Spiel. Einige sind im Folgenden näher beschrieben:
+
+\subsubsection{UI}
+Wir könnten uns überlegen, das ursprünglich angedachte, komplexere Iconset zu implementieren. Der Spieler könnte sich damit vielleicht besser mit der Story identifizieren. Dies hat für uns allerdings im Moment keine Priorität.
+
+\subsubsection{Befehlsset}
+In Zukunft könnten die zur Verfügung stehenden Kommandos erweitert werden, z.B. durch weiterführende Levels, so dass auch neue Strategien möglich werden. Damit könnte man z.B. die Spieler durch verschiedene Lernstufen begleiten und sie würden ihr Können Schritt für Schritt verbessern.
+
+\subsubsection{Spielmodus}
+Wir könnten uns vorstellen, verschiedene neue Gems mit neuen Bedeutungen einzuführen die man sammeln kann oder denen man z.B. auch ausweichen muss. Dies könnte das Spiel aber unnötig verkomplizieren ohne, dass der Spieler seine Programmierfährigkeiten notwendigerweise verbessert. Daher müssen wir diese Anpassungen sehr vorsichtig vornehmen.
 
 \section{Literaturverzeichnis}
 %Beispiele Grundmuster Harvard-System:
@@ -149,8 +184,8 @@ Darwin wurde gemäss unserer Plannung erfolgreich umgesetzt.
 
 \begin{itemize}
 \item [1] Wikipedia, Type Script [online]. URL: https://de.wikipedia.org/wiki/TypeScript (Abgerufen am 18.04.2020).
-\item [2] Entwickler Onlinemagazin.  [online]. URL: https://entwickler.de/online/javascript/7-gruende-node-js-579924149.html (Abgerufen am 18.04.2020).
-\item [3] React Handbook [online]. URL: https://www.freecodecamp.org/news/the-react-handbook-b71c27b0a795/ (Abgerufen am 18.04.2020).
+\item [2] Entwickler Onlinemagazin.  [online]. \\URL: https://entwickler.de/online/javascript/7-gruende-node-js-579924149.html (Abgerufen am 18.04.2020).
+\item [3] React Handbook [online]. \\URL: https://www.freecodecamp.org/news/the-react-handbook-b71c27b0a795/ (Abgerufen am 18.04.2020).
 \item [4] Lerna. URL: https://lerna.js.org/ (Abgerufen am 18.04.2020).
 \end{itemize}
 
