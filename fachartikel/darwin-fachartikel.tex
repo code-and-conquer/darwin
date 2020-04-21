@@ -13,7 +13,10 @@
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \graphicspath{{./img/}}
 \usepackage{titlepic}
-
+\usepackage[document]{ragged2e}
+\usepackage{float}
+\usepackage[titles]{tocloft}
+	
 \titlepic{\includegraphics[width=\textwidth]{darwin.png}}
 
 \author{Michael Schaufelberger (Product Owner)\\
@@ -39,8 +42,8 @@ Ferenc Kuntić}
 %250 wörter
 % Einleitung: Definiere Problematik und begründe Revelanz der Untersuchung
 In der heutigen Zeit haben sich Videospiele als Teil unserer Gesellschaft stark gefestigt und ein Teil unseres Alltags geworden. Die Wirtschaft und Präsenz der Spieleindustrie wächst vom Jahr zu Jahr stetig an und bildet ein sehr lukratives Geschäftsumfeld. Erträge und Umsätze in Milliardenhöhe sind keine Besonderheit. Unternehmen mit hunderten von Mitarbeitern versuchen im Schnelltempo Spiele verschiedenster Art auf den Markt zu bringen. 
-Deswegen stellt sich uns die Frage, wie gestalten wir ein attraktives Spiel? Was ist die Zielgruppe? Wie kann ich die Spieler für das Spiel begeistern? Welche Qualitäten braucht das Spiel?
-Um all diese Fragen beantworten zu können braucht es ein fundiertes Konzept, gute Überlegungen und ein gutes Team und obwohl die Konkurrenz sehr gross ist, sehen wir die Möglichkeit mit einem interaktiven Multiplayer-Spiel den Durchbruch zu schaffen.
+\\Deswegen stellt sich uns die Frage, wie gestalten wir ein attraktives Spiel? Was ist die Zielgruppe? Wie kann ich die Spieler für das Spiel begeistern? Welche Qualitäten braucht das Spiel?
+\\Um all diese Fragen beantworten zu können braucht es ein fundiertes Konzept, gute Überlegungen und ein gutes Team und obwohl die Konkurrenz sehr gross ist, sehen wir die Möglichkeit mit einem interaktiven Multiplayer-Spiel den Durchbruch zu schaffen.
 
 % Methodische Einordnung: Art und Ziel der Arbeit (Umfrage, Analyse, Test, etc)
 Ziel dieser Arbeit ist es, ein Innovatives und erfinderisches Spiel zu entwickeln, das sowohl logisches Denken wie technisches Interesse fördert. Das Ziel des Spieles ist es, Spieleinheiten mit kleinen Code-Abschnitten zu steuern und der einzige Überlebende zu sein.
@@ -96,12 +99,20 @@ Es wird auf die einzelnen Bausteine unserer Applikation detaillierter eingegange
 \subsection{TypeScript / Node.js}
 TypeScript ist eine Programmiersprache die von Microsoft entwickelt wurde [1]. Es ermöglicht uns, unsere Applikation Modularer zu gestalten und einen besseren Überblick über die Funktionalität zu haben.\\
 Da es sich bei Darwin um eine Webapplikation handelt, welche in Frontend und Backend aufgeteilt ist, haben wir uns aufgrund der Erfahrung der Teammitglieder auf das ausschliessliche Einsetzen von TypeScript bzw. JavaScript entschieden.
+Mit Hilfe von TypeScript können wir unseren Quellcode mit einer besserer Struktur versehen und ihn besser formulieren sowie einfacher skalieren.
+
+\begin{figure}[H]
+	\includegraphics{darwintypes.png}
+	\caption{Erstellen von Spiel Objekten mittels TypeScript / Darwin Types}
+\end{figure}
+
 Mit Node.js können wir das Frontend sowie Backend einfach zusammenlegen und den Entwicklungsprozess verbessern. Es ist die meistverwendete JavaScript Runtime und erweist die notwendige Stabilität für unser Projekt Darwin.
 
 \subsection{React / 2D Canvas}
 React ist eine JavaScript-Bibliothek deren Ziel es ist, die Entwicklung von User Interfaces zu vereinfachen. Es wurde 2013 von Facebook entwickelt und ist in der App-Entwicklung mittlerweile stark verbreitet.
 Die API von React ist sehr kompakt und besteht aus 4 Komponenten: Components, JSX, State und Props [3].
 Aufgrund der bestehenden Erfahrung des Teams und einer sehr grossen Community fiel uns der Entscheid React zu benutzen einfach.
+
 Für die Visualisierung des Spiels und deren Objekte setzen wir 2D Canvas Context mittels Pixi.js ein. Da wir das Spiel selber gestaltet haben ist das Einsetzen der Canvas API am besten geeignet, da man es einfach erlernen kann und es nur minimale mathematische Kenntnisse für die Entwicklung voraussetzt.
 
 \subsection{Lerna / Monorepo}
@@ -120,7 +131,10 @@ Um den Entwicklungsprozess strukturiert und effizient zu gestalten haben wir uns
 Der Entwicklungsprozess stellt für uns oberste priorität dar, deswegen haben wir beschlossen eine Build- sowie eine Releasepipeline einzurichten. Diese ermöglicht es, Pull-Requests automatisch zu testen und bei einem erfolgten merge automatisiert zu releasen und deployen.
 Damit soll die Entwicklungsphase beschleunigen und gewähleisten, dass stets und ausschliesslich funktionierender Code deployed wird.
 
-\includegraphics{workflow.png}
+\begin{figure}[H]
+	\includegraphics{workflow.png}
+	\caption{Design Entwicklungsprozess / CI CD}
+\end{figure}
 
 \newpage
 
@@ -137,8 +151,10 @@ Darwin wurde gemäss unserer Planung erfolgreich umgesetzt. Wir haben alle Funkt
 
 Das UI gliedert sich in ein Spielfeld und eine Textinput-Area, durch die der Spieler den Spielverlauf steuern kann. Es ist innerhalb des Spiels eine detaillierte Hilfeseite mit Beispielen jederzeit abrufbar. Dies ist sehr hilfreich vorallem für Programmier-Anfänger, schliesslich soll man durch das Spiel auch lernen zu Programmieren.
 
+\begin{figure}[H]
 \includegraphics[width=\textwidth]{darwin-gameplay.png}
-
+	\caption{Design Darwin Spiel}
+\end{figure}
 
 \subsection{Spielfeld}
 
@@ -153,7 +169,10 @@ Das Spielfeld besteht aus kleinen Quadraten, die entweder leer oder mit geometri
 
 Die Darstellung der Icons auf dem Spielfeld wurde zu Beginn etwas aufwändiger geplant, jedoch bald verworfen. Die komplexe Darstellung hätte zwar ein historisches Thema ins Spiel gebracht, jedoch inhaltlich keinen Mehrwert geliefert. Die jetzt verwendeten geometrischen Formen sind sehr klar, für den Spieler gut erkennbar und passen auch insgesamt gut zur Grafik. Wir sind deshalb mit dieser Anpassung zufrieden.
 
-\includegraphics[width=\textwidth]{game1.png}
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{game1.png}
+	\caption{Design Spielfeld}
+\end{figure}
 
 \subsection{Spielführung}
 
@@ -161,7 +180,11 @@ Gespielt wird mittels Eingabe von Code, z.B. \texttt{move('LEFT')}. Ziel ist es,
 
 Die Regeln des Spiels sind sehr einfach gehalten, damit kann sich der Spieler auf das Wesentliche konzentieren, nämlich das Coden zu erlernen und seine Strategie in Code umzusetzen.
 
-\includegraphics[width=\textwidth]{game2.png}
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{game2.png}
+	\caption{Design Code Eingabe}
+\end{figure}
+
 
 \subsection{Ausblick}
 
@@ -176,6 +199,8 @@ In Zukunft könnten die zur Verfügung stehenden Kommandos erweitert werden, z.B
 \subsubsection{Spielmodus}
 Wir könnten uns vorstellen, verschiedene neue Gems mit neuen Bedeutungen einzuführen die man sammeln kann oder denen man z.B. auch ausweichen muss. Dies könnte das Spiel aber unnötig verkomplizieren ohne, dass der Spieler seine Programmierfährigkeiten notwendigerweise verbessert. Daher müssen wir diese Anpassungen sehr vorsichtig vornehmen.
 
+\newpage
+
 \section{Literaturverzeichnis}
 %Beispiele Grundmuster Harvard-System:
 %Deutsch:\\
@@ -184,10 +209,12 @@ Wir könnten uns vorstellen, verschiedene neue Gems mit neuen Bedeutungen einzuf
 %Author surname, Initials. (Year). title. ed. City: Publisher, p.Pages Used.
 
 \begin{itemize}
-\item [1] Wikipedia, Type Script [online]. URL: https://de.wikipedia.org/wiki/TypeScript (Abgerufen am 18.04.2020).
+\item [1] Wikipedia, Type Script [online]. \\URL: https://de.wikipedia.org/wiki/TypeScript (Abgerufen am 18.04.2020).
 \item [2] Entwickler Onlinemagazin.  [online]. \\URL: https://entwickler.de/online/javascript/7-gruende-node-js-579924149.html (Abgerufen am 18.04.2020).
 \item [3] React Handbook [online]. \\URL: https://www.freecodecamp.org/news/the-react-handbook-b71c27b0a795/ (Abgerufen am 18.04.2020).
 \item [4] Lerna. URL: https://lerna.js.org/ (Abgerufen am 18.04.2020).
 \end{itemize}
+
+\listoffigures
 
 \end{document}
