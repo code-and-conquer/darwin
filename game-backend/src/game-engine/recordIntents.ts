@@ -1,6 +1,4 @@
-import ivm from 'isolated-vm';
 import {
-  UserScript,
   UserExecutionContext,
   State,
   Consumable,
@@ -22,6 +20,7 @@ import {
   selectEnemyUnits,
   selectNearestEnemyUnit,
 } from './state-selectors';
+import runScript from './runScript';
 
 interface ScriptContextMethods {
   move: (direction: Direction) => void;
@@ -40,55 +39,6 @@ export interface ScriptContext
   extends ScriptContextMethods,
     ScriptContextVariables {
   store: UserStore;
-}
-
-/**
- * Run given script in context, throws exception if execution fails.
- * The script is not sandboxed in a secure manner.
- * @param userScript
- * @param scriptContext
- */
-function runScript(
-  userScript: UserScript,
-  scriptContext: ScriptContext
-): UserStore {
-  const isolate = new ivm.Isolate({ memoryLimit: 8 });
-  const context = isolate.createContextSync();
-
-  // Provide global object
-  const jail = context.global;
-  jail.setSync('global', jail.derefInto());
-
-  const objectKeys = Object.entries(scriptContext)
-    .filter(([, value]) => typeof value !== 'function')
-    .map(([name]) => name);
-
-  const functionKeys = Object.entries(scriptContext)
-    .filter(([, value]) => typeof value === 'function')
-    .map(([name]) => name);
-
-  context.evalClosureSync(
-    `$1.copySync().forEach((name) => {
-       global[name] = function(...args) {
-         $2.getSync(name).applySync(undefined, args, { arguments: { copy: true } });
-       }
-     });
-     $0.copySync().forEach((name) => {
-       global[name] = $2.getSync(name).copySync();
-     }); 
-    `,
-    [objectKeys, functionKeys, scriptContext],
-    { arguments: { reference: true } }
-  );
-
-  const script = isolate.compileScriptSync(userScript.script);
-
-  script.runSync(context, { timeout: 20 });
-  const store = jail.getSync('store').copySync();
-  script.release();
-  context.release();
-  isolate.dispose();
-  return store;
 }
 
 /**
