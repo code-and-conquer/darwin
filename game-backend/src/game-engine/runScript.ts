@@ -27,11 +27,12 @@ export default function runScript(
     .map(([name]) => name);
 
   context.evalClosureSync(
-    `$0.copySync().forEach((name) => {
-       global[name] = function(...args) {
-         $1.getSync(name).applySync(undefined, args, { arguments: { copy: true } });
-       }
-     });
+    `
+    $0.copySync().forEach((name) => {
+      global[name] = function(...args) {
+        $1.getSync(name).applySync(undefined, args, { arguments: { copy: true } });
+      }
+    });
     `,
     [functionKeys, scriptContext],
     { arguments: { reference: true } }
