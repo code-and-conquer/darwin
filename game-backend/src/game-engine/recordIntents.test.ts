@@ -27,6 +27,15 @@ describe('recordIntents', () => {
     expect(intentions.length).toBe(0);
   });
 
+  it('handles variable properly', () => {
+    userExecutionContext.userScript = {
+      script: 'store.isProperlyStored = true',
+    };
+
+    recordIntents(userExecutionContext, emptyState);
+    expect(userExecutionContext.store.isProperlyStored).toBe(true);
+  });
+
   it('handles single script properly', () => {
     userExecutionContext.userScript = {
       script: "move('UP')",
