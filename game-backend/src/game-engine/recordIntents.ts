@@ -1,4 +1,4 @@
-import vm, { Context, Script } from 'vm';
+import ivm from 'isolated-vm';
 import {
   UserScript,
   UserExecutionContext,
@@ -42,23 +42,36 @@ export interface ScriptContext
   store: UserStore;
 }
 
-function createGameContext(context: ScriptContext): Context {
-  return vm.createContext(context);
-}
-
 /**
  * Run given script in context, throws exception if execution fails.
  * The script is not sandboxed in a secure manner.
  * @param userScript
  * @param context
  */
-function runScript(userScript: UserScript, context: Context): void {
-  const script = new Script(userScript.script);
-  script.runInContext(context, {
-    // arbitrary number
-    timeout: 20,
-    breakOnSigint: true,
-  });
+function runScript(userScript: UserScript, scriptContext: ScriptContext): void {
+  const isolate = new ivm.Isolate({ memoryLimit: 8 });
+  const context = isolate.createContextSync();
+
+  // Provide global object
+  const jail = context.global;
+  jail.setSync('global', jail.derefInto());
+
+  context.evalClosureSync(
+    `$0.copySync().forEach((name) => {
+        global[name] = function(...args) {
+          $1.getSync(name).applySync(undefined, args, { arguments: { copy: true } })
+        }
+      });
+      `,
+    [Object.keys(scriptContext), scriptContext],
+    { arguments: { reference: true } }
+  );
+
+  const script = isolate.compileScriptSync(userScript.script);
+
+  script.runSync(context, { timeout: 20 });
+  script.release();
+  context.release();
 }
 
 /**
@@ -97,11 +110,11 @@ function recordIntents(
     },
   };
 
-  const context = createGameContext({
+  const context: ScriptContext = {
     ...methods,
     ...variables,
     store: userExecutionContext.store,
-  });
+  };
   runScript(userExecutionContext.userScript, context);
 
   return intentions;
