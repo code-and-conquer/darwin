@@ -1,6 +1,4 @@
-import vm, { Context, Script } from 'vm';
 import {
-  UserScript,
   UserExecutionContext,
   State,
   Consumable,
@@ -22,6 +20,7 @@ import {
   selectEnemyUnits,
   selectNearestEnemyUnit,
 } from './state-selectors';
+import runScript from './runScript';
 
 interface ScriptContextMethods {
   move: (direction: Direction) => void;
@@ -42,28 +41,10 @@ export interface ScriptContext
   store: UserStore;
 }
 
-function createGameContext(context: ScriptContext): Context {
-  return vm.createContext(context);
-}
-
-/**
- * Run given script in context, throws exception if execution fails.
- * The script is not sandboxed in a secure manner.
- * @param userScript
- * @param context
- */
-function runScript(userScript: UserScript, context: Context): void {
-  const script = new Script(userScript.script);
-  script.runInContext(context, {
-    // arbitrary number
-    timeout: 20,
-    breakOnSigint: true,
-  });
-}
-
 /**
  * Executes User Script and records user intents
- * @param userScript
+ * @param userExecutionContext
+ * @param state
  */
 function recordIntents(
   userExecutionContext: UserExecutionContext,
@@ -97,12 +78,18 @@ function recordIntents(
     },
   };
 
-  const context = createGameContext({
+  const context: ScriptContext = {
     ...methods,
     ...variables,
     store: userExecutionContext.store,
-  });
-  runScript(userExecutionContext.userScript, context);
+  };
+
+  // This is in place in order to update the store of a given user transparently
+  // eslint-disable-next-line no-param-reassign
+  userExecutionContext.store = runScript(
+    userExecutionContext.userScript,
+    context
+  );
 
   return intentions;
 }
