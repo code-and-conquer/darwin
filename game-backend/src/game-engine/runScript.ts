@@ -2,6 +2,9 @@ import ivm from 'isolated-vm';
 import { UserScript, UserStore } from '@darwin/types';
 import { ScriptContext } from './recordIntents';
 
+const MAX_MEMORY_MB = 8;
+const MAX_EXECUTION_TIME_MS = 20;
+
 /**
  * Run given script with context, throws exception if execution fails.
  * The script execution is sandboxed in a secure manner.
@@ -12,7 +15,7 @@ export default function runScript(
   userScript: UserScript,
   scriptContext: ScriptContext
 ): UserStore {
-  const isolate = new ivm.Isolate({ memoryLimit: 8 });
+  const isolate = new ivm.Isolate({ memoryLimit: MAX_MEMORY_MB });
   const context = isolate.createContextSync();
 
   // Provide global object
@@ -49,7 +52,7 @@ export default function runScript(
   );
 
   const script = isolate.compileScriptSync(userScript.script);
-  script.runSync(context, { timeout: 20 });
+  script.runSync(context, { timeout: MAX_EXECUTION_TIME_MS });
 
   const store = jail.getSync('store').copySync();
 
