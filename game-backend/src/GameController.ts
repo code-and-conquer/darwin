@@ -11,7 +11,7 @@ import {
 import { createUnit, getGameObjectsPerType } from './helper/gameObjects';
 import { generateFreePosition } from './helper/fields';
 import performTick from './game-engine';
-import { createGameStore } from './createGameStore';
+import { createGameStore, GameStore } from './createGameStore';
 
 export const TICK_INTERVAL = 2000;
 
@@ -49,6 +49,10 @@ export default class GameController {
 
   setScript(userId: UserId, script: UserScript): void {
     this.store.userContexts.userContextMap[userId].userScript = script;
+  }
+
+  getStore(): GameStore {
+    return this.store;
   }
 
   private checkGameState(): void {
