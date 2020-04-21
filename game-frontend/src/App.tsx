@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Resizable } from 're-resizable';
 import Game from './Game';
 import { WebsocketProvider } from './service/game';
 import AppContainer from './components/container/AppContainer';
@@ -15,9 +16,17 @@ function App(): JSX.Element {
       <GlobalStyle />
       <WebsocketProvider>
         <AppContainer>
-          <SideContainer>
-            <UserScript />
-          </SideContainer>
+          <Resizable
+            defaultSize={{
+              width: '40%',
+              height: 'auto',
+            }}
+            minHeight="100%"
+          >
+            <SideContainer>
+              <UserScript />
+            </SideContainer>
+          </Resizable>
           <ContentContainer>
             <Game />
             <Help />
