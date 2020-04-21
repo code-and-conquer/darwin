@@ -46,9 +46,12 @@ export interface ScriptContext
  * Run given script in context, throws exception if execution fails.
  * The script is not sandboxed in a secure manner.
  * @param userScript
- * @param context
+ * @param scriptContext
  */
-function runScript(userScript: UserScript, scriptContext: ScriptContext): void {
+function runScript(
+  userScript: UserScript,
+  scriptContext: ScriptContext
+): UserStore {
   const isolate = new ivm.Isolate({ memoryLimit: 8 });
   const context = isolate.createContextSync();
 
@@ -56,27 +59,42 @@ function runScript(userScript: UserScript, scriptContext: ScriptContext): void {
   const jail = context.global;
   jail.setSync('global', jail.derefInto());
 
+  const objectKeys = Object.entries(scriptContext)
+    .filter(([, value]) => typeof value !== 'function')
+    .map(([name]) => name);
+
+  const functionKeys = Object.entries(scriptContext)
+    .filter(([, value]) => typeof value === 'function')
+    .map(([name]) => name);
+
   context.evalClosureSync(
-    `$0.copySync().forEach((name) => {
-        global[name] = function(...args) {
-          $1.getSync(name).applySync(undefined, args, { arguments: { copy: true } })
-        }
-      });
-      `,
-    [Object.keys(scriptContext), scriptContext],
+    `$1.copySync().forEach((name) => {
+       global[name] = function(...args) {
+         $2.getSync(name).applySync(undefined, args, { arguments: { copy: true } });
+       }
+     });
+     $0.copySync().forEach((name) => {
+       global[name] = $2.getSync(name).copySync();
+     }); 
+    `,
+    [objectKeys, functionKeys, scriptContext],
     { arguments: { reference: true } }
   );
 
   const script = isolate.compileScriptSync(userScript.script);
 
   script.runSync(context, { timeout: 20 });
+  const store = jail.getSync('store').copySync();
   script.release();
   context.release();
+  isolate.dispose();
+  return store;
 }
 
 /**
  * Executes User Script and records user intents
- * @param userScript
+ * @param userExecutionContext
+ * @param state
  */
 function recordIntents(
   userExecutionContext: UserExecutionContext,
@@ -115,7 +133,13 @@ function recordIntents(
     ...variables,
     store: userExecutionContext.store,
   };
-  runScript(userExecutionContext.userScript, context);
+
+  // This is in place in order to update the store of a given user transparently
+  // eslint-disable-next-line no-param-reassign
+  userExecutionContext.store = runScript(
+    userExecutionContext.userScript,
+    context
+  );
 
   return intentions;
 }
