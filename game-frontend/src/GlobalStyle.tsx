@@ -16,9 +16,13 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
- * {
-   box-sizing: border-box;
- }
+  * {
+    box-sizing: border-box;
+  }
+
+  .monaco-aria-container {
+    bottom: 0;
+  }
 `;
 
 export default GlobalStyle;
