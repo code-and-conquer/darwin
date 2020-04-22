@@ -9,7 +9,7 @@ const ErrorLog: FC = () => {
     Hook(window.console, log => {
       setLogs([...logs, Decode(log)]);
     });
-  }, [logs]);
+  });
 
   return (
     <div style={{ backgroundColor: '#242424' }}>
