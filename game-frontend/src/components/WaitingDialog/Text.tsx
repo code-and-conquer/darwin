@@ -8,7 +8,7 @@ const Text: FC = () => {
       <Giphy />
       <p>
         Leider traut sich gerade niemand zu, gegen Dich zu spielen.
-        <span role="img" aria-label="Kosten Aktionspunkte">
+        <span role="img" aria-label="Sad Emoji">
           😥
         </span>
         <br />

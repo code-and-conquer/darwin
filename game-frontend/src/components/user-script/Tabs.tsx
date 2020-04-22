@@ -51,22 +51,23 @@ const Tabs: FC<{
     <Container>
       {Object.keys(tabs).map(tabKey => {
         return (
-          <>
-            <Tab
-              key={tabKey}
-              className={tabKey === activeTab ? 'active' : ''}
-              onClick={(): void => {
-                setActiveTab(tabKey);
-              }}
-            >
-              {tabs[tabKey].name}
-            </Tab>
-          </>
+          <Tab
+            key={tabKey}
+            className={tabKey === activeTab ? 'active' : ''}
+            onClick={(): void => {
+              setActiveTab(tabKey);
+            }}
+          >
+            {tabs[tabKey].name}
+          </Tab>
         );
       })}
       {Object.keys(tabs).map(tabKey => {
         return (
-          <Content className={activeTab === tabKey ? 'active' : ''}>
+          <Content
+            key={tabKey}
+            className={activeTab === tabKey ? 'active' : ''}
+          >
             {tabs[tabKey].component}
           </Content>
         );

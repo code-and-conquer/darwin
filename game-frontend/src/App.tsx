@@ -22,6 +22,7 @@ function App(): JSX.Element {
               height: 'auto',
             }}
             minHeight="100%"
+            enable={{ right: true }}
           >
             <SideContainer>
               <UserScript />
