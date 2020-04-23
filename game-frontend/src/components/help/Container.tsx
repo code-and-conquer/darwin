@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-  width: 100px;
-  position: absolute;
-  top: 30px;
-  right: 10px;
+  margin-top: 2rem;
+  background: white;
+  padding: 2rem;
 `;
 
 export default Container;

@@ -1,7 +1,9 @@
 import React from 'react';
 
-function useDialogState(): [boolean, () => void, () => void] {
-  const [isDialogOpen, setDialogOpen] = React.useState(false);
+function useDialogState(
+  initialState: boolean
+): [boolean, () => void, () => void] {
+  const [isDialogOpen, setDialogOpen] = React.useState(initialState);
   return [
     isDialogOpen,
     (): void => {
