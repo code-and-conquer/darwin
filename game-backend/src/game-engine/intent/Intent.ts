@@ -1,5 +1,4 @@
-import { State, UserContext } from '@darwin/types';
-import { Feedback } from '@darwin/types/dist/ExecutionInfo';
+import { State, UserContext, Feedback } from '@darwin/types';
 import { ElevatedUserExecutionContext } from '../core/types';
 
 export type IntentCost = number;
