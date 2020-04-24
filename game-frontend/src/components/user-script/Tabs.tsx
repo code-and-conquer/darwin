@@ -1,9 +1,12 @@
-import React, { FC, useState, Component } from 'react';
+import React, { Component, FC, useState } from 'react';
 import styled from 'styled-components';
 import { ControlledEditorOnChange } from '@monaco-editor/react';
+import { FeedbackType } from '@darwin/types';
 import Tab from './Tab';
 import Editor from './Editor';
 import ErrorLog from './ErrorLog';
+import { useFeedback } from '../../service/game';
+import TabBadge from './TabBadge';
 
 const Container = styled.div`
   width: 100%;
@@ -22,7 +25,7 @@ const Content = styled.div`
 `;
 
 type TabDefinition = {
-  name: string;
+  name: string | JSX.Element;
   component: Component | JSX.Element;
 };
 
@@ -32,6 +35,9 @@ const Tabs: FC<{
   onEditorChange: ControlledEditorOnChange;
   saveScript: (script: string) => void;
 }> = props => {
+  const feedback = useFeedback();
+  const errorCount = feedback.filter(fb => fb.type === FeedbackType.ERROR)
+    .length;
   const tabs: TabDefinitions = {
     code: {
       name: 'Code',
@@ -40,7 +46,12 @@ const Tabs: FC<{
       ),
     },
     errors: {
-      name: 'Fehler',
+      name: (
+        <span>
+          Fehler
+          {errorCount > 0 ? <TabBadge>{errorCount}</TabBadge> : null}
+        </span>
+      ),
       component: <ErrorLog />,
     },
   };

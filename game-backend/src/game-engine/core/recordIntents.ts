@@ -5,21 +5,21 @@ import {
   Unit,
   UserStore,
 } from '@darwin/types';
-import deepClone from '../helper/deepClone';
-import { Intent } from './intent/Intent';
-import MoveIntent, { Direction } from './intent/MoveIntent';
-import ConsumeIntent from './intent/ConsumeIntent';
+import deepClone from '../../helper/deepClone';
+import { Intent } from '../intent/Intent';
+import MoveIntent, { Direction } from '../intent/MoveIntent';
+import ConsumeIntent from '../intent/ConsumeIntent';
 import {
   selectPowerups,
   getNearestPowerup,
-} from './state-selectors/powerupSelector';
+} from '../state-selectors/powerupSelector';
 import {
   selectFoods,
   selectUserUnit,
   getNearestFood,
   selectEnemyUnits,
   selectNearestEnemyUnit,
-} from './state-selectors';
+} from '../state-selectors';
 import runScript from './runScript';
 
 interface ScriptContextMethods {
@@ -49,7 +49,7 @@ export interface ScriptContext
 function recordIntents(
   userExecutionContext: UserExecutionContext,
   state: State
-): Intent[] {
+): [Intent[], UserStore] {
   const intentions: Intent[] = [];
   const foods = selectFoods(state);
   const userUnit = selectUserUnit(state, userExecutionContext.unitId);
@@ -85,13 +85,9 @@ function recordIntents(
   };
 
   // This is in place in order to update the store of a given user transparently
-  // eslint-disable-next-line no-param-reassign
-  userExecutionContext.store = runScript(
-    userExecutionContext.userScript,
-    context
-  );
+  const store = runScript(userExecutionContext.userScript, context);
 
-  return intentions;
+  return [intentions, store];
 }
 
 export default recordIntents;

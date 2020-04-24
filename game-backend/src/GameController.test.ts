@@ -1,10 +1,18 @@
-import { MatchUpdate, State, Tick } from '@darwin/types';
+import {
+  MatchUpdate,
+  State,
+  Tick,
+  UserContextContainer,
+  UserExecutionFeedbackContainer,
+} from '@darwin/types';
 import GameController, { TICK_INTERVAL } from './GameController';
 import performTick from './game-engine';
 import StateBuilder from './test-helper/StateBuilder';
 
 jest.mock('./game-engine');
-const performTickMock = performTick as jest.Mock<State>;
+const performTickMock = performTick as jest.Mock<
+  [State, UserExecutionFeedbackContainer]
+>;
 
 describe('GameController', () => {
   let gameController: GameController;
@@ -21,7 +29,23 @@ describe('GameController', () => {
     jest.clearAllTimers();
 
     gameController = new GameController(mockSendMatchUpdate, mockTerminate);
-    performTickMock.mockImplementation(state => state);
+    performTickMock.mockImplementation(
+      (state: State, userContextContainer: UserContextContainer) => [
+        state,
+        {
+          userMap: userContextContainer.userContextIds.reduce((agg, id) => {
+            return {
+              ...agg,
+              [id]: {
+                store: {},
+                feedback: [],
+              },
+            };
+          }, {}),
+          userIds: userContextContainer.userContextIds,
+        },
+      ]
+    );
   });
 
   it('starts ticking', () => {
@@ -106,7 +130,10 @@ describe('GameController', () => {
 
   it('terminates the game when only one survives', () => {
     const emptyState = StateBuilder.buildState().build();
-    performTickMock.mockImplementation(() => emptyState);
+    performTickMock.mockImplementation(() => [
+      emptyState,
+      { userMap: {}, userIds: [] },
+    ]);
 
     gameController.appendUser('user0');
     gameController.appendUser('user1');

@@ -1,5 +1,5 @@
 import { State, UserExecutionContext } from '@darwin/types';
-import StateBuilder from '../test-helper/StateBuilder';
+import StateBuilder from '../../test-helper/StateBuilder';
 import recordIntents from './recordIntents';
 
 describe('recordIntents', () => {
@@ -23,7 +23,7 @@ describe('recordIntents', () => {
       script: '',
     };
 
-    const intentions = recordIntents(userExecutionContext, emptyState);
+    const [intentions] = recordIntents(userExecutionContext, emptyState);
     expect(intentions.length).toBe(0);
   });
 
@@ -32,8 +32,10 @@ describe('recordIntents', () => {
       script: 'store.isProperlyStored = true',
     };
 
-    recordIntents(userExecutionContext, emptyState);
-    expect(userExecutionContext.store.isProperlyStored).toBe(true);
+    const [, newStore] = recordIntents(userExecutionContext, emptyState);
+    expect(newStore.isProperlyStored).toBe(true);
+    // previous value must be unchanged
+    expect(userExecutionContext.store.isProperlyStored).toBe(undefined);
   });
 
   it('handles single script properly', () => {
@@ -41,7 +43,7 @@ describe('recordIntents', () => {
       script: "move('UP')",
     };
 
-    const intentions = recordIntents(userExecutionContext, emptyState);
+    const [intentions] = recordIntents(userExecutionContext, emptyState);
     expect(intentions.length).toBe(1);
   });
 
@@ -50,7 +52,7 @@ describe('recordIntents', () => {
       script: "move('UP');move('DOWN');",
     };
 
-    const intentions = recordIntents(userExecutionContext, emptyState);
+    const [intentions] = recordIntents(userExecutionContext, emptyState);
     expect(intentions.length).toBe(2);
   });
 
@@ -59,7 +61,7 @@ describe('recordIntents', () => {
       script: "((...args) => {move(...args)})('UP')",
     };
 
-    const intentions = recordIntents(userExecutionContext, emptyState);
+    const [intentions] = recordIntents(userExecutionContext, emptyState);
     expect(intentions.length).toBe(1);
   });
 

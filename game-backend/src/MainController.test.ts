@@ -73,6 +73,7 @@ describe('MainController', () => {
         state,
         userContext: { unitId: 'unit1' },
         meta: { currentTick: null },
+        feedback: [],
       },
     };
   });

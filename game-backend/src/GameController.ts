@@ -7,6 +7,7 @@ import {
   UserExecutionContext,
   UserId,
   UserScript,
+  Feedback,
 } from '@darwin/types';
 import { createUnit, getGameObjectsPerType } from './helper/gameObjects';
 import { generateFreePosition } from './helper/fields';
@@ -14,6 +15,11 @@ import performTick from './game-engine';
 import { createGameStore } from './createGameStore';
 
 export const TICK_INTERVAL = 2000;
+
+interface TickFeedback {
+  userId: UserId;
+  feedback: Feedback[];
+}
 
 export default class GameController {
   private isRunning = false;
@@ -81,8 +87,8 @@ export default class GameController {
 
   private getTickExecutor() {
     return (): void => {
-      this.tick();
-      this.notifyUsers();
+      const tickFeedback = this.tick();
+      this.notifyUsers(tickFeedback);
       const units = getGameObjectsPerType(
         this.store.matchState,
         GameObjectTypes.Unit
@@ -101,31 +107,51 @@ export default class GameController {
     };
   }
 
-  private notifyUsers(): void {
-    this.store.userContexts.userContextIds
-      .map(id => ({ id, context: this.store.userContexts.userContextMap[id] }))
-      .forEach(userEntry => {
-        const update = this.generateUpdate(
-          GameController.getPlainUserContext(userEntry.context)
-        );
-        this.sendMatchUpdate(userEntry.id, update);
-      });
+  private notifyUsers(tickFeedback: TickFeedback[]): void {
+    tickFeedback.forEach(userTickFeedback => {
+      const context = this.store.userContexts.userContextMap[
+        userTickFeedback.userId
+      ];
+      const update = this.generateUpdate(
+        GameController.getPlainUserContext(context),
+        userTickFeedback.feedback
+      );
+      this.sendMatchUpdate(userTickFeedback.userId, update);
+    });
   }
 
-  private tick(): void {
+  private tick(): TickFeedback[] {
     this.store.currentTick++;
-    const userContexts = this.store.userContexts.userContextIds.map(
-      id => this.store.userContexts.userContextMap[id]
+
+    const [newState, newStores] = performTick(
+      this.store.matchState,
+      this.store.userContexts
     );
-    this.store.matchState = performTick(this.store.matchState, userContexts);
+    this.store.matchState = newState;
+    // update user stores
+    newStores.userIds.forEach(userId => {
+      const { store } = newStores.userMap[userId];
+      this.store.userContexts.userContextMap[userId].store = store;
+    });
+    return newStores.userIds.map(userId => {
+      const { feedback } = newStores.userMap[userId];
+      return {
+        userId,
+        feedback,
+      };
+    });
   }
 
-  private generateUpdate(userContext: UserContext): MatchUpdate {
+  private generateUpdate(
+    userContext: UserContext,
+    feedback: Feedback[]
+  ): MatchUpdate {
     return {
       type: 'matchUpdate',
       payload: {
         state: this.store.matchState,
         userContext,
+        feedback,
         meta: {
           currentTick: this.store.currentTick,
         },
