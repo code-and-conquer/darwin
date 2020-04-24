@@ -1,11 +1,8 @@
-import { State, UserExecutionContext, UserId } from '@darwin/types';
+import { State, UserContextContainer } from '@darwin/types';
 
 export interface GameStore {
   matchState: State;
-  userContexts: {
-    userContextMap: Record<UserId, UserExecutionContext>;
-    userContextIds: UserId[];
-  };
+  userContexts: UserContextContainer;
   currentTick: number;
 }
 

@@ -1,5 +1,5 @@
 import React, { FC, useMemo } from 'react';
-import { State, UserContext, Message } from '@darwin/types';
+import { State, UserContext, Message, Feedback } from '@darwin/types';
 import { useWebsocket, useWebsocketContext, WebsocketContext } from './context';
 
 export const WebsocketProvider: FC = props => {
@@ -15,6 +15,11 @@ export function useGameState(): State {
 export function useUserContext(): UserContext {
   const { userContext } = useWebsocketContext();
   return userContext;
+}
+
+export function useFeedback(): Feedback[] {
+  const { feedback } = useWebsocketContext();
+  return feedback;
 }
 
 export function useSendMessage(): (message: Message) => void {

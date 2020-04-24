@@ -14,6 +14,11 @@ describe('scheduleIntents', () => {
       {
         context: {
           unitId: '',
+          userId: '',
+          userScript: {
+            script: '',
+          },
+          store: {},
         },
         intents: [
           {
@@ -21,6 +26,7 @@ describe('scheduleIntents', () => {
             cost: 3,
           },
         ],
+        feedback: [],
       },
     ]);
 
