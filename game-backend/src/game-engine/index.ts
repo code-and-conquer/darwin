@@ -1,39 +1,39 @@
-import { State, UserExecutionContext } from '@darwin/types';
-import recordIntents from './recordIntents';
+import {
+  State,
+  UserContextContainer,
+  UserExecutionFeedbackContainer,
+} from '@darwin/types';
 import scheduleIntents from './schedule-intents';
-import { UserTickIntents } from './intent/Intent';
 import handleGameMechanics from './mechanics';
+import extractExecutionFeedbackFromTicks from './core/extractExecutionFeedbackFromTicks';
+import handleUserScript from './core/handleUserScript';
+import { ElevatedUserExecutionContext } from './core/types';
 
 /**
  * Executes all given user executionContexts and returns the next state object.
  *
  * @param state
- * @param executionContexts
+ * @param userContextContainer
  */
 function performTick(
   state: State,
-  executionContexts: UserExecutionContext[]
-): State {
-  const userTicks = executionContexts.map(
-    (executionContext): UserTickIntents => {
-      try {
-        const intents = recordIntents(executionContext, state);
-        return {
-          context: executionContext,
-          intents,
-        };
-      } catch (e) {
-        // assume no intents in case of script error
-        return {
-          context: executionContext,
-          intents: [],
-        };
-      }
-    }
+  userContextContainer: UserContextContainer
+): [State, UserExecutionFeedbackContainer] {
+  const executionContexts = userContextContainer.userContextIds.map(
+    (id): ElevatedUserExecutionContext => ({
+      ...userContextContainer.userContextMap[id],
+      userId: id,
+    })
+  );
+  const userTicks = executionContexts.map(context =>
+    handleUserScript(state, context)
   );
 
   const newState = scheduleIntents(state, userTicks);
-  return handleGameMechanics(newState);
+
+  const newStores = extractExecutionFeedbackFromTicks(userTicks);
+
+  return [handleGameMechanics(newState), newStores];
 }
 
 export default performTick;

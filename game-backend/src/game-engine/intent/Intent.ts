@@ -1,4 +1,5 @@
-import { State, UserContext } from '@darwin/types';
+import { State, UserContext, Feedback } from '@darwin/types';
+import { ElevatedUserExecutionContext } from '../core/types';
 
 export type IntentCost = number;
 
@@ -17,6 +18,7 @@ export interface Intent {
  * Stores the intents of a user during a single tick.
  */
 export interface UserTickIntents {
-  context: UserContext;
+  context: ElevatedUserExecutionContext;
   intents: Intent[];
+  feedback: Feedback[];
 }

@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
 const ContentContainer = styled.div`
+  flex-flow: column;
+  flex-shrink: 1;
   display: flex;
-  justify-content: center;
   align-items: center;
-  flex-grow: 1;
-  padding: 20px;
+  overflow-y: auto;
+  padding: 2rem;
 `;
 
 export default ContentContainer;
