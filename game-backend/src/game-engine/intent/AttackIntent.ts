@@ -1,6 +1,6 @@
 import { State, UserContext, Unit, ObjectId } from '@darwin/types';
 import { Intent } from './Intent';
-import { getUnit } from '../../helper/gameObjects';
+import { getUnit, removeGameObject } from '../../helper/gameObjects';
 import produce from '../../helper/produce';
 
 export const ATTACK_RANGE = 1;
@@ -30,6 +30,14 @@ export default class AttackIntent implements Intent {
     return produce(state, draft => {
       const defendingUnit = getUnit(draft, targetUnit.id);
       defendingUnit.health -= HIT_DAMAGE;
+      if (defendingUnit.health <= 0) {
+        const { objectIds, objectMap } = removeGameObject(
+          draft,
+          defendingUnit.id
+        );
+        draft.objectMap = objectMap;
+        draft.objectIds = objectIds;
+      }
     });
   }
 
