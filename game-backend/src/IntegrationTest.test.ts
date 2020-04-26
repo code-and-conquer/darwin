@@ -41,35 +41,6 @@ describe('Complete game-engine', () => {
     }
     consume();
   `;
-  const scriptEatOnce = `
-    store.eaten = false;
-    if (!store.eaten) {
-      if (nearestFood.position.x > userUnit.position.x) {
-        move('RIGHT');
-        if (nearestFood.position.x - userUnit.position.x > 2) {
-          move('RIGHT');
-        }
-      } else if (nearestFood.position.x < userUnit.position.x) {
-        move('LEFT');
-        if (nearestFood.position.x - userUnit.position.x < -2) {
-          move('LEFT');
-        }
-      } else if (nearestFood.position.y > userUnit.position.y) {
-        move('DOWN');
-        if (nearestFood.position.y - userUnit.position.y > 2) {
-          move('DOWN');
-        }
-      } else if (nearestFood.position.y < userUnit.position.y) {
-        move('UP');
-        if (nearestFood.position.y - userUnit.position.y < -2) {
-          move('UP');
-        }
-      } else {
-        consume();
-      }
-      store.eaten = true;
-    }
-  `;
 
   const ticksTillDeath = INITIAL_HEALTH / HEALTH_LOSS_RATE + 1;
   let startState: State;
