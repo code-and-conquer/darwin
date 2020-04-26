@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import {
   GameObjectTypes,
   State,
@@ -6,12 +5,18 @@ import {
   AttributeName,
   Unit,
   UserContextContainer,
+  MatchUpdate,
 } from '@darwin/types';
+import WebSocket, { OPEN } from 'ws';
 import performTick from './game-engine';
 import { getGameObjectsPerType } from './helper/gameObjects';
 import StateBuilder from './test-helper/StateBuilder';
 import { HEALTH_LOSS_RATE } from './game-engine/mechanics/hunger-handler';
 import deepClone from './helper/deepClone';
+import MainController, { GAME_RESTART_TIME } from './MainController';
+import { TICK_INTERVAL } from './GameController';
+
+const ticksTillDeath = Math.floor(INITIAL_HEALTH / HEALTH_LOSS_RATE) + 1;
 
 describe('Complete game-engine', () => {
   const UNIT_ID1 = 'unit1';
@@ -42,7 +47,6 @@ describe('Complete game-engine', () => {
     consume();
   `;
 
-  const ticksTillDeath = INITIAL_HEALTH / HEALTH_LOSS_RATE + 1;
   let startState: State;
   let userContextContainers: UserContextContainer;
   beforeEach(() => {
@@ -97,39 +101,116 @@ describe('Complete game-engine', () => {
     expect(getGameObjectsPerType(state, GameObjectTypes.Unit).length).toBe(1);
   });
 
-  it('both eat but one boosted', () => {
-    for (const context of Object.values(userContextContainers.userContextMap)) {
-      context.userScript = {
-        script,
-      };
-    }
-    let unit1: Unit = startState.objectMap[UNIT_ID1] as Unit;
-    unit1.attributes[AttributeName.HealthRegenBoost] = 10;
+  // it('both eat but one boosted', () => {
+  //   for (const context of Object.values(userContextContainers.userContextMap)) {
+  //     context.userScript = {
+  //       script,
+  //     };
+  //   }
+  //   let unit1: Unit = startState.objectMap[UNIT_ID1] as Unit;
+  //   unit1.attributes[AttributeName.HealthRegenBoost] = 10;
 
-    let timesUnit1IsHealthier = 0;
-    let timesUnit2IsHealthier = 0;
-    const maxMatches = 50;
-    for (let matches = 0; matches < maxMatches; matches++) {
-      let state: State = deepClone(startState);
-      for (let i = 0; i < ticksTillDeath - 1; i++) {
-        [state] = performTick(state, userContextContainers);
-      }
+  //   let timesUnit1IsHealthier = 0;
+  //   let timesUnit2IsHealthier = 0;
+  //   const maxMatches = 50;
+  //   for (let matches = 0; matches < maxMatches; matches++) {
+  //     let state: State = deepClone(startState);
+  //     for (let i = 0; i < ticksTillDeath - 1; i++) {
+  //       [state] = performTick(state, userContextContainers);
+  //     }
 
-      unit1 = state.objectMap[UNIT_ID1] as Unit;
-      const unit2 = state.objectMap[UNIT_ID2] as Unit;
+  //     unit1 = state.objectMap[UNIT_ID1] as Unit;
+  //     const unit2 = state.objectMap[UNIT_ID2] as Unit;
 
-      if (unit1.health > unit2.health) {
-        timesUnit1IsHealthier++;
-      } else {
-        timesUnit2IsHealthier++;
-      }
-    }
-    expect(timesUnit1IsHealthier).toBeGreaterThan(timesUnit2IsHealthier);
-  });
+  //     if (unit1.health > unit2.health) {
+  //       timesUnit1IsHealthier++;
+  //     } else {
+  //       timesUnit2IsHealthier++;
+  //     }
+  //   }
+  //   expect(timesUnit1IsHealthier).toBeGreaterThan(timesUnit2IsHealthier);
+  // });
 });
 
 describe('Controller Tests', () => {
+  const sendFunction1 = jest.fn();
+  const sendFunction2 = jest.fn();
+  const onFunction = jest.fn();
+  const pingFunctionAlive = jest.fn().mockImplementation(function ping() {
+    this.isAlive = true;
+  });
+  const wsMock1: unknown = {
+    send: sendFunction1,
+    on: onFunction,
+    ping: pingFunctionAlive,
+    readyState: OPEN,
+    isAlive: true,
+  };
+  const wsMock2: unknown = {
+    send: sendFunction2,
+    on: onFunction,
+    ping: pingFunctionAlive,
+    isAlive: true,
+    readyState: OPEN,
+  };
+
+  const parseMatchUpdate = (body: string): MatchUpdate => {
+    return JSON.parse(body);
+  };
+  const getLastMatchUpdate = (sendFunction: any): MatchUpdate => {
+    return parseMatchUpdate(
+      sendFunction.mock.calls[sendFunction.mock.calls.length - 1][0]
+    );
+  };
+
+  const UNIT_ID1 = 'unit1';
+  const UNIT_ID2 = 'unit2';
+
   jest.useFakeTimers();
 
-  // const mainController = new MainController();
+  let mainController: MainController;
+  beforeAll(() => {
+    jest.clearAllTimers();
+
+    mainController = new MainController();
+    mainController.newConnection(wsMock1 as WebSocket, UNIT_ID1);
+    mainController.newConnection(wsMock2 as WebSocket, UNIT_ID2);
+  });
+
+  it('finishes one game with both players dying at the same time', () => {
+    // match has started
+    jest.advanceTimersByTime(TICK_INTERVAL);
+    const matchUpdate = parseMatchUpdate(sendFunction1.mock.calls[0][0]);
+    expect(matchUpdate.payload.meta.currentTick).toBe(1);
+
+    // last round
+    jest.advanceTimersByTime(TICK_INTERVAL * (ticksTillDeath - 2));
+    let { state } = getLastMatchUpdate(sendFunction1).payload;
+    expect(getGameObjectsPerType(state, GameObjectTypes.Unit).length).toBe(2);
+
+    // match has ended
+    jest.advanceTimersByTime(TICK_INTERVAL);
+    state = getLastMatchUpdate(sendFunction1).payload.state;
+    expect(getGameObjectsPerType(state, GameObjectTypes.Unit).length).toBe(0);
+  });
+
+  it('runs 5 matches after another', () => {
+    const matches = 5;
+    for (let i = 0; i < matches; i++) {
+      jest.advanceTimersByTime(TICK_INTERVAL * ticksTillDeath);
+      jest.advanceTimersByTime(GAME_RESTART_TIME);
+    }
+    jest.advanceTimersByTime(TICK_INTERVAL);
+    const { state } = parseMatchUpdate(
+      sendFunction1.mock.calls[matches * ticksTillDeath][0]
+    ).payload;
+
+    const units: Unit[] = getGameObjectsPerType(
+      state,
+      GameObjectTypes.Unit
+    ) as Unit[];
+    expect(units.length).toBe(2);
+    expect(units[0].health).toBe(100 - HEALTH_LOSS_RATE);
+    expect(units[1].health).toBe(100 - HEALTH_LOSS_RATE);
+  });
 });
