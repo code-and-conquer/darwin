@@ -9,6 +9,7 @@ import deepClone from '../../helper/deepClone';
 import { Intent } from '../intent/Intent';
 import MoveIntent, { Direction } from '../intent/MoveIntent';
 import ConsumeIntent from '../intent/ConsumeIntent';
+import AttackIntent from '../intent/AttackIntent';
 import {
   selectPowerups,
   getNearestPowerup,
@@ -24,6 +25,7 @@ import runScript from './runScript';
 
 interface ScriptContextMethods {
   move: (direction: Direction) => void;
+  attack: (unit: Unit) => void;
   consume: () => void;
 }
 
@@ -72,6 +74,9 @@ function recordIntents(
   const methods: ScriptContextMethods = {
     move: (direction: Direction) => {
       intentions.push(new MoveIntent(direction));
+    },
+    attack: (unit: Unit = nearestEnemyUnit) => {
+      intentions.push(new AttackIntent(unit));
     },
     consume: () => {
       intentions.push(new ConsumeIntent());
