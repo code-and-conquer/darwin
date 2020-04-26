@@ -6,109 +6,118 @@ import {
   INITIAL_HEALTH,
   AttributeName,
   Unit,
+  UserContextContainer,
 } from '@darwin/types';
 import performTick from './game-engine';
 import { getGameObjectsPerType } from './helper/gameObjects';
 import StateBuilder from './test-helper/StateBuilder';
 import { HEALTH_LOSS_RATE } from './game-engine/mechanics/hunger-handler';
+import MainController from './MainController';
 
 describe('Complete game-engine', () => {
   const UNIT_ID1 = 'unit1';
   const UNIT_ID2 = 'unit2';
 
   const script = `
-  
-  if (nearestFood.position.x > userUnit.position.x) {
-    move('RIGHT');
-    if (nearestFood.position.x - userUnit.position.x > 2) {
+    if (nearestFood.position.x > userUnit.position.x) {
       move('RIGHT');
-    }
-  } else if (nearestFood.position.x < userUnit.position.x) {
-    move('LEFT');
-    if (nearestFood.position.x - userUnit.position.x < -2) {
+      if (nearestFood.position.x - userUnit.position.x > 2) {
+        move('RIGHT');
+      }
+    } else if (nearestFood.position.x < userUnit.position.x) {
       move('LEFT');
-    }
-  } else if (nearestFood.position.y > userUnit.position.y) {
-    move('DOWN');
-    if (nearestFood.position.y - userUnit.position.y > 2) {
+      if (nearestFood.position.x - userUnit.position.x < -2) {
+        move('LEFT');
+      }
+    } else if (nearestFood.position.y > userUnit.position.y) {
       move('DOWN');
-    }
-  } else if (nearestFood.position.y < userUnit.position.y) {
-    move('UP');
-    if (nearestFood.position.y - userUnit.position.y < -2) {
+      if (nearestFood.position.y - userUnit.position.y > 2) {
+        move('DOWN');
+      }
+    } else if (nearestFood.position.y < userUnit.position.y) {
       move('UP');
+      if (nearestFood.position.y - userUnit.position.y < -2) {
+        move('UP');
+      }
     }
-  }
-  consume();
+    consume();
   `;
 
   const ticksTillDeath = INITIAL_HEALTH / HEALTH_LOSS_RATE + 1;
   let startState: State;
-  let userContexts: UserExecutionContext[];
+  let userContextContainers: UserContextContainer;
   beforeEach(() => {
     startState = StateBuilder.buildState()
       .addUnit({ id: UNIT_ID1, x: 0, y: 0 })
       .addUnit({ id: UNIT_ID2, x: 20, y: 20 })
       .build();
-    userContexts = [
-      {
-        unitId: UNIT_ID1,
-        userScript: {
-          script: '',
+    userContextContainers = {
+      userContextIds: [UNIT_ID1, UNIT_ID2],
+      userContextMap: {
+        UNIT_ID1: {
+          unitId: UNIT_ID1,
+          userScript: {
+            script: '',
+          },
+          store: {},
         },
-        store: {},
-      },
-      {
-        unitId: UNIT_ID2,
-        userScript: {
-          script: '',
+        UNIT_ID2: {
+          unitId: UNIT_ID2,
+          userScript: {
+            script: '',
+          },
+          store: {},
         },
-        store: {},
       },
-    ];
+    };
   });
 
   it('add two units and let game end', () => {
+    let state: State = startState;
     for (let i = 0; i < ticksTillDeath; i++) {
-      startState = performTick(startState, userContexts);
+      [state] = performTick(startState, userContextContainers);
     }
 
-    expect(getGameObjectsPerType(startState, GameObjectTypes.Unit).length).toBe(
-      0
-    );
+    expect(getGameObjectsPerType(state, GameObjectTypes.Unit).length).toBe(0);
   });
 
   it('one unit eats the other not', () => {
-    userContexts.find(elem => {
-      return elem.unitId === UNIT_ID1;
-    }).userScript = {
-      script,
-    };
-
-    for (let i = 0; i < ticksTillDeath; i++) {
-      startState = performTick(startState, userContexts);
+    for (const context of Object.values(userContextContainers.userContextMap)) {
+      context.userScript = {
+        script,
+      };
     }
 
-    expect(getGameObjectsPerType(startState, GameObjectTypes.Unit).length).toBe(
-      1
-    );
+    let state: State = startState;
+    for (let i = 0; i < ticksTillDeath; i++) {
+      [state] = performTick(startState, userContextContainers);
+    }
+
+    expect(getGameObjectsPerType(state, GameObjectTypes.Unit).length).toBe(1);
   });
 
   it('both eat but one boosted', () => {
-    userContexts.forEach(elem => {
-      elem.userScript = {
+    for (const context of Object.values(userContextContainers.userContextMap)) {
+      context.userScript = {
         script,
       };
-    });
+    }
     let unit1: Unit = startState.objectMap[UNIT_ID1] as Unit;
     unit1.attributes[AttributeName.HealthRegenBoost] = 10;
 
+    let state: State = startState;
     for (let i = 0; i < ticksTillDeath; i++) {
-      startState = performTick(startState, userContexts);
+      [state] = performTick(startState, userContextContainers);
     }
 
-    unit1 = startState.objectMap[UNIT_ID1] as Unit;
-    const unit2 = startState.objectMap[UNIT_ID2] as Unit;
+    unit1 = state.objectMap[UNIT_ID1] as Unit;
+    const unit2 = state.objectMap[UNIT_ID2] as Unit;
     expect(unit1.health).toBeGreaterThan(unit2.health);
   });
+});
+
+describe('Controller Tests', () => {
+  jest.useFakeTimers();
+
+  // const mainController = new MainController();
 });
