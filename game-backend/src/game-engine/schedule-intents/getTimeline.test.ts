@@ -1,4 +1,3 @@
-import { UserContext } from '@darwin/types';
 import {
   filterUnreachableTimelineEntries,
   mapToTimeline,
@@ -6,13 +5,19 @@ import {
 } from './getTimeline';
 import { Intent, UserTickIntents } from '../intent/Intent';
 import { ExecutionTimeline } from './types';
+import { ElevatedUserExecutionContext } from '../core/types';
 
 const fakeIntent = ({ cost = 1, execute = jest.fn() } = {}): Intent => ({
   cost,
   execute,
 });
 
-const fakeContext = (): UserContext => ({ unitId: '' });
+const fakeContext = (): ElevatedUserExecutionContext => ({
+  unitId: '',
+  userId: '',
+  userScript: { script: '' },
+  store: {},
+});
 
 describe('mapToTimeline', () => {
   let lazyUser: UserTickIntents;
@@ -22,10 +27,12 @@ describe('mapToTimeline', () => {
     lazyUser = {
       context: fakeContext(),
       intents: [fakeIntent()],
+      feedback: [],
     };
     normalUser = {
       context: fakeContext(),
       intents: [fakeIntent(), fakeIntent(), fakeIntent()],
+      feedback: [],
     };
   });
   it('accumulates tick cost', () => {

@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-  height: 250px;
-  max-height: 33%;
+  width: 100%;
+  height: 100%;
   position: relative;
+  resize: horizontal;
 
   form {
     height: 100%;

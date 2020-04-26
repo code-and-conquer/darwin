@@ -4,7 +4,7 @@ import { ScriptUpdate } from '@darwin/types';
 import Container from './Container';
 import SaveButton from './SaveButton';
 import { useSendMessage } from '../../service/game';
-import Editor from './Editor';
+import Tabs from './Tabs';
 
 const UserScript: FC = () => {
   const sendMessage = useSendMessage();
@@ -28,14 +28,14 @@ const UserScript: FC = () => {
     saveScript(userScript);
   };
 
-  const onChange: ControlledEditorOnChange = (_, value) => {
+  const onEditorChange: ControlledEditorOnChange = (_, value) => {
     setUserScript(value || '');
   };
 
   return (
     <Container data-testid="user-script-form">
       <form>
-        <Editor onChange={onChange} save={saveScript} />
+        <Tabs onEditorChange={onEditorChange} saveScript={saveScript} />
         <SaveButton onClick={onClick}>Speichern</SaveButton>
       </form>
     </Container>
