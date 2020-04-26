@@ -1,6 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { monaco, EditorDidMount } from '@monaco-editor/react';
 import monacoEditor from 'monaco-editor/esm/vs/editor/editor.api';
+// import fs from 'fs';
+// import editorIntellisenseText from './editorIntellisense.txt';
+// const editorIntellisenseText = fs.readFileSync(
+//   './editorIntellisense.txt',
+//   'utf8'
+// );
 
 export type MonacoInstance = typeof monacoEditor;
 type Editor = monacoEditor.editor.IStandaloneCodeEditor;
@@ -18,6 +24,28 @@ export const useMonacoInstance = (): MonacoInstance | undefined => {
   const [monacoInstance, setMonacoInstance] = useState<MonacoInstance>();
   useEffect(() => {
     monaco.init().then(m => {
+      m.languages.typescript.javascriptDefaults.setCompilerOptions({
+        noLib: true,
+        allowNonTsExtensions: true,
+      });
+      m.languages.typescript.javascriptDefaults.addExtraLib(`
+      type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
+
+      declare function move(direction: Direction): void;
+      declare function consume(): void;
+
+      declare const store: any;
+      declare const foods: any[];
+      declare const userUnit: any;
+      declare const nearestFood: any;
+      declare const enemyUnits: any;
+      declare const nearestEnemyUnit: any;
+
+
+      `);
+      // m.languages.typescript.javascriptDefaults.addExtraLib(
+      //   editorIntellisenseText
+      // );
       setMonacoInstance(m);
     });
   }, []);
