@@ -101,35 +101,35 @@ describe('Complete game-engine', () => {
     expect(getGameObjectsPerType(state, GameObjectTypes.Unit).length).toBe(1);
   });
 
-  // it('both eat but one boosted', () => {
-  //   for (const context of Object.values(userContextContainers.userContextMap)) {
-  //     context.userScript = {
-  //       script,
-  //     };
-  //   }
-  //   let unit1: Unit = startState.objectMap[UNIT_ID1] as Unit;
-  //   unit1.attributes[AttributeName.HealthRegenBoost] = 10;
+  it('both eat but one boosted', () => {
+    for (const context of Object.values(userContextContainers.userContextMap)) {
+      context.userScript = {
+        script,
+      };
+    }
+    let unit1: Unit = startState.objectMap[UNIT_ID1] as Unit;
+    unit1.attributes[AttributeName.HealthRegenBoost] = 10;
 
-  //   let timesUnit1IsHealthier = 0;
-  //   let timesUnit2IsHealthier = 0;
-  //   const maxMatches = 50;
-  //   for (let matches = 0; matches < maxMatches; matches++) {
-  //     let state: State = deepClone(startState);
-  //     for (let i = 0; i < ticksTillDeath - 1; i++) {
-  //       [state] = performTick(state, userContextContainers);
-  //     }
+    let timesUnit1IsHealthier = 0;
+    let timesUnit2IsHealthier = 0;
+    const maxMatches = 50;
+    for (let matches = 0; matches < maxMatches; matches++) {
+      let state: State = deepClone(startState);
+      for (let i = 0; i < ticksTillDeath - 1; i++) {
+        [state] = performTick(state, userContextContainers);
+      }
 
-  //     unit1 = state.objectMap[UNIT_ID1] as Unit;
-  //     const unit2 = state.objectMap[UNIT_ID2] as Unit;
+      unit1 = state.objectMap[UNIT_ID1] as Unit;
+      const unit2 = state.objectMap[UNIT_ID2] as Unit;
 
-  //     if (unit1.health > unit2.health) {
-  //       timesUnit1IsHealthier++;
-  //     } else {
-  //       timesUnit2IsHealthier++;
-  //     }
-  //   }
-  //   expect(timesUnit1IsHealthier).toBeGreaterThan(timesUnit2IsHealthier);
-  // });
+      if (unit1.health > unit2.health) {
+        timesUnit1IsHealthier++;
+      } else {
+        timesUnit2IsHealthier++;
+      }
+    }
+    expect(timesUnit1IsHealthier).toBeGreaterThan(timesUnit2IsHealthier);
+  });
 });
 
 describe('Controller Tests', () => {
