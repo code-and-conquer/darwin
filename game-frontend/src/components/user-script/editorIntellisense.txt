@@ -1,5 +1,0 @@
-type Direction = 'UP' | 'DOWN';
-
-declare function move(direction: Direction): void;
-declare const foods: any[];
-declare const userUnit: any;
