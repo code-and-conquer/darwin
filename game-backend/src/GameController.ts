@@ -51,10 +51,6 @@ export default class GameController {
     this.store.userContexts.userContextMap[userId].userScript = script;
   }
 
-  getStore(): GameStore {
-    return this.store;
-  }
-
   private checkGameState(): void {
     if (this.hasMoreThanOneUser() && !this.isRunning) {
       this.startGame();
