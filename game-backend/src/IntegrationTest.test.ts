@@ -157,6 +157,8 @@ describe('Controller Tests', () => {
   const parseMatchUpdate = (body: string): MatchUpdate => {
     return JSON.parse(body);
   };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getLastMatchUpdate = (sendFunction: any): MatchUpdate => {
     return parseMatchUpdate(
       sendFunction.mock.calls[sendFunction.mock.calls.length - 1][0]

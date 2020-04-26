@@ -12,7 +12,7 @@ import {
 import { createUnit, getGameObjectsPerType } from './helper/gameObjects';
 import { generateFreePosition } from './helper/fields';
 import performTick from './game-engine';
-import { createGameStore, GameStore } from './createGameStore';
+import { createGameStore } from './createGameStore';
 
 export const TICK_INTERVAL = 2000;
 
