@@ -4,6 +4,8 @@ import {
   State,
   UserExecutionContext,
   INITIAL_HEALTH,
+  AttributeName,
+  Unit,
 } from '@darwin/types';
 import performTick from './game-engine';
 import { getGameObjectsPerType } from './helper/gameObjects';
@@ -45,14 +47,7 @@ describe('Complete game-engine', () => {
   let userContexts: UserExecutionContext[];
   beforeEach(() => {
     startState = StateBuilder.buildState()
-      .addUnit({
-        id: UNIT_ID1,
-        x: 0,
-        y: 0,
-        attributes: {
-          healthRegenBoost: 10,
-        },
-      })
+      .addUnit({ id: UNIT_ID1, x: 0, y: 0 })
       .addUnit({ id: UNIT_ID2, x: 20, y: 20 })
       .build();
     userContexts = [
@@ -99,19 +94,21 @@ describe('Complete game-engine', () => {
     );
   });
 
-  it('one unit eats the other not', () => {
+  it('both eat but one boosted', () => {
     userContexts.forEach(elem => {
       elem.userScript = {
         script,
       };
     });
+    let unit1: Unit = startState.objectMap[UNIT_ID1] as Unit;
+    unit1.attributes[AttributeName.HealthRegenBoost] = 10;
 
     for (let i = 0; i < ticksTillDeath; i++) {
       startState = performTick(startState, userContexts);
     }
 
-    expect(getGameObjectsPerType(startState, GameObjectTypes.Unit).length).toBe(
-      1
-    );
+    unit1 = startState.objectMap[UNIT_ID1] as Unit;
+    const unit2 = startState.objectMap[UNIT_ID2] as Unit;
+    expect(unit1.health).toBeGreaterThan(unit2.health);
   });
 });
