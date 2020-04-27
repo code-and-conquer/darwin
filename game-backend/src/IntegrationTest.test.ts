@@ -18,6 +18,18 @@ import { TICK_INTERVAL } from './GameController';
 
 const ticksTillDeath = Math.floor(INITIAL_HEALTH / HEALTH_LOSS_RATE) + 1;
 
+const performTickNTimes = (
+  startState: State,
+  userContextContainers: UserContextContainer,
+  times: number
+): State => {
+  let state = startState;
+  for (let i = 0; i < times; i++) {
+    [state] = performTick(state, userContextContainers);
+  }
+  return state;
+};
+
 describe('Complete game-engine', () => {
   const UNIT_ID1 = 'unit1';
   const UNIT_ID2 = 'unit2';
@@ -77,9 +89,7 @@ describe('Complete game-engine', () => {
 
   it('add two units and let game end', () => {
     let state: State = deepClone(startState);
-    for (let i = 0; i < ticksTillDeath; i++) {
-      [state] = performTick(startState, userContextContainers);
-    }
+    state = performTickNTimes(state, userContextContainers, ticksTillDeath);
 
     expect(getGameObjectsPerType(state, GameObjectTypes.Unit).length).toBe(0);
   });
@@ -94,9 +104,7 @@ describe('Complete game-engine', () => {
     }
 
     let state: State = deepClone(startState);
-    for (let i = 0; i < ticksTillDeath; i++) {
-      [state] = performTick(state, userContextContainers);
-    }
+    state = performTickNTimes(state, userContextContainers, ticksTillDeath);
 
     expect(getGameObjectsPerType(state, GameObjectTypes.Unit).length).toBe(1);
   });
@@ -115,9 +123,11 @@ describe('Complete game-engine', () => {
     const maxMatches = 50;
     for (let matches = 0; matches < maxMatches; matches++) {
       let state: State = deepClone(startState);
-      for (let i = 0; i < ticksTillDeath - 1; i++) {
-        [state] = performTick(state, userContextContainers);
-      }
+      state = performTickNTimes(
+        state,
+        userContextContainers,
+        ticksTillDeath - 1
+      );
 
       unit1 = state.objectMap[UNIT_ID1] as Unit;
       const unit2 = state.objectMap[UNIT_ID2] as Unit;
