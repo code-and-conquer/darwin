@@ -115,18 +115,15 @@ describe('Complete game-engine', () => {
     expect(getGameObjectsPerType(state, GameObjectTypes.Unit).length).toBe(1);
   });
 
-  it('both eat but one boosted', () => {
-    Object.values(userContextContainers.userContextMap).forEach(context => {
-      // eslint-disable-next-line no-param-reassign
-      context.userScript = {
-        script,
-      };
-    });
-    let unit1 = getUnit(startState, UNIT_ID1);
-    unit1.attributes[AttributeName.HealthRegenBoost] = 10;
+  it('one unit eats, the other does not for 50 matches', () => {
+    const context = Object.values(userContextContainers.userContextMap).find(
+      ctx => ctx.unitId === UNIT_ID1
+    );
+    context.userScript = {
+      script,
+    };
 
     let timesUnit1IsHealthier = 0;
-    let timesUnit2IsHealthier = 0;
     const maxMatches = 50;
     for (let matches = 0; matches < maxMatches; matches++) {
       const state = performTickNTimes(
@@ -135,16 +132,14 @@ describe('Complete game-engine', () => {
         ticksTillDeath - 1
       );
 
-      unit1 = getUnit(state, UNIT_ID1);
+      const unit1 = getUnit(state, UNIT_ID1);
       const unit2 = getUnit(state, UNIT_ID2);
 
       if (unit1.health > unit2.health) {
         timesUnit1IsHealthier++;
-      } else {
-        timesUnit2IsHealthier++;
       }
     }
-    expect(timesUnit1IsHealthier).toBeGreaterThan(timesUnit2IsHealthier);
+    expect(timesUnit1IsHealthier).toBe(maxMatches);
   });
 });
 
