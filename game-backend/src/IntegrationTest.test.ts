@@ -12,7 +12,6 @@ import performTick from './game-engine';
 import { getGameObjectsPerType, getUnit } from './helper/gameObjects';
 import StateBuilder from './test-helper/StateBuilder';
 import { HEALTH_LOSS_RATE } from './game-engine/mechanics/hunger-handler';
-import deepClone from './helper/deepClone';
 import MainController, { GAME_RESTART_TIME } from './MainController';
 import { TICK_INTERVAL } from './GameController';
 
@@ -23,7 +22,7 @@ const performTickNTimes = (
   userContextContainers: UserContextContainer,
   times: number
 ): State => {
-  let state: State = deepClone(startState);
+  let state = startState;
   for (let i = 0; i < times; i++) {
     [state] = performTick(state, userContextContainers);
   }
