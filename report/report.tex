@@ -185,14 +185,14 @@ Qualitätsattribute:
 \item Benutzerfreundlichkeit - Das Userinterface soll es ermöglichen, die gesuchten Infos möglichst schnell, unmittelbar und bequem bereitzustellen und es muss dem User erlauben, dass er sich auf der Seite bewegen kann, ohne auf Probleme zu stossen.
 \item Failover / Disaster Recovery Ziele - Die Recovery Plans werden eingeschränkt auf:
 \begin{enumerate}
-\item Hardware Probleme - Es muss sichergestellt werden das bei einem CPU Ausfall
-\item Applikations- Code Probleme -
-\item Dependency probleme -
+\item Hardware Probleme - Im Fall eines einzelnen Hardware-Ausfalls (z.B. CPU) sollen Benutzer keinen Unterbruch wahrnehmen
+\item Applikations- Code Probleme - Mögliche Errors werden abgefangen so dass das Spiel nicht crasht
+\item Dependency probleme - Benutzte externe Libraries werden auf dem neusten Stand gehalten und der Code entsprechend angepasst.
 \end{enumerate}
 
 \end{itemize}
 
-Um die Qualitätsattribute einzuhalten, ist die Sicherstellung von Programmcode-Entwicklungsprinzipien und Eskalationsplännen ein Muss. Diese werden mithilfe von agilen Framework Prozessen wie Scrum und zuverlässigen Entwicklungstools einfacher eingehalten.
+Um die Qualitätsattribute einzuhalten, ist die Sicherstellung von Entwicklungsprinzipien (z.B. bzgl. Code) und Eskalationsplänen ein Muss. Diese sind dank agilen Framework-Prozessen wie Scrum und zuverlässigen Entwicklungstools einfacher einzuhalten.
 
 \section{User Roles}
 \subsection{Player}
@@ -233,19 +233,21 @@ Unsere Software ist unabhängig des Entwicklungsprozesses folgenden Beschränkun
 \end{itemize}
 
 \section{Verwendete Prinzipien}
-Die Qualität einer Software hat stets oberste Priorität. Um diese bei der Entwicklung unseres Spieles
-sicherzustellen haben wir uns auf folgende Prinzipien geeinigt:
+Um die Qualität der Software bei der Entwicklung unseres Spieles
+sicherzustellen, haben wir uns auf folgende Prinzipien geeinigt:
 \begin{itemize}
 \item Hohe Kohäsion und minimale Kopplung ist wichtiger Bestandteil um die Komplexität unseres
  Spieles und die Fehlerbehebung zu vereinfachen.
 \item Coding Guidelines werden für unsere Entwicklung eingesetzt und mittels Eslint und TSlint sowie Pull-Request Reviews überprüft. So können Syntax und Code-Styling eingehalten werden.
 \item Fehlerbehandlungen werden grundsätzlich mittels 'Bug Stories' abgearbeitet.
-\item Anstatt direkt in den Master-Branch zu pushen wird für jede Änderung ein Branch erstellt, welcher mittels einem Pull-Request in den Master-Branch gemerged wird. So können wir sicherstellen, dass der Code und die anstehenden Änderungen den Vorstellungen des Teams entsprechen.
-\item Bevor ein Pull-Request merged wird, prüfen wir mittels einer Build-Pipeline, ob die Unittests erfolgreich durchlaufen.
+\item Anstatt direkt in den Master-Branch zu pushen, wird für jede Änderung ein Branch erstellt, welcher mittels eines Pull-Request in den Master-Branch gemerged wird. 
+So können wir sicherstellen, dass der Code und die in Entwicklung begriffenen Änderungen den Vorstellungen des Teams entsprechen.
+\item Bevor ein Pull-Request gemerged wird, prüfen wir mittels einer automatisierten Build-Pipeline, ob die Unittests erfolgreich laufen.
 \item Wir kommunizieren offen und ehrlich miteinander. 
 \end{itemize}
 All diese Prinzipien sind ein wichtiger Bestandteil unserer Entwicklung und werden von allen Teammitglieder stets eingehalten.
 \subsection{DoD}
+Wir halten uns bei unserem Entwicklungsprozess an die folgende Definition of Done:
 \begin{itemize}
 \item Alle Akzeptanzkriterien werden erfüllt
 \item Der Code ist fertiggestellt und im Versionierungssystem eingespielt
@@ -262,31 +264,31 @@ Bei Darwin handelt es sich um eine Webapplikation welche in Frontend und Backend
 Aufgrund der Erfahrung der Teammitglieder wird ausschliesslich TypeScript bzw. JavaScript eingesetzt.
 
 \subsubsection{Frontend}
-Die Usability ist ein Kernanspruch an die Applikation deshalb verwendet Darwin moderne Technologien im Frontend.
+Usability ist ein Kernanspruch an die Applikation. Deshalb verwendet Darwin moderne Technologien im Frontend.
 Die Visualisierung des Spiels wird in einem 2D Canvas Context mittels Pixi.js dargestellt.
 Als UI Library wird aufgrund der Erfahrung des Teams React eingesetzt.
 
 \subsubsection{Backend}
 Für das Backend wird Node.js eingesetzt, da dieses die meistverwendete JavaScript Runtime ist und die notwendige Stabilität aufweist.
-Damit das Frontend in Echtzeit über den neusten Spielstand informiert wird findet die Kommunikation mittels Websockets statt.
+Damit das Frontend in Echtzeit über den neusten Spielstand informiert wird, findet die Kommunikation mittels Websockets statt.
 Im Backend werden keine externen APIs verwendet und es ist insbesondere keine Persistierungsschicht angedacht.
 
 \subsection{CI /CD}
-Um einen raschen release Zyklus zu gewährleisten wurde eine Build- sowie eine Releasepipeline eingerichtet.
-Diese ermöglicht es, Pull-Requests automatisch zu testen und bei einem erfolgten merge automatisiert zu releasen und deployen.
+Um einen raschen Release-Zyklus zu gewährleisten, wurde eine Build- sowie eine Releasepipeline eingerichtet.
+Diese ermöglicht es, Pull-Requests automatisch zu testen und nach einem erfolgten Merge automatisiert zu releasen und deployen.
 Dies soll die Entwicklungsphase beschleunigen und gewähleisten, dass stets und ausschliesslich funktionierender Code deployed wird.
 
 Innerhalb dieser Pipeline werden folgende Schritte durchgeführt:
 \begin{itemize}
   \item Installieren aller notwendigen Pakete
-  \item Bauen der beiden Artefakten (Frontend und Backend)
+  \item Bauen der beiden Artefakte (Frontend und Backend)
   \item Durchführen der Unit Tests
   \item Erstellung eines deploybaren Paketes
   \item Deployment auf den Server
   \item Neustarten des Docker-Containers auf dem Server
 \end{itemize}
 
-Der Aufbau unserer Software hat in voraus bereits eine Grobplanung in welchen schritten und Phasen entwickelt wird.
+Der Aufbau unserer Software und in welchen Schritten und Phasen entwickelt wird, wurde im Voraus in einer Grobplanung definiert.
 Dies ermöglicht es uns, bereits frühzeitig Fehler zu erkennen und Schnittstellen genauer zu spezifizieren.
 
 \subsection{Testing}
@@ -306,8 +308,8 @@ Beim Unit Testing werden einzelne Einheiten isoliert getestet und sowohl im Fron
 % auf den Akzeptanzkriterien der User Stories.
 
 \subsubsection{Manuelles Testing}
-Manuelles Testen während der Entwicklungsphase und danach. Dieser Teil sollte so klein wie möglich gehalten werden, um die Qualität zu gewährleisten. Manuelles Testing wird vom Entwickler während und nach der Entwicklung durchgeführt.
-Zudem soll der PO durch manuelles Prüfen das Feature zum Schluss noch abnehmen.
+Manuelles Testen während der Entwicklungsphase und danach. Dieser Teil sollte aus Zeitgründen so klein wie möglich gehalten werden, allerdings trotzdem sicherstellen, dass die Qualität gewährleistet bleibt. Manuelles Testing wird vom Entwickler während und nach der Entwicklung durchgeführt.
+Zudem soll der PO durch manuelles Prüfen das Feature zum Schluss abnehmen.
 
 \section{Externe Schnittstellen}
 Es werden zurzeit keine externe Schnittstellen verwendet.
@@ -319,7 +321,7 @@ Nachfolgend ein Klassendiagramm der Intents:
 \begin{figure}[h]
   \caption{Klassendiagramm Intents}
   \centering
-  \includegraphics[width=0.7\textwidth]{./img/Intent}
+  \includegraphics[width=0.7\textwidth]{./img/Intent} 
 \end{figure}
 %\includegraphics[width=0.7\textwidth]{./img/Intent.svg}
 % Vielleicht später die Recording Engine & Co.?
@@ -344,6 +346,8 @@ Nachfolgend ein Klassendiagramm der Intents:
 \section{Installation (Deployment)}
 
 \section{Operation und Support}
+
+Da unser Projekt als zeitlich begrenztes Projekt einer Studenten-Gruppe läuft, ist keinerlei Support oder Maintenance nach Ablauf der Entwicklungsphase geplant.
 
 \section{Entscheidungs-Logbuch}
 
