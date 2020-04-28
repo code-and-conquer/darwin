@@ -97,13 +97,12 @@ describe('Complete game-engine', () => {
   });
 
   it('one unit eats, the other does not', () => {
-    for (const context of Object.values(userContextContainers.userContextMap)) {
-      if (context.unitId === UNIT_ID1) {
-        context.userScript = {
-          script,
-        };
-      }
-    }
+    const context = Object.values(userContextContainers.userContextMap).find(
+      ctx => ctx.unitId === UNIT_ID1
+    );
+    context.userScript = {
+      script,
+    };
 
     const state = performTickNTimes(
       startState,
@@ -115,11 +114,12 @@ describe('Complete game-engine', () => {
   });
 
   it('both eat but one boosted', () => {
-    for (const context of Object.values(userContextContainers.userContextMap)) {
+    Object.values(userContextContainers.userContextMap).map(context => {
+      // eslint-disable-next-line no-param-reassign
       context.userScript = {
         script,
       };
-    }
+    });
     let unit1 = getUnit(startState, UNIT_ID1);
     unit1.attributes[AttributeName.HealthRegenBoost] = 10;
 
