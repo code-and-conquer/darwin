@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { monaco, EditorDidMount } from '@monaco-editor/react';
 import monacoEditor from 'monaco-editor/esm/vs/editor/editor.api';
-import editorIntellisense from './EditorIntellisense';
+import editorIntellisense from './editorIntellisense';
 
 export type MonacoInstance = typeof monacoEditor;
 type Editor = monacoEditor.editor.IStandaloneCodeEditor;
