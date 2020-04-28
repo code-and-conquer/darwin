@@ -113,7 +113,7 @@ describe('Complete game-engine', () => {
   });
 
   it('both eat but one boosted', () => {
-    Object.values(userContextContainers.userContextMap).map(context => {
+    Object.values(userContextContainers.userContextMap).forEach(context => {
       // eslint-disable-next-line no-param-reassign
       context.userScript = {
         script,
