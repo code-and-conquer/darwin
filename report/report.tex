@@ -160,11 +160,11 @@ Die essenziellen Komponenten des Spieles sind einerseits das Backend, das es erl
 \begin{itemize}
   \item Zuschauer können einem Match beitreten, ohne dass sie Einheiten kontrollieren können. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/43/}{\#43 Spectators}
   \item Die Spieler und Zuschauer können das Match visuell mitverfolgen. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/21/}{\#21 Arena Update}
-  \item Die Spieler können das Spiel mittels Code steuern. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/42/}{\#42 Code controls}
+  \item Die Spieler können das Spiel mittels Code steuern. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/20/}{\#20 Move Command}
   \item Der Spieler kann die Spielregeln sowie eine Liste aller verfügbaren Aktionen der Einheiten abrufen. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/22/}{\#22 Help}
 \end{itemize}
 
-Des Weiteren soll das Spiel kostenlos als Webapplikation zur Verfügung stehen. Die Einnahmen werden durch Werbung eingenommen.
+Des Weiteren soll das Spiel kostenlos als Webapplikation zur Verfügung stehen. Das Spiel könnte später mittels Werbung finanziert werden.
 Um diese Ziele zu erreichen, ist es wichtig, eine gut aufgebaute Organisation zu haben, dessen Struktur und Visionen klar definiert sind. Ein agiles Umfeld wie Scrum wird uns helfen, die stetig auftretenden Probleme
 besser und effizienter zu bewältigen.
 
@@ -177,22 +177,14 @@ besser und effizienter zu bewältigen.
 Qualitätsattribute:
 \begin{itemize}
 
-\item Performance - Das Spiel soll den eingegeben Code innerhalb wenigen Sekunden kompilieren und ausführen
-\item Verfügbarkeit - Der Server soll 24 Stunden am Tag laufen.
-\item Security - Eine Prüfung auf schädlichen Code sowie Standard gegen 'Javascript Injection' müssen geprüft werden, zudem muss sich jeder Benutzer authentifizieren, um die Webapplikation zu bedienen.
-\item Erweiterbarkeit - Die Software muss modular aufgebaut sein, um einzelne Funktionen und Features einfach zu erweitern
-\item Zuverlässigkeit - Das Spiel muss gewährleisten, dass es fliessend ohne grössere Unterbrüche läuft und ein fehlerhaftes/schädliches Script nicht die Performance des Spiels beeinträchtigt.
+\item Performance - Das Spiel soll den eingegeben Code innerhalb wenigen Sekunden kompilieren und ausführen.
+\item Verfügbarkeit - Der Server soll möglichst 24 Stunden am Tag laufen, da bei einem Unterbruch die aktuellen Matches beeinträchtigen oder sogar beendet werden würden. Ein fehlerhaftes Skript eines Spielers darf keine anderen Spieler beeinträchtigen.
+\item Security - Eine Prüfung auf schädlichen Code sowie Standard gegen 'Javascript Injection' müssen geprüft und ggf. implementiert werden.
+\item Erweiterbarkeit - Die Software muss modular aufgebaut sein, um einzelne Funktionen und Features einfach zu erweitern.
 \item Benutzerfreundlichkeit - Das Userinterface soll es ermöglichen, die gesuchten Infos möglichst schnell, unmittelbar und bequem bereitzustellen und es muss dem User erlauben, dass er sich auf der Seite bewegen kann, ohne auf Probleme zu stossen.
-\item Failover / Disaster Recovery Ziele - Die Recovery Plans werden eingeschränkt auf:
-\begin{enumerate}
-\item Hardware Probleme - Im Fall eines einzelnen Hardware-Ausfalls (z.B. CPU) sollen Benutzer keinen Unterbruch wahrnehmen
-\item Applikations- Code Probleme - Mögliche Errors werden abgefangen so dass das Spiel nicht crasht
-\item Dependency probleme - Benutzte externe Libraries werden auf dem neusten Stand gehalten und der Code entsprechend angepasst.
-\end{enumerate}
-
+\item Browserkompatibilität - Für die Browser Chrome und Firefox muss das Spiel konsistent funktionieren.
+\item Sprache - Das Spiel ist in der Deutschen Sprache verfügbar.
 \end{itemize}
-
-Um die Qualitätsattribute einzuhalten, ist die Sicherstellung von Entwicklungsprinzipien (z.B. bzgl. Code) und Eskalationsplänen ein Muss. Diese sind dank agilen Framework-Prozessen wie Scrum und zuverlässigen Entwicklungstools einfacher einzuhalten.
 
 \section{User Roles}
 \subsection{Player}
@@ -215,17 +207,15 @@ Die Unit ist eine logische Rolle. Ihr Ziel ist zu Überleben, kann das aber nich
 %• lokale Standards
 
 Bei unserer Software-Entwicklung werden die Prozesse von Story Beschreibung, Entwicklung, Testing und Code-Review befolgt und eingehalten.
-Ein strukturiertes Vorgehen ist zwingend, um den Durchbruch bei unserem IT-Projekt zu schaffen.
 
 Unsere Software ist unabhängig des Entwicklungsprozesses folgenden Beschränkungen ausgesetzt.
 \begin{itemize}
 \item Zeit: die Zeitdauer des Projekts ist eingeschränkt, was sich auf 6 Sprints beläuft.
-\item Budget und Ressourcen: Das Budget soll sich möglichst auf das Minimum beziehen und optimaler Weise jede Ressource zu 100\% ausnutzen.
-\item Technologien:
+\item Budget und Ressourcen: Das Projekt ist ein Schulprojekt und ist deshalb grundsätzlich auf die Anzahl ECTS-Credits pro Entwickler beschränkt.
+\item Technologien: Wir verwenden die Technologien React und Node.js mit TypeScript. Grundsätzlich enthält das Projekt aber keine Technologievorgaben. Zurzeit verwenden wir zudem folgende Cloud Services für die Entwicklung, welche einzuhalten sind.
 	\begin{itemize}
-
-	\item Cloud basierende Hosting Services: Github und Azure
-
+  \item Github - Als Git-Repository und für PR Reviews
+  \item Azure DevOps - Als Projektplanungstool sowie für CI/CD Pipelines
 	\end{itemize}
 \item Grösse des Entwicklungsteams: Das Team besteht aus einem Product Owner, einem Scrum Master und 4 weiteren Entwicklern
 \item Kompetenzenprofil: Die Entwickler sind aktuell Teilzeitstudenten an der ZHAW und befinden sich im drittletzten Semester des Bachelorstudiengangs Informatik. Dadurch sind sie mit den Grundlagen der Objektorientierten Programmierung sowie mit den Technologien, die im Webbereich zum Einsatz kommen, vertraut. Desweiteren haben einige Entwickler bereits mehrjährige Berufserfahrung mit den Technologien React, TypeScript und Node JS.
@@ -234,17 +224,25 @@ Unsere Software ist unabhängig des Entwicklungsprozesses folgenden Beschränkun
 
 \section{Verwendete Prinzipien}
 Um die Qualität der Software bei der Entwicklung unseres Spieles
-sicherzustellen, haben wir uns auf folgende Prinzipien geeinigt:
+sicherzustellen, haben wir uns auf folgende Prinzipien geeinigt.
+
+\subsection{Generelles}
+
 \begin{itemize}
-\item Hohe Kohäsion und minimale Kopplung ist wichtiger Bestandteil um die Komplexität unseres
- Spieles und die Fehlerbehebung zu vereinfachen.
-\item Coding Guidelines werden für unsere Entwicklung eingesetzt und mittels Eslint und TSlint sowie Pull-Request Reviews überprüft. So können Syntax und Code-Styling eingehalten werden.
-\item Fehlerbehandlungen werden grundsätzlich mittels 'Bug Stories' abgearbeitet.
-\item Anstatt direkt in den Master-Branch zu pushen, wird für jede Änderung ein Branch erstellt, welcher mittels eines Pull-Request in den Master-Branch gemerged wird. 
-So können wir sicherstellen, dass der Code und die in Entwicklung begriffenen Änderungen den Vorstellungen des Teams entsprechen.
-\item Bevor ein Pull-Request gemerged wird, prüfen wir mittels einer automatisierten Build-Pipeline, ob die Unittests erfolgreich laufen.
-\item Wir kommunizieren offen und ehrlich miteinander. 
+  \item Anstatt direkt in den Master-Branch zu pushen, wird für jede Änderung ein Branch erstellt, welcher mittels eines Pull-Request in den Master-Branch gemerged wird. 
+  So können wir sicherstellen, dass der Code und die in Entwicklung begriffenen Änderungen den Vorstellungen des Teams entsprechen.
+  \item Bevor ein Pull-Request gemerged wird, prüfen wir mittels einer automatisierten Build-Pipeline, ob die Unittests erfolgreich laufen.
+  \item Fehlerbehandlungen werden grundsätzlich mittels 'Bug Stories' abgearbeitet, ausser sie können in einem PR Review o.ä. direkt erkannt und behoben werden.
+  \item Wir kommunizieren offen und ehrlich miteinander. 
 \end{itemize}
+
+\subsection{Coding}
+\begin{itemize}
+  \item Hohe Kohäsion und minimale Kopplung ist wichtiger Bestandteil, um die Komplexität unseres Spieles und die Fehlerbehebung zu vereinfachen.
+  \item Es wird grundsätzlich Funktionale Programmierung mit dem Immutability Prinzip eingesetzt. (Dies wird mittels [Immer JS](https://immerjs.github.io/immer) erleichtert.) 
+  \item Coding Guidelines werden für unsere Entwicklung eingesetzt und mittels Eslint und TSlint sowie Pull-Request Reviews überprüft. So können Syntax und Code-Styling eingehalten werden.
+\end{itemize}
+
 All diese Prinzipien sind ein wichtiger Bestandteil unserer Entwicklung und werden von allen Teammitglieder stets eingehalten.
 \subsection{DoD}
 Wir halten uns bei unserem Entwicklungsprozess an die folgende Definition of Done:
@@ -254,7 +252,7 @@ Wir halten uns bei unserem Entwicklungsprozess an die folgende Definition of Don
 \item Dokumentation aktualisiert
 \item Es wurde ein Code Review durchgeführt oder der Code wurde im Pair Programming erarbeitet
 \item Coding Guidelines und Standards wurden eingehalten
-\item Unittests wurden erfolgreich durchgeführt
+\item Unittests und Integrationtests wurden erfolgreich durchgeführt
 \item Es sind keine kritischen Bugs offen
 \end{itemize}
 
@@ -299,13 +297,8 @@ Unit Tests werden automatisiert bei jedem Build und Pull Request ausgeführt.
 Als Framework wird Jest von Facebook verwendet. Dieses ist in der Javascript-Welt sehr verbreitet und im Team ist damit bereits Know-How vorhanden.
 Beim Unit Testing werden einzelne Einheiten isoliert getestet und sowohl im Frontend als auch im Backend separat ausgeführt.
 
-% \subsubsection{Integration Testing}
-% Integration Tests, die durchgeführt werden, während der Entwicklung und vor einem PR zum Überprüfen der Akzeptanzkriterien.
-% Für die End-to-End-Tests wird Cypress verwendet. Auch hier ist damit bereits wertvolle Erfahrung im Team vorhanden
-% und löste bislang immer Zufriedenheit bei der Benutzung aus.
-% Integration Tests prüfen das Zusammenspiel der Applikation und überprüft die Gesamtfunktionalität.
-% Die Applikation wird dabei aus der Sicht eines Benutzers automatisiert getestet und Testfälle basieren
-% auf den Akzeptanzkriterien der User Stories.
+\subsubsection{Integration Testing}
+Die Integration Tests erweitern das Testkonzept, indem mehrere Komponenten durch einzelne Tests gleichzeitig getestet werden. So können wir sicherstellen, dass gewisse Spielmechaniken über ein einzelnes oder mehrere Matches hinweg funktionieren.
 
 \subsubsection{Manuelles Testing}
 Manuelles Testen während der Entwicklungsphase und danach. Dieser Teil sollte aus Zeitgründen so klein wie möglich gehalten werden, allerdings trotzdem sicherstellen, dass die Qualität gewährleistet bleibt. Manuelles Testing wird vom Entwickler während und nach der Entwicklung durchgeführt.

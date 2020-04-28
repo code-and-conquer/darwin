@@ -4,7 +4,7 @@ import {
   ControlledEditorOnChange,
 } from '@monaco-editor/react';
 import monacoEditor from 'monaco-editor/esm/vs/editor/editor.api';
-import { useSaveHotKey, useHandleEditorRef } from './monaco-helper';
+import { useSaveHotKey, useHandleEditorRef } from './monacoHelpers';
 
 const editorOptions: monacoEditor.editor.IEditorConstructionOptions = {
   minimap: {
