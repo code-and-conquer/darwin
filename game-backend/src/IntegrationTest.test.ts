@@ -2,7 +2,6 @@ import {
   GameObjectTypes,
   State,
   INITIAL_HEALTH,
-  AttributeName,
   Unit,
   UserContextContainer,
   MatchUpdate,
