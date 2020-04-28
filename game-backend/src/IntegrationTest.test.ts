@@ -23,7 +23,7 @@ const performTickNTimes = (
   userContextContainers: UserContextContainer,
   times: number
 ): State => {
-  let state = startState;
+  let state: State = deepClone(startState);
   for (let i = 0; i < times; i++) {
     [state] = performTick(state, userContextContainers);
   }
@@ -88,9 +88,11 @@ describe('Complete game-engine', () => {
   });
 
   it('add two units and let game end', () => {
-    let state: State = deepClone(startState);
-    state = performTickNTimes(state, userContextContainers, ticksTillDeath);
-
+    const state = performTickNTimes(
+      startState,
+      userContextContainers,
+      ticksTillDeath
+    );
     expect(getGameObjectsPerType(state, GameObjectTypes.Unit).length).toBe(0);
   });
 
@@ -103,8 +105,11 @@ describe('Complete game-engine', () => {
       }
     }
 
-    let state: State = deepClone(startState);
-    state = performTickNTimes(state, userContextContainers, ticksTillDeath);
+    const state = performTickNTimes(
+      startState,
+      userContextContainers,
+      ticksTillDeath
+    );
 
     expect(getGameObjectsPerType(state, GameObjectTypes.Unit).length).toBe(1);
   });
@@ -122,9 +127,8 @@ describe('Complete game-engine', () => {
     let timesUnit2IsHealthier = 0;
     const maxMatches = 50;
     for (let matches = 0; matches < maxMatches; matches++) {
-      let state: State = deepClone(startState);
-      state = performTickNTimes(
-        state,
+      const state = performTickNTimes(
+        startState,
         userContextContainers,
         ticksTillDeath - 1
       );
