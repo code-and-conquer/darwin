@@ -55,7 +55,10 @@ describe('Complete game-engine', () => {
         move('UP');
       }
     }
-    consume();
+    if (nearestFood.position.x === userUnit.position.x
+        && nearestFood.position.y === userUnit.position.y) {
+        consume();
+    }
   `;
 
   let startState: State;
