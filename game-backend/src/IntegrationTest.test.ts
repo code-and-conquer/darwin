@@ -9,7 +9,7 @@ import {
 } from '@darwin/types';
 import WebSocket, { OPEN } from 'ws';
 import performTick from './game-engine';
-import { getGameObjectsPerType } from './helper/gameObjects';
+import { getGameObjectsPerType, getUnit } from './helper/gameObjects';
 import StateBuilder from './test-helper/StateBuilder';
 import { HEALTH_LOSS_RATE } from './game-engine/mechanics/hunger-handler';
 import deepClone from './helper/deepClone';
@@ -120,7 +120,7 @@ describe('Complete game-engine', () => {
         script,
       };
     }
-    let unit1: Unit = startState.objectMap[UNIT_ID1] as Unit;
+    let unit1 = getUnit(startState, UNIT_ID1);
     unit1.attributes[AttributeName.HealthRegenBoost] = 10;
 
     let timesUnit1IsHealthier = 0;
@@ -133,8 +133,8 @@ describe('Complete game-engine', () => {
         ticksTillDeath - 1
       );
 
-      unit1 = state.objectMap[UNIT_ID1] as Unit;
-      const unit2 = state.objectMap[UNIT_ID2] as Unit;
+      unit1 = getUnit(state, UNIT_ID1);
+      const unit2 = getUnit(state, UNIT_ID2);
 
       if (unit1.health > unit2.health) {
         timesUnit1IsHealthier++;
