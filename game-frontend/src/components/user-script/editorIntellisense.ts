@@ -16,17 +16,16 @@ interface Unit extends GameObject {
     health: number;
     attributes: Attributes;
   };
-// type Food = 'food';
 interface Consumable extends GameObject {
     type: ConsumableType;
   };
-type Consume = (
-    id: ObjectId,
-    state: State,
-    UserContext: UserContext
-  ) => State;
 
 type ConsumableType = GameObjectTypes.Food | PowerupType;
+
+type PowerupType =
+  | GameObjectTypes.EnduranceBoost
+  | GameObjectTypes.Teleport
+  | GameObjectTypes.HealthRegenBoost;
 
 enum GameObjectTypes {
     Unit = 'unit',
@@ -46,4 +45,6 @@ declare const userUnit: Unit;
 declare const nearestFood: Consumable;
 declare const enemyUnits: Unit[];
 declare const nearestEnemyUnit: Unit;
+declare const powerups: Consumable[];
+declare const nearestPowerup: Consumable;
 `;
