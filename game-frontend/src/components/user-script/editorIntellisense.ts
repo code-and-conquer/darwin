@@ -16,6 +16,14 @@ interface Unit extends GameObject {
     health: number;
     attributes: Attributes;
   };
+
+enum AttributeName {
+    EnduranceBoost = 'enduranceBoost',
+    HealthRegenBoost = 'healthRegenBoost',
+  };
+
+type Attributes = Record<AttributeName, number>;
+
 interface Consumable extends GameObject {
     type: ConsumableType;
   };
