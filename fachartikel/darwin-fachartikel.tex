@@ -1,4 +1,4 @@
-%compile with XeLaTeX
+%compile with XeLaTeX, biber, xelatex, xelatex
 \documentclass[11pt,a4paper,titlepage]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[german,english]{babel}
@@ -16,23 +16,25 @@
 \usepackage[document]{ragged2e}
 \usepackage{float}
 \usepackage[titles]{tocloft}
+\usepackage[style=ieee,backend=biber,alldates=edtf]{biblatex}
+\addbibresource{darwin-fachartikel.bib}
+
 	
 %%% TODO: VOLLSTÄNDIGES BILD
 \titlepic{\includegraphics[width=\textwidth]{darwin.png}}
 
-\author{Michael Schaufelberger (Product Owner)\\
+\author{
+Michael Schaufelberger (Product Owner)\\
 Filip Kašiković (Scrum Master)\\
 Raphael Mailänder\\
 Simon Stucki\\
 Marc Berli\\
 Ferenc Kuntić}
 
-
 %%% TODO: HINWEIS AUF ZHAW SCHÖNER FORMATIEREN
-\title{
-ZHAW School of Engineering\\
-IT17ta\_ZH\\
-PSIT 4\\
+\title{{\small ZHAW School of Engineering, 
+IT17ta\_ZH, 
+PSIT 4}\\
 Projekt Darwin}
 
 \begin{document}
@@ -65,6 +67,9 @@ Das Ergebnis des ''Projekt Darwin'' ist ein funktionierendes Spiel, in dem mehre
 %\tableofcontents
 
 \newpage
+
+\pagestyle{myheadings}
+\markright{\hfill Projekt Darwin \hfill}
 
 \section{Einleitung}
 \subsection{Ausgangslage}
@@ -105,7 +110,7 @@ Es wird auf die einzelnen Bausteine unserer Applikation detaillierter eingegange
 %Jeweils ein code snippet als beispiel einbinden ?
 \subsection{Technische Design-Entscheidungen}
 \subsubsection{TypeScript / Node.js}
-TypeScript ist eine Programmiersprache, die von Microsoft entwickelt wurde [1]. Sie ermöglicht es uns, unsere Applikation modularer zu gestalten und einen besseren Überblick über die Funktionalität zu behalten.\\
+TypeScript ist eine Programmiersprache, die von Microsoft entwickelt wurde. Sie ermöglicht es uns, unsere Applikation modularer zu gestalten und einen besseren Überblick über die Funktionalität zu behalten.\\
 Da es sich bei Darwin um eine Webapplikation handelt, welche in Frontend und Backend aufgeteilt ist, haben wir uns aufgrund der Erfahrung der Teammitglieder für das ausschliessliche Einsetzen von TypeScript bzw. JavaScript entschieden.
 Mit Hilfe von TypeScript können wir unseren Quellcode mit einer besseren Struktur versehen (siehe z.B. die Struktur der Spiel-Objekte im Bild \ref{types}) und ihn besser formulieren sowie einfacher skalieren.
 
@@ -116,17 +121,17 @@ Mit Hilfe von TypeScript können wir unseren Quellcode mit einer besseren Strukt
 	\label{types}
 \end{figure}
 
-Mit Node.js können wir das Front- und Backend einfach zusammenlegen und den Entwicklungsprozess verbessern. Es ist die meistverwendete JavaScript Runtime und weist die notwendige Stabilität für das Projekt Darwin auf.
+Mit Node.js können wir das Front- und Backend einfach zusammenlegen und den Entwicklungsprozess verbessern. Es ist die meistverwendete JavaScript Runtime \cite{node.js} und weist die notwendige Stabilität für das Projekt Darwin auf.
 
 \subsubsection{React / 2D Canvas}
 React ist eine JavaScript-Bibliothek, deren Ziel es ist, die Entwicklung von User Interfaces zu vereinfachen. Sie wurde 2013 von Facebook entwickelt und ist in der App-Entwicklung mittlerweile stark verbreitet.
-Die API von React ist sehr kompakt und besteht aus 4 Komponenten: Components, JSX, State und Props [3].
+Die API von React ist sehr kompakt und besteht aus 4 Komponenten: Components, JSX, State und Props \cite{react-handbook}.
 Aufgrund der bestehenden Erfahrung des Teams und einer sehr grossen Community fiel uns der Entscheid React zu benutzen leicht.
 
 Für die Visualisierung des Spiels und dessen Objekte setzen wir 2D Canvas Context mittels Pixi.js ein. Da wir das Spiel selber gestaltet haben, ist das Einsetzen der Canvas API am besten geeignet, da man diese einfach erlernen kann und sie nur minimale mathematische Kenntnisse für die Entwicklung voraussetzt.
 
 \subsubsection{Lerna / Monorepo}
-Lerna ist ein Tool, das die Verwaltung von Repositories mit mehreren Paketen mittels git und npm optimiert [4]. Bei unserem Projekt hilft uns Lerna mit der Verwaltung von Paketen, die im Frontend und Backend verwendet werden.
+Lerna ist ein Tool, das die Verwaltung von Repositories mit mehreren Paketen mittels git und npm optimiert \cite{lerna}. Bei unserem Projekt hilft uns Lerna mit der Verwaltung von Paketen, die im Frontend und Backend verwendet werden.
 
 \subsubsection{Testing / Jest}
 Unit Tests werden automatisiert bei jedem Build und Pull-Request ausgeführt.
@@ -240,12 +245,16 @@ Wir könnten uns vorstellen, verschiedene neue Gem-Types mit neuen Bedeutungen e
 %Englisch:\\
 %Author surname, Initials. (Year). title. ed. City: Publisher, p.Pages Used.
 
-\begin{itemize}
-\item [1] Wikipedia, Type Script [online]. \\URL: https://de.wikipedia.org/wiki/TypeScript (Abgerufen am 18.04.2020).
-\item [2] Entwickler Onlinemagazin.  [online]. \\URL: https://entwickler.de/online/javascript/7-gruende-node-js-579924149.html (Abgerufen am 18.04.2020).
-\item [3] React Handbook [online]. \\URL: https://www.freecodecamp.org/news/the-react-handbook-b71c27b0a795/ (Abgerufen am 18.04.2020).
-\item [4] Lerna. URL: https://lerna.js.org/ (Abgerufen am 18.04.2020).
-\end{itemize}
+% Online-Publikation Grundmuster:
+% Vorname-Initiale. Autorname. (Datum). titel (Ausgabe) [Online]. URL: url [Stand: Abfragedatum]
+
+\printbibliography
+%\begin{itemize}
+%\item [2] P. D. Bhavsar. (30.1.2020). 7 Gründe für Node.js: Warum sich der Blick darauf lohnt [Online]. URL: https://entwickler.de/online/javascript/7-gruende-node-js-579924149.html [Stand 18.04.2020]
+%\item [3] F. Copes. (8.1.2019). The React Handbook [online]. \\URL: https://www.freecodecamp.org/news/the-react-handbook-b71c27b0a795/ [Stand 18.04.2020]
+%\item [4] Unknown author. (Unknown date). Lerna, A tool for managing JavaScript projects with multiple packages. [Online]. URL: https://lerna.js.org/ [Stand 18.04.2020]
+%\end{itemize}
+
 \begin{otherlanguage}{german}
 \listoffigures
 \end{otherlanguage}
