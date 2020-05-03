@@ -105,8 +105,8 @@ const HelpText: FC = () => {
         Gegner attackieren, welcher in Reichweite ist. Du Kannst das Unit-Objekt
         deiner Wahl als übergabe Parameter mitgeben. Die{' '}
         <InlineCode>nearestEnemyUnit</InlineCode> ist als default-Wert gesetzt.
-        <Codeblock>attack(nearestEnemyUnit)</Codeblock>
       </p>
+      <Codeblock>attack(nearestEnemyUnit)</Codeblock>
       <h4>Power-ups</h4>
       <p>
         Mit dem Konsumieren eines Powerups kann sich der Spieler einen Vorteil
