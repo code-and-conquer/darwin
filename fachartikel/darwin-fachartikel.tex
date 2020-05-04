@@ -48,11 +48,11 @@ Projekt Darwin}
 %250 wörter
 % Einleitung: Definiere Problematik und begründe Revelanz der Untersuchung
 In der heutigen Zeit haben sich Videospiele in unserer Gesellschaft stark etabliert und sind ein Teil unseres Alltags geworden. Die Branche und Präsenz der Spieleindustrie wächst von Jahr zu Jahr stetig an und bildet ein sehr lukratives Geschäftsumfeld. Erträge und Umsätze in Milliardenhöhe sind keine Seltenheit. Unternehmen mit mehreren Hundert Mitarbeitern, versuchen im Schnelltempo Spiele verschiedenster Art auf den Markt zu bringen. 
-\\Im Angesicht solch grosser Konkurrenz stellt sich uns die Frage, wie gestalten wir ein attraktives Spiel? Wer ist die Zielgruppe? Wie kann ich die Spieler für das Spiel begeistern? Welche Qualitäten braucht das Spiel?
-\\Um all diese Fragen beantworten zu können, braucht es ein fundiertes Konzept, gute Überlegungen und ein gutes Team. Obwohl die Konkurrenz sehr gross ist, sehen wir eine Möglichkeit mit einem interaktiven Multiplayer-Spiel den Durchbruch zu schaffen.
+\\Im Angesicht solch grosser Konkurrenz stellt sich uns die Frage, wie gestalten wir ein attraktives Spiel? Wer ist die Zielgruppe? Wie können wir die Spieler für das Spiel begeistern? Welche Qualitäten braucht das Spiel?
+\\Um all diese Fragen beantworten zu können, braucht es ein fundiertes Konzept, durchdachte Überlegungen und ein gutes Team. Obwohl die Konkurrenz sehr gross ist, sehen wir eine Möglichkeit mit einem interaktiven Multiplayer-Spiel den Durchbruch zu schaffen.
 
 % Methodische Einordnung: Art und Ziel der Arbeit (Umfrage, Analyse, Test, etc)
-Ziel dieser Arbeit ist es, ein innovatives und erfinderisches Spiel zu entwickeln, das sowohl logisches Denken wie technisches Interesse fördert. Das Ziel des Spieles ist es, Spieleinheiten mit kleinen Code-Abschnitten zu steuern und der einzige ''Überlebende'' zu sein.
+Ziel dieser Arbeit ist es, ein innovatives und erfinderisches Spiel zu entwickeln, das sowohl logisches Denken wie auch technisches Interesse fördert. Das Ziel des Spieles ist es, Spieleinheiten mit kleinen Code-Abschnitten zu steuern und schlussendlich der letzte ''Überlebende'' zu sein.
 
 % Vorgehen:  Typische Fragestellungen werden genannt oder ein Testbeispiel wird beschrieben
 Bei der Entwicklung werden modernste Technologien eingesetzt. Für den Frontend-Bereich haben wir uns für React entscheiden. Dies ermöglicht es uns die Applikation in Komponenten zu entwickeln und erhöht den Wiederverwendungsgrad. Für die Realisierung des Backends setzen wir auf Node.js und Typescript, da es uns erlaubt die Applikation modularer zu bauen und sie eine grosse Community besitzen.
@@ -98,7 +98,7 @@ Ziel von ''Projekt Darwin'' ist es, sowohl den Spielspass zu maximieren, als auc
 Das Spiel in seiner jetzigen Version lässt sich mit wenigen Befehlen spielen, weshalb die technischen Vorkenntnisse minimal sein können.\\
 In einer zukünftigen Version könnte man das verwendete Set an Befehlen in höheren Levels erweitern, sodass die Komplexität zunimmt und der Spieler im Laufe der Zeit dazu lernen kann.
 
-Ein weiteres Ziel des Projektes war es, die Kompetenzen des Entwicklungsteams bzgl. agiler Software-Entwicklung aufzubauen und zu trainieren.
+Ein weiteres Ziel des Projektes war es, die Kompetenzen des Entwicklungsteams bzgl. agiler Software-Entwicklung aufzubauen und zu festigen.
 
 \newpage
 
@@ -110,9 +110,9 @@ Es wird auf die einzelnen Bausteine unserer Applikation detaillierter eingegange
 %Jeweils ein code snippet als beispiel einbinden ?
 \subsection{Technische Design-Entscheidungen}
 \subsubsection{TypeScript / Node.js}
-TypeScript ist eine Programmiersprache, die von Microsoft entwickelt wurde. Durch die Typisierung ermöglicht es uns verschiedene Module einfacher zu überarbeiten.\\
+TypeScript ist eine Programmiersprache, die von Microsoft entwickelt wurde. Durch die Typisierung ermöglicht es uns, verschiedene Module einfacher zu überarbeiten.\\
 Da es sich bei Darwin um eine Webapplikation handelt, welche in Frontend und Backend aufgeteilt ist, haben wir uns aufgrund der Erfahrung der Teammitglieder für das ausschliessliche Einsetzen von TypeScript bzw. JavaScript entschieden.
-Mithilfe von TypeScript können wir unseren Quellcode mit einer besseren Struktur versehen (siehe z. B. die Struktur der Spiel-Objekte im Bild \ref{types}) und ihn besser formulieren sowie einfacher skalieren.
+Mithilfe von TypeScript können wir unseren Quellcode mit einer besseren Struktur versehen (siehe z. B. die Struktur der Spiel-Objekte im Bild \ref{types}) und ihn besser formulieren, sowie auch einfacher skalieren.
 
 \begin{figure}[H]
 	\centering
@@ -121,13 +121,13 @@ Mithilfe von TypeScript können wir unseren Quellcode mit einer besseren Struktu
 	\label{types}
 \end{figure}
 
-Mit Node.js können wir nicht nur im Frontend JavaScript einsetzen sondern ebenfalls im Backend. Dies ermöglicht es uns Code einfacher zwischen verschiedenen Teilen der Applikation auszutauschen. Zudem ist es die meistverwendete JavaScript Runtime \cite{node.js} und weist die notwendige Stabilität für das Projekt Darwin auf.
+Mit Node.js können wir nicht nur auch im Backend JavaScript einsetzen. Dies ermöglicht es uns, Code einfacher zwischen den verschiedenen Teilen der Applikation wiederzuverwenden. Zudem ist es die meistverwendete JavaScript Runtime \cite{node.js} und weist die notwendige Stabilität für das Projekt Darwin auf.
 
 \subsubsection{React / 2D Canvas}
 React ist eine JavaScript-Bibliothek, deren Ziel es ist, die Entwicklung von User Interfaces zu vereinfachen. Sie wurde 2013 von Facebook entwickelt und ist in der Web-Entwicklung mittlerweile stark verbreitet.
 Aufgrund der bestehenden Erfahrung des Teams und einer sehr grossen Community fiel uns der Entscheid React zu benutzen leicht.
 
-Für die Visualisierung des Spiels und dessen Objekte setzen wir 2D Canvas mittels Pixi.js ein. Der Einsatz von Pixi.js bietet uns die Möglichkeit die Canvas API zu abstrahieren und sich somit die Umsetzung der Visualisierung weniger aufwändig gestaltet.
+Für die Visualisierung des Spiels und dessen Objekte setzen wir 2D Canvas mittels Pixi.js ein. Der Einsatz von Pixi.js bietet uns die Möglichkeit, die Canvas API zu abstrahieren und sich somit die Umsetzung der Visualisierung weniger aufwändig gestaltet.
 
 \subsubsection{Lerna / Monorepo}
 Lerna ist ein Tool, das die Verwaltung von Repositories mit mehreren Paketen mittels git und npm optimiert \cite{lerna}. Bei unserem Projekt hilft uns Lerna mit der Verwaltung von Paketen, die im Frontend und Backend verwendet werden.
@@ -153,7 +153,7 @@ In diesem Abschnitt werden die Elemente des implementierten Spiels beschrieben.
 
 \subsubsection{UI}
 
-Wie im Bild \ref{gameplay} ersichtlich, gliedert sich das UI in ein Spielfeld (zentriert) und eine Textinput-Area (unten), durch die der Spieler den Spielverlauf steuern kann. Es ist innerhalb des Spiels eine detaillierte Hilfeseite mit Beispielen jederzeit abrufbar.
+Wie im Bild \ref{gameplay} ersichtlich, gliedert sich das UI in ein Spielfeld (rechts) und eine Textinput-Area (link), durch die der Spieler den Spielverlauf steuern kann. Es ist innerhalb des Spiels eine detaillierte Hilfeseite mit Beispielen direkt unter dem Spielfeld einsehbar.
 
 \begin{figure}[H]
 	\centering
@@ -164,11 +164,11 @@ Wie im Bild \ref{gameplay} ersichtlich, gliedert sich das UI in ein Spielfeld (z
 
 \subsubsection{Spielfeld}
 
-Das Spielfeld (sichtbar im Bild \ref{spielfeld}) besteht aus kleinen Quadraten, die entweder leer oder mit geometrischen Figuren gefüllt sind. Die geometrischen Formen haben folgende Bedeutung:
+Das Spielfeld (sichtbar im Bild \ref{spielfeld}) ist in ein Raster unterteilt. Die Spielobjekte werden als geometrische Figuren visualisiert. Diese geometrischen Formen haben folgende Bedeutung:
 \begin{itemize}
 \item Grünes Quadrat: Der aktuelle Spieler (''ich'')
 \item Rotes Quadrat: Anderer Spieler (''Gegner'')
-\item Balken über den Quadraten: Gesundheitszustand der Spieler (''Health'')
+\item Balken über den Quadraten: Gesundheitszustand des Spielers (''Health'')
 \item Blauer Kreis: Nahrung
 \item Kleine Quadrate (verschiedene Farben): ''Power-Ups''
 \end{itemize}
@@ -182,7 +182,7 @@ Das Spielfeld (sichtbar im Bild \ref{spielfeld}) besteht aus kleinen Quadraten, 
 
 \subsubsection{Spielführung}
 
-Gespielt wird mittels Eingabe von Code, z.B. \texttt{move('LEFT')}, wie im Bild \ref{code-eingabe} ersichtlich. Ziel ist es, als Letzter zu überleben. Um am Leben zu bleiben, muss man Nahrung sammeln. Man kann sich Vorteile verschaffen durch das Konsumieren von Power-Ups. Bewegt man sich auf ein Feld auf dem der andere Spieler sich befindet, attackiert man diesen.
+Gespielt wird mittels Code-Eingabe, z.B. \texttt{move('LEFT')}, wie im Bild \ref{code-eingabe} ersichtlich. Ziel ist es, als Letzter zu überleben. Um am Leben zu bleiben, muss man Nahrung sammeln. Das konsumieren von Powerups kann einem einen entscheidenden Vorteil im Kampf um den Siegverschaffen. Ist man gerüstet, kann der Spieler auch gegnerische Spieler angreifen, um dem Sieg ein Stück näher zu kommen. Aber hierbei ist Vorsicht geboten! Dieses Maneuver kann nach hinten los gehen.
 
 \begin{figure}[H]
 	\centering
@@ -204,7 +204,7 @@ Darwin wurde gemäss unserer Planung erfolgreich umgesetzt. Wir haben alle Funkt
 
 \subsection{Workflow}
 
-Die automatisierte Build-Pipeline hat sich als sehr wichtig herausgestellt um während der Entwicklungsphase mit mehreren Entwicklern effizient arbeiten zu können. Der Workflow gewährleistet, dass ausschliesslich funktionierender Code deployed wird. Das führt dazu, dass weder nachfolgende Entwickler warten müssen um Code einzuchecken (weil z.B. gerade jemand den Build ''gebrochen'' hat mit seinem Check-in), noch das Testing wegen nicht funktionierender Umgebungen warten muss.
+Die automatisierte Build-Pipeline hat sich als sehr wichtig herausgestellt, um während der Entwicklungsphase mit mehreren Entwicklern effizient arbeiten zu können. Der Workflow gewährleistet, dass ausschliesslich funktionierender Code deployed wird. Das führt dazu, dass weder nachfolgende Entwickler warten müssen, um Code einzuchecken (weil z.B. gerade jemand den Build ''gebrochen'' hat mit seinem Check-in), noch das Testing wegen einer nicht funktionierender Umgebungen warten muss.
 
 \subsection{UI}
 
@@ -213,7 +213,7 @@ Die angebotene Hilfeseite mit Code-Beispielen erweist sich als sehr hilfreich, i
 
 \subsection{Spielfeld}
 
-Die Grafik der Icons auf dem Spielfeld war zu Beginn etwas aufwendiger geplant, das Team wollte Figuren aus der ''Wilhelm Tell''-Sage benutzen. Wir haben uns jedoch relativ schnell dagegen entschieden, komplexe Icons zu designen. Die aufwendige Darstellung hätte dem Spiel zwar ein interessantes Thema gegeben, jedoch inhaltlich keinen Mehrwert geliefert. Die jetzt verwendeten geometrischen Formen sind sehr klar, für den Spieler gut erkennbar und passen auch insgesamt gut zur Grafik. Wir sind deshalb mit dieser Anpassung zufrieden.
+Die Grafik der Icons auf dem Spielfeld war zu Beginn etwas aufwendiger geplant, das Team wollte Figuren aus der ''Wilhelm Tell''-Sage benutzen. Wir haben uns jedoch früh dagegen entschieden, komplexe Icons zu designen. Die aufwendige Darstellung hätte dem Spiel zwar ein interessantes Thema gegeben, jedoch inhaltlich keinen Mehrwert geliefert. Die jetzt verwendeten geometrischen Formen sind sehr klar, für den Spieler gut erkennbar und passen auch insgesamt gut zur Grafik. Wir sind deshalb mit dieser Anpassung zufrieden.
 
 \subsection{Spielführung}
 
@@ -227,7 +227,7 @@ Scrum ermöglicht, den Entwicklungsprozess strukturiert und effizient zu gestalt
 Es gibt diverse Erweiterungsmöglichkeiten für das Spiel. Einige sind im Folgenden näher beschrieben:
 
 \subsubsection{UI}
-Wir könnten uns überlegen, das ursprünglich angedachte, komplexere Iconset zu implementieren. Der Spieler könnte sich damit vielleicht besser mit der Story identifizieren. Dies hat für den Product Owner allerdings im Moment keine Priorität, da der Aufwand für die Erstellung des Iconsets eher gross wäre im Vergleich zum Nutzen.
+Wir könnten uns überlegen, das ursprünglich angedachte, komplexere Iconset zu implementieren. Der Spieler könnte sich damit vielleicht besser mit der Story identifizieren. Dies hat für den Product Owner allerdings im Moment keine Priorität, da der Aufwand für die Erstellung des Iconsets sehr gross wäre im Vergleich zum Nutzen.
 
 \subsubsection{Befehlsset}
 In Zukunft könnten die zur Verfügung stehenden Kommandos erweitert werden, z.B. durch weiterführende Levels, sodass auch neue Strategien möglich werden. Damit könnte man z.B. die Spieler durch verschiedene Lernstufen begleiten und sie würden ihr Können Schritt für Schritt verbessern.
