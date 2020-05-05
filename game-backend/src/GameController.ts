@@ -13,6 +13,7 @@ import { createUnit, getGameObjectsPerType } from './helper/gameObjects';
 import { generateFreePosition } from './helper/fields';
 import performTick from './game-engine';
 import { createGameStore } from './createGameStore';
+import createMap from './map/index';
 
 export const TICK_INTERVAL = 2000;
 
@@ -33,7 +34,9 @@ export default class GameController {
   constructor(
     private sendMatchUpdate: (userId: UserId, matchUpdate: MatchUpdate) => void,
     private terminate: () => void
-  ) {}
+  ) {
+    this.store.matchState = createMap(this.store.matchState);
+  }
 
   appendUser(userId: UserId): void {
     const unit = this.generateUnit();
