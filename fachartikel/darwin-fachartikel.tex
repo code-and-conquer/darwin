@@ -20,7 +20,6 @@
 \addbibresource{darwin-fachartikel.bib}
 
 	
-%%% TODO: VOLLSTÄNDIGES BILD
 \titlepic{\includegraphics[width=\textwidth]{darwin.png}}
 
 \author{
@@ -29,7 +28,7 @@ Filip Kašiković (Scrum Master)\\
 Raphael Mailänder\\
 Simon Stucki\\
 Marc Berli\\
-Ferenc Kuntić}
+Ferenc Kuntič}
 
 %%% TODO: HINWEIS AUF ZHAW SCHÖNER FORMATIEREN
 \title{{\small ZHAW School of Engineering, 
@@ -112,7 +111,7 @@ Es wird auf die einzelnen Bausteine unserer Applikation detaillierter eingegange
 \subsubsection{TypeScript / Node.js}
 TypeScript ist eine Programmiersprache, die von Microsoft entwickelt wurde. Durch die Typisierung ermöglicht es uns, verschiedene Module einfacher zu überarbeiten.\\
 Da es sich bei Darwin um eine Webapplikation handelt, welche in Frontend und Backend aufgeteilt ist, haben wir uns aufgrund der Erfahrung der Teammitglieder für das ausschliessliche Einsetzen von TypeScript bzw. JavaScript entschieden.
-Mithilfe von TypeScript können wir unseren Quellcode mit einer besseren Struktur versehen (siehe z. B. die Struktur der Spiel-Objekte im Bild \ref{types}) und ihn besser formulieren, sowie auch einfacher skalieren.
+Mithilfe von TypeScript können wir unseren Quellcode mit einer besseren Struktur versehen (siehe z. B. die Struktur der Spiel-Objekte in Abb. \ref{types}) und ihn besser formulieren, sowie auch einfacher skalieren.
 
 \begin{figure}[H]
 	\centering
@@ -121,10 +120,10 @@ Mithilfe von TypeScript können wir unseren Quellcode mit einer besseren Struktu
 	\label{types}
 \end{figure}
 
-Mit Node.js können wir nicht nur auch im Backend JavaScript einsetzen. Dies ermöglicht es uns, Code einfacher zwischen den verschiedenen Teilen der Applikation wiederzuverwenden. Zudem ist es die meistverwendete JavaScript Runtime \cite{node.js} und weist die notwendige Stabilität für das Projekt Darwin auf.
+Mit Node.js können wir nicht nur auch im Backend JavaScript einsetzen. Dies ermöglicht es uns, Code einfacher zwischen den verschiedenen Teilen der Applikation wiederzuverwenden. Zudem ist es eine sehr beliebte JavaScript Runtime \cite{node-git} und weist die notwendige Stabilität für das Projekt Darwin auf.
 
 \subsubsection{React / 2D Canvas}
-React ist eine JavaScript-Bibliothek, deren Ziel es ist, die Entwicklung von User Interfaces zu vereinfachen. Sie wurde 2013 von Facebook entwickelt und ist in der Web-Entwicklung mittlerweile stark verbreitet.
+React ist eine JavaScript-Bibliothek, deren Ziel es ist, die Entwicklung von User Interfaces zu vereinfachen. Sie wurde 2013 von Facebook entwickelt \cite{react-handbook} und ist in der Web-Entwicklung mittlerweile stark verbreitet.
 Aufgrund der bestehenden Erfahrung des Teams und einer sehr grossen Community fiel uns der Entscheid React zu benutzen leicht.
 
 Für die Visualisierung des Spiels und dessen Objekte setzen wir 2D Canvas mittels Pixi.js ein. Der Einsatz von Pixi.js bietet uns die Möglichkeit, die Canvas API zu abstrahieren und sich somit die Umsetzung der Visualisierung weniger aufwändig gestaltet.
@@ -138,7 +137,7 @@ Als Framework wird Jest von Facebook verwendet. Dieses ist in der Javascript-Wel
 Beim Unit Testing werden einzelne Einheiten isoliert getestet und sowohl im Frontend als auch im Backend separat ausgeführt.
 
 \subsubsection{Workflow / CI|CD}
-Ein reibungsloser Entwicklungsprozess hat für uns oberste Priorität, deswegen haben wir beschlossen eine Build-, sowie eine Releasepipeline einzurichten (siehe Bild \ref{pipeline}). Diese ermöglicht es, Pull-Requests automatisch zu testen und bei einem erfolgten Merge automatisiert zu Deployen.
+Ein reibungsloser Entwicklungsprozess hat für uns oberste Priorität, deswegen haben wir beschlossen eine Build-, sowie eine Releasepipeline einzurichten (siehe Abb. \ref{pipeline}). Diese ermöglicht es, Pull-Requests automatisch zu testen und bei einem erfolgten Merge automatisiert zu Deployen.
 
 \begin{figure}[H]
 	\centering
@@ -153,7 +152,7 @@ In diesem Abschnitt werden die Elemente des implementierten Spiels beschrieben.
 
 \subsubsection{UI}
 
-Wie im Bild \ref{gameplay} ersichtlich, gliedert sich das UI in ein Spielfeld (rechts) und eine Textinput-Area (links), durch die der Spieler den Spielverlauf steuern kann. Es ist innerhalb des Spiels eine detaillierte Hilfeseite mit Beispielen direkt unter dem Spielfeld einsehbar.
+Wie in Abbildung \ref{gameplay} ersichtlich, gliedert sich das UI in ein Spielfeld (rechts) und eine Textinput-Area (links), durch die der Spieler den Spielverlauf steuern kann. Es ist innerhalb des Spiels eine detaillierte Hilfeseite mit Beispielen direkt unter dem Spielfeld einsehbar.
 
 \begin{figure}[H]
 	\centering
@@ -164,7 +163,7 @@ Wie im Bild \ref{gameplay} ersichtlich, gliedert sich das UI in ein Spielfeld (r
 
 \subsubsection{Spielfeld}
 
-Das Spielfeld (sichtbar im Bild \ref{spielfeld}) ist in ein Raster unterteilt. Die Spielobjekte werden als geometrische Figuren visualisiert. Diese geometrischen Formen haben folgende Bedeutung:
+Das Spielfeld (sichtbar in Abb. \ref{spielfeld}) ist in ein Raster unterteilt. Die Spielobjekte werden als geometrische Figuren visualisiert. Diese geometrischen Formen haben folgende Bedeutung:
 \begin{itemize}
 \item Grünes Quadrat: Der aktuelle Spieler (''ich'')
 \item Rotes Quadrat: Anderer Spieler (''Gegner'')
@@ -182,7 +181,7 @@ Das Spielfeld (sichtbar im Bild \ref{spielfeld}) ist in ein Raster unterteilt. D
 
 \subsubsection{Spielführung}
 
-Gespielt wird mittels Code-Eingabe, z.B. \texttt{move('LEFT')}, wie im Bild \ref{code-eingabe} ersichtlich. Ziel ist es, als Letzter zu überleben. Um am Leben zu bleiben, muss man Nahrung sammeln. Das konsumieren von Powerups kann einem einen entscheidenden Vorteil im Kampf um den Siegverschaffen. Ist man gerüstet, kann der Spieler auch gegnerische Spieler angreifen, um dem Sieg ein Stück näher zu kommen. Aber hierbei ist Vorsicht geboten! Dieses Maneuver kann nach hinten los gehen.
+Gespielt wird mittels Code-Eingabe, z.B. \texttt{move('LEFT')}, wie in Abbildung \ref{code-eingabe} ersichtlich. Ziel ist es, als Letzter zu überleben. Um am Leben zu bleiben, muss man Nahrung sammeln. Das konsumieren von Powerups kann einem einen entscheidenden Vorteil im Kampf um den Siegverschaffen. Ist man gerüstet, kann der Spieler auch gegnerische Spieler angreifen, um dem Sieg ein Stück näher zu kommen. Aber hierbei ist Vorsicht geboten! Dieses Maneuver kann nach hinten los gehen.
 
 \begin{figure}[H]
 	\centering
