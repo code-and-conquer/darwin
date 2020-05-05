@@ -5,6 +5,7 @@ export type ObjectId = string;
 export enum GameObjectTypes {
   Unit = 'unit',
   Food = 'food',
+  Wall = 'wall',
   EnduranceBoost = 'enduranceBoost',
   Teleport = 'teleport',
   HealthRegenBoost = 'healthRegenBoost',

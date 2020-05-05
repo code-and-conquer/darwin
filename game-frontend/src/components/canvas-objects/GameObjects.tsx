@@ -19,6 +19,7 @@ type Props = {
 
 const sortLayerConfig: Record<GameObjectTypes, number> = {
   unit: 2,
+  wall: 2,
   food: 1,
   enduranceBoost: 1,
   healthRegenBoost: 1,
