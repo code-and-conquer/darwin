@@ -71,6 +71,13 @@ const HelpText: FC = () => {
         <InlineCode>'LEFT'</InlineCode>) zur Verfügung.
       </p>
       <Codeblock>move('UP')</Codeblock>
+      <h5>Wände</h5>
+      <p>
+        Es gibt Wände, die dir und deinen Gegner Schutz geben können, aber auch
+        das finden von Resourcen umständlicher gestaltet. Alle Wände auf der Map
+        findest du in der <InlineCode>walls</InlineCode> Variable. Damit kannst
+        du diese effektiv umkurven.
+      </p>
       <h4>
         Ressourcen konsumieren - <CostEmoji /> 3
       </h4>
