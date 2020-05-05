@@ -1,6 +1,6 @@
 import { Position } from '@darwin/types';
 
-const warpedArena: Position[] = [
+const feastOrFamine: Position[] = [
   // top left
   { x: 6, y: 3 },
   { x: 6, y: 4 },
@@ -36,4 +36,4 @@ const warpedArena: Position[] = [
   { x: 11, y: 11 },
 ];
 
-export default warpedArena;
+export default feastOrFamine;
