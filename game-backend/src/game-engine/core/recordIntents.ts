@@ -4,6 +4,7 @@ import {
   Consumable,
   Unit,
   UserStore,
+  GameObject,
 } from '@darwin/types';
 import deepClone from '../../helper/deepClone';
 import { Intent } from '../intent/Intent';
@@ -16,6 +17,7 @@ import {
 } from '../state-selectors/powerupSelector';
 import {
   selectFoods,
+  selectWalls,
   selectUserUnit,
   getNearestFood,
   selectEnemyUnits,
@@ -31,6 +33,7 @@ interface ScriptContextMethods {
 
 interface ScriptContextVariables {
   foods: Consumable[];
+  walls: GameObject[];
   nearestFood: Consumable;
   userUnit: Unit;
   enemyUnits: Unit[];
@@ -54,6 +57,7 @@ function recordIntents(
 ): [Intent[], UserStore] {
   const intentions: Intent[] = [];
   const foods = selectFoods(state);
+  const walls = selectWalls(state);
   const userUnit = selectUserUnit(state, userExecutionContext.unitId);
   const nearestFood = getNearestFood(state, userUnit);
   const enemyUnits = selectEnemyUnits(state, userExecutionContext.unitId);
@@ -64,6 +68,7 @@ function recordIntents(
   const variables: ScriptContextVariables = deepClone({
     nearestFood,
     foods,
+    walls,
     userUnit,
     enemyUnits,
     nearestEnemyUnit,
