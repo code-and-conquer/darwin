@@ -13,13 +13,12 @@
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \graphicspath{{./img/}}
 \usepackage{titlepic}
-\usepackage[document]{ragged2e}
 \usepackage{float}
 \usepackage[titles]{tocloft}
 \usepackage[style=ieee,backend=biber,alldates=iso]{biblatex}
 \addbibresource{darwin-fachartikel.bib}
+\setlength{\parindent}{0em} 
 
-	
 \titlepic{\includegraphics[width=\textwidth]{darwin.png}}
 
 \author{
@@ -47,9 +46,8 @@ Projekt Darwin}
 %250 wörter
 % Einleitung: Definiere Problematik und begründe Revelanz der Untersuchung
 In der heutigen Zeit haben sich Videospiele in unserer Gesellschaft stark etabliert und sind ein Teil unseres Alltags geworden. Die Branche und Präsenz der Spieleindustrie wächst von Jahr zu Jahr stetig an und bildet ein sehr lukratives Geschäftsumfeld. Erträge und Umsätze in Milliardenhöhe sind keine Seltenheit. Unternehmen mit mehreren hundert Mitarbeitern, versuchen im Schnelltempo Spiele verschiedenster Art auf den Markt zu bringen. 
-
 Angesichts solch grosser Konkurrenz stellen sich uns die Fragen: Wie gestalten wir ein attraktives Spiel? Wer ist die Zielgruppe? Wie können wir die Spieler für das Spiel begeistern? Welche Qualitäten braucht das Spiel?
-\\Um all diese Fragen beantworten zu können, braucht es ein fundiertes Konzept, durchdachte Überlegungen und ein gutes Team. Obwohl die Konkurrenz sehr gross ist, sehen wir eine Möglichkeit, mit einem interaktiven Mehrspieler-Spiel den Durchbruch zu schaffen.
+Um all diese Fragen beantworten zu können, braucht es ein fundiertes Konzept, durchdachte Überlegungen und ein gutes Team. Obwohl die Konkurrenz sehr gross ist, sehen wir eine Möglichkeit, mit einem interaktiven Mehrspieler-Spiel den Durchbruch zu schaffen.
 
 % Methodische Einordnung: Art und Ziel der Arbeit (Umfrage, Analyse, Test, etc)
 Ziel dieser Arbeit ist es, ein innovatives und erfinderisches Spiel zu entwickeln, das sowohl logisches Denken wie auch technisches Interesse fördert. Das Ziel des Spieles ist es, Spieleinheiten mit kleinen Code-Abschnitten zu steuern und schlussendlich der letzte ''Überlebende'' zu sein.
@@ -183,7 +181,7 @@ Das Spielfeld (sichtbar in Abb. \ref{spielfeld}) ist in ein Raster unterteilt. D
 
 \subsubsection{Spielführung}
 
-Gespielt wird mittels Code-Eingabe, zum Beispiel \texttt{move('LEFT')}, wie in Abbildung \ref{code-eingabe} ersichtlich. Ziel ist es, als Letzter zu überleben. Um am Leben zu bleiben, muss man Nahrung sammeln. Das Konsumieren von Powerups kann dem Spieler einen entscheidenden Vorteil verschaffen, um den Sieg zu erlangen. Ist man gerüstet, kann der Spieler auch gegnerische Spieler angreifen, um dem Sieg ein Stück näher zu kommen. Aber hierbei ist Vorsicht geboten: Dieses Manöver kann nach hinten los gehen!
+Gespielt wird mittels Code-Eingabe, zum Beispiel \texttt{move('LEFT')}, wie in Abbildung \ref{code-eingabe} ersichtlich. Ziel ist es, als Letzter noch zu leben. Um am Leben zu bleiben, muss man Nahrung sammeln. Das Konsumieren von Powerups kann dem Spieler einen entscheidenden Vorteil verschaffen, um den Sieg zu erlangen. Ist man gerüstet, kann der Spieler auch gegnerische Spieler angreifen, um dem Sieg ein Stück näher zu kommen. Aber hierbei ist Vorsicht geboten: Dieses Manöver kann nach hinten los gehen!
 
 \begin{figure}[H]
 	\centering
@@ -205,7 +203,7 @@ Projekt Darwin wurde gemäss unserer Planung erfolgreich umgesetzt. Wir haben al
 
 \subsection{Workflow}
 
-Die automatisierte Build-Pipeline hat sich als sehr wichtig herausgestellt, um während der Entwicklungsphase mit mehreren Entwicklern effizient arbeiten zu können. Der Workflow gewährleistet, dass ausschliesslich funktionierender Code deployed wird. Dies hat den Vorteil, dass nachfolgende Entwickler nicht blockiert werden, falls eingecheckter Code nicht kompiliert. Auch das Testing kann deshalb verzögerungsfrei starten, da es nicht auf eine nicht funktionierende Umgebung warten muss.
+Die automatisierte Build-Pipeline hat sich als sehr wichtig herausgestellt, um während der Entwicklungsphase mit mehreren Entwicklern effizient arbeiten zu können. Der Workflow gewährleistet, dass ausschliesslich funktionierender Quellcode veröffentlicht wird. Dies hat den Vorteil, dass nachfolgende Entwickler nicht blockiert werden, falls eingecheckter Code nicht kompiliert. Auch das Testing kann deshalb verzögerungsfrei starten, da es nicht auf eine nicht funktionierende Umgebung warten muss.
 
 \subsection{Benutzeroberfläche}
 
@@ -223,12 +221,13 @@ Die Regeln des Spiels sind sehr einfach gehalten, das hilft dem Spieler, sich au
 \subsection{Scrum}
 Scrum ermöglicht, den Entwicklungsprozess strukturiert und effizient zu gestalten. Ein agiles Umfeld wie Scrum hilft, die auftretenden Probleme besser und schneller zu bewältigen. Wir sind deshalb froh, dass wir dieses Framework benutzt haben.
 
+\newpage
 \subsection{Ausblick}
 
 Es gibt diverse Erweiterungsmöglichkeiten für das Spiel. Einige werden im Folgenden näher beschrieben:
 
 \subsubsection{Benutzeroberfläche}
-Es ist möglich, das ursprünglich angedachte, komplexere Icon-Set zu implementieren. Der Spieler könnte sich damit vielleicht besser mit der Geschichte identifizieren. Dies hat für den Product Owner allerdings im Moment keine Priorität, da der Aufwand für die Erstellung des Icon-Sets im Vergleich zum Nutzen zu gross ist.
+Es ist möglich, das ursprünglich angedachte, komplexere Icon-Set zu implementieren. Der Spieler könnte sich damit vielleicht besser mit der Geschichte identifizieren. Dies hat für den Product Owner allerdings im Moment keine Priorität, da der Aufwand für die Erstellung des Icon-Sets, im Vergleich zum Nutzen, zu gross ist.
 
 \subsubsection{Befehlssatz}
 In Zukunft können die zur Verfügung stehenden Befehle erweitert werden, zum Beispiel durch weiterführende Levels, sodass auch neue Strategien möglich werden. Damit könnte man zum Beispiel die Spieler durch verschiedene Lernstufen begleiten und sie können ihre Fähigkeiten Schritt für Schritt verbessern.
