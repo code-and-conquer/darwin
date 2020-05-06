@@ -1,4 +1,5 @@
 import { selectFoods, getNearestFood } from './foodSelector';
+import selectWalls from './wallSelector';
 import {
   selectUserUnit,
   selectEnemyUnits,
@@ -11,4 +12,5 @@ export {
   selectUserUnit,
   selectEnemyUnits,
   selectNearestEnemyUnit,
+  selectWalls,
 };

@@ -10,6 +10,7 @@ import Unit from './Unit';
 import Food from './Food';
 import PowerUp from './Powerup';
 import scalePosition from '../../helper/scalePosition';
+import Wall from './Wall';
 
 type Props = {
   objectIds: ObjectId[];
@@ -19,6 +20,7 @@ type Props = {
 
 const sortLayerConfig: Record<GameObjectTypes, number> = {
   unit: 2,
+  wall: 2,
   food: 1,
   enduranceBoost: 1,
   healthRegenBoost: 1,
@@ -42,6 +44,14 @@ const GameObjects: FC<Props> = ({ objectIds, objectMap, ownUnitId }) => (
                 health={unit.health}
                 position={scalePosition(unit.position)}
                 isOwn={unit.id === ownUnitId}
+              />
+            );
+          }
+          case GameObjectTypes.Wall: {
+            return (
+              <Wall
+                key={gameObject.id}
+                position={scalePosition(gameObject.position)}
               />
             );
           }
