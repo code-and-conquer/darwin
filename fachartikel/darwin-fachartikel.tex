@@ -47,11 +47,13 @@ Projekt Darwin}
 %250 wörter
 % Einleitung: Definiere Problematik und begründe Revelanz der Untersuchung
 In der heutigen Zeit haben sich Videospiele in unserer Gesellschaft stark etabliert und sind ein Teil unseres Alltags geworden. Die Branche und Präsenz der Spieleindustrie wächst von Jahr zu Jahr stetig an und bildet ein sehr lukratives Geschäftsumfeld. Erträge und Umsätze in Milliardenhöhe sind keine Seltenheit. Unternehmen mit mehreren hundert Mitarbeitern, versuchen im Schnelltempo Spiele verschiedenster Art auf den Markt zu bringen. 
+
 Angesichts solch grosser Konkurrenz stellen sich uns die Fragen: Wie gestalten wir ein attraktives Spiel? Wer ist die Zielgruppe? Wie können wir die Spieler für das Spiel begeistern? Welche Qualitäten braucht das Spiel?
 \\Um all diese Fragen beantworten zu können, braucht es ein fundiertes Konzept, durchdachte Überlegungen und ein gutes Team. Obwohl die Konkurrenz sehr gross ist, sehen wir eine Möglichkeit, mit einem interaktiven Mehrspieler-Spiel den Durchbruch zu schaffen.
 
 % Methodische Einordnung: Art und Ziel der Arbeit (Umfrage, Analyse, Test, etc)
 Ziel dieser Arbeit ist es, ein innovatives und erfinderisches Spiel zu entwickeln, das sowohl logisches Denken wie auch technisches Interesse fördert. Das Ziel des Spieles ist es, Spieleinheiten mit kleinen Code-Abschnitten zu steuern und schlussendlich der letzte ''Überlebende'' zu sein.
+
 % Vorgehen:  Typische Fragestellungen werden genannt oder ein Testbeispiel wird beschrieben
 Bei der Entwicklung werden modernste Technologien eingesetzt. Für den Frontend-Bereich haben wir uns für React entscheiden. Dies ermöglicht es uns die Applikation in Komponenten zu entwickeln und erhöht den Wiederverwendungsgrad. Für die Realisierung des Backends setzen wir auf Node.js und TypeScript, da es uns erlaubt die Applikation modularer zu bauen und sie eine grosse Community besitzen.
 Für das Projektmanagement der Entwicklung wurde uns Scrum als agilen Prozess vorgegeben.
@@ -74,10 +76,11 @@ Das Ergebnis des ''Projekt Darwin'' ist ein herausforderndes Überlebensspiel, i
 % bestehende arbeiten/Literatur
 % stand der technik / bisherige Lösungen des Problems, deren Grenzen
 
-Bestehende Spiele, die mittels Programmierung gesteuert werden, zielen sehr stark darauf ab, die Programmierfähigkeiten zu verbessern, oder ganz grundlegend, die beim Programmieren notwendige Art des Denkens zu vermitteln.
-Die meisten dieser Spiele sind für Kinder gemacht, da diese möglichst spielerisch dazu gebracht werden wollen, Dinge zu erlernen. Allerdings wissen auch junge Erwachsene eine spielerische Lernweise zu schätzen.
-Bei vielen der Lösungen steht der Quellcode im Vordergrund - die Grafik und damit auch der Spielspass, lassen zu wünschen übrig.
-Weiter sind die meisten der Konkurrenzprodukte nur für einen Spieler ausgelegt. Auch dies limitiert den Spielspass.
+Bestehende Spiele, die mittels Programmierung gesteuert werden, zielen sehr stark darauf ab die Programmierfähigkeiten zu verbessern, oder ganz grundlegend, die beim Programmieren notwendige Art des Denkens zu vermitteln.
+Die meisten dieser Spiele sind für Kinder gemacht, da diese möglichst spielerisch dazu gebracht werden wollen, Dinge zu erlernen. Allerdings wissen auch grössere Kinder eine spielerische Lernweise zu schätzen.
+
+Bei vielen der Lösungen steht das Programmieren im Vordergrund - die Grafik und damit auch der Spielspass, lassen zu wünschen übrig.
+Weiter sind die meisten der Konkurrenzprodukte nur für einen Spieler ausgelegt (''Single Player''). Auch dies limitiert den Spielspass.
 Um diese Schwächen zu adressieren, haben wir ''Projekt Darwin'' entwickelt.
 
 \subsection{Zielsetzungen}
@@ -93,7 +96,7 @@ Um diese Schwächen zu adressieren, haben wir ''Projekt Darwin'' entwickelt.
 
 Ziel von ''Projekt Darwin'' ist es, sowohl den Spielspass zu maximieren, als auch die algorithmische, logische Denkweise zu fördern. Das Spiel soll sowohl von Kindern als auch von Erwachsenen gespielt werden können, wobei die Grafik insbesondere nicht kindlich sein soll.
 Das Spiel in seiner jetzigen Version lässt sich mit wenigen Befehlen spielen, weshalb nur minimale, technische Vorkenntnisse nötig sind.
-In einer zukünftigen Version könnte man das verwendete Set an Befehlen in höheren Levels erweitern, sodass die Komplexität zunimmt und der Spieler im Laufe der Zeit dazu lernen kann.
+In einer zukünftigen Version könnte man das verwendete Set an Befehlen in höheren Levels erweitern, sodass die Komplexität zunimmt und der Spieler im Laufe der Zeit dazulernen kann.
 Ein weiteres Ziel des Projektes ist es, die Kompetenzen des Entwicklungsteams bezüglich agiler Software-Entwicklung aufzubauen und zu festigen.
 
 \newpage
@@ -107,7 +110,7 @@ Es wird auf die einzelnen Bausteine der Applikation detaillierter eingegangen un
 \subsection{Technische Design-Entscheidungen}
 Für die Umsetzung des Projekts waren verschiedene technische Entscheidungen nötig, die im Folgenden erläutert werden.
 \subsubsection{TypeScript / Node.js}
-TypeScript ist eine Programmiersprache, die von Microsoft entwickelt wurde und Quellcode in JavaScript kompiliert. Durch die Typisierung ermöglicht sie es, verschiedene Module besser zu organisieren und Refactoring einfacher durchzuführen.
+TypeScript ist eine Programmiersprache, die von Microsoft entwickelt wurde und Code in JavaScript kompiliert. Durch die Typisierung ermöglicht sie es, verschiedene Module besser zu organisieren und Refactoring einfacher durchzuführen.
 Da es sich bei Darwin um eine Webapplikation handelt, welche in Frontend und Backend aufgeteilt ist, und aufgrund der Erfahrung der Teammitglieder, ist die Entscheidung gefallen, ausschliesslich TypeScript einzusetzen.
 Mithilfe von TypeScript kann der Quellcode mit einer besseren Struktur versehen werden (siehe zum Beispiel die Struktur der Spielobjekte in Abb. \ref{types}) und ihn besser formulieren sowie auch einfacher skalieren.
 
@@ -118,7 +121,7 @@ Mithilfe von TypeScript kann der Quellcode mit einer besseren Struktur versehen 
 	\label{types}
 \end{figure}
 
-Mittels Node.js kann sowohl im Frontend als auch im Backend JavaScript eingesetzt werden. Dies ermöglicht es uns, Quellcode einfacher zwischen den verschiedenen Teilen der Applikation wiederzuverwenden. Zudem ist es eine sehr beliebte JavaScript Runtime \cite{node-git} und weist die notwendige Stabilität für das Projekt Darwin auf.
+Mittels Node.js kann sowohl im Frontend als auch im Backend JavaScript eingesetzt werden. Dies ermöglicht es uns, Code einfacher zwischen den verschiedenen Teilen der Applikation wiederzuverwenden. Zudem ist es eine sehr beliebte JavaScript Runtime \cite{node-git} und weist die notwendige Stabilität für das Projekt Darwin auf.
 
 \subsubsection{React / 2D Canvas}
 React ist eine JavaScript-Bibliothek, deren Ziel es ist, die Entwicklung von grafischen Benutzeroberflächen im Webbrowser zu vereinfachen. Sie wurde 2013 von Facebook entwickelt \cite{react-handbook} und ist in der Web-Entwicklung mittlerweile stark verbreitet.
@@ -180,7 +183,7 @@ Das Spielfeld (sichtbar in Abb. \ref{spielfeld}) ist in ein Raster unterteilt. D
 
 \subsubsection{Spielführung}
 
-Gespielt wird mittels Eingabe des Quellcodes, zum Beispiel \texttt{move('LEFT')}, wie in Abbildung \ref{code-eingabe} ersichtlich. Ziel ist es, als Letzter noch zu leben. Um am Leben zu bleiben, muss man Nahrung sammeln. Das Konsumieren von Powerups kann dem Spieler einen entscheidenden Vorteil verschaffen, um den Sieg zu erlangen. Ist man gerüstet, kann der Spieler auch gegnerische Spieler angreifen, um dem Sieg ein Stück näher zu kommen. Aber hierbei ist Vorsicht geboten: Dieses Maneuver kann nach hinten los gehen.
+Gespielt wird mittels Code-Eingabe, zum Beispiel \texttt{move('LEFT')}, wie in Abbildung \ref{code-eingabe} ersichtlich. Ziel ist es, als Letzter zu überleben. Um am Leben zu bleiben, muss man Nahrung sammeln. Das Konsumieren von Powerups kann dem Spieler einen entscheidenden Vorteil verschaffen, um den Sieg zu erlangen. Ist man gerüstet, kann der Spieler auch gegnerische Spieler angreifen, um dem Sieg ein Stück näher zu kommen. Aber hierbei ist Vorsicht geboten: Dieses Manöver kann nach hinten los gehen!
 
 \begin{figure}[H]
 	\centering
@@ -202,7 +205,7 @@ Projekt Darwin wurde gemäss unserer Planung erfolgreich umgesetzt. Wir haben al
 
 \subsection{Workflow}
 
-Die automatisierte Build-Pipeline hat sich als sehr wichtig herausgestellt, um während der Entwicklungsphase mit mehreren Entwicklern effizient arbeiten zu können. Der Workflow gewährleistet, dass ausschliesslich funktionierender Quellcode veröffentlicht wird. Das führt dazu, dass weder nachfolgende Entwickler warten müssen, um Quellcode einzuchecken, falls jemand nicht lauffähigen Quellcode eingecheckt hätte, noch dass das Testing wegen einer nicht funktionierenden Umgebung warten muss.
+Die automatisierte Build-Pipeline hat sich als sehr wichtig herausgestellt, um während der Entwicklungsphase mit mehreren Entwicklern effizient arbeiten zu können. Der Workflow gewährleistet, dass ausschliesslich funktionierender Code deployed wird. Dies hat den Vorteil, dass nachfolgende Entwickler nicht blockiert werden, falls eingecheckter Code nicht kompiliert. Auch das Testing kann deshalb verzögerungsfrei starten, da es nicht auf eine nicht funktionierende Umgebung warten muss.
 
 \subsection{Benutzeroberfläche}
 
@@ -215,17 +218,17 @@ Die Grafik der Icons auf dem Spielfeld war zu Beginn etwas aufwendiger geplant, 
 
 \subsection{Spielführung}
 
-Die Regeln des Spiels sind sehr einfach gehalten, das hilft dem Spieler, sich auf das Hauptziel zu konzentieren, nämlich das Programmieren zu erlernen und seine Strategie in Quellcode umzusetzen.
+Die Regeln des Spiels sind sehr einfach gehalten, das hilft dem Spieler, sich auf das Hauptziel zu konzentrieren, nämlich das Programmieren zu erlernen und seine Strategie in Code umzusetzen.
 
 \subsection{Scrum}
-Scrum ermöglicht den Entwicklungsprozess strukturiert und effizient zu gestalten. Ein agiles Umfeld wie Scrum hilft, die auftretenden Probleme besser und schneller zu bewältigen. Wir sind deshalb froh, dass wir dieses Framework benutzt haben.
+Scrum ermöglicht, den Entwicklungsprozess strukturiert und effizient zu gestalten. Ein agiles Umfeld wie Scrum hilft, die auftretenden Probleme besser und schneller zu bewältigen. Wir sind deshalb froh, dass wir dieses Framework benutzt haben.
 
 \subsection{Ausblick}
 
 Es gibt diverse Erweiterungsmöglichkeiten für das Spiel. Einige werden im Folgenden näher beschrieben:
 
 \subsubsection{Benutzeroberfläche}
-Es ist möglich, das ursprünglich angedachte, komplexere Icon-Set zu implementieren. Der Spieler könnte sich damit vielleicht besser mit der Geschichte identifizieren. Dies hat für den Product Owner allerdings im Moment keine Priorität, da der Aufwand für die Erstellung des Icon-Sets zu gross ist, im Vergleich zum Nutzen.
+Es ist möglich, das ursprünglich angedachte, komplexere Icon-Set zu implementieren. Der Spieler könnte sich damit vielleicht besser mit der Geschichte identifizieren. Dies hat für den Product Owner allerdings im Moment keine Priorität, da der Aufwand für die Erstellung des Icon-Sets im Vergleich zum Nutzen zu gross ist.
 
 \subsubsection{Befehlssatz}
 In Zukunft können die zur Verfügung stehenden Befehle erweitert werden, zum Beispiel durch weiterführende Levels, sodass auch neue Strategien möglich werden. Damit könnte man zum Beispiel die Spieler durch verschiedene Lernstufen begleiten und sie können ihre Fähigkeiten Schritt für Schritt verbessern.
