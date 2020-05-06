@@ -49,6 +49,7 @@ declare function attack(unit: Unit = nearestEnemyUnit): void;
 
 declare const store: any;
 declare const foods: Consumable[];
+declare const walls: GameObject[];
 declare const userUnit: Unit;
 declare const nearestFood: Consumable;
 declare const enemyUnits: Unit[];
