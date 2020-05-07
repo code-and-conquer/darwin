@@ -279,17 +279,48 @@ Damit das Frontend in Echtzeit über den neusten Spielstand informiert wird, fin
 Im Backend werden keine externen APIs verwendet und es ist insbesondere keine Persistierungsschicht angedacht.
 
 \section{Code}
-Die Befehle welche der Player absetzen kann um das Spiel zu beeinflussen werden alle mittels einer RecordingEngine als Absichten (Intents) aufgezeichnet.
-Dadurch ist es möglich Konflikte (Zum Beispiel zwei Units auf dem gleichen Feld) zu verhindern indem die Intents nacheinander ausgeführt werden.
-Nachfolgend ein Klassendiagramm der Intents:
+
+Der Kern des Spiels stellt die Spielelogik dar. Ziel der Logik ist es Skripts von Benutzern sicher und fair auszuführen.
+Im folgenden werden wichtige Elemente der Logik erläutert.
+
+\subsection{Skript Ausführung}
+
+Die Skripts werden direkt auf dem Server ausgeführt. Deshalb müssen Massnahmen für die sichere Code Ausführung ergriffen werden.
+Um eine möglichst sichere Ausführung zu gewährleisten wird eine dedizierte Bibliothek eingesetzt.
+Dies ermöglicht es für jedes Skript einen spezifischen V8 Isolate zu verwenden.
+
+Folgende Massnahmen werden ergriffen um häufige Missbrauchsmöglichkeiten zu verhindern:
+
+\begin{itemize}
+  \item Sowohl CPU als auch Arbeitsspeicher Limiten sind gesetzt und verhindern unzulässiges Nutzen der Ressourcen.
+  \item Zugriff auf die Node.js Laufzeit des Servers ist nicht möglich.
+  \item Die Skripts haben keine Möglichkeit mit dem Netzwerk, Dateisystem oder dergleichen zu kommunizieren, deshalb können sie auch nicht für Bot Netzwerke missbraucht werden.
+\end{itemize}
+
+Diese Massnahmen verkleinern den Angriffsvektor für böswillige Skripts.
+
+\subsection{Spielelogik}
+
+Die Befehle welche der Player absetzen kann um das Spiel zu beeinflussen werden als Absichten (Intents) abgebildet.
+Die Gliederung der verschiedenen Intents ist in Figure \ref{fig:classDiagramIntents} ersichtlich.
+
 \begin{figure}[h]
   \caption{Klassendiagramm Intents}
+  \label{fig:classDiagramIntents}
   \centering
-  \includegraphics[width=0.7\textwidth]{./img/Intent}
+  \includegraphics[width=0.9\textwidth]{./img/Intent}
 \end{figure}
-%\includegraphics[width=0.7\textwidth]{./img/Intent.svg}
-% Vielleicht später die Recording Engine & Co.?
 
+Die Skripts werden sequentiell ausgeführt und alle Absichten gemäss ihren Kosten pro Skript in eine künstliche Zeitachse eingegliedert.
+
+Damit die Absichten aller Benutzer berücksichtigt werden können wird folgender Prozess durchlaufen:
+\begin{itemize}
+  \item Alle individuellen Absichten in globale Ablaufreihenfolge eingliedern.
+  \item Einträge innerhalb eines spezifischen Zeiteintrages zufällig anordnen. Somit wird kein Spieler bevorzugt.
+  \item Absichten welche nicht im Zeitbudget erreicht werden können entfernen. Dies stellt sicher, dass Skripts nicht unbegrenzt viele Absichten ausführen können.
+\end{itemize}
+
+Im Anschluss werden die einzelnen Zeitachseneinträge und alle gewünschten Befehle ausgeführt und auf den Spielstand appliziert.
 
 \section{Infrastructure Architecture}
 % Während der grösste Teil des Guidebooks sich mit der Software selber beschäftigt, wird hier die physikalische/virtuelle Infrastruktur in welche die Software installiert und betrieben wird beschrie-ben. Folgende Fragen sollten hier behandelt werden:
