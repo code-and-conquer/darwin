@@ -38,10 +38,6 @@ export default class MainController {
     } else {
       userConnection.connections.push(ws);
     }
-
-    if (!this.gameController.getIsRunning()) {
-      this.gameController.appendUsers([userId]);
-    }
   }
 
   private getMatchUpdateExecutor(): (
@@ -136,11 +132,16 @@ export default class MainController {
         newRole,
       },
     };
+
     this.store.userConnnections.userConnectionMap[userId].connections.forEach(
       ws => {
         ws.send(JSON.stringify(roleResponse));
       }
     );
+
+    if (!this.gameController.getIsRunning() && newRole === Role.PLAYER) {
+      this.gameController.appendUsers([userId]);
+    }
   }
 
   private storeNewUserConnection(ws: WebSocket, userId: UserId): void {
