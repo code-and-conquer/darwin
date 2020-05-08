@@ -6,6 +6,7 @@ import {
   UserId,
   RoleRequest,
   Role,
+  RoleResponse,
 } from '@darwin/types';
 import GameController from './GameController';
 import { createServerStore } from './createServerStore';
@@ -126,8 +127,20 @@ export default class MainController {
   }
 
   private handleRoleRequest(userId: string, message: RoleRequest): void {
-    this.store.userConnnections.userConnectionMap[userId].role =
-      message.payload.newRole;
+    const { newRole } = message.payload;
+    this.store.userConnnections.userConnectionMap[userId].role = newRole;
+
+    const roleResponse: RoleResponse = {
+      type: 'roleResponse',
+      payload: {
+        newRole,
+      },
+    };
+    this.store.userConnnections.userConnectionMap[userId].connections.forEach(
+      ws => {
+        ws.send(JSON.stringify(roleResponse));
+      }
+    );
   }
 
   private storeNewUserConnection(ws: WebSocket, userId: UserId): void {

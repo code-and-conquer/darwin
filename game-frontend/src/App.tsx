@@ -9,6 +9,7 @@ import ContentContainer from './components/container/ContentContainer';
 import GlobalStyle from './GlobalStyle';
 import UserScript from './components/user-script';
 import Help from './components/help';
+import RoleSwitch from './components/role-switch';
 
 function App(): JSX.Element {
   return (
@@ -30,6 +31,7 @@ function App(): JSX.Element {
           </Resizable>
           <ContentContainer>
             <Game />
+            <RoleSwitch />
             <Help />
           </ContentContainer>
         </AppContainer>
