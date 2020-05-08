@@ -1,9 +1,14 @@
 import WebSocket from 'ws';
-import { UserId } from '@darwin/types';
+import { UserId, Role } from '@darwin/types';
+
+interface UserConnnection {
+  connections: WebSocket[];
+  role: Role;
+}
 
 export interface ServerStore {
   userConnnections: {
-    userConnectionMap: Record<UserId, WebSocket[]>;
+    userConnectionMap: Record<UserId, UserConnnection>;
     userConnectionIds: UserId[];
   };
 }

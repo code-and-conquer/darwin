@@ -49,16 +49,14 @@ describe('GameController', () => {
   });
 
   it('starts ticking', () => {
-    gameController.appendUser('user0');
-    gameController.appendUser('user1');
+    gameController.appendUsers(['user0', 'user1']);
     jest.advanceTimersByTime(TICK_INTERVAL);
 
     expect(setInterval).toBeCalledTimes(1);
   });
 
   it('sends a matchUpdate', () => {
-    gameController.appendUser('user0');
-    gameController.appendUser('user1');
+    gameController.appendUsers(['user0', 'user1']);
     jest.advanceTimersByTime(TICK_INTERVAL);
 
     const matchUpdate = parseMatchUpdate(mockSendMatchUpdate.mock.calls[0][1]);
@@ -66,8 +64,7 @@ describe('GameController', () => {
   });
 
   it('sends correct states on tick', () => {
-    gameController.appendUser('user0');
-    gameController.appendUser('user1');
+    gameController.appendUsers(['user0', 'user1']);
     jest.advanceTimersByTime(TICK_INTERVAL);
 
     const matchUpdate = parseMatchUpdate(mockSendMatchUpdate.mock.calls[0][1]);
@@ -80,8 +77,7 @@ describe('GameController', () => {
   it('increments tick counter on each tick', () => {
     let matchUpdate;
 
-    gameController.appendUser('user0');
-    gameController.appendUser('user1');
+    gameController.appendUsers(['user0', 'user1']);
 
     jest.advanceTimersByTime(TICK_INTERVAL);
     matchUpdate = parseMatchUpdate(mockSendMatchUpdate.mock.calls[0][1]);
@@ -110,8 +106,7 @@ describe('GameController', () => {
   }
 
   it('sends the same state to multiple clients', () => {
-    gameController.appendUser('user0');
-    gameController.appendUser('user1');
+    gameController.appendUsers(['user0', 'user1']);
 
     jest.advanceTimersByTime(TICK_INTERVAL);
     jest.advanceTimersByTime(TICK_INTERVAL);
@@ -135,8 +130,7 @@ describe('GameController', () => {
       { userMap: {}, userIds: [] },
     ]);
 
-    gameController.appendUser('user0');
-    gameController.appendUser('user1');
+    gameController.appendUsers(['user0', 'user1']);
     jest.advanceTimersByTime(TICK_INTERVAL);
 
     expect(mockTerminate).toHaveBeenCalledTimes(1);

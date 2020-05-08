@@ -1,5 +1,12 @@
 import WebSocket, { OPEN } from 'ws';
-import { MatchUpdate, Message, ScriptUpdate, UserId } from '@darwin/types';
+import {
+  MatchUpdate,
+  Message,
+  ScriptUpdate,
+  UserId,
+  RoleRequest,
+  Role,
+} from '@darwin/types';
 import GameController from './GameController';
 import { createServerStore } from './createServerStore';
 
@@ -28,7 +35,11 @@ export default class MainController {
     if (userConnection === undefined) {
       this.storeNewUserConnection(ws, userId);
     } else {
-      userConnection.push(ws);
+      userConnection.connections.push(ws);
+    }
+
+    if (!this.gameController.getIsRunning()) {
+      this.gameController.appendUsers([userId]);
     }
   }
 
@@ -37,9 +48,11 @@ export default class MainController {
     matchUpdate: MatchUpdate
   ) => void {
     return (userId: UserId, matchUpdate: MatchUpdate): void => {
-      this.store.userConnnections.userConnectionMap[userId].forEach(ws => {
-        ws.send(JSON.stringify(matchUpdate));
-      });
+      this.store.userConnnections.userConnectionMap[userId].connections.forEach(
+        ws => {
+          ws.send(JSON.stringify(matchUpdate));
+        }
+      );
     };
   }
 
@@ -52,9 +65,15 @@ export default class MainController {
           this.getMatchUpdateExecutor(),
           this.getTerminateExecutor()
         );
-        this.store.userConnnections.userConnectionIds.forEach(id => {
-          this.gameController.appendUser(id);
-        });
+        const playerIds = this.store.userConnnections.userConnectionIds.filter(
+          id => {
+            return (
+              this.store.userConnnections.userConnectionMap[id].role ===
+              Role.PLAYER
+            );
+          }
+        );
+        this.gameController.appendUsers(playerIds);
       }, GAME_RESTART_TIME);
     };
   }
@@ -68,7 +87,7 @@ export default class MainController {
     this.store.userConnnections.userConnectionIds.forEach(userId => {
       const foundAliveConnections = this.store.userConnnections.userConnectionMap[
         userId
-      ].some((ws: WebSocket) => {
+      ].connections.some((ws: WebSocket) => {
         return ws.readyState === OPEN;
       });
       if (!foundAliveConnections) {
@@ -91,6 +110,9 @@ export default class MainController {
         case 'scriptUpdate':
           this.handleUserScript(userId, message as ScriptUpdate);
           break;
+        case 'roleRequest':
+          this.handleRoleRequest(userId, message as RoleRequest);
+          break;
         default:
           break;
       }
@@ -103,9 +125,16 @@ export default class MainController {
     });
   }
 
+  private handleRoleRequest(userId: string, message: RoleRequest): void {
+    this.store.userConnnections.userConnectionMap[userId].role =
+      message.payload.newRole;
+  }
+
   private storeNewUserConnection(ws: WebSocket, userId: UserId): void {
-    this.store.userConnnections.userConnectionMap[userId] = [ws];
+    this.store.userConnnections.userConnectionMap[userId] = {
+      connections: [ws],
+      role: Role.SPECTATOR,
+    };
     this.store.userConnnections.userConnectionIds.push(userId);
-    this.gameController.appendUser(userId);
   }
 }

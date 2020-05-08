@@ -135,7 +135,7 @@ describe('MainController', () => {
     terminate();
     jest.advanceTimersByTime(GAME_RESTART_TIME);
     const mockInstance = GameControllerMock.mock.instances[1];
-    const appendUserMock = mockInstance.appendUser as jest.Mock;
+    const appendUserMock = mockInstance.appendUsers as jest.Mock;
     expect(appendUserMock.mock.calls.length).toBe(1);
     expect(appendUserMock.mock.calls[0][0]).toBe(userId);
   });

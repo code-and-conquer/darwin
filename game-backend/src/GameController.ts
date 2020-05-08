@@ -23,7 +23,7 @@ interface TickFeedback {
 }
 
 export default class GameController {
-  private isRunning = false;
+  public isRunning = false;
 
   private tickingInterval: NodeJS.Timeout;
 
@@ -38,26 +38,32 @@ export default class GameController {
     this.store.matchState = createMap(this.store.matchState);
   }
 
-  appendUser(userId: UserId): void {
-    const unit = this.generateUnit();
+  appendUsers(userIds: UserId[]): void {
+    userIds.forEach(userId => {
+      const unit = this.generateUnit();
 
-    this.addUnitToMatchState(unit);
-    const userCtx: UserExecutionContext = {
-      unitId: unit.id,
-      userScript: {
-        script: '',
-      },
-      store: {},
-    };
+      this.addUnitToMatchState(unit);
+      const userCtx: UserExecutionContext = {
+        unitId: unit.id,
+        userScript: {
+          script: '',
+        },
+        store: {},
+      };
 
-    this.store.userContexts.userContextMap[userId] = userCtx;
-    this.store.userContexts.userContextIds.push(userId);
+      this.store.userContexts.userContextMap[userId] = userCtx;
+      this.store.userContexts.userContextIds.push(userId);
+    });
 
     this.checkGameState();
   }
 
   setScript(userId: UserId, script: UserScript): void {
     this.store.userContexts.userContextMap[userId].userScript = script;
+  }
+
+  getIsRunning(): boolean {
+    return this.isRunning;
   }
 
   private checkGameState(): void {
