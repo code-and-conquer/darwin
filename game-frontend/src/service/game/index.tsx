@@ -22,7 +22,7 @@ export function useFeedback(): Feedback[] {
   return feedback;
 }
 
-export function useRole(): Role {
+export function useRole(): Role | null {
   const { role } = useWebsocketContext();
   return role;
 }

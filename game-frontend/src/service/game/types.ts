@@ -11,7 +11,7 @@ export type ContextState = {
   state: State;
   userContext: UserContext;
   feedback: Feedback[];
-  role: Role;
+  role: Role | null;
   meta: {
     currentTick: Tick;
   };
@@ -29,7 +29,7 @@ export const emptyWebsocketContext: ContextState = {
   userContext: {
     unitId: '',
   },
-  role: Role.SPECTATOR,
+  role: null,
   feedback: [],
   meta: {
     currentTick: 0,

@@ -71,7 +71,7 @@ function Game(): JSX.Element {
     );
   }
 
-  if (!hasJoinedGame && role === Role.SPECTATOR) {
+  if (!role) {
     return (
       <>
         <TextContainer>
