@@ -8,8 +8,9 @@ import SideContainer from './components/container/SideContainer';
 import ContentContainer from './components/container/ContentContainer';
 import GlobalStyle from './GlobalStyle';
 import UserScript from './components/user-script';
-import Help from './components/help';
 import RoleSwitch from './components/role-switch';
+import TextContainer from './components/visual/TextContainer';
+import HelpText from './components/help-text';
 
 function App(): JSX.Element {
   return (
@@ -32,7 +33,9 @@ function App(): JSX.Element {
           <ContentContainer>
             <Game />
             <RoleSwitch />
-            <Help />
+            <TextContainer>
+              <HelpText />
+            </TextContainer>
           </ContentContainer>
         </AppContainer>
       </WebsocketProvider>
