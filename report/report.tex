@@ -280,16 +280,16 @@ Im Backend werden keine externen APIs verwendet und es ist insbesondere keine Pe
 
 \section{Code}
 
-Der Kern des Spiels stellt die Spielelogik dar. Ziel der Logik ist es Skripts von Benutzern sicher und fair auszuführen.
+Der Kern des Spiels stellt die Spielelogik dar. Ziel der Logik ist es, Skripts von Benutzern sicher und fair auszuführen.
 Im folgenden werden wichtige Elemente der Logik erläutert.
 
 \subsection{Skript Ausführung}
 
 Die Skripts werden direkt auf dem Server ausgeführt. Deshalb müssen Massnahmen für die sichere Code Ausführung ergriffen werden.
-Um eine möglichst sichere Ausführung zu gewährleisten wird eine dedizierte Bibliothek eingesetzt.
-Dies ermöglicht es für jedes Skript einen spezifischen V8 Isolate zu verwenden.
+Um eine möglichst sichere Ausführung zu gewährleisten, wird eine dedizierte Bibliothek eingesetzt.
+Diese ermöglicht es, für jedes Skript einen spezifischen V8 Isolate zu verwenden.
 
-Folgende Massnahmen werden ergriffen um häufige Missbrauchsmöglichkeiten zu verhindern:
+Folgende Massnahmen werden ergriffen, um häufige Missbrauchsmöglichkeiten zu verhindern:
 
 \begin{itemize}
   \item Sowohl CPU als auch Arbeitsspeicher Limiten sind gesetzt und verhindern unzulässiges Nutzen der Ressourcen.
@@ -301,7 +301,7 @@ Diese Massnahmen verkleinern den Angriffsvektor für böswillige Skripts.
 
 \subsection{Spielelogik}
 
-Die Befehle welche der Player absetzen kann um das Spiel zu beeinflussen werden als Absichten (Intents) abgebildet.
+Die Befehle welche der Player absetzen kann, um das Spiel zu beeinflussen, werden als Absichten (Intents) abgebildet.
 Die Gliederung der verschiedenen Intents ist in Figure \ref{fig:classDiagramIntents} ersichtlich.
 
 \begin{figure}[h]
@@ -313,11 +313,11 @@ Die Gliederung der verschiedenen Intents ist in Figure \ref{fig:classDiagramInte
 
 Die Skripts werden sequentiell ausgeführt und alle Absichten gemäss ihren Kosten pro Skript in eine künstliche Zeitachse eingegliedert.
 
-Damit die Absichten aller Benutzer berücksichtigt werden können wird folgender Prozess durchlaufen:
+Damit die Absichten aller Benutzer berücksichtigt werden können, wird folgender Prozess durchlaufen:
 \begin{itemize}
   \item Alle individuellen Absichten in globale Ablaufreihenfolge eingliedern.
   \item Einträge innerhalb eines spezifischen Zeiteintrages zufällig anordnen. Somit wird kein Spieler bevorzugt.
-  \item Absichten welche nicht im Zeitbudget erreicht werden können entfernen. Dies stellt sicher, dass Skripts nicht unbegrenzt viele Absichten ausführen können.
+  \item Absichten, welche nicht im Zeitbudget erreicht werden können, entfernen. Dies stellt sicher, dass Skripts nicht unbegrenzt viele Absichten ausführen können.
 \end{itemize}
 
 Im Anschluss werden die einzelnen Zeitachseneinträge und alle gewünschten Befehle ausgeführt und auf den Spielstand appliziert.
