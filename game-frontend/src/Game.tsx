@@ -28,7 +28,9 @@ function Game(): JSX.Element {
   const role = useRole();
   const playStartSound = useStartSound();
 
-  const isLiving = !!gameState.objectMap[userContext.unitId];
+  const isSpectator = role === Role.PLAYER;
+  const isLiving =
+    !isSpectator && userContext && !!gameState.objectMap[userContext.unitId];
 
   useEffect(() => {
     if (isLiving) {
@@ -37,7 +39,7 @@ function Game(): JSX.Element {
     }
   }, [isLiving, playStartSound]);
 
-  const isDead = hasJoinedGame && !isLiving;
+  const isDead = !isSpectator && hasJoinedGame && !isLiving;
 
   const isOnlyOnePlayerLeft =
     gameState.objectIds
@@ -61,7 +63,7 @@ function Game(): JSX.Element {
     }
   }, [isDead, playLosingSound]);
 
-  if (!hasJoinedGame && role === Role.PLAYER) {
+  if (!hasJoinedGame && isSpectator) {
     return (
       <>
         <TextContainer>
@@ -112,7 +114,7 @@ function Game(): JSX.Element {
             <GameObjects
               objectIds={gameState.objectIds}
               objectMap={gameState.objectMap}
-              ownUnitId={userContext.unitId}
+              ownUnitId={userContext ? userContext.unitId : ''}
             />
           </Container>
         </Stage>

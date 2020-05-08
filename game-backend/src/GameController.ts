@@ -98,6 +98,7 @@ export default class GameController {
     return (): void => {
       const tickFeedback = this.tick();
       this.notifyUsers(tickFeedback);
+      this.notifySpectators();
       const units = getGameObjectsPerType(
         this.store.matchState,
         GameObjectTypes.Unit
@@ -108,6 +109,10 @@ export default class GameController {
         this.terminate();
       }
     };
+  }
+
+  private notifySpectators(): void {
+    this.sendMatchUpdate(null, this.generateUpdate(null, []));
   }
 
   private static getPlainUserContext(userContext: UserContext): UserContext {

@@ -45,11 +45,28 @@ export default class MainController {
     matchUpdate: MatchUpdate
   ) => void {
     return (userId: UserId, matchUpdate: MatchUpdate): void => {
-      this.store.userConnnections.userConnectionMap[userId].connections.forEach(
-        ws => {
+      if (userId) {
+        this.store.userConnnections.userConnectionMap[
+          userId
+        ].connections.forEach(ws => {
           ws.send(JSON.stringify(matchUpdate));
-        }
-      );
+        });
+      } else {
+        this.store.userConnnections.userConnectionIds
+          .filter(id => {
+            return (
+              this.store.userConnnections.userConnectionMap[id].role ===
+              Role.SPECTATOR
+            );
+          })
+          .forEach(id => {
+            this.store.userConnnections.userConnectionMap[
+              id
+            ].connections.forEach(ws => {
+              ws.send(JSON.stringify(matchUpdate));
+            });
+          });
+      }
     };
   }
 
