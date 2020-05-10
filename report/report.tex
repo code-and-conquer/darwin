@@ -1,22 +1,16 @@
-\documentclass[a4paper, 11pt]{scrartcl}
+\documentclass[11pt,a4paper]{scrartcl}
 
-\usepackage{ucs}
-\usepackage[framemethod=tikz]{mdframed}
+\usepackage{xcolor}
 \usepackage{float}
 \usepackage{subfig}
-\usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage[automark]{scrlayer-scrpage}
 \usepackage[hidelinks]{hyperref}
 \usepackage{listings}
-\usepackage{booktabs}
-\usepackage{tikz}
-\usepackage[acronym]{glossaries}
 \usepackage{enumitem}
-\usepackage{epigraph}
-\usepackage{hyperref}
 \usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+\graphicspath{{./img/}}
 \setlength{\parindent}{0em} 
 
 \hypersetup{
@@ -28,36 +22,7 @@
 \let\oldsection\section
 \renewcommand\section{\clearpage\oldsection}
 
-\makeglossaries
-
-\mdfdefinestyle{note-style}{%
-  rightline=true,
-  innerleftmargin=10,
-  innerrightmargin=10,
-  outerlinewidth=3pt,
-  topline=false,
-  rightline=true,
-  bottomline=false,
-  skipabove=\topsep,
-  skipbelow=\topsep
-}
-
-\newglossaryentry{nodejs}
-{
-  name=Node.js,
-  description={Node.js is an open-source, cross-platform, JavaScript library that executes JavaScript code outside of a browser.}
-}
-
 \makeindex
-
-\newacronym{arest}{REST}{Representational State Transfer}
-
-\usetikzlibrary{shapes.geometric, arrows}
-\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
-\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
-\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
-\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
-\tikzstyle{arrow} = [thick,->,>=stealth]
 
 \pagestyle{scrheadings}
 \clearscrheadfoot
@@ -422,9 +387,5 @@ Da unser Projekt als zeitlich begrenztes Projekt einer Studenten-Gruppe läuft, 
 \end{itemize}
 
 \clearpage
-
-\printglossary[type=\acronymtype]
-
-\printglossary
 
 \end{document}
