@@ -17,6 +17,7 @@
 \usepackage{epigraph}
 \usepackage{hyperref}
 \usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+\setlength{\parindent}{0em} 
 
 \hypersetup{
   colorlinks=true,
@@ -322,7 +323,8 @@ Damit die Absichten aller Benutzer berücksichtigt werden können, wird folgende
 
 Im Anschluss werden die einzelnen Zeitachseneinträge und alle gewünschten Befehle ausgeführt und auf den Spielstand appliziert.
 
-\section{Infrastructure Architecture}
+\section{Instrastruktur-Architektur}
+\label{InfrastructureArchitecture}
 % Während der grösste Teil des Guidebooks sich mit der Software selber beschäftigt, wird hier die physikalische/virtuelle Infrastruktur in welche die Software installiert und betrieben wird beschrie-ben. Folgende Fragen sollten hier behandelt werden:
 % • Ist eine klare Infrastruktur Architektur vorhanden?
 % • Welche Hardware (virtuell oder physikalisch) wird dazu verwendet?
@@ -331,21 +333,51 @@ Im Anschluss werden die einzelnen Zeitachseneinträge und alle gewünschten Befe
 % • Wer ist zuständig für Support und Unterhalt der Infrastruktur?
 % • Wer ist verantwortlich für die Ressourcen (ownership)?•etc.
 
+Da es sich um ein Schulprojekt handelt und sich das Projekt in der Entwicklungsphase befindet, ist die Infrastruktur zurzeit eher simpel gehalten. Es wurde jedoch bereits angedacht, wie die Infrastruktur in Zukunft aussehen könnte.
+
+\subsection{Infrastruktur während der Entwicklungsphase}
+Es wird aktuell ein Linux Rechner (mit Ubuntu 18.04.4 LTS) eingesetzt. Auf diesem ist Docker installiert, der mittels Docker-Compose jeweils einen Docker-Container für das Frontend und einen für das Backend konfiguriert. Das Backend wird mittels eines Node.js Images betrieben, wobei für das Frontend ein Nginx Image verwendet wird, um die statischen Dateien des gebauten React-Apps auszuliefern.
+
+% TODO: ? Diagramm
+
+\subsection{Skalierbarkeit und Infrastruktur in Zukunft}
+Durch den Einsatz von Docker kann die Software auf einer Reihe von Systemen, wie einzelnen physikalischen/virtuellen Rechnern oder PaaS Anbietern, betrieben werden. Es besteht auch die Möglichkeit der Orchestrierung: 
+\begin{itemize}
+  \item Der Webserver für das Frontend, hat keinen Zustand zu speichern. Mittels eines Load Balancers kann die Last so auf mehrere Server verteilt werden.
+  \item Das Backend hingegen hält den aktuellen Zustand eines Spiels und deren Spielern und Zuschauern. Daher kann man nicht während des Spiels oder in einer neuer Sitzung, während das Match noch läuft, auf einen anderen Server verbinden. Mittels eines Load Balancers, der für die verschiedenen User speichert, welcher Backend Server für den jeweiligen User zuständig ist, kann das Problem umgangen werden. Allerdings ist dies noch zu untersuchen.
+\end{itemize}
+
+Die Zuständigkeiten sind zurzeit nicht bekannt. Auch steht noch kein Konzept bezüglich Disaster-Recovery / Failover. Allerdings ist aufgrund des Einsatzes von Docker und Load Balancers bereits Vorarbeit geleistet.
+
+% Ein Beispiel, wie eine Infrastruktur aussehen könnte:
+% TODO: ? Beispielgrafik
+
 \section{Installation (Deployment)}
-\subsection{CI /CD}
+
 Um einen raschen Release-Zyklus zu gewährleisten, wurde eine Build- sowie eine Releasepipeline eingerichtet.
 Diese ermöglicht es, Pull-Requests automatisch zu testen und nach einem erfolgten Merge automatisiert zu releasen und deployen.
 Dies soll die Entwicklungsphase beschleunigen und gewähleisten, dass stets und ausschliesslich funktionierender Code deployed wird.
 
+\subsection{Build Pipeline}
 Innerhalb dieser Pipeline werden folgende Schritte durchgeführt:
-\begin{itemize}
+\begin{enumerate}
   \item Installieren aller notwendigen Pakete
-  \item Bauen der beiden Artefakte (Frontend und Backend)
-  \item Durchführen der Unit Tests
-  \item Erstellung eines deploybaren Paketes
-  \item Deployment auf den Server
-  \item Neustarten des Docker-Containers auf dem Server
-\end{itemize}
+  \item Linting und Formatierung werden überprüft
+  \item Build wird durchgeführt
+  \item Tests werden durchgeführt
+  \item Bilden eines Artefakts mit Inhalt: Frontend, Backend und Shared Types
+\end{enumerate}
+Das Build schlägt fehl, sobald ein Schritt nicht erfolgreich war. Wenn zum Beispiel das Linting / die Formatierung nicht korrekt ist, wird das Build abgebrochen und der Pull-Request kann nicht gemerged werden. Das Artefaktwird anschliessend von der Release Pipeline verwendet, um die Version zu veröffentlichen.
+
+\subsection{Release Pipeline}
+Die Release Pipeline verwendet das von der Build Pipeline erstellten Artefakts. Beim erfolgreichen Abschluss der Build Pipeline wird automatisch die Release Pipeline angestossen, die folgende Schritte durchführt:
+\begin{enumerate}
+  \item Entpacken und kopieren des Artefakts auf den Server
+  \item Kopieren der Ordner aus dem Artefakt in das Docker-Compose Projekt
+  \item Neuerstellen der Docker Container mittels Docker-Compose
+\end{enumerate}
+
+Wie bereits im Kapitel \textit{\nameref{InfrastructureArchitecture}} erwähnt, ist das Docker-Compose Projekt mit einem Webserver und Node.js konfiguriert.
 
 \section{Operation und Support}
 
