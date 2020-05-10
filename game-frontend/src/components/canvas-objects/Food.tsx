@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Position } from '@darwin/types';
 import { Sprite } from '@inlet/react-pixi';
 import { FIELD_SIZE } from '../../constants/stage';
-import food from '../../assets/images/endurance.png';
+import food from '../../assets/images/food.png';
 
 type Props = {
   position: Position;

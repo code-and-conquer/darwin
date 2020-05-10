@@ -4,13 +4,13 @@ import {
   Unit as UnitT,
   Consumable as ConsumableT,
   GameObjectTypes,
+  GameObject
 } from '@darwin/types';
 import Unit from './Unit';
 import Food from './Food';
 import { Teleport, Endurance, HealthRegen } from './Powerup';
 import scalePosition from '../../helper/scalePosition';
 import Wall from './Wall';
-import { GameObject } from '../../../../darwin-types/dist/game-objects/GameObject';
 
 type Props = {
   objectIds: ObjectId[];
