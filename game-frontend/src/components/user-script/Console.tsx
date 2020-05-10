@@ -1,9 +1,10 @@
 import React, { FC, useEffect } from 'react';
-import { Console } from 'console-feed';
+import { Console as ConsoleFeed } from 'console-feed';
 import { Methods } from 'console-feed/lib/definitions/Console';
 import { FeedbackType } from '@darwin/types';
 import { useFeedback } from '../../service/game';
 import { useErrorSound } from '../../service/sound';
+import ConsoleContainer from './ConsoleContainer';
 
 const mapFeedbackTypeToMethod = (type: FeedbackType): Methods => {
   switch (type) {
@@ -16,7 +17,7 @@ const mapFeedbackTypeToMethod = (type: FeedbackType): Methods => {
   }
 };
 
-const ErrorLog: FC = () => {
+const Console: FC = () => {
   const feedback = useFeedback();
   const playErrorSound = useErrorSound();
   const logs = feedback.map(entry => ({
@@ -24,15 +25,17 @@ const ErrorLog: FC = () => {
     data: entry.content,
   }));
   useEffect(() => {
-    const hasFirstLogEntries = logs.length === 2;
-    if (hasFirstLogEntries) {
+    const errorLogCount = feedback.filter(fb => fb.type === FeedbackType.ERROR)
+      .length;
+    const hasFirstErrorLog = errorLogCount === 1;
+    if (hasFirstErrorLog) {
       playErrorSound();
     }
-  }, [logs.length, playErrorSound]);
+  }, [feedback, playErrorSound]);
   return (
-    <div style={{ backgroundColor: '#242424' }}>
-      <Console logs={logs as never} variant="dark" />
-    </div>
+    <ConsoleContainer>
+      <ConsoleFeed logs={logs as never} variant="dark" />
+    </ConsoleContainer>
   );
 };
-export default ErrorLog;
+export default Console;
