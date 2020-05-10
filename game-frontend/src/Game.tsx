@@ -10,6 +10,11 @@ import { FIELD_SIZE, STAGE_COLUMNS, STAGE_ROWS } from './constants/stage';
 import Rectangle from './components/pixi/Rectangle';
 import Firework from './components/pixi/Firework';
 import WaitingDialog from './components/WaitingDialog';
+import {
+  useLosingSound,
+  useStartSound,
+  useWinningSound,
+} from './service/sound';
 
 const width = STAGE_COLUMNS * FIELD_SIZE;
 const height = STAGE_ROWS * FIELD_SIZE;
@@ -18,14 +23,16 @@ function Game(): JSX.Element {
   const [hasJoinedGame, setHasJoinedGame] = useState(false);
   const gameState = useGameState();
   const userContext = useUserContext();
+  const playStartSound = useStartSound();
 
   const isLiving = !!gameState.objectMap[userContext.unitId];
 
   useEffect(() => {
     if (isLiving) {
+      playStartSound();
       setHasJoinedGame(true);
     }
-  }, [isLiving]);
+  }, [isLiving, playStartSound]);
 
   const isDead = hasJoinedGame && !isLiving;
 
@@ -36,6 +43,20 @@ function Game(): JSX.Element {
     1;
 
   const hasWon = isLiving && isOnlyOnePlayerLeft;
+
+  const playWinningSound = useWinningSound();
+  useEffect(() => {
+    if (hasWon) {
+      playWinningSound();
+    }
+  }, [hasWon, playWinningSound]);
+
+  const playLosingSound = useLosingSound();
+  useEffect(() => {
+    if (isDead) {
+      playLosingSound();
+    }
+  }, [isDead, playLosingSound]);
 
   if (!hasJoinedGame) {
     return (

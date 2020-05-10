@@ -1,5 +1,5 @@
 import ivm from 'isolated-vm';
-import { UserScript, UserStore } from '@darwin/types';
+import { Feedback, FeedbackType, UserScript, UserStore } from '@darwin/types';
 import { ScriptContext } from './recordIntents';
 
 const MAX_MEMORY_MB = 8;
@@ -14,7 +14,7 @@ const MAX_EXECUTION_TIME_MS = 20;
 export default function runScript(
   userScript: UserScript,
   scriptContext: ScriptContext
-): UserStore {
+): [UserStore, Feedback[]] {
   const isolate = new ivm.Isolate({ memoryLimit: MAX_MEMORY_MB });
   const context = isolate.createContextSync();
 
@@ -35,6 +35,25 @@ export default function runScript(
     });
     `,
     [functionKeys, scriptContext],
+    { arguments: { reference: true } }
+  );
+
+  const feedback: Feedback[] = [];
+
+  const log = (...args: unknown[]): void => {
+    feedback.push({
+      type: FeedbackType.INFO,
+      content: args,
+    });
+  };
+
+  context.evalClosureSync(
+    `
+    global.log = function(...args) {
+        $0.applySync(undefined, args, { arguments: { copy: true } });
+      }
+    `,
+    [log],
     { arguments: { reference: true } }
   );
 
@@ -62,5 +81,5 @@ export default function runScript(
   context.release();
   isolate.dispose();
 
-  return store;
+  return [store, feedback];
 }

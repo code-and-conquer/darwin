@@ -117,7 +117,7 @@ Er kann mittels des Skripts beispielsweise den aktuellen Spielstand auslesen, Be
 Das Spiel selbst ist in seiner Grundform ein Multiplayer Survival Game.
 Es treten mehrere Spieler gegeneinander an.
 Ziel des Spiels ist es, der einzige Überlebende zu sein.
-Dazu müssen Einheiten der Spieler beispielsweise Essen aufsammeln, um nicht zu verhungern, Ressourcen sammeln, um Ausrüstung oder Gebäude zu bauen, oder können gegnerische Einheiten angreifen.
+Dazu müssen Einheiten der Spieler beispielsweise Essen aufsammeln, um nicht zu verhungern, PowerUps brauchen, um beispielsweise ihre Verteidigung zu verbessern, oder können gegnerische Einheiten angreifen.
 Dieses simple Spielprinzip ist für Spieler einfach zu verstehen oder bereits bekannt.
 Die Steuerung durch den Code erlaubt uns, den Schwerpunkt des Gameplays stärker auf die Vorausplanung und langfristigen Strategien zu legen und reaktives Gameplay in den Hintergrund zu stellen.
 
@@ -138,7 +138,17 @@ Während des Spielverlaufs können sie ihr Skript aktualisieren und visuell verf
 Für die Entwicklung unseres Spieles wird Github und Azure DevOps verwendet,
 währenddessen als Hauptprogrammiersprache, im Backend sowie im Frontend, TypeScript zum Einsatz kommt.
 
-Das Spiel richtet sich auf leidenschaftliche und engagierte Software Entwickler aus, die ihr Können nicht nur mit einfachem "Coden", sondern auch mit bester KI-Architektur unter Beweis stellen können.
+Das Spiel richtet sich auf leidenschaftliche und engagierte Software Entwickler aus, die ihr Können unter Beweis stellen und sich mit Kollegen messen möchten.
+
+\subsection{User Roles}
+\subsubsection{Player}
+Der Player ist der Hauptbenutzer des Spiels. Er verwendet die Software häufig. Sein Hauptziel ist es, mittels Code seine Units zu steuern, um möglichst lange im Spiel zu überleben. Da der Code die einzige Möglichkeit ist, das Spiel zu steuern möchte er den Code möglichst bequem (mittels Syntax-Highlighting) eingeben.
+\subsubsection{Spectator}
+Der Spectator ist ein Zuschauer des Spiels. Er ist wie der Player mit den Regeln des Spiels vertraut, möchte aber nur eine Arena sehen und nicht selbst spielen.
+\subsubsection{User}
+Der User ist Player und Spectator zusammengefasst. Also alle Personen, welche das Spiel in irgendeiner Form verwenden.
+\subsubsection{Unit}
+Die Unit ist eine logische Rolle. Ihr Ziel ist zu Überleben, kann das aber nicht selbst beeinflussen, da sie vom Player gesteuert wird. Diese Rolle vereinfacht das Schreiben von User Stories für den Spielablauf und die Ausbalanciertheit des Spiels.
 
 \section{Ziele und Hauptfunktionen}
 %• Ist allen Teilnehmern klar, was das System, die Software macht?
@@ -156,8 +166,9 @@ Die essenziellen Komponenten des Spieles sind einerseits das Backend, das es erl
   \item Der Spieler kann die Spielregeln sowie eine Liste aller verfügbaren Aktionen der Einheiten abrufen. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/22/}{\#22 Help}
 \end{itemize}
 
+Sofern diese vier Punkte erfolgreich umgesetzt werden können, gilt der technische Durchstich als erfolgreich. Alle weiteren Entwicklungen sind Verbesserungen dieser Ziele und dienen der Attraktivitätssteigerung des Spiels.
+
 Des Weiteren soll das Spiel kostenlos als Webapplikation zur Verfügung stehen. Das Spiel könnte später mittels Werbung finanziert werden.
-Um diese Ziele zu erreichen, ist es wichtig, eine gut aufgebaute Organisation zu haben, dessen Struktur und Visionen klar definiert sind. Ein agiles Umfeld wie Scrum wird uns helfen, die stetig auftretenden Probleme besser und effizienter zu bewältigen.
 
 \section{Qualitätsattribute}
 %• Welche Qualitätsattribute soll die Software/das System erfüllen?
@@ -178,16 +189,6 @@ Qualitätsattribute:
   \item Sprache - Das Spiel ist in der Deutschen Sprache verfügbar.
 \end{itemize}
 
-\section{User Roles}
-\subsection{Player}
-Der Player ist der Hauptbenutzer des Spiels. Er verwendet die Software häufig. Sein Hauptziel ist es, mittels Code seine Units zu steuern, um möglichst lange im Spiel zu überleben. Da der Code die einzige Möglichkeit ist, das Spiel zu steuern möchte er den Code möglichst bequem (mittels Syntax-Highlighting) eingeben.
-\subsection{Spectator}
-Der Spectator ist ein Zuschauer des Spiels. Er ist wie der Player mit den Regeln des Spiels vertraut, möchte aber nur eine Arena sehen und nicht selbst spielen.
-\subsection{User}
-Der User ist Player und Spectator zusammengefasst. Also alle Personen, welche das Spiel in irgendeiner Form verwenden.
-\subsection{Unit}
-Die Unit ist eine logische Rolle. Ihr Ziel ist zu Überleben, kann das aber nicht selbst beeinflussen, da sie vom Player gesteuert wird. Diese Rolle vereinfacht das Schreiben von User Stories für den Spielablauf und die Ausbalanciertheit des Spiels.
-
 \section{Bekannte Beschränkungen}
 %• Zeit
 %• Budget und Ressourcen
@@ -203,7 +204,7 @@ Bei unserer Software-Entwicklung werden die Prozesse von Story Beschreibung, Ent
 Unsere Software ist unabhängig des Entwicklungsprozesses folgenden Beschränkungen ausgesetzt.
 \begin{itemize}
   \item Zeit: die Zeitdauer des Projekts ist eingeschränkt, was sich auf 6 Sprints beläuft.
-  \item Budget und Ressourcen: Das Projekt ist ein Schulprojekt und ist deshalb grundsätzlich auf die Anzahl ECTS-Credits pro Entwickler beschränkt.
+  \item Budget und Ressourcen: Das Projekt ist ein Schulprojekt und ist deshalb grundsätzlich auf die Anzahl ECTS-Credits pro Entwickler beschränkt. In Stunden sind das ungefähr 100 bis 120 pro Entwickler, was Total 600 - 720 Stunden ergibt.
   \item Technologien: Wir verwenden die Technologien React und Node.js mit TypeScript. Grundsätzlich enthält das Projekt aber keine Technologievorgaben. Zurzeit verwenden wir zudem folgende Cloud Services für die Entwicklung, welche einzuhalten sind.
         \begin{itemize}
           \item Github - Als Git-Repository und für PR Reviews
@@ -233,8 +234,6 @@ Um die Qualität der Software bei der Entwicklung unseres Spieles sicherzustelle
   \item Coding Guidelines werden für unsere Entwicklung eingesetzt und mittels Eslint und TSlint sowie Pull-Request Reviews überprüft. So können Syntax und Code-Styling eingehalten werden.
 \end{itemize}
 
-All diese Prinzipien sind ein wichtiger Bestandteil unserer Entwicklung und werden von allen Teammitglieder stets eingehalten.
-
 \subsection{DoD}
 Wir halten uns bei unserem Entwicklungsprozess an die folgende Definition of Done:
 \begin{itemize}
@@ -246,39 +245,6 @@ Wir halten uns bei unserem Entwicklungsprozess an die folgende Definition of Don
   \item Unittests und Integrationtests wurden erfolgreich durchgeführt
   \item Es sind keine kritischen Bugs offen
 \end{itemize}
-
-\section{Architektur}
-\subsection{Applikation}
-Bei Darwin handelt es sich um eine Webapplikation welche in Frontend und Backend aufgeteilt ist.
-Aufgrund der Erfahrung der Teammitglieder wird ausschliesslich TypeScript bzw. JavaScript eingesetzt.
-
-\subsubsection{Frontend}
-Usability ist ein Kernanspruch an die Applikation. Deshalb verwendet Darwin moderne Technologien im Frontend.
-Die Visualisierung des Spiels wird in einem 2D Canvas Context mittels Pixi.js dargestellt.
-Als UI Library wird aufgrund der Erfahrung des Teams React eingesetzt.
-
-\subsubsection{Backend}
-Für das Backend wird Node.js eingesetzt, da dieses die meistverwendete JavaScript Runtime ist und die notwendige Stabilität aufweist.
-Damit das Frontend in Echtzeit über den neusten Spielstand informiert wird, findet die Kommunikation mittels Websockets statt.
-Im Backend werden keine externen APIs verwendet und es ist insbesondere keine Persistierungsschicht angedacht.
-
-\subsection{CI /CD}
-Um einen raschen Release-Zyklus zu gewährleisten, wurde eine Build- sowie eine Releasepipeline eingerichtet.
-Diese ermöglicht es, Pull-Requests automatisch zu testen und nach einem erfolgten Merge automatisiert zu releasen und deployen.
-Dies soll die Entwicklungsphase beschleunigen und gewähleisten, dass stets und ausschliesslich funktionierender Code deployed wird.
-
-Innerhalb dieser Pipeline werden folgende Schritte durchgeführt:
-\begin{itemize}
-  \item Installieren aller notwendigen Pakete
-  \item Bauen der beiden Artefakte (Frontend und Backend)
-  \item Durchführen der Unit Tests
-  \item Erstellung eines deploybaren Paketes
-  \item Deployment auf den Server
-  \item Neustarten des Docker-Containers auf dem Server
-\end{itemize}
-
-Der Aufbau unserer Software und in welchen Schritten und Phasen entwickelt wird, wurde im Voraus in einer Grobplanung definiert.
-Dies ermöglicht es uns, bereits frühzeitig Fehler zu erkennen und Schnittstellen genauer zu spezifizieren.
 
 \subsection{Testing}
 Das Testen der Applikation erfolgt in drei Schritten:
@@ -295,8 +261,22 @@ Die Integration Tests erweitern das Testkonzept, indem mehrere Komponenten durch
 Manuelles Testen während der Entwicklungsphase und danach. Dieser Teil sollte aus Zeitgründen so klein wie möglich gehalten werden, allerdings trotzdem sicherstellen, dass die Qualität gewährleistet bleibt. Manuelles Testing wird vom Entwickler während und nach der Entwicklung durchgeführt.
 Zudem soll der PO durch manuelles Prüfen das Feature zum Schluss abnehmen.
 
-\section{Externe Schnittstellen}
-Es werden zurzeit keine externe Schnittstellen verwendet.
+All diese Prinzipien sind ein wichtiger Bestandteil unserer Entwicklung und werden von allen Teammitglieder stets eingehalten.
+
+\section{Architektur}
+\subsection{Applikation}
+Bei Darwin handelt es sich um eine Webapplikation welche in Frontend und Backend aufgeteilt ist.
+Aufgrund der Erfahrung der Teammitglieder wird ausschliesslich TypeScript bzw. JavaScript eingesetzt.
+
+\subsubsection{Frontend}
+Usability ist ein Kernanspruch an die Applikation. Deshalb verwendet Darwin moderne Technologien im Frontend.
+Die Visualisierung des Spiels wird in einem 2D Canvas Context mittels Pixi.js dargestellt.
+Als UI Library wird aufgrund der Erfahrung des Teams React eingesetzt.
+
+\subsubsection{Backend}
+Für das Backend wird Node.js eingesetzt, da dieses die meistverwendete JavaScript Runtime ist und die notwendige Stabilität aufweist.
+Damit das Frontend in Echtzeit über den neusten Spielstand informiert wird, findet die Kommunikation mittels Websockets statt.
+Im Backend werden keine externen APIs verwendet und es ist insbesondere keine Persistierungsschicht angedacht.
 
 \section{Code}
 Die Befehle welche der Player absetzen kann um das Spiel zu beeinflussen werden alle mittels einer RecordingEngine als Absichten (Intents) aufgezeichnet.
@@ -310,13 +290,6 @@ Nachfolgend ein Klassendiagramm der Intents:
 %\includegraphics[width=0.7\textwidth]{./img/Intent.svg}
 % Vielleicht später die Recording Engine & Co.?
 
-\section{Data}
-% In den bisherigen Sektionen war der Fokus nicht primär auf die Daten gerichtet, obwohl diese in modernen Systemen eine essentielle Rolle spielen. Ziel dieser Sektion ist die Informationen zu dokumentieren, die aus Datenperspektive wichtig sind.Auch hier soll jede Sektion kurz gehalten werden. Eventuell ein Entity-Relationship Diagramm, wenn es dem Leser hilft.
-% • Wie sieht das Datenmodell aus?
-% • Wo sind die Daten gespeichert?
-% • Wer ist verantwortlich für die Daten (ownership)?
-% • Was ist das Mengengerüst? Wie viel welcher Daten fallen an?
-% • Archivierung und Backup Strategien
 
 \section{Infrastructure Architecture}
 % Während der grösste Teil des Guidebooks sich mit der Software selber beschäftigt, wird hier die physikalische/virtuelle Infrastruktur in welche die Software installiert und betrieben wird beschrie-ben. Folgende Fragen sollten hier behandelt werden:
@@ -328,6 +301,20 @@ Nachfolgend ein Klassendiagramm der Intents:
 % • Wer ist verantwortlich für die Ressourcen (ownership)?•etc.
 
 \section{Installation (Deployment)}
+\subsection{CI /CD}
+Um einen raschen Release-Zyklus zu gewährleisten, wurde eine Build- sowie eine Releasepipeline eingerichtet.
+Diese ermöglicht es, Pull-Requests automatisch zu testen und nach einem erfolgten Merge automatisiert zu releasen und deployen.
+Dies soll die Entwicklungsphase beschleunigen und gewähleisten, dass stets und ausschliesslich funktionierender Code deployed wird.
+
+Innerhalb dieser Pipeline werden folgende Schritte durchgeführt:
+\begin{itemize}
+  \item Installieren aller notwendigen Pakete
+  \item Bauen der beiden Artefakte (Frontend und Backend)
+  \item Durchführen der Unit Tests
+  \item Erstellung eines deploybaren Paketes
+  \item Deployment auf den Server
+  \item Neustarten des Docker-Containers auf dem Server
+\end{itemize}
 
 \section{Operation und Support}
 

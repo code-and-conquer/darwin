@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Stage } from '@inlet/react-pixi';
 import { FIELD_SIZE } from '../../constants/stage';
 
-const Container = styled.div`
+const Container = styled.span`
   vertical-align: middle;
   display: inline-block;
   width: ${FIELD_SIZE / 2}px;

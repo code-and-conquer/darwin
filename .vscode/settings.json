@@ -2,6 +2,15 @@
   "latex-workshop.latex.recipe.default": "first",
   "latex-workshop.latex.recipes": [
     {
+      "name": "Fachartikel",
+      "tools": [
+        "xelatex",
+        "biber",
+        "xelatex",
+        "xelatex",
+      ]
+    },
+    {
       "name": "PSIT4",
       "tools": [
         "latexmk"
@@ -18,6 +27,22 @@
     }
   ],
   "latex-workshop.latex.tools": [
+    {
+      "name": "xelatex",
+      "command": "xelatex",
+      "args": [
+        "--synctex=1",
+        "-interaction=nonstopmode",
+        "%DOC%"
+      ]
+    },
+    {
+      "name": "biber",
+      "command": "biber",
+      "args": [
+        "%DOC%",
+      ]
+    },
     {
       "name": "latexmk",
       "command": "latexmk",
