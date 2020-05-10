@@ -1,46 +1,55 @@
 import React, { FC } from 'react';
 import { Position } from '@darwin/types';
-import Circle from '../pixi/Circle';
+import { Sprite } from '@inlet/react-pixi';
 import { FIELD_SIZE } from '../../constants/stage';
-import Square from '../pixi/Square';
+import endurance from '../../assets/images/endurance.png';
+import teleport from '../../assets/images/teleport.png';
+import healthregen from '../../assets/images/healthregen.png';
 
 type Props = {
-  color: number;
   position: Position;
 };
 
-const HALF_FIELD_SIZE = FIELD_SIZE / 2;
-
-const squareScale = 0.4;
-const squareSize = FIELD_SIZE * squareScale;
-const squareMargin = (FIELD_SIZE - squareSize) / 2;
-
-const radius = HALF_FIELD_SIZE * 0.3;
-
-const PowerUp: FC<Props> = ({ color, position }) => {
+const HealthRegen: FC<Props> = ({ position }) => {
   return (
     <>
-      <Square
-        position={{
-          x: position.x + squareMargin,
-          y: position.y + squareMargin,
-        }}
-        size={squareSize}
-        fill={color}
-        color={color}
-      />
-      <Circle
-        position={{
-          x: position.x + HALF_FIELD_SIZE,
-          y: position.y + HALF_FIELD_SIZE,
-        }}
-        radius={radius}
-        color={color}
-        fill={0x000000}
-        alpha={0.3}
+      <Sprite
+        height={FIELD_SIZE}
+        width={FIELD_SIZE}
+        image={healthregen}
+        x={position.x}
+        y={position.y}
       />
     </>
   );
 };
 
-export default PowerUp;
+const Endurance: FC<Props> = ({ position }) => {
+  return (
+    <>
+      <Sprite
+        height={FIELD_SIZE}
+        width={FIELD_SIZE}
+        image={endurance}
+        x={position.x}
+        y={position.y}
+      />
+    </>
+  );
+};
+
+const Teleport: FC<Props> = ({ position }) => {
+  return (
+    <>
+      <Sprite
+        height={FIELD_SIZE}
+        width={FIELD_SIZE}
+        image={teleport}
+        x={position.x}
+        y={position.y}
+      />
+    </>
+  );
+};
+
+export { Teleport, Endurance, HealthRegen };

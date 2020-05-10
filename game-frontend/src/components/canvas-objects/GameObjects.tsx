@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import {
-  GameObject,
   ObjectId,
   Unit as UnitT,
   Consumable as ConsumableT,
@@ -8,9 +7,10 @@ import {
 } from '@darwin/types';
 import Unit from './Unit';
 import Food from './Food';
-import PowerUp from './Powerup';
+import { Teleport, Endurance, HealthRegen } from './Powerup';
 import scalePosition from '../../helper/scalePosition';
 import Wall from './Wall';
+import { GameObject } from '../../../../darwin-types/dist/game-objects/GameObject';
 
 type Props = {
   objectIds: ObjectId[];
@@ -63,27 +63,24 @@ const GameObjects: FC<Props> = ({ objectIds, objectMap, ownUnitId }) => (
           }
           case GameObjectTypes.EnduranceBoost: {
             return (
-              <PowerUp
+              <Endurance
                 key={gameObject.id}
-                color={0x05bf96}
                 position={scalePosition(gameObject.position)}
               />
             );
           }
           case GameObjectTypes.Teleport: {
             return (
-              <PowerUp
+              <Teleport
                 key={gameObject.id}
-                color={0xffc0cb}
                 position={scalePosition(gameObject.position)}
               />
             );
           }
           case GameObjectTypes.HealthRegenBoost: {
             return (
-              <PowerUp
+              <HealthRegen
                 key={gameObject.id}
-                color={0xd7ff9e}
                 position={scalePosition(gameObject.position)}
               />
             );
