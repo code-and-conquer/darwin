@@ -20,7 +20,6 @@ export const useMonacoInstance = (): MonacoInstance | undefined => {
   useEffect(() => {
     monaco.init().then(m => {
       m.languages.typescript.javascriptDefaults.setCompilerOptions({
-        // noLib: true,
         allowNonTsExtensions: true,
       });
       m.languages.typescript.javascriptDefaults.addExtraLib(editorIntellisense);
