@@ -107,6 +107,7 @@ währenddessen als Hauptprogrammiersprache, im Backend sowie im Frontend, TypeSc
 Das Spiel richtet sich auf leidenschaftliche und engagierte Software Entwickler aus, die ihr Können unter Beweis stellen und sich mit Kollegen messen möchten.
 
 \subsection{User Roles}
+In diesem Abschnitt sollen die User Roles genauer beschrieben werden. Sie sind die Hauptbenutzer des Spiels.
 \subsubsection{Player}
 Der Player ist der Hauptbenutzer des Spiels. Er verwendet die Software häufig. Sein Hauptziel ist es, mittels Code seine Units zu steuern, um möglichst lange im Spiel zu überleben. Da der Code die einzige Möglichkeit ist, das Spiel zu steuern möchte er den Code möglichst bequem (mittels Syntax-Highlighting) eingeben.
 \subsubsection{Spectator}
@@ -346,10 +347,10 @@ Innerhalb dieser Pipeline werden folgende Schritte durchgeführt:
   \item Tests werden durchgeführt
   \item Bilden eines Artefakts mit Inhalt: Frontend, Backend und Shared Types
 \end{enumerate}
-Das Build schlägt fehl, sobald ein Schritt nicht erfolgreich war. Wenn zum Beispiel das Linting / die Formatierung nicht korrekt ist, wird das Build abgebrochen und der Pull-Request kann nicht gemerged werden. Das Artefaktwird anschliessend von der Release Pipeline verwendet, um die Version zu veröffentlichen.
+Das Build schlägt fehl, sobald ein Schritt nicht erfolgreich war. Wenn zum Beispiel das Linting / die Formatierung nicht korrekt ist, wird das Build abgebrochen und der Pull-Request kann nicht gemerged werden.
 
 \subsection{Release Pipeline}
-Die Release Pipeline verwendet das von der Build Pipeline erstellten Artefakts. Beim erfolgreichen Abschluss der Build Pipeline wird automatisch die Release Pipeline angestossen, die folgende Schritte durchführt:
+Die Release Pipeline verwendet das neuste von der Build Pipeline erstellte Artefakt. Beim erfolgreichen Abschluss der Build Pipeline wird automatisch die Release Pipeline angestossen, die folgende Schritte durchführt:
 \begin{enumerate}
   \item Entpacken und kopieren des Artefakts auf den Server
   \item Kopieren der Ordner aus dem Artefakt in das Docker-Compose Projekt
