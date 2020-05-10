@@ -230,20 +230,9 @@ Zudem soll der PO durch manuelles Prüfen das Feature zum Schluss abnehmen.
 All diese Prinzipien sind ein wichtiger Bestandteil unserer Entwicklung und werden von allen Teammitglieder stets eingehalten.
 
 \section{Architektur}
+In diesem Kapitel soll die Struktur der Software auf einem hohen Level beschreiben werden. Die folgende Abbildung zeigt eine Übersicht wie die einzelnen Komponenten der Applikation zusammenspielen.
+Die Applikation ist in drei Hauptkomponenten unterteilt: Frontend, Backend und Darwin-Types. Alle diese Komponenten sind in TypeScript und JavaScript geschrieben. 
 
-\subsection{Applikation}
-Bei Darwin handelt es sich um eine Webapplikation welche in Frontend und Backend aufgeteilt ist.
-Aufgrund der Erfahrung der Teammitglieder wird ausschliesslich TypeScript bzw. JavaScript eingesetzt.
-
-\subsubsection{Frontend}
-Usability ist ein Kernanspruch an die Applikation. Deshalb verwendet Darwin moderne Technologien im Frontend.
-Die Visualisierung des Spiels wird in einem 2D Canvas Context mittels Pixi.js dargestellt.
-Als UI Library wird aufgrund der Erfahrung des Teams React eingesetzt.
-
-\subsubsection{Backend}
-Für das Backend wird Node.js eingesetzt, da dieses die meistverwendete JavaScript Runtime ist und die notwendige Stabilität aufweist.
-Damit das Frontend in Echtzeit über den neusten Spielstand informiert wird, findet die Kommunikation mittels Websockets statt.
-Im Backend werden keine externen APIs verwendet und es ist insbesondere keine Persistierungsschicht angedacht.
 
 \begin{figure}[h]
   \label{fig:architecture}
@@ -251,6 +240,23 @@ Im Backend werden keine externen APIs verwendet und es ist insbesondere keine Pe
   \includegraphics[width=0.9\textwidth]{architecture}
   \caption{Architektur}
 \end{figure}
+
+\subsubsection{Frontend}
+Usability ist ein Kernanspruch an die Applikation. Deshalb verwendet Darwin moderne Technologien im Frontend.
+Die Visualisierung des Spiels wird in einem 2D Canvas Context mittels Pixi.js realisiert.
+Als UI-Library wird aufgrund der Erfahrung des Teams React eingesetzt.
+
+\subsubsection{Backend}
+Für das Backend wird Node.js eingesetzt, da dieses die meistverwendete JavaScript Runtime ist und die notwendige Stabilität aufweist.
+Damit das Frontend in Echtzeit über den neusten Spielstand informiert wird, findet die Kommunikation mittels Websockets statt.
+Das Backend besteht grob beschrieben aus einem Websocket-Server dem Main- und Game-Controller und der Gameengine.
+Der Websocket-Server nimmt neue Verbindungen entgegen und leitet sie an die Controller weiter. Im den Controllern werden die Websocket-Verbindungen und das Spiel als Ganzes verwaltet. Das beinhaltet auch die Verwaltung der Userskripte.
+Zudem wird regelmässig ein Match-Update, welches von der Gameengine berechnet wird, generiert und an die verbundenen Spieler und Zuschauer gesendet. 
+Im Backend werden keine externen APIs verwendet und es ist insbesondere keine Persistierungsschicht angedacht.
+
+\subsubsection{Darwin-Types}
+Die Darwin-Types sind Typen wie zum Beispiel die Unit oder der Spielstatus, welche im Frontend sowie im Backend verwendet werden. Sie sind in einem
+eigenen Node-Modul zusammengefasst, was die Nutzung von ihnen in anderen Softwareteilen enorm vereinfacht. 
 
 \section{Code}
 
