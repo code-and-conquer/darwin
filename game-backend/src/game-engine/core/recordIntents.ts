@@ -5,6 +5,7 @@ import {
   Unit,
   UserStore,
   GameObject,
+  Feedback,
 } from '@darwin/types';
 import deepClone from '../../helper/deepClone';
 import { Intent } from '../intent/Intent';
@@ -54,7 +55,7 @@ export interface ScriptContext
 function recordIntents(
   userExecutionContext: UserExecutionContext,
   state: State
-): [Intent[], UserStore] {
+): [Intent[], UserStore, Feedback[]] {
   const intentions: Intent[] = [];
   const foods = selectFoods(state);
   const walls = selectWalls(state);
@@ -95,9 +96,9 @@ function recordIntents(
   };
 
   // This is in place in order to update the store of a given user transparently
-  const store = runScript(userExecutionContext.userScript, context);
+  const [store, feedback] = runScript(userExecutionContext.userScript, context);
 
-  return [intentions, store];
+  return [intentions, store, feedback];
 }
 
 export default recordIntents;

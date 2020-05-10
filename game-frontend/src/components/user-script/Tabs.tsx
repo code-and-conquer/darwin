@@ -4,7 +4,7 @@ import { ControlledEditorOnChange } from '@monaco-editor/react';
 import { FeedbackType } from '@darwin/types';
 import Tab from './Tab';
 import Editor from './Editor';
-import ErrorLog from './ErrorLog';
+import Console from './Console';
 import { useFeedback } from '../../service/game';
 import TabBadge from './TabBadge';
 
@@ -45,14 +45,14 @@ const Tabs: FC<{
         <Editor save={props.saveScript} onChange={props.onEditorChange} />
       ),
     },
-    errors: {
+    console: {
       name: (
         <span>
-          Fehler
+          Konsole
           {errorCount > 0 ? <TabBadge>{errorCount}</TabBadge> : null}
         </span>
       ),
-      component: <ErrorLog />,
+      component: <Console />,
     },
   };
 

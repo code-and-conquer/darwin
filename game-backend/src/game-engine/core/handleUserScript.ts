@@ -8,14 +8,14 @@ export default function handleUserScript(
   executionContext: ElevatedUserExecutionContext
 ): UserTickIntents {
   try {
-    const [intents, store] = recordIntents(executionContext, state);
+    const [intents, store, feedback] = recordIntents(executionContext, state);
     return {
       context: {
         ...executionContext,
         store,
       },
       intents,
-      feedback: [],
+      feedback,
     };
   } catch (e) {
     // assume no intents in case of script error
