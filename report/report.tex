@@ -88,9 +88,9 @@ Dieses simple Spielprinzip ist für Spieler einfach zu verstehen oder bereits be
 Die Steuerung durch den Code erlaubt uns, den Schwerpunkt des Gameplays stärker auf die Vorausplanung und langfristigen Strategien zu legen und reaktives Gameplay in den Hintergrund zu stellen.
 
 \begin{figure}[h]
-  \caption{Darwin Gameplay}
   \centering
-  \includegraphics[width=0.95\textwidth]{./img/darwin-gameplay}
+  \includegraphics[width=0.95\textwidth]{darwin-gameplay}
+  \caption{Darwin Gameplay}
 \end{figure}
 
 Da in unserem Team niemand Erfahrung mit Grafikdesign hat, möchten wird das Gametheme möglichst einfach halten.
@@ -230,6 +230,7 @@ Zudem soll der PO durch manuelles Prüfen das Feature zum Schluss abnehmen.
 All diese Prinzipien sind ein wichtiger Bestandteil unserer Entwicklung und werden von allen Teammitglieder stets eingehalten.
 
 \section{Architektur}
+
 \subsection{Applikation}
 Bei Darwin handelt es sich um eine Webapplikation welche in Frontend und Backend aufgeteilt ist.
 Aufgrund der Erfahrung der Teammitglieder wird ausschliesslich TypeScript bzw. JavaScript eingesetzt.
@@ -243,6 +244,13 @@ Als UI Library wird aufgrund der Erfahrung des Teams React eingesetzt.
 Für das Backend wird Node.js eingesetzt, da dieses die meistverwendete JavaScript Runtime ist und die notwendige Stabilität aufweist.
 Damit das Frontend in Echtzeit über den neusten Spielstand informiert wird, findet die Kommunikation mittels Websockets statt.
 Im Backend werden keine externen APIs verwendet und es ist insbesondere keine Persistierungsschicht angedacht.
+
+\begin{figure}[h]
+  \label{fig:architecture}
+  \centering
+  \includegraphics[width=0.9\textwidth]{architecture}
+  \caption{Architektur}
+\end{figure}
 
 \section{Code}
 
@@ -271,10 +279,10 @@ Die Befehle welche der Player absetzen kann, um das Spiel zu beeinflussen, werde
 Die Gliederung der verschiedenen Intents ist in Figure \ref{fig:classDiagramIntents} ersichtlich.
 
 \begin{figure}[h]
-  \caption{Klassendiagramm Intents}
   \label{fig:classDiagramIntents}
   \centering
-  \includegraphics[width=0.9\textwidth]{./img/Intent}
+  \includegraphics[width=0.9\textwidth]{Intent}
+  \caption{Klassendiagramm Intents}
 \end{figure}
 
 Die Skripts werden sequentiell ausgeführt und alle Absichten gemäss ihren Kosten pro Skript in eine künstliche Zeitachse eingegliedert.
