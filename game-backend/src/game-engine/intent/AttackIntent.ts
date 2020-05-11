@@ -4,7 +4,7 @@ import { getUnit, removeGameObject } from '../../helper/gameObjects';
 import produce from '../../helper/produce';
 
 export const ATTACK_RANGE = 1;
-export const HIT_DAMAGE = 10;
+export const HIT_DAMAGE = 16;
 
 /**
  * Represents the intent to attack an enemy.

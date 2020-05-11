@@ -54,7 +54,7 @@ describe('food consumption', () => {
 
     const unit = getUnit(newState, NORMAL_UNIT_ID);
 
-    expect(unit.health).toBe(40);
+    expect(unit.health).toBe(44);
   });
 
   it('should respect max health', () => {
@@ -79,6 +79,6 @@ describe('food consumption', () => {
 
     const unit = getUnit(newState, BOOSTED_UNIT_ID);
 
-    expect(unit.health).toBe(50);
+    expect(unit.health).toBe(54);
   });
 });
