@@ -45,16 +45,6 @@ function Game(): JSX.Element {
   const isDead = isPlayer && hasJoinedGame && !isLiving;
   const hasWon = isPlayer && hasJoinedGame && isLiving && isOnlyOnePlayerLeft;
 
-  console.log({
-    matchIsRunning,
-    isPlayer,
-    hasJoinedGame,
-    isOnlyOnePlayerLeft,
-    isLiving,
-    isDead,
-    hasWon,
-  });
-
   const playStartSound = useStartSound();
   useEffect(() => {
     if (isLiving) {

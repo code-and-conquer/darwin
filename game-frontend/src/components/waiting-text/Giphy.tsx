@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState } from 'react';
 
 const GIPHY_ID_LIST = [
   'hiu4RJvbEBUVq',
