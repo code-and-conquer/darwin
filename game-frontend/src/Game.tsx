@@ -17,6 +17,7 @@ import {
 import WaitingText from './components/waiting-text';
 import TextContainer from './components/visual/TextContainer';
 import WelcomeText from './components/welcome-text';
+import RoleSwitch from './components/role-switch';
 
 const width = STAGE_COLUMNS * FIELD_SIZE;
 const height = STAGE_ROWS * FIELD_SIZE;
@@ -26,13 +27,35 @@ function Game(): JSX.Element {
   const gameState = useGameState();
   const userContext = useUserContext();
   const role = useRole();
-  const playStartSound = useStartSound();
+
+  const matchIsRunning =
+    gameState.objectIds
+      .map(id => gameState.objectMap[id])
+      .filter(gameObject => gameObject.type === GameObjectTypes.Unit).length >
+    0;
 
   const isPlayer = role === Role.PLAYER;
   const isLiving =
-    isPlayer && userContext && !!gameState.objectMap[userContext.unitId];
+    isPlayer && matchIsRunning && !!gameState.objectMap[userContext.unitId];
+  const isOnlyOnePlayerLeft =
+    gameState.objectIds
+      .map(id => gameState.objectMap[id])
+      .filter(gameObject => gameObject.type === GameObjectTypes.Unit).length ===
+    1;
   const isDead = isPlayer && hasJoinedGame && !isLiving;
+  const hasWon = isPlayer && hasJoinedGame && isLiving && isOnlyOnePlayerLeft;
 
+  console.log({
+    matchIsRunning,
+    isPlayer,
+    hasJoinedGame,
+    isOnlyOnePlayerLeft,
+    isLiving,
+    isDead,
+    hasWon,
+  });
+
+  const playStartSound = useStartSound();
   useEffect(() => {
     if (isLiving) {
       playStartSound();
@@ -40,13 +63,11 @@ function Game(): JSX.Element {
     }
   }, [isLiving, playStartSound]);
 
-  const isOnlyOnePlayerLeft =
-    gameState.objectIds
-      .map(id => gameState.objectMap[id])
-      .filter(gameObject => gameObject.type === GameObjectTypes.Unit).length ===
-    1;
-
-  const hasWon = isLiving && isOnlyOnePlayerLeft;
+  useEffect(() => {
+    if (hasJoinedGame && !isPlayer) {
+      setHasJoinedGame(false);
+    }
+  }, [hasJoinedGame, isPlayer]);
 
   const playWinningSound = useWinningSound();
   useEffect(() => {
@@ -62,7 +83,7 @@ function Game(): JSX.Element {
     }
   }, [isDead, playLosingSound]);
 
-  if (!hasJoinedGame && isPlayer) {
+  if (isPlayer && !hasJoinedGame) {
     return (
       <>
         <TextContainer>
@@ -118,6 +139,7 @@ function Game(): JSX.Element {
           </Container>
         </Stage>
       </CanvasWrapper>
+      {!matchIsRunning ? <RoleSwitch /> : ''}
     </>
   );
 }

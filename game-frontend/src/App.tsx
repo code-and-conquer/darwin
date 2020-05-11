@@ -8,7 +8,6 @@ import SideContainer from './components/container/SideContainer';
 import ContentContainer from './components/container/ContentContainer';
 import GlobalStyle from './GlobalStyle';
 import UserScript from './components/user-script';
-import RoleSwitch from './components/role-switch';
 import TextContainer from './components/visual/TextContainer';
 import HelpText from './components/help-text';
 
@@ -32,7 +31,6 @@ function App(): JSX.Element {
           </Resizable>
           <ContentContainer>
             <Game />
-            <RoleSwitch />
             <TextContainer>
               <HelpText />
             </TextContainer>

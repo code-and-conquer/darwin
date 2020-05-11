@@ -60,7 +60,7 @@ export function useWebsocket(): ContextState {
       };
       dispatch(message);
     }
-  });
+  }, [role]);
   return contextState;
 }
 
