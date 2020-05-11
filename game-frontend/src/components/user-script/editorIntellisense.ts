@@ -61,4 +61,6 @@ declare const nearestPowerup: Consumable;
 declare function move(direction: Direction): void;
 declare function attack(unit: Unit = nearestEnemyUnit): void;
 declare function consume(): void;
+
+declare function log(...data): void;
 `;
