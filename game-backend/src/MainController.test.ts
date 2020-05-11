@@ -1,5 +1,12 @@
 import WebSocket, { CLOSED, OPEN } from 'ws';
-import { MatchUpdate, ScriptUpdate, UserId } from '@darwin/types';
+import {
+  MatchUpdate,
+  ScriptUpdate,
+  UserId,
+  RoleRequest,
+  Role,
+  RoleResponse,
+} from '@darwin/types';
 import MainController, { GAME_RESTART_TIME } from './MainController';
 
 import * as GameController from './GameController';
@@ -53,6 +60,18 @@ describe('MainController', () => {
   const parseMatchUpdate = (body: string): MatchUpdate => {
     return JSON.parse(body);
   };
+  const parseRoleResponse = (body: string): RoleResponse => {
+    return JSON.parse(body);
+  };
+
+  const roleRequestPlayer: RoleRequest = {
+    type: 'roleRequest',
+    payload: { newRole: Role.PLAYER },
+  };
+  const roleRequestSpectator: RoleRequest = {
+    type: 'roleRequest',
+    payload: { newRole: Role.SPECTATOR },
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -78,7 +97,7 @@ describe('MainController', () => {
     };
   });
 
-  it('forwards a matchUpdate to the client', () => {
+  it('forwards a matchUpdate to the player', () => {
     const userId = 'user1';
     mainController.newConnection(wsMock0 as WebSocket, userId);
 
@@ -86,6 +105,20 @@ describe('MainController', () => {
 
     const matchUpdate = parseMatchUpdate(sendFunction0.mock.calls[0][0]);
     expect(matchUpdate.type).toBe(fakeMatchUpdate.type);
+  });
+
+  it('forwards a matchUpdate to spectators', () => {
+    const userId0 = 'user0';
+    const userId1 = 'user1';
+    mainController.newConnection(wsMock0 as WebSocket, userId0);
+    mainController.newConnection(wsMock1 as WebSocket, userId1);
+
+    sendMatchUpdate(null, fakeMatchUpdate);
+
+    const matchUpdate = parseMatchUpdate(sendFunction0.mock.calls[0][0]);
+    const matchUpdate1 = parseMatchUpdate(sendFunction1.mock.calls[0][0]);
+    expect(matchUpdate.type).toBe(fakeMatchUpdate.type);
+    expect(matchUpdate1.type).toBe(fakeMatchUpdate.type);
   });
 
   it('forwards a scriptUpdate to the GameController', () => {
@@ -127,16 +160,41 @@ describe('MainController', () => {
     expect(GameControllerMock.mock.calls.length).toBe(2);
   });
 
-  it('removes inactive users from store', () => {
+  it('responds to role requests', () => {
     const userId = 'user1';
     mainController.newConnection(wsMock0 as WebSocket, userId);
+
+    const onListener = onFunction.mock.calls[0][1];
+    onListener(JSON.stringify(roleRequestPlayer));
+    const roleResponse = parseRoleResponse(sendFunction0.mock.calls[0][0]);
+    expect(roleRequestPlayer.payload.newRole).toBe(
+      roleResponse.payload.newRole
+    );
+
+    onListener(JSON.stringify(roleRequestSpectator));
+    const roleResponse1 = parseRoleResponse(sendFunction0.mock.calls[1][0]);
+    expect(roleRequestSpectator.payload.newRole).toBe(
+      roleResponse1.payload.newRole
+    );
+  });
+
+  it('removes inactive users from store', () => {
+    const userId = 'user1';
+
+    mainController.newConnection(wsMock0 as WebSocket, userId);
     mainController.newConnection(wsMockDead as WebSocket, 'user2');
+
+    // change role to be players
+    const onListener0 = onFunction.mock.calls[0][1];
+    onListener0(JSON.stringify(roleRequestPlayer));
+    const onListener1 = onFunction.mock.calls[1][1];
+    onListener1(JSON.stringify(roleRequestPlayer));
 
     terminate();
     jest.advanceTimersByTime(GAME_RESTART_TIME);
     const mockInstance = GameControllerMock.mock.instances[1];
     const appendUserMock = mockInstance.appendUsers as jest.Mock;
     expect(appendUserMock.mock.calls.length).toBe(1);
-    expect(appendUserMock.mock.calls[0][0]).toBe(userId);
+    expect(appendUserMock.mock.calls[0][0][0]).toBe(userId);
   });
 });
