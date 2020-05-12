@@ -1,5 +1,5 @@
-import React, { FC, useMemo, useEffect, useState } from 'react';
-import { State, UserContext, Message, Feedback, Role } from '@darwin/types';
+import React, { FC, useEffect, useMemo, useState } from 'react';
+import { Feedback, Message, State, UserContext } from '@darwin/types';
 import { useWebsocket, useWebsocketContext, WebsocketContext } from './context';
 
 export const WebsocketProvider: FC = props => {
@@ -24,19 +24,31 @@ export function useFeedback(): Feedback[] {
 
 export function useSendMessage(): (message: Message) => void {
   const { socket } = useWebsocketContext();
-  const socketReadyState = socket?.readyState;
+  const [messageQueue, setMessageQueue] = useState<Message[]>([]);
+  const [socketReady, setSocketReady] = useState(socket?.readyState === 1);
 
   const send = useMemo(() => {
-    // console.log('socket', socket);
-    // console.log('socket state', socket?.readyState);
     return (message: Message): void => {
-      console.log('socket', socket);
-      console.log('socket state', socketReadyState);
-      if (socket && socketReadyState === 1) {
-        socket.send(JSON.stringify(message));
-      }
+      setMessageQueue([...messageQueue, message]);
     };
-  }, [socket, socketReadyState]);
+  }, [messageQueue]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.addEventListener('open', (): void => {
+        setSocketReady(true);
+      });
+    }
+  }, [socket, setSocketReady]);
+
+  useEffect(() => {
+    if (socket && socketReady && messageQueue.length > 0) {
+      messageQueue.forEach(message => {
+        socket.send(JSON.stringify(message));
+      });
+      setMessageQueue([]);
+    }
+  }, [messageQueue, socketReady, socket]);
 
   return send;
 }
