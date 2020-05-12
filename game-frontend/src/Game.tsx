@@ -3,7 +3,7 @@ import { Container, Stage } from '@inlet/react-pixi';
 import * as PIXI from 'pixi.js';
 import { GameObjectTypes, Role } from '@darwin/types';
 import CanvasWrapper from './components/visual/CanvasWrapper';
-import { useGameState, useUserContext, useRole } from './service/game';
+import { useGameState, useUserContext } from './service/game';
 import GameObjects from './components/canvas-objects/GameObjects';
 import Grid from './components/canvas-objects/Grid';
 import { FIELD_SIZE, STAGE_COLUMNS, STAGE_ROWS } from './constants/stage';
@@ -18,6 +18,7 @@ import WaitingText from './components/waiting-text';
 import TextContainer from './components/visual/TextContainer';
 import WelcomeText from './components/welcome-text';
 import RoleSwitch from './components/role-switch';
+import { useRole } from './service/game/role';
 
 const width = STAGE_COLUMNS * FIELD_SIZE;
 const height = STAGE_ROWS * FIELD_SIZE;
@@ -26,7 +27,7 @@ function Game(): JSX.Element {
   const [hasJoinedGame, setHasJoinedGame] = useState(false);
   const gameState = useGameState();
   const userContext = useUserContext();
-  const role = useRole();
+  const [role] = useRole();
 
   const matchIsRunning = gameState.objectIds
     .map(id => gameState.objectMap[id])

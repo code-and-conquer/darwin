@@ -39,17 +39,6 @@ const handleMatchUpdate = (
   };
 };
 
-const handleRoleResponse = (
-  state: ContextState,
-  action: RoleResponse
-): ContextState => {
-  const { newRole } = action.payload;
-  return {
-    ...state,
-    role: newRole,
-  };
-};
-
 const reducer = (state: ContextState, action: Message): ContextState => {
   switch (action.type) {
     case 'socketUpdate':
@@ -59,8 +48,6 @@ const reducer = (state: ContextState, action: Message): ContextState => {
       };
     case 'matchUpdate':
       return handleMatchUpdate(state, action as MatchUpdate);
-    case 'roleResponse':
-      return handleRoleResponse(state, action as RoleResponse);
     default:
       return state;
   }

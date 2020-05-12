@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useMemo, useEffect, useState } from 'react';
 import { State, UserContext, Message, Feedback, Role } from '@darwin/types';
 import { useWebsocket, useWebsocketContext, WebsocketContext } from './context';
 
@@ -22,22 +22,21 @@ export function useFeedback(): Feedback[] {
   return feedback;
 }
 
-export function useRole(): Role | null {
-  const { role } = useWebsocketContext();
-  return role;
-}
-
 export function useSendMessage(): (message: Message) => void {
   const { socket } = useWebsocketContext();
+  const socketReadyState = socket?.readyState;
 
-  const send = useMemo(
-    () => (message: Message): void => {
-      if (socket) {
+  const send = useMemo(() => {
+    // console.log('socket', socket);
+    // console.log('socket state', socket?.readyState);
+    return (message: Message): void => {
+      console.log('socket', socket);
+      console.log('socket state', socketReadyState);
+      if (socket && socketReadyState === 1) {
         socket.send(JSON.stringify(message));
       }
-    },
-    [socket]
-  );
+    };
+  }, [socket, socketReadyState]);
 
   return send;
 }

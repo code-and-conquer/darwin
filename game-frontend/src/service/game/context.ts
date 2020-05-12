@@ -9,11 +9,15 @@ import {
   socketUpdateAction,
 } from './types';
 import reducer from './reducer';
+import {
+  usePersistRole,
+  handleRoleResponse,
+  createRoleRequestMessage,
+  useRole,
+} from './role';
 
 const USER_ID_QUERY_PARAM = 'userId';
-export const ROLE_LOCAL_STORAGE_KEY = 'role';
 const useUserId = createPersistedState(USER_ID_QUERY_PARAM);
-const usePersistRole = createPersistedState(ROLE_LOCAL_STORAGE_KEY);
 
 export const WebsocketContext = createContext<ContextState>(
   emptyWebsocketContext
@@ -21,9 +25,12 @@ export const WebsocketContext = createContext<ContextState>(
 
 export function useWebsocket(): ContextState {
   const [userId, setUserId] = useUserId<UserId>(() => uuidv4());
-  const [role, setRole] = usePersistRole<Role | null>(() => null);
+  // const [role, setRole] = usePersistRole<Role | null>(null);
+  const [, setRole] = useRole();
   const [contextState, dispatch] = useReducer(reducer, emptyWebsocketContext);
   const { socket } = contextState;
+
+  // const socketReadyState = socket?.readyState;
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -37,30 +44,29 @@ export function useWebsocket(): ContextState {
   useEffect(() => {
     if (socket) {
       socket.addEventListener('message', event => {
-        const message: Message = JSON.parse(event.data);
-        dispatch(message);
-      });
-      // persist role choice
-      socket.addEventListener('message', event => {
-        const message: Message = JSON.parse(event.data);
-        if (message.type === 'roleResponse') {
-          const { newRole } = (message as RoleResponse).payload;
-          setRole(newRole);
+        const action: Message = JSON.parse(event.data);
+        switch (action.type) {
+          case 'roleResponse':
+            handleRoleResponse(action as RoleResponse, setRole);
+            break;
+          default:
+            dispatch(action);
         }
       });
     }
   }, [socket, setUserId, dispatch, setRole]);
 
-  // set initial role from localStorage
-  useEffect(() => {
-    if (role) {
-      const message: RoleResponse = {
-        type: 'roleResponse',
-        payload: { newRole: role },
-      };
-      dispatch(message);
-    }
-  }, [role]);
+  // get initial role from storage and tell the server
+  // useEffect(() => {
+  //   console.log('role', role);
+  //   console.log('socket ready', socket?.readyState);
+
+  //   if (role && socket?.readyState === WebSocket.OPEN) {
+  //     console.log(role);
+  //     socket.send(JSON.stringify(createRoleRequestMessage(role)));
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [socket, socketReadyState]);
   return contextState;
 }
 
