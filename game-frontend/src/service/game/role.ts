@@ -36,7 +36,6 @@ export const useRole = (): [
     if (role && !roleSent) {
       sendMessage(createRoleRequestMessage(role));
       setRoleSent(true);
-      console.log('sending initial role:', role);
     }
   }, [role, roleSent, sendMessage]);
 
