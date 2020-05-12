@@ -78,6 +78,7 @@ function Game(): JSX.Element {
         <TextContainer>
           <WaitingText />
         </TextContainer>
+        <RoleSwitch />
       </>
     );
   }
