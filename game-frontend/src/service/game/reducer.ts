@@ -1,9 +1,4 @@
-import {
-  Message,
-  MatchUpdate,
-  FeedbackType,
-  RoleResponse,
-} from '@darwin/types';
+import { Message, MatchUpdate, FeedbackType } from '@darwin/types';
 import { ContextState } from './types';
 
 const handleMatchUpdate = (

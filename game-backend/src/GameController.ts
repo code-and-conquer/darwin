@@ -41,7 +41,7 @@ export default class GameController {
   appendUsers(userIds: UserId[]): void {
     userIds
       .filter(userId => {
-        return this.store.userContexts.userContextIds.includes(userId);
+        return !this.store.userContexts.userContextIds.includes(userId);
       })
       .forEach(userId => {
         const unit = this.generateUnit();
