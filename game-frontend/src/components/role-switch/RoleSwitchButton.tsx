@@ -11,27 +11,19 @@ const RoleSwitchButton: FC<Props> = ({ roleToRequest, children }) => {
   const sendMessage = useSendMessage();
 
   const sendRoleRequest = useMemo(
-    () => (newRole: Role): void => {
+    () => (): void => {
       const scriptUpdate: RoleRequest = {
         type: 'roleRequest',
         payload: {
-          newRole,
+          newRole: roleToRequest,
         },
       };
       sendMessage(scriptUpdate);
     },
-    [sendMessage]
+    [sendMessage, roleToRequest]
   );
 
-  return (
-    <Button
-      onClick={(): void => {
-        sendRoleRequest(roleToRequest);
-      }}
-    >
-      {children}
-    </Button>
-  );
+  return <Button onClick={sendRoleRequest}>{children}</Button>;
 };
 
 export default RoleSwitchButton;

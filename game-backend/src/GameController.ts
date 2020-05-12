@@ -23,7 +23,7 @@ interface TickFeedback {
 }
 
 export default class GameController {
-  public isRunning = false;
+  private isRunning = false;
 
   private tickingInterval: NodeJS.Timeout;
 

@@ -28,11 +28,9 @@ function Game(): JSX.Element {
   const userContext = useUserContext();
   const role = useRole();
 
-  const matchIsRunning =
-    gameState.objectIds
-      .map(id => gameState.objectMap[id])
-      .filter(gameObject => gameObject.type === GameObjectTypes.Unit).length >
-    0;
+  const matchIsRunning = gameState.objectIds
+    .map(id => gameState.objectMap[id])
+    .some(gameObject => gameObject.type === GameObjectTypes.Unit);
 
   const isPlayer = role === Role.PLAYER;
   const isLiving =
@@ -129,7 +127,7 @@ function Game(): JSX.Element {
           </Container>
         </Stage>
       </CanvasWrapper>
-      {!matchIsRunning ? <RoleSwitch /> : ''}
+      {!matchIsRunning ? <RoleSwitch /> : null}
     </>
   );
 }

@@ -15,9 +15,7 @@ const RoleSwitch: FC = () => {
     <RoleSwitchButton roleToRequest={roleToRequest}>
       Ich möchte {getRoleText(roleToRequest)}!
     </RoleSwitchButton>
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 
 export default RoleSwitch;
