@@ -38,7 +38,7 @@ export const getOccupiedFieldMap = <T extends GameObject>(
 export const getObjectsOnField = <T extends GameObject>(
   state: State,
   position: Position
-): T[] => getOccupiedFieldMap<T>(state)[createKeyFromPosition(position)];
+): T[] => getOccupiedFieldMap<T>(state)[createKeyFromPosition(position)] || [];
 
 export const getFreeFields = (state: State): Position[] => {
   const fields = getFlatFieldArray();

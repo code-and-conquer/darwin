@@ -36,7 +36,7 @@ describe('getObjectsOnField', () => {
     const objectsOnFieldTwoTwo = getObjectsOnField(state, { x: 2, y: 2 });
     const objectsOnEmptyField = getObjectsOnField(state, { x: 3, y: 3 });
 
-    expect(objectsOnEmptyField).toBeFalsy();
+    expect(objectsOnEmptyField.length).toBe(0);
 
     expect(objectsOnFieldOneOne.length).toEqual(2);
     expect(objectsOnFieldOneOne).toEqual(expect.arrayContaining([unit, food2]));
