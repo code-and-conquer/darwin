@@ -1,9 +1,9 @@
-\documentclass[11pt,a4paper]{scrartcl}
-
+\documentclass[11pt,a4paper,german]{scrartcl}
+\usepackage[utf8x]{inputenc}
 \usepackage{xcolor}
 \usepackage{float}
 \usepackage{subfig}
-\usepackage[T1]{fontenc}
+\usepackage{fontspec}
 \usepackage{graphicx}
 \usepackage[automark]{scrlayer-scrpage}
 \usepackage[hidelinks]{hyperref}
@@ -315,7 +315,7 @@ Im Anschluss werden die einzelnen Zeitachseneinträge und alle gewünschten Befe
 Da es sich um ein Schulprojekt handelt und sich das Projekt in der Entwicklungsphase befindet, ist die Infrastruktur zurzeit simpel gehalten. Es wurde jedoch bereits angedacht, wie die Infrastruktur in Zukunft aussehen könnte.
 
 \subsection{Infrastruktur während der Entwicklungsphase}
-Wie auf der Abbildung zu sehen, wird aktuell ein Linux Rechner (mit Ubuntu 18.04.4 LTS) eingesetzt. Auf diesem ist Docker installiert, der mittels Docker-Compose jeweils einen Docker-Container für das Frontend und einen für das Backend konfiguriert. Das Backend wird mittels eines Node.js-Images betrieben, wobei für das Frontend ein Nginx-Image verwendet wird, um die statischen Dateien des gebauten React-Apps auszuliefern.
+Wie auf der folgenden Abbildung zu sehen, wird aktuell ein Linux Rechner (mit Ubuntu 18.04.4 LTS) eingesetzt. Auf diesem ist Docker installiert, der mittels Docker-Compose jeweils einen Docker-Container für das Frontend und einen für das Backend konfiguriert. Das Backend wird mittels eines Node.js-Images betrieben, wobei für das Frontend ein Nginx-Image verwendet wird, um die statischen Dateien des gebauten React-Apps auszuliefern.
 
 \begin{figure}[h]
   \centering
