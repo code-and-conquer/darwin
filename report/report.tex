@@ -316,9 +316,13 @@ Im Anschluss werden die einzelnen Zeitachseneinträge und alle gewünschten Befe
 Da es sich um ein Schulprojekt handelt und sich das Projekt in der Entwicklungsphase befindet, ist die Infrastruktur zurzeit eher simpel gehalten. Es wurde jedoch bereits angedacht, wie die Infrastruktur in Zukunft aussehen könnte.
 
 \subsection{Infrastruktur während der Entwicklungsphase}
-Es wird aktuell ein Linux Rechner (mit Ubuntu 18.04.4 LTS) eingesetzt. Auf diesem ist Docker installiert, der mittels Docker-Compose jeweils einen Docker-Container für das Frontend und einen für das Backend konfiguriert. Das Backend wird mittels eines Node.js Images betrieben, wobei für das Frontend ein Nginx Image verwendet wird, um die statischen Dateien des gebauten React-Apps auszuliefern.
+Wie auf der Abbildung zu sehen, wird aktuell ein Linux Rechner (mit Ubuntu 18.04.4 LTS) eingesetzt. Auf diesem ist Docker installiert, der mittels Docker-Compose jeweils einen Docker-Container für das Frontend und einen für das Backend konfiguriert. Das Backend wird mittels eines Node.js Images betrieben, wobei für das Frontend ein Nginx Image verwendet wird, um die statischen Dateien des gebauten React-Apps auszuliefern.
 
-% TODO: ? Diagramm
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{infrastructure_current.png}
+  \caption{Aktuelle Infrastruktur}
+\end{figure}
 
 \subsection{Skalierbarkeit und Infrastruktur in Zukunft}
 Durch den Einsatz von Docker kann die Software auf einer Reihe von Systemen, wie einzelnen physikalischen/virtuellen Rechnern oder PaaS Anbietern, betrieben werden. Es besteht auch die Möglichkeit der Orchestrierung: 
