@@ -1,17 +1,9 @@
-import {
-  State,
-  Tick,
-  UserContext,
-  Message,
-  Feedback,
-  Role,
-} from '@darwin/types';
+import { State, Tick, UserContext, Message, Feedback } from '@darwin/types';
 
 export type ContextState = {
   state: State;
   userContext: UserContext;
   feedback: Feedback[];
-  role: Role | null;
   meta: {
     currentTick: Tick;
   };
@@ -29,7 +21,6 @@ export const emptyWebsocketContext: ContextState = {
   userContext: {
     unitId: '',
   },
-  role: null,
   feedback: [],
   meta: {
     currentTick: 0,
