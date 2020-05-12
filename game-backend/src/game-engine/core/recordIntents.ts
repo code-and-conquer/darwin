@@ -25,9 +25,11 @@ import {
   selectNearestEnemyUnit,
 } from '../state-selectors';
 import runScript from './runScript';
+import canMove from '../userScriptHelper/canMove';
 
 interface ScriptContextMethods {
   move: (direction: Direction) => void;
+  canMove: (direction: Direction) => boolean;
   attack: (unit: Unit) => void;
   consume: () => void;
 }
@@ -81,6 +83,7 @@ function recordIntents(
     move: (direction: Direction) => {
       intentions.push(new MoveIntent(direction));
     },
+    canMove: (direction: Direction) => canMove(direction, userUnit, state),
     attack: (unit: Unit = nearestEnemyUnit) => {
       intentions.push(new AttackIntent(unit));
     },
