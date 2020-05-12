@@ -39,21 +39,25 @@ export default class GameController {
   }
 
   appendUsers(userIds: UserId[]): void {
-    userIds.forEach(userId => {
-      const unit = this.generateUnit();
+    userIds
+      .filter(userId => {
+        return this.store.userContexts.userContextIds.includes(userId);
+      })
+      .forEach(userId => {
+        const unit = this.generateUnit();
 
-      this.addUnitToMatchState(unit);
-      const userCtx: UserExecutionContext = {
-        unitId: unit.id,
-        userScript: {
-          script: '',
-        },
-        store: {},
-      };
+        this.addUnitToMatchState(unit);
+        const userCtx: UserExecutionContext = {
+          unitId: unit.id,
+          userScript: {
+            script: '',
+          },
+          store: {},
+        };
 
-      this.store.userContexts.userContextMap[userId] = userCtx;
-      this.store.userContexts.userContextIds.push(userId);
-    });
+        this.store.userContexts.userContextMap[userId] = userCtx;
+        this.store.userContexts.userContextIds.push(userId);
+      });
 
     this.checkGameState();
   }
