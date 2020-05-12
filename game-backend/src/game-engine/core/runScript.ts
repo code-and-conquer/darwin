@@ -30,7 +30,7 @@ export default function runScript(
     `
     $0.copySync().forEach((name) => {
       global[name] = function(...args) {
-        $1.getSync(name).applySync(undefined, args, { arguments: { copy: true } });
+        return $1.getSync(name).applySync(undefined, args, { arguments: { copy: true } });
       }
     });
     `,
@@ -65,7 +65,7 @@ export default function runScript(
     `
      $0.copySync().forEach((name) => {
        global[name] = $1.getSync(name).copySync();
-     }); 
+     });
     `,
     [objectKeys, scriptContext],
     { arguments: { reference: true } }
