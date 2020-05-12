@@ -2,85 +2,74 @@ import React, { FC } from 'react';
 import { Position } from '@darwin/types';
 import { Sprite } from '@inlet/react-pixi';
 import { FIELD_SIZE } from '../../constants/stage';
-import endurance from '../../assets/images/endurance.png';
-import teleport from '../../assets/images/teleport.png';
-import healthregen from '../../assets/images/healthregen.png';
-import Circle from '../pixi/Circle';
+import healthRegen from '../../assets/images/heart.svg';
+import teleport from '../../assets/images/teleport.svg';
+import endurance from '../../assets/images/biceps.svg';
+import Square from '../pixi/Square';
 
-type Props = {
+interface Props extends BaseProps {
+  color: number;
+  image: string;
+  iconScale?: number;
+}
+
+type BaseProps = {
   position: Position;
 };
 
-const HALF_FIELD_SIZE = FIELD_SIZE / 2;
-const radius = HALF_FIELD_SIZE;
+const squareScale = 0.6;
+const squareSize = FIELD_SIZE * squareScale;
+const squareMargin = (FIELD_SIZE - squareSize) / 2;
 
-const HealthRegen: FC<Props> = ({ position }) => {
+const Powerup: FC<Props> = ({ position, color, image, iconScale = 1 }) => {
+  const iconSize = squareSize * iconScale;
+  const iconMargin = (FIELD_SIZE - iconSize) / 2;
   return (
     <>
-      <Circle
+      <Square
         position={{
-          x: position.x + HALF_FIELD_SIZE,
-          y: position.y + HALF_FIELD_SIZE,
+          x: position.x + squareMargin,
+          y: position.y + squareMargin,
         }}
-        radius={radius}
-        color={0xd7ff9e}
-        fill={0xd7ff9e}
+        size={squareSize}
+        fill={color}
+        color={color}
       />
       <Sprite
-        height={FIELD_SIZE}
-        width={FIELD_SIZE}
-        image={healthregen}
-        x={position.x}
-        y={position.y}
+        height={iconSize}
+        width={iconSize}
+        image={image}
+        x={position.x + iconMargin}
+        y={position.y + iconMargin}
       />
     </>
   );
 };
 
-const Endurance: FC<Props> = ({ position }) => {
-  return (
-    <>
-      <Circle
-        position={{
-          x: position.x + HALF_FIELD_SIZE,
-          y: position.y + HALF_FIELD_SIZE,
-        }}
-        radius={radius}
-        color={0x05bf96}
-        fill={0x05bf96}
-      />
-      <Sprite
-        height={FIELD_SIZE}
-        width={FIELD_SIZE}
-        image={endurance}
-        x={position.x}
-        y={position.y}
-      />
-    </>
-  );
-};
+const HealthRegen: FC<BaseProps> = ({ position }) => (
+  <Powerup
+    position={position}
+    color={0xd7ff9e}
+    image={healthRegen}
+    iconScale={1.1}
+  />
+);
+const Endurance: FC<BaseProps> = ({ position }) => (
+  <Powerup
+    position={position}
+    color={0x05bf96}
+    image={endurance}
+    iconScale={0.8}
+  />
+);
 
-const Teleport: FC<Props> = ({ position }) => {
-  return (
-    <>
-      <Circle
-        position={{
-          x: position.x + HALF_FIELD_SIZE,
-          y: position.y + HALF_FIELD_SIZE,
-        }}
-        radius={radius}
-        color={0xffc0cb}
-        fill={0xffc0cb}
-      />
-      <Sprite
-        height={FIELD_SIZE}
-        width={FIELD_SIZE}
-        image={teleport}
-        x={position.x}
-        y={position.y}
-      />
-    </>
-  );
-};
+const Teleport: FC<BaseProps> = ({ position }) => (
+  <Powerup
+    position={position}
+    color={0xffc0cb}
+    image={teleport}
+    iconScale={0.9}
+  />
+);
 
 export { Teleport, Endurance, HealthRegen };
