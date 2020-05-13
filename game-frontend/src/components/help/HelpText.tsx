@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import InlineCode from './InlineCode';
 import Codeblock from './CodeBlock';
 import CostEmoji from './CostEmoji';
-import PowerUp from '../canvas-objects/Powerup';
+import { Teleport, HealthRegen, Endurance } from '../canvas-objects/Powerup';
 import OneFieldStage from './OneFieldStage';
 import Unit from '../canvas-objects/Unit';
 import Food from '../canvas-objects/Food';
@@ -122,14 +122,14 @@ const HelpText: FC = () => {
       <h5>
         Teleport{' '}
         <OneFieldStage>
-          <PowerUp color={0xffc0cb} position={{ x: 0, y: 0 }} />
+          <Teleport position={{ x: 0, y: 0 }} />
         </OneFieldStage>
       </h5>
       <p>Teleportiert die Unit auf ein zufälliges anderes freies Feld.</p>
       <h5>
         Lebensregeneration{' '}
         <OneFieldStage>
-          <PowerUp color={0xd7ff9e} position={{ x: 0, y: 0 }} />
+          <HealthRegen position={{ x: 0, y: 0 }} />
         </OneFieldStage>
       </h5>
       <p>
@@ -138,7 +138,7 @@ const HelpText: FC = () => {
       <h5>
         Ausdauer{' '}
         <OneFieldStage>
-          <PowerUp color={0x05bf96} position={{ x: 0, y: 0 }} />
+          <Endurance position={{ x: 0, y: 0 }} />
         </OneFieldStage>
       </h5>
       <p>Die Unit verliert weniger Leben pro Tick.</p>
