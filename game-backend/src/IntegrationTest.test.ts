@@ -205,7 +205,6 @@ describe('Controller Tests', () => {
 
   it('finishes one game with both players dying at the same time', () => {
     // match has started
-    jest.advanceTimersByTime(TICK_INTERVAL);
     const matchUpdate = parseMatchUpdate(sendFunction1.mock.calls[1][0]);
     expect(matchUpdate.payload.meta.currentTick).toBe(1);
 

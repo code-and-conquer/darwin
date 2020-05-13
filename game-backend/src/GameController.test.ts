@@ -141,8 +141,6 @@ describe('GameController', () => {
     ]);
 
     gameController.appendUsers(['user0', 'user1']);
-    jest.advanceTimersByTime(TICK_INTERVAL);
-
     expect(mockTerminate).toHaveBeenCalledTimes(1);
   });
 });
