@@ -19,6 +19,8 @@ export default class MainController {
 
   private gameController: GameController | null = null;
 
+  private isRestartingGame = false;
+
   newConnection(ws: WebSocket, userId: UserId): void {
     ws.on('message', this.getMessageListener(userId));
 
@@ -88,9 +90,11 @@ export default class MainController {
   }
 
   private getTerminateExecutor(): () => void {
-    this.gameController = null;
     return (): void => {
+      this.gameController = null;
+      this.isRestartingGame = true;
       setTimeout(() => {
+        this.isRestartingGame = false;
         this.removeInactiveUsers();
 
         this.checkMatch();
@@ -149,7 +153,9 @@ export default class MainController {
     const { newRole } = message.payload;
     this.store.userConnnections.userConnectionMap[userId].role = newRole;
 
-    this.checkMatch();
+    if (!this.isRestartingGame) {
+      this.checkMatch();
+    }
 
     const roleResponse: RoleResponse = {
       type: 'roleResponse',
