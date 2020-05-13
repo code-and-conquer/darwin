@@ -227,7 +227,7 @@ describe('Controller Tests', () => {
     }
     jest.advanceTimersByTime(TICK_INTERVAL);
     const { state } = parseMatchUpdate(
-      sendFunction1.mock.calls[matches * ticksTillDeath + 1][0]
+      sendFunction1.mock.calls[matches * ticksTillDeath][0]
     ).payload;
 
     const units: Unit[] = getGameObjectsPerType(
