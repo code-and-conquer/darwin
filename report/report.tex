@@ -5,6 +5,7 @@
 \usepackage{subfig}
 \usepackage{fontspec}
 \usepackage{graphicx}
+\usepackage{listings}
 \usepackage[automark]{scrlayer-scrpage}
 \usepackage[hidelinks]{hyperref}
 \usepackage{listings}
@@ -17,6 +18,14 @@
   colorlinks=true,
   linkcolor=black, %!70!black,
   urlcolor=blue!70!black
+}
+
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  breaklines=true,
+  frame=single,
+  postbreak=\mbox{\textcolor{blue}{$\hookrightarrow$}\space},
 }
 
 \let\oldsection\section
@@ -315,7 +324,7 @@ Im Anschluss werden die einzelnen Zeitachseneinträge und alle gewünschten Befe
 Da es sich um ein Schulprojekt handelt und sich das Projekt in der Entwicklungsphase befindet, ist die Infrastruktur zurzeit simpel gehalten. Es wurde jedoch bereits angedacht, wie die Infrastruktur in Zukunft aussehen könnte.
 
 \subsection{Infrastruktur während der Entwicklungsphase}
-Wie auf der folgenden Abbildung zu sehen, wird aktuell ein Linux Rechner (mit Ubuntu 18.04.4 LTS) eingesetzt. Auf diesem ist Docker installiert, der mittels Docker-Compose jeweils einen Docker-Container für das Frontend und einen für das Backend konfiguriert. Das Backend wird mittels eines Node.js-Images betrieben, wobei für das Frontend ein Nginx-Image verwendet wird, um die statischen Dateien des gebauten React-Apps auszuliefern.
+Wie auf der folgenden Abbildung zu sehen, wird aktuell ein virtueller Linux Rechner (mit Ubuntu 18.04.4 LTS) eingesetzt. Auf diesem ist Docker installiert, der mittels Docker-Compose jeweils einen Docker-Container für das Frontend und einen für das Backend konfiguriert. Das Backend wird mittels eines Node.js-Images betrieben, wobei für das Frontend ein Nginx-Image verwendet wird, um die statischen Dateien des gebauten React-Apps auszuliefern.
 
 \begin{figure}[h]
   \centering
@@ -332,10 +341,7 @@ Durch den Einsatz von Docker kann die Software auf einer Reihe von Systemen, wie
 
 Die Zuständigkeiten sind zurzeit nicht bekannt. Auch steht noch kein Konzept bezüglich Disaster-Recovery / Failover. Allerdings ist aufgrund des Einsatzes von Docker und Load Balancers bereits Vorarbeit geleistet.
 
-% Ein Beispiel, wie eine Infrastruktur aussehen könnte:
-% TODO: ? Beispielgrafik
-
-\section{Installation (Deployment)}
+\section{Deployment}
 
 Um einen raschen Release-Zyklus zu gewährleisten, wurde eine Build- sowie eine Releasepipeline eingerichtet.
 Diese ermöglicht es, Pull-Requests automatisch zu testen und nach einem erfolgten Merge automatisiert zu releasen und deployen.
@@ -360,22 +366,36 @@ Die Release Pipeline verwendet das neuste von der Build Pipeline erstellte Artef
   \item Neuerstellen der Docker Container mittels Docker-Compose
 \end{enumerate}
 
+Die detaillierte Konfiguration der Pipelines befindet sich in der Datei \textit{azure-pipeline.yml} des Code-Repositorys und in \href{https://dev.azure.com/schaumic/darwin/_build}{Azure DevOps}.
+
 Wie bereits im Kapitel \textit{\nameref{InfrastructureArchitecture}} erwähnt, ist das Docker-Compose Projekt mit einem Webserver und Node.js konfiguriert.
 
 \section{Operation und Support}
-Da unser Projekt als zeitlich begrenztes Projekt einer Studenten-Gruppe läuft, ist keinerlei Support oder Maintenance nach Ablauf der Entwicklungsphase geplant. Auch eine Überwachungslösung ist nicht vorgesehen.
-Serverseitig gibt es keine Logs. 
+Da unser Projekt als zeitlich begrenztes Projekt einer Studenten-Gruppe läuft, ist keinerlei Support oder Maintenance nach Ablauf der Entwicklungsphase geplant. Auch eine Überwachungslösung ist nicht vorgesehen. Allgemein gilt, dass die Server mittels Befehlen von \href{https://docs.docker.com/engine/reference/commandline/docker/}{Docker} und \href{https://docs.docker.com/compose/reference/overview/}{Docker Compose} sowie der jeweiligen Server-Software administriert werden können.
+
+Eine Kopie des Docker Compose Setups und der Nginx Konfiguration ist in (\nameref{Anhang-A} ersichtlich.
 
 \subsection{Zugriff}
-Der Zugriff auf die virtuelle Maschine erfolgt via SSH. Die IP-Adresse ist 160.85.252.31.
+Der Zugriff auf die virtuelle Maschine erfolgt via SSH.
 
 \subsection{Administrationsaufgaben}
+Folgend einige Lösungswege für alltägliche Probleme.
+
+\subsubsection{Absturz und Neustart}
 Sollte die Applikation nicht mehr reagieren oder sonst einen Fehler aufweisen, kann sie mittels den folgenden Befehlen neugestartet werden:
 \begin{verbatim}
 cd /web/darwin
-sed -i 's/\*/file:.\/darwin-types/g' current/backend/package.json
 docker-compose up -d --force-recreate
 \end{verbatim}
+beziehungsweise mit
+\begin{verbatim}
+docker-compose up [frontend/backend] -d --force-recreate
+\end{verbatim}
+um nur den Backend- oder den Frontend-Server neuzustarten.
+
+
+\subsubsection{Logs einsehen}
+Die Logs können mittels \texttt{docker-compose logs} eingesehen werden. Sie werden zurzeit aber nicht persistiert.
 
 \section{Entscheidungs-Logbuch}
 
@@ -420,6 +440,45 @@ docker-compose up -d --force-recreate
         \end{itemize}
 \end{itemize}
 
-\clearpage
+\section{Anhang}
+\subsection{Anhang A: Docker Compose und Nginx Konfiguration}
+\label{Anhang-A}
+
+\begin{lstlisting}[caption={Docker Compose},captionpos=b]
+version: "3.7"
+services:
+  frontend:
+    image: nginx:1.17
+    volumes:
+      - ./current/frontend/build:/var/www/html:ro
+      - ./sites.conf:/etc/nginx/conf.d/sites.template:ro
+    ports:
+      - 80:80
+    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/sites.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
+  backend:
+    image: node:12.16.1
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./current/backend:/home/node/app:z
+    ports:
+      - 8080:8080
+    command: /bin/bash -c "npm i --production && npm start"
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Nginx},captionpos=b]
+server {
+  listen 80;
+  charset UTF-8;
+  server_name _;
+  root /var/www/html;
+  index index.html;
+  error_page 404 /404.html;
+}
+\end{lstlisting}
+
+
 
 \end{document}
