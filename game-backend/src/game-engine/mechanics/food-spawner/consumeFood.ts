@@ -2,7 +2,7 @@ import { Consume, MAX_HEALTH } from '@darwin/types';
 import produce from '../../../helper/produce';
 import { getUnit, removeGameObject } from '../../../helper/gameObjects';
 
-export const FOOD_REGENERATION_VALUE = 20;
+export const FOOD_REGENERATION_VALUE = 24;
 
 const consumeFood: Consume = (id, state, userContext) => {
   return produce(state, draft => {
