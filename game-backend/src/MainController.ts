@@ -17,14 +17,7 @@ export const GAME_RESTART_TIME = 10000;
 export default class MainController {
   private store = createServerStore();
 
-  private gameController: GameController;
-
-  constructor() {
-    this.gameController = new GameController(
-      this.getMatchUpdateExecutor(),
-      this.getTerminateExecutor()
-    );
-  }
+  private gameController: GameController | null = null;
 
   newConnection(ws: WebSocket, userId: UserId): void {
     ws.on('message', this.getMessageListener(userId));
@@ -40,54 +33,67 @@ export default class MainController {
     }
   }
 
+  private getTickNotificationExecutor(): (matchUpdate: MatchUpdate) => void {
+    return (matchUpdate: MatchUpdate): void => {
+      const spectators = this.getSpectators();
+      spectators.forEach(userId => {
+        return this.sendMatchUpdateToUser(userId, matchUpdate);
+      });
+    };
+  }
+
   private getMatchUpdateExecutor(): (
     userId: UserId,
     matchUpdate: MatchUpdate
   ) => void {
     return (userId: UserId, matchUpdate: MatchUpdate): void => {
-      if (userId) {
-        this.store.userConnnections.userConnectionMap[
-          userId
-        ].connections.forEach(ws => {
-          ws.send(JSON.stringify(matchUpdate));
-        });
-      } else {
-        this.store.userConnnections.userConnectionIds
-          .filter(id => {
-            return (
-              this.store.userConnnections.userConnectionMap[id].role ===
-              Role.SPECTATOR
-            );
-          })
-          .forEach(id => {
-            this.store.userConnnections.userConnectionMap[
-              id
-            ].connections.forEach(ws => {
-              ws.send(JSON.stringify(matchUpdate));
-            });
-          });
-      }
+      return this.sendMatchUpdateToUser(userId, matchUpdate);
     };
   }
 
+  private sendMatchUpdateToUser(
+    userId: UserId,
+    matchUpdate: MatchUpdate
+  ): void {
+    this.store.userConnnections.userConnectionMap[userId].connections.forEach(
+      ws => {
+        ws.send(JSON.stringify(matchUpdate));
+      }
+    );
+  }
+
+  private filterUsersByRole(role: Role): UserId[] {
+    return this.store.userConnnections.userConnectionIds.filter(id => {
+      return this.store.userConnnections.userConnectionMap[id].role === role;
+    });
+  }
+
+  private getSpectators(): UserId[] {
+    return this.filterUsersByRole(Role.SPECTATOR);
+  }
+
+  private getPlayers(): UserId[] {
+    return this.filterUsersByRole(Role.PLAYER);
+  }
+
+  private startGame(): void {
+    const playerIds = this.getPlayers();
+
+    this.gameController = new GameController(
+      playerIds,
+      this.getMatchUpdateExecutor(),
+      this.getTickNotificationExecutor(),
+      this.getTerminateExecutor()
+    );
+  }
+
   private getTerminateExecutor(): () => void {
+    this.gameController = null;
     return (): void => {
       setTimeout(() => {
         this.removeInactiveUsers();
 
-        this.gameController = new GameController(
-          this.getMatchUpdateExecutor(),
-          this.getTerminateExecutor()
-        );
-        const playerIds = this.store.userConnnections.userConnectionIds.filter(
-          id => {
-            return (
-              this.store.userConnnections.userConnectionMap[id].role ===
-              Role.PLAYER
-            );
-          }
-        );
-        this.gameController.appendUsers(playerIds);
+        this.checkMatch();
       }, GAME_RESTART_TIME);
     };
   }
@@ -143,12 +149,7 @@ export default class MainController {
     const { newRole } = message.payload;
     this.store.userConnnections.userConnectionMap[userId].role = newRole;
 
-    if (newRole === Role.SPECTATOR) {
-      this.gameController.removeUsers([userId]);
-    }
-    if (!this.gameController.getIsRunning() && newRole === Role.PLAYER) {
-      this.gameController.appendUsers([userId]);
-    }
+    this.checkMatch();
 
     const roleResponse: RoleResponse = {
       type: 'roleResponse',
@@ -162,6 +163,12 @@ export default class MainController {
         ws.send(JSON.stringify(roleResponse));
       }
     );
+  }
+
+  private checkMatch(): void {
+    if (this.gameController === null && this.getPlayers().length > 1) {
+      this.startGame();
+    }
   }
 
   private storeNewUserConnection(ws: WebSocket, userId: UserId): void {

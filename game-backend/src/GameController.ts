@@ -8,7 +8,6 @@ import {
   UserId,
   UserScript,
   Feedback,
-  ObjectId,
 } from '@darwin/types';
 import { createUnit, getGameObjectsPerType } from './helper/gameObjects';
 import { generateFreePosition } from './helper/fields';
@@ -33,13 +32,18 @@ export default class GameController {
   private store = createGameStore();
 
   constructor(
+    userIds: UserId[],
     private sendMatchUpdate: (userId: UserId, matchUpdate: MatchUpdate) => void,
+    private sendTickNotification: (matchUpdate: MatchUpdate) => void,
     private terminate: () => void
   ) {
     this.store.matchState = createMap(this.store.matchState);
+    this.appendUsers(userIds);
+
+    this.startGame();
   }
 
-  appendUsers(userIds: UserId[]): void {
+  private appendUsers(userIds: UserId[]): void {
     userIds
       .filter(userId => {
         return !this.store.userContexts.userContextIds.includes(userId);
@@ -59,38 +63,10 @@ export default class GameController {
         this.store.userContexts.userContextMap[userId] = userCtx;
         this.store.userContexts.userContextIds.push(userId);
       });
-
-    this.checkGameState();
-  }
-
-  removeUsers(userIds: UserId[]): void {
-    userIds.forEach(userId => {
-      if (this.store.userContexts.userContextMap[userId]) {
-        this.removeUnitFromMatchState(
-          this.store.userContexts.userContextMap[userId].unitId
-        );
-        delete this.store.userContexts.userContextMap[userId];
-      }
-    });
-    this.store.userContexts.userContextIds = this.store.userContexts.userContextIds.filter(
-      userId => {
-        return !userIds.includes(userId);
-      }
-    );
   }
 
   setScript(userId: UserId, script: UserScript): void {
     this.store.userContexts.userContextMap[userId].userScript = script;
-  }
-
-  getIsRunning(): boolean {
-    return this.isRunning;
-  }
-
-  private checkGameState(): void {
-    if (this.hasMoreThanOneUser() && !this.isRunning) {
-      this.startGame();
-    }
   }
 
   private generateUnit(): Unit {
@@ -106,22 +82,8 @@ export default class GameController {
     this.store.matchState.objectIds.push(unit.id);
   }
 
-  private removeUnitFromMatchState(unitId: ObjectId): void {
-    this.store.matchState.objectIds = this.store.matchState.objectIds.filter(
-      objectId => {
-        return objectId !== unitId;
-      }
-    );
-    delete this.store.matchState.objectMap[unitId];
-  }
-
-  private hasMoreThanOneUser(): boolean {
-    return this.store.userContexts.userContextIds.length > 1;
-  }
-
   private startGame(): void {
     this.isRunning = true;
-    this.getTickExecutor()();
     this.tickingInterval = setInterval(this.getTickExecutor(), TICK_INTERVAL);
   }
 
@@ -143,7 +105,7 @@ export default class GameController {
   }
 
   private notifySpectators(): void {
-    this.sendMatchUpdate(null, this.generateUpdate(null, []));
+    this.sendTickNotification(this.generateUpdate(null, []));
   }
 
   private static getPlainUserContext(userContext: UserContext): UserContext {
