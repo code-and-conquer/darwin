@@ -1,5 +1,5 @@
 {
-  "latex-workshop.latex.recipe.default": "first",
+  "latex-workshop.latex.recipe.default": "lastUsed",
   "latex-workshop.latex.recipes": [
     {
       "name": "Fachartikel",
@@ -11,18 +11,10 @@
       ]
     },
     {
-      "name": "PSIT4",
+      "name": "Projekt-Dokumentation",
       "tools": [
-        "latexmk"
-      ]
-    },
-    {
-      "name": "PSIT4 (mit Glossar)",
-      "tools": [
-        "latexmk",
-        "makeindex",
-        "bibtex",
-        "latexmk"
+        "xelatex",
+        "xelatex",
       ]
     }
   ],
@@ -42,35 +34,6 @@
       "args": [
         "%DOC%",
       ]
-    },
-    {
-      "name": "latexmk",
-      "command": "latexmk",
-      "args": [
-        "-synctex=1",
-        "-interaction=nonstopmode",
-        "-file-line-error",
-        "-pdf",
-        "-outdir=%OUTDIR%",
-        "%DOC%"
-      ],
-      "env": {}
-    },
-    {
-      "name": "makeindex",
-      "command": "makeindex",
-      "args": [
-        "%DOCFILE%"
-      ],
-      "env": {}
-    },
-    {
-      "name": "bibtex",
-      "command": "bibtex",
-      "args": [
-        "%DOCFILE%"
-      ],
-      "env": {}
     }
   ],
   "editor.codeActionsOnSave": {
