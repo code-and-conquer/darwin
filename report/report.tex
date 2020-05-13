@@ -366,14 +366,13 @@ Die Release Pipeline verwendet das neuste von der Build Pipeline erstellte Artef
   \item Neuerstellen der Docker Container mittels Docker-Compose
 \end{enumerate}
 
-Die detaillierte Konfiguration der Pipelines befindet sich in der Datei \textit{azure-pipeline.yml} des Code-Repositorys und in \href{https://dev.azure.com/schaumic/darwin/_build}{Azure DevOps}. Eine Kopie des Docker Compose Projekts befindet sich in \nameref{Anhang-A}.
-
+Die detaillierte Konfiguration der Pipelines befindet sich in der Datei \textit{azure-pipeline.yml} des Code-Repositorys und in \href{https://dev.azure.com/schaumic/darwin/_build}{Azure DevOps}. Eine Kopie des Docker Compose Projekts befindet sich in \textit{\nameref{Anhang-A}}.
 Wie bereits im Kapitel \textit{\nameref{InfrastructureArchitecture}} erwähnt, ist das Docker-Compose Projekt mit einem Webserver und Node.js konfiguriert.
 
 \section{Operation und Support}
 Da unser Projekt als zeitlich begrenztes Projekt einer Studenten-Gruppe läuft, ist keinerlei Support oder Maintenance nach Ablauf der Entwicklungsphase geplant. Auch eine Überwachungslösung ist nicht vorgesehen. Allgemein gilt, dass die Server mittels Befehlen von \href{https://docs.docker.com/engine/reference/commandline/docker/}{Docker} und \href{https://docs.docker.com/compose/reference/overview/}{Docker Compose} sowie der jeweiligen Server-Software administriert werden können.
 
-Eine Kopie des Docker Compose Setups und der Nginx Konfiguration ist in \nameref{Anhang-A} ersichtlich.
+Eine Kopie des Docker Compose Setups und der Nginx Konfiguration ist in \textit{\nameref{Anhang-A}} ersichtlich.
 
 \subsection{Zugriff}
 Der Zugriff auf die virtuelle Maschine erfolgt via SSH.
