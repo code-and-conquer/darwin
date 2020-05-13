@@ -121,6 +121,7 @@ export default class GameController {
 
   private startGame(): void {
     this.isRunning = true;
+    this.getTickExecutor()();
     this.tickingInterval = setInterval(this.getTickExecutor(), TICK_INTERVAL);
   }
 
