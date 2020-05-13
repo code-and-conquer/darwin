@@ -80,7 +80,7 @@ describe('GameController', () => {
   it('sends empty user context on tick for spectators', () => {
     jest.advanceTimersByTime(TICK_INTERVAL);
 
-    const matchUpdate = parseMatchUpdate(mockSendMatchUpdate.mock.calls[2][1]);
+    const matchUpdate = parseMatchUpdate(mockTickNotification.mock.calls[0][0]);
     const { userContext } = matchUpdate.payload;
 
     expect(userContext).toBeNull();
@@ -125,8 +125,8 @@ describe('GameController', () => {
       1
     );
     assertStatesMatch(
+      mockSendMatchUpdate.mock.calls[2][1],
       mockSendMatchUpdate.mock.calls[3][1],
-      mockSendMatchUpdate.mock.calls[4][1],
       2
     );
   });
