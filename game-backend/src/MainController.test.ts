@@ -5,7 +5,6 @@ import {
   UserId,
   RoleRequest,
   Role,
-  RoleResponse,
 } from '@darwin/types';
 import MainController, { GAME_RESTART_TIME } from './MainController';
 
@@ -58,9 +57,6 @@ describe('MainController', () => {
   jest.useFakeTimers();
 
   const parseMatchUpdate = (body: string): MatchUpdate => {
-    return JSON.parse(body);
-  };
-  const parseRoleResponse = (body: string): RoleResponse => {
     return JSON.parse(body);
   };
 
@@ -158,24 +154,6 @@ describe('MainController', () => {
     jest.advanceTimersByTime(GAME_RESTART_TIME);
 
     expect(GameControllerMock.mock.calls.length).toBe(2);
-  });
-
-  it('responds to role requests', () => {
-    const userId = 'user1';
-    mainController.newConnection(wsMock0 as WebSocket, userId);
-
-    const onListener = onFunction.mock.calls[0][1];
-    onListener(JSON.stringify(roleRequestPlayer));
-    const roleResponse = parseRoleResponse(sendFunction0.mock.calls[0][0]);
-    expect(roleRequestPlayer.payload.newRole).toBe(
-      roleResponse.payload.newRole
-    );
-
-    onListener(JSON.stringify(roleRequestSpectator));
-    const roleResponse1 = parseRoleResponse(sendFunction0.mock.calls[1][0]);
-    expect(roleRequestSpectator.payload.newRole).toBe(
-      roleResponse1.payload.newRole
-    );
   });
 
   it('removes inactive users from store', () => {
