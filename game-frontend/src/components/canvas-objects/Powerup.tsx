@@ -49,7 +49,7 @@ const Powerup: FC<Props> = ({ position, color, image, iconScale = 1 }) => {
 const HealthRegen: FC<BaseProps> = ({ position }) => (
   <Powerup
     position={position}
-    color={0xd7ff9e}
+    color={0xcdc7e5}
     image={healthRegen}
     iconScale={1.1}
   />
