@@ -6,7 +6,6 @@ import {
   UserId,
   RoleRequest,
   Role,
-  RoleResponse,
 } from '@darwin/types';
 import GameController from './GameController';
 import { createServerStore } from './createServerStore';
@@ -156,19 +155,6 @@ export default class MainController {
     if (!this.isRestartingGame) {
       this.checkMatch();
     }
-
-    const roleResponse: RoleResponse = {
-      type: 'roleResponse',
-      payload: {
-        newRole,
-      },
-    };
-
-    this.store.userConnnections.userConnectionMap[userId].connections.forEach(
-      ws => {
-        ws.send(JSON.stringify(roleResponse));
-      }
-    );
   }
 
   private checkMatch(): void {

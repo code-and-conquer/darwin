@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
 import createPersistedState from 'use-persisted-state';
 import { v4 as uuidv4 } from 'uuid';
-import { Message, UserId, RoleResponse } from '@darwin/types';
+import { Message, UserId } from '@darwin/types';
 import {
   API_URL,
   ContextState,
@@ -9,7 +9,6 @@ import {
   socketUpdateAction,
 } from './types';
 import reducer from './reducer';
-import { handleRoleResponse, useRole } from './role';
 
 const USER_ID_QUERY_PARAM = 'userId';
 const useUserId = createPersistedState(USER_ID_QUERY_PARAM);
@@ -19,8 +18,7 @@ export const WebsocketContext = createContext<ContextState>(
 );
 
 export function useWebsocket(): ContextState {
-  const [userId, setUserId] = useUserId<UserId>(() => uuidv4());
-  const [, setRole] = useRole();
+  const [userId] = useUserId<UserId>(() => uuidv4());
   const [contextState, dispatch] = useReducer(reducer, emptyWebsocketContext);
   const { socket } = contextState;
 
@@ -37,16 +35,10 @@ export function useWebsocket(): ContextState {
     if (socket) {
       socket.addEventListener('message', event => {
         const action: Message = JSON.parse(event.data);
-        switch (action.type) {
-          case 'roleResponse':
-            handleRoleResponse(action as RoleResponse, setRole);
-            break;
-          default:
-            dispatch(action);
-        }
+        dispatch(action);
       });
     }
-  }, [socket, setUserId, dispatch, setRole]);
+  }, [socket, dispatch]);
 
   return contextState;
 }
