@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { monaco, EditorDidMount } from '@monaco-editor/react';
 import monacoEditor from 'monaco-editor/esm/vs/editor/editor.api';
+import editorIntellisense from './editorIntellisense';
 
 export type MonacoInstance = typeof monacoEditor;
 type Editor = monacoEditor.editor.IStandaloneCodeEditor;
@@ -18,6 +19,10 @@ export const useMonacoInstance = (): MonacoInstance | undefined => {
   const [monacoInstance, setMonacoInstance] = useState<MonacoInstance>();
   useEffect(() => {
     monaco.init().then(m => {
+      m.languages.typescript.javascriptDefaults.setCompilerOptions({
+        allowNonTsExtensions: true,
+      });
+      m.languages.typescript.javascriptDefaults.addExtraLib(editorIntellisense);
       setMonacoInstance(m);
     });
   }, []);
