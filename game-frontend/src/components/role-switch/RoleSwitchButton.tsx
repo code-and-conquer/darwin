@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useCallback } from 'react';
 import { RoleRequest, Role } from '@darwin/types';
 import Button from '../visual/Button';
 import { useSendMessage } from '../../service/game';
@@ -10,18 +10,15 @@ interface Props {
 const RoleSwitchButton: FC<Props> = ({ roleToRequest, children }) => {
   const sendMessage = useSendMessage();
 
-  const sendRoleRequest = useMemo(
-    () => (): void => {
-      const scriptUpdate: RoleRequest = {
-        type: 'roleRequest',
-        payload: {
-          newRole: roleToRequest,
-        },
-      };
-      sendMessage(scriptUpdate);
-    },
-    [sendMessage, roleToRequest]
-  );
+  const sendRoleRequest = useCallback((): void => {
+    const scriptUpdate: RoleRequest = {
+      type: 'roleRequest',
+      payload: {
+        newRole: roleToRequest,
+      },
+    };
+    sendMessage(scriptUpdate);
+  }, [sendMessage, roleToRequest]);
 
   return <Button onClick={sendRoleRequest}>{children}</Button>;
 };

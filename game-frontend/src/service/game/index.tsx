@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { Feedback, Message, State, UserContext } from '@darwin/types';
 import { useWebsocket, useWebsocketContext, WebsocketContext } from './context';
 
@@ -27,11 +27,12 @@ export function useSendMessage(): (message: Message) => void {
   const [messageQueue, setMessageQueue] = useState<Message[]>([]);
   const [socketReady, setSocketReady] = useState(socket?.readyState === 1);
 
-  const send = useMemo(() => {
-    return (message: Message): void => {
+  const send = useCallback(
+    (message: Message): void => {
       setMessageQueue([...messageQueue, message]);
-    };
-  }, [messageQueue]);
+    },
+    [messageQueue]
+  );
 
   useEffect(() => {
     if (socket) {
