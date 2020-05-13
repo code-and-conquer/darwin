@@ -138,6 +138,8 @@ describe('GameController', () => {
       { userMap: {}, userIds: [] },
     ]);
 
+    jest.advanceTimersByTime(TICK_INTERVAL);
+
     expect(mockTerminate).toHaveBeenCalledTimes(1);
   });
 });
