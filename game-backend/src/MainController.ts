@@ -143,6 +143,13 @@ export default class MainController {
     const { newRole } = message.payload;
     this.store.userConnnections.userConnectionMap[userId].role = newRole;
 
+    if (newRole === Role.SPECTATOR) {
+      this.gameController.removeUsers([userId]);
+    }
+    if (!this.gameController.getIsRunning() && newRole === Role.PLAYER) {
+      this.gameController.appendUsers([userId]);
+    }
+
     const roleResponse: RoleResponse = {
       type: 'roleResponse',
       payload: {
@@ -155,10 +162,6 @@ export default class MainController {
         ws.send(JSON.stringify(roleResponse));
       }
     );
-
-    if (!this.gameController.getIsRunning() && newRole === Role.PLAYER) {
-      this.gameController.appendUsers([userId]);
-    }
   }
 
   private storeNewUserConnection(ws: WebSocket, userId: UserId): void {

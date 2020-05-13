@@ -8,6 +8,7 @@ import {
   UserId,
   UserScript,
   Feedback,
+  ObjectId,
 } from '@darwin/types';
 import { createUnit, getGameObjectsPerType } from './helper/gameObjects';
 import { generateFreePosition } from './helper/fields';
@@ -62,6 +63,22 @@ export default class GameController {
     this.checkGameState();
   }
 
+  removeUsers(userIds: UserId[]): void {
+    userIds.forEach(userId => {
+      if (this.store.userContexts.userContextMap[userId]) {
+        this.removeUnitFromMatchState(
+          this.store.userContexts.userContextMap[userId].unitId
+        );
+        delete this.store.userContexts.userContextMap[userId];
+      }
+    });
+    this.store.userContexts.userContextIds = this.store.userContexts.userContextIds.filter(
+      userId => {
+        return !userIds.includes(userId);
+      }
+    );
+  }
+
   setScript(userId: UserId, script: UserScript): void {
     this.store.userContexts.userContextMap[userId].userScript = script;
   }
@@ -87,6 +104,15 @@ export default class GameController {
   private addUnitToMatchState(unit: Unit): void {
     this.store.matchState.objectMap[unit.id] = unit;
     this.store.matchState.objectIds.push(unit.id);
+  }
+
+  private removeUnitFromMatchState(unitId: ObjectId): void {
+    this.store.matchState.objectIds = this.store.matchState.objectIds.filter(
+      objectId => {
+        return objectId !== unitId;
+      }
+    );
+    delete this.store.matchState.objectMap[unitId];
   }
 
   private hasMoreThanOneUser(): boolean {
