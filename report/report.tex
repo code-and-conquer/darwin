@@ -363,8 +363,19 @@ Die Release Pipeline verwendet das neuste von der Build Pipeline erstellte Artef
 Wie bereits im Kapitel \textit{\nameref{InfrastructureArchitecture}} erwähnt, ist das Docker-Compose Projekt mit einem Webserver und Node.js konfiguriert.
 
 \section{Operation und Support}
+Da unser Projekt als zeitlich begrenztes Projekt einer Studenten-Gruppe läuft, ist keinerlei Support oder Maintenance nach Ablauf der Entwicklungsphase geplant. Auch eine Überwachungslösung ist nicht vorgesehen.
+Serverseitig gibt es keine Logs. 
 
-Da unser Projekt als zeitlich begrenztes Projekt einer Studenten-Gruppe läuft, ist keinerlei Support oder Maintenance nach Ablauf der Entwicklungsphase geplant.
+\subsection{Zugriff}
+Der Zugriff auf die virtuelle Maschine erfolgt via SSH. Die IP-Adresse ist 160.85.252.31.
+
+\subsection{Administrationsaufgaben}
+Sollte die Applikation nicht mehr reagieren oder sonst einen Fehler aufweisen, kann sie mittels den folgenden Befehlen neugestartet werden:
+\begin{verbatim}
+cd /web/darwin
+sed -i 's/\*/file:.\/darwin-types/g' current/backend/package.json
+docker-compose up -d --force-recreate
+\end{verbatim}
 
 \section{Entscheidungs-Logbuch}
 
