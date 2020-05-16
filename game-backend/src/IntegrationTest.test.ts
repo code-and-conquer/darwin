@@ -204,12 +204,8 @@ describe('Controller Tests', () => {
   });
 
   it('finishes one game with both players dying at the same time', () => {
-    // match has started
-    const matchUpdate = parseMatchUpdate(sendFunction1.mock.calls[1][0]);
-    expect(matchUpdate.payload.meta.currentTick).toBe(1);
-
     // last round
-    jest.advanceTimersByTime(TICK_INTERVAL * (ticksTillDeath - 2));
+    jest.advanceTimersByTime(TICK_INTERVAL * (ticksTillDeath - 1));
     let { state } = getLastMatchUpdate(sendFunction1).payload;
     expect(getGameObjectsPerType(state, GameObjectTypes.Unit).length).toBe(2);
 

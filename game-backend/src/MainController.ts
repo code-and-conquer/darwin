@@ -143,9 +143,11 @@ export default class MainController {
   }
 
   private handleUserScript(userContextId: UserId, message: ScriptUpdate): void {
-    this.gameController.setScript(userContextId, {
-      script: message.payload.script,
-    });
+    if (this.gameController !== null) {
+      this.gameController.setScript(userContextId, {
+        script: message.payload.script,
+      });
+    }
   }
 
   private handleRoleRequest(userId: string, message: RoleRequest): void {
