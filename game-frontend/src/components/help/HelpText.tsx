@@ -31,7 +31,10 @@ const HelpText: FC = () => {
   return (
     <>
       <h2>Hilfe</h2>
-      <p>Ziel des Spiel ist es, am längsten zu überleben.</p>
+      <p>
+        Ziel des Spiel ist es, am längsten zu überleben. Um dieses Ziel zu
+        erreichen kannst du mittels JavaScript Befehle absetzen.
+      </p>
       <h3>Spielfiguren</h3>
       <h4>Unit</h4>
       <p>
@@ -47,18 +50,17 @@ const HelpText: FC = () => {
         </OneFieldStage>{' '}
         der letzte Überlebende zu sein.
       </p>
-      <h3>API</h3>
-      <h4>Zwischenspeicher</h4>
-      <p>
-        Mittels der <InlineCode>store</InlineCode> Variable kannst du berechnete
-        Resultate über verschiedene Runden hinweg speichern.
-      </p>
-      <Codeblock>{storeCodeExample}</Codeblock>
-      <h4>Aktionspunkte</h4>
+      <h3>Aktionspunkte</h3>
       <p>
         Jeder Befehl kostet Aktionspunkte. Pro Runde hast du 3 Aktionspunkte.
         Bei jedem Befehl steht wieviel eine Ausführung kostet (z.B.:{' '}
         <CostEmoji /> 1).
+      </p>
+      <h3>API</h3>
+      <p>
+        In jeder Runde wird dein Code ausgeführt. Mittels{' '}
+        <InlineCode>log(...args)</InlineCode> kannst du Informationen in der
+        Konsole ausgeben.
       </p>
       <h4>
         Bewegen - <CostEmoji /> 1
@@ -76,7 +78,7 @@ const HelpText: FC = () => {
         Es gibt Wände, die dir und deinen Gegner Schutz geben können, aber auch
         das finden von Resourcen umständlicher gestaltet. Alle Wände auf der Map
         findest du in der <InlineCode>walls</InlineCode> Variable. Damit kannst
-        du diese effektiv umkurven.
+        du diese effektiv umgehen.
       </p>
       <h4>
         Ressourcen konsumieren - <CostEmoji /> 3
@@ -98,6 +100,12 @@ const HelpText: FC = () => {
         Um die Ressource an deiner Position zu konsumieren, führe{' '}
         <InlineCode>consume()</InlineCode> aus.
       </p>
+      <h4>Zwischenspeicher</h4>
+      <p>
+        Mittels der <InlineCode>store</InlineCode> Variable kannst du berechnete
+        Resultate über verschiedene Runden hinweg speichern.
+      </p>
+      <Codeblock>{storeCodeExample}</Codeblock>
       <h4>
         Attackieren - <CostEmoji /> 2
       </h4>
@@ -134,6 +142,7 @@ const HelpText: FC = () => {
       </h5>
       <p>
         Durch konsumieren von Food-Ressourcen regeneriert die Unit mehr Leben.
+        Dieses Powerup ist bis zum Ende des Spiels wirksam.
       </p>
       <h5>
         Ausdauer{' '}
@@ -141,7 +150,10 @@ const HelpText: FC = () => {
           <Endurance position={{ x: 0, y: 0 }} />
         </OneFieldStage>
       </h5>
-      <p>Die Unit verliert weniger Leben pro Tick.</p>
+      <p>
+        Die Unit verliert weniger Leben pro Runde. Dieses Powerup ist bis zum
+        Ende des Spiels wirksam.
+      </p>
     </>
   );
 };
