@@ -15,7 +15,6 @@ const performTickMock = performTick as jest.Mock<
 >;
 
 describe('GameController', () => {
-  let gameController: GameController;
   const mockSendMatchUpdate = jest.fn();
   const mockTickNotification = jest.fn();
   const mockTerminate = jest.fn();
@@ -29,7 +28,8 @@ describe('GameController', () => {
     jest.clearAllMocks();
     jest.clearAllTimers();
 
-    gameController = new GameController(
+    // eslint-disable-next-line no-new
+    new GameController(
       ['user0', 'user1'],
       mockSendMatchUpdate,
       mockTickNotification,
