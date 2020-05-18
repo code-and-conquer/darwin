@@ -1,22 +1,18 @@
-\documentclass[a4paper, 11pt]{scrartcl}
-
-\usepackage{ucs}
-\usepackage[framemethod=tikz]{mdframed}
+\documentclass[11pt,a4paper,german]{scrartcl}
+\usepackage[utf8x]{inputenc}
+\usepackage{xcolor}
 \usepackage{float}
 \usepackage{subfig}
-\usepackage[utf8x]{inputenc}
-\usepackage[T1]{fontenc}
+\usepackage{fontspec}
 \usepackage{graphicx}
+\usepackage{listings}
 \usepackage[automark]{scrlayer-scrpage}
 \usepackage[hidelinks]{hyperref}
 \usepackage{listings}
-\usepackage{booktabs}
-\usepackage{tikz}
-\usepackage[acronym]{glossaries}
 \usepackage{enumitem}
-\usepackage{epigraph}
-\usepackage{hyperref}
 \usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+\graphicspath{{./img/}}
+\setlength{\parindent}{0em} 
 
 \hypersetup{
   colorlinks=true,
@@ -24,39 +20,18 @@
   urlcolor=blue!70!black
 }
 
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  breaklines=true,
+  frame=single,
+  postbreak=\mbox{\textcolor{blue}{$\hookrightarrow$}\space},
+}
+
 \let\oldsection\section
 \renewcommand\section{\clearpage\oldsection}
 
-\makeglossaries
-
-\mdfdefinestyle{note-style}{%
-  rightline=true,
-  innerleftmargin=10,
-  innerrightmargin=10,
-  outerlinewidth=3pt,
-  topline=false,
-  rightline=true,
-  bottomline=false,
-  skipabove=\topsep,
-  skipbelow=\topsep
-}
-
-\newglossaryentry{nodejs}
-{
-  name=Node.js,
-  description={Node.js is an open-source, cross-platform, JavaScript library that executes JavaScript code outside of a browser.}
-}
-
 \makeindex
-
-\newacronym{arest}{REST}{Representational State Transfer}
-
-\usetikzlibrary{shapes.geometric, arrows}
-\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
-\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
-\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
-\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
-\tikzstyle{arrow} = [thick,->,>=stealth]
 
 \pagestyle{scrheadings}
 \clearscrheadfoot
@@ -78,7 +53,7 @@
   \vspace{1cm}
   {\scshape\Large Darwin\par}
   \vspace{1.5cm}
-  {\huge\bfseries Produktdokumentation\par}
+  {\huge\bfseries Software Guidebook\par}
   \vspace{2cm}
   von
   \vspace{1em}
@@ -88,7 +63,7 @@
   IT17ta\_ZH\par
   \vspace{2em}
   \textbf{Status}\par
-  In Progress
+  Final
 
   \vfill
 
@@ -122,9 +97,9 @@ Dieses simple Spielprinzip ist für Spieler einfach zu verstehen oder bereits be
 Die Steuerung durch den Code erlaubt uns, den Schwerpunkt des Gameplays stärker auf die Vorausplanung und langfristigen Strategien zu legen und reaktives Gameplay in den Hintergrund zu stellen.
 
 \begin{figure}[h]
-  \caption{Darwin Gameplay}
   \centering
-  \includegraphics[width=0.95\textwidth]{./img/darwin-gameplay}
+  \includegraphics[width=0.95\textwidth]{darwin-gameplay}
+  \caption{Darwin Gameplay}
 \end{figure}
 
 Da in unserem Team niemand Erfahrung mit Grafikdesign hat, möchten wird das Gametheme möglichst einfach halten.
@@ -133,7 +108,7 @@ So wird die Darstellung des Spiels einfacher, bleibt aber trotzdem noch ansprech
 
 Das Spiel wird als Webapplikation umgesetzt.
 Spieler können sich gegenseitig herausforden und ein Match starten.
-Während des Spielverlaufs können sie ihr Skript aktualisieren und visuell verfolgen, wie das Spielfeld aktuell aussieht. Zuschauer können den verschiedenen Matches beitreten und zuschauen.
+Während des Spielverlaufs können sie ihr Skript aktualisieren und visuell verfolgen, wie das Spielfeld aktuell aussieht. Zuschauer sehen nur den aktuellen Spielstand.
 
 Für die Entwicklung unseres Spieles wird Github und Azure DevOps verwendet,
 währenddessen als Hauptprogrammiersprache, im Backend sowie im Frontend, TypeScript zum Einsatz kommt.
@@ -141,6 +116,7 @@ währenddessen als Hauptprogrammiersprache, im Backend sowie im Frontend, TypeSc
 Das Spiel richtet sich auf leidenschaftliche und engagierte Software Entwickler aus, die ihr Können unter Beweis stellen und sich mit Kollegen messen möchten.
 
 \subsection{User Roles}
+In diesem Abschnitt werden die User Roles genauer beschrieben. Sie sind die Hauptbenutzer des Spiels.
 \subsubsection{Player}
 Der Player ist der Hauptbenutzer des Spiels. Er verwendet die Software häufig. Sein Hauptziel ist es, mittels Code seine Units zu steuern, um möglichst lange im Spiel zu überleben. Da der Code die einzige Möglichkeit ist, das Spiel zu steuern möchte er den Code möglichst bequem (mittels Syntax-Highlighting) eingeben.
 \subsubsection{Spectator}
@@ -157,7 +133,7 @@ Die Unit ist eine logische Rolle. Ihr Ziel ist zu Überleben, kann das aber nich
 %wirtschaftliche oder organisatorische Ziele)
 % Spiel beschreiben und das so kleinwenig das technische ansprechen
 
-Die essenziellen Komponenten des Spieles sind einerseits das Backend, das es erlaubt den vom Spieler verfassten Code auszuführen und andererseits die Grafik, die es dem Benutzer ersichtlich macht, was für Auswirkungen sein Code hat. Zusätzlich dazu braucht es ein faires Game Balancing, welches ermöglicht verschiedenste Strategien zu verfolgen, um im Spiel zu gewinnen:
+Die essenziellen Komponenten des Spieles sind einerseits das Backend, das es erlaubt den vom Spieler verfassten Code auszuführen und andererseits das Frontend, welches es dem Benutzer ersichtlich macht, was für Auswirkungen sein Code hat. Zusätzlich dazu braucht es ein faires Game Balancing, durch das es möglich ist mit verschiedensten Strategien zu gewinnen:
 
 \begin{itemize}
   \item Zuschauer können einem Match beitreten, ohne dass sie Einheiten kontrollieren können. \href{https://dev.azure.com/schaumic/darwin/_workitems/edit/43/}{\#43 Spectators}
@@ -203,16 +179,16 @@ Bei unserer Software-Entwicklung werden die Prozesse von Story Beschreibung, Ent
 
 Unsere Software ist unabhängig des Entwicklungsprozesses folgenden Beschränkungen ausgesetzt.
 \begin{itemize}
-  \item Zeit: die Zeitdauer des Projekts ist eingeschränkt, was sich auf 6 Sprints beläuft.
+  \item Zeit: Die Zeitdauer des Projekts ist eingeschränkt und beläuft sich auf 6 Sprints à je zwei Wochen.
   \item Budget und Ressourcen: Das Projekt ist ein Schulprojekt und ist deshalb grundsätzlich auf die Anzahl ECTS-Credits pro Entwickler beschränkt. In Stunden sind das ungefähr 100 bis 120 pro Entwickler, was Total 600 - 720 Stunden ergibt.
   \item Technologien: Wir verwenden die Technologien React und Node.js mit TypeScript. Grundsätzlich enthält das Projekt aber keine Technologievorgaben. Zurzeit verwenden wir zudem folgende Cloud Services für die Entwicklung, welche einzuhalten sind.
         \begin{itemize}
           \item Github - Als Git-Repository und für PR Reviews
           \item Azure DevOps - Als Projektplanungstool sowie für CI/CD Pipelines
         \end{itemize}
-  \item Grösse des Entwicklungsteams: Das Team besteht aus einem Product Owner, einem Scrum Master und 4 weiteren Entwicklern
-  \item Kompetenzenprofil: Die Entwickler sind aktuell Teilzeitstudenten an der ZHAW und befinden sich im drittletzten Semester des Bachelorstudiengangs Informatik. Dadurch sind sie mit den Grundlagen der Objektorientierten Programmierung sowie mit den Technologien, die im Webbereich zum Einsatz kommen, vertraut. Desweiteren haben einige Entwickler bereits mehrjährige Berufserfahrung mit den Technologien React, TypeScript und Node JS.
-  \item Datenpersistierung wird vernachlässigt, da es für die Zeitdauer dieses Projekts Out-of-Scope ist.
+  \item Grösse des Entwicklungsteams: Das Team besteht aus einem Product Owner, einem Scrum Master und 4 weiteren Entwicklern.
+  \item Kompetenzenprofil: Die Entwickler sind aktuell Teilzeitstudenten an der ZHAW und befinden sich im drittletzten Semester des Bachelorstudiengangs Informatik. Dadurch sind sie mit den Grundlagen der Objektorientierten Programmierung sowie mit den Technologien, die im Webbereich zum Einsatz kommen, vertraut. Desweiteren haben einige Entwickler bereits mehrjährige Berufserfahrung mit den Technologien React, TypeScript und Node.js.
+  \item Datenpersistierung wird vernachlässigt, da es für die Zielsetzung dieses Projekts Out-of-Scope ist.
 \end{itemize}
 
 \section{Verwendete Prinzipien}
@@ -222,35 +198,35 @@ Um die Qualität der Software bei der Entwicklung unseres Spieles sicherzustelle
 \begin{itemize}
   \item Anstatt direkt in den Master-Branch zu pushen, wird für jede Änderung ein Branch erstellt, welcher mittels eines Pull-Request in den Master-Branch gemerged wird.
         So können wir sicherstellen, dass der Code und die in Entwicklung begriffenen Änderungen den Vorstellungen des Teams entsprechen.
-  \item Bevor ein Pull-Request gemerged wird, prüfen wir mittels einer automatisierten Build-Pipeline, ob die Unittests erfolgreich laufen.
+  \item Bevor ein Pull-Request gemerged wird, prüfen wir mittels einer automatisierten Build-Pipeline, ob die Unit-Tests erfolgreich laufen.
   \item Fehlerbehandlungen werden grundsätzlich mittels 'Bug Stories' abgearbeitet, ausser sie können in einem PR Review o.ä. direkt erkannt und behoben werden.
   \item Wir kommunizieren offen und ehrlich miteinander.
 \end{itemize}
 
 \subsection{Coding}
 \begin{itemize}
-  \item Hohe Kohäsion und minimale Kopplung ist wichtiger Bestandteil, um die Komplexität unseres Spieles und die Fehlerbehebung zu vereinfachen.
-  \item Es wird grundsätzlich Funktionale Programmierung mit dem Immutability Prinzip eingesetzt. (Dies wird mittels [Immer JS](https://immerjs.github.io/immer) erleichtert.)
+  \item Hohe Kohäsion und minimale Kopplung ist wichtiger Bestandteil, um die Komplexität unseres Spieles zu minimieren und die Fehlerbehebung zu vereinfachen.
+  \item Es wird grundsätzlich Funktionale Programmierung mit dem Immutability Prinzip eingesetzt.
   \item Coding Guidelines werden für unsere Entwicklung eingesetzt und mittels Eslint und TSlint sowie Pull-Request Reviews überprüft. So können Syntax und Code-Styling eingehalten werden.
 \end{itemize}
 
 \subsection{DoD}
 Wir halten uns bei unserem Entwicklungsprozess an die folgende Definition of Done:
 \begin{itemize}
-  \item Alle Akzeptanzkriterien werden erfüllt
-  \item Der Code ist fertiggestellt und im Versionierungssystem eingespielt
-  \item Dokumentation aktualisiert
-  \item Es wurde ein Code Review durchgeführt oder der Code wurde im Pair Programming erarbeitet
-  \item Coding Guidelines und Standards wurden eingehalten
-  \item Unittests und Integrationtests wurden erfolgreich durchgeführt
-  \item Es sind keine kritischen Bugs offen
+  \item Alle Akzeptanzkriterien werden erfüllt.
+  \item Der Code ist fertiggestellt und im Versionierungssystem eingespielt.
+  \item Dokumentation aktualisiert.
+  \item Es wurde ein Code Review durchgeführt oder der Code wurde im Pair Programming erarbeitet.
+  \item Coding Guidelines und Standards wurden eingehalten.
+  \item Unittests und Integrationtests wurden erfolgreich durchgeführt.
+  \item Es sind keine kritischen Bugs offen.
 \end{itemize}
 
 \subsection{Testing}
 Das Testen der Applikation erfolgt in drei Schritten:
 
 \subsubsection{Unit Testing}
-Unit Tests werden automatisiert bei jedem Build und Pull Request ausgeführt.
+Unit-Tests werden automatisiert bei jedem Build und Pull Request ausgeführt.
 Als Framework wird Jest von Facebook verwendet. Dieses ist in der Javascript-Welt sehr verbreitet und im Team ist damit bereits Know-How vorhanden.
 Beim Unit Testing werden einzelne Einheiten isoliert getestet und sowohl im Frontend als auch im Backend separat ausgeführt.
 
@@ -258,40 +234,85 @@ Beim Unit Testing werden einzelne Einheiten isoliert getestet und sowohl im Fron
 Die Integration Tests erweitern das Testkonzept, indem mehrere Komponenten durch einzelne Tests gleichzeitig getestet werden. So können wir sicherstellen, dass gewisse Spielmechaniken über ein einzelnes oder mehrere Matches hinweg funktionieren.
 
 \subsubsection{Manuelles Testing}
-Manuelles Testen während der Entwicklungsphase und danach. Dieser Teil sollte aus Zeitgründen so klein wie möglich gehalten werden, allerdings trotzdem sicherstellen, dass die Qualität gewährleistet bleibt. Manuelles Testing wird vom Entwickler während und nach der Entwicklung durchgeführt.
+Manuell getestet wird während der Entwicklungsphase und danach. Dieser Teil sollte aus Zeitgründen so klein wie möglich gehalten werden, allerdings trotzdem sicherstellen, dass die Qualität gewährleistet bleibt. 
 Zudem soll der PO durch manuelles Prüfen das Feature zum Schluss abnehmen.
 
-All diese Prinzipien sind ein wichtiger Bestandteil unserer Entwicklung und werden von allen Teammitglieder stets eingehalten.
 
 \section{Architektur}
-\subsection{Applikation}
-Bei Darwin handelt es sich um eine Webapplikation welche in Frontend und Backend aufgeteilt ist.
-Aufgrund der Erfahrung der Teammitglieder wird ausschliesslich TypeScript bzw. JavaScript eingesetzt.
+In diesem Kapitel wird die Struktur der Software auf einem hohen Level beschrieben. Die folgende Abbildung zeigt eine Übersicht wie die einzelnen Komponenten der Applikation zusammenspielen.
+Die Applikation ist in drei Hauptkomponenten unterteilt: Frontend, Backend und Darwin-Types. Alle diese Komponenten sind in TypeScript und JavaScript geschrieben. 
 
-\subsubsection{Frontend}
+
+\begin{figure}[h]
+  \label{fig:architecture}
+  \centering
+  \includegraphics[width=0.9\textwidth]{architecture}
+  \caption{Architektur}
+\end{figure}
+
+\subsection{Frontend}
 Usability ist ein Kernanspruch an die Applikation. Deshalb verwendet Darwin moderne Technologien im Frontend.
-Die Visualisierung des Spiels wird in einem 2D Canvas Context mittels Pixi.js dargestellt.
-Als UI Library wird aufgrund der Erfahrung des Teams React eingesetzt.
+Die Visualisierung des Spiels wird in einem 2D Canvas Context mittels Pixi.js realisiert.
+Als UI-Library wird aufgrund der Erfahrung des Teams React eingesetzt.
 
-\subsubsection{Backend}
+\subsection{Backend}
 Für das Backend wird Node.js eingesetzt, da dieses die meistverwendete JavaScript Runtime ist und die notwendige Stabilität aufweist.
-Damit das Frontend in Echtzeit über den neusten Spielstand informiert wird, findet die Kommunikation mittels Websockets statt.
+Damit das Frontend in Echtzeit über den neusten Spielstand informiert wird, findet die Kommunikation mittels WebSockets statt.
+Das Backend besteht grob beschrieben aus einem WebSocket-Server dem Main- und Game-Controller und der Game-Engine.
+Der WebSocket-Server nimmt neue Verbindungen entgegen und leitet sie an die Controller weiter. Im den Controllern werden die WebSocket-Verbindungen und das Spiel als Ganzes verwaltet. Das beinhaltet auch die Verwaltung der Userskripte.
+Zudem wird regelmässig ein Match-Update, welches von der Game-Engine berechnet wird, generiert und an die verbundenen Spieler und Zuschauer gesendet. 
 Im Backend werden keine externen APIs verwendet und es ist insbesondere keine Persistierungsschicht angedacht.
 
+\subsection{Darwin-Types}
+Die Darwin-Types sind Typen wie zum Beispiel die Unit oder der Spielstatus, welche im Frontend sowie im Backend verwendet werden. Sie sind in einem
+eigenen Node-Modul zusammengefasst, was die Nutzung von ihnen in anderen Softwareteilen enorm vereinfacht. 
+
 \section{Code}
-Die Befehle welche der Player absetzen kann um das Spiel zu beeinflussen werden alle mittels einer RecordingEngine als Absichten (Intents) aufgezeichnet.
-Dadurch ist es möglich Konflikte (Zum Beispiel zwei Units auf dem gleichen Feld) zu verhindern indem die Intents nacheinander ausgeführt werden.
-Nachfolgend ein Klassendiagramm der Intents:
+
+Der Kern des Spiels stellt die Spielelogik dar. Ziel der Logik ist es, Skripts von Benutzern sicher und fair auszuführen.
+Im folgenden werden wichtige Elemente der Logik erläutert.
+
+\subsection{Skript Ausführung}
+
+Die Skripts werden direkt auf dem Server ausgeführt. Deshalb müssen Massnahmen für die sichere Code Ausführung ergriffen werden.
+Um eine möglichst sichere Ausführung zu gewährleisten, wird eine dedizierte Bibliothek eingesetzt.
+Diese ermöglicht es, für jedes Skript einen spezifischen V8 Isolate zu verwenden.
+
+Folgende Massnahmen werden ergriffen, um häufige Missbrauchsmöglichkeiten zu verhindern:
+
+\begin{itemize}
+  \item Sowohl CPU als auch Arbeitsspeicher Limiten sind gesetzt und verhindern unzulässiges Nutzen der Ressourcen.
+  \item Zugriff auf die Node.js Laufzeit des Servers ist nicht möglich.
+  \item Die Skripts haben keine Möglichkeit mit dem Netzwerk, Dateisystem oder dergleichen zu kommunizieren, deshalb können sie auch nicht für Bot Netzwerke missbraucht werden.
+\end{itemize}
+
+Diese Massnahmen verkleinern den Angriffsvektor für böswillige Skripts.
+
+\subsection{Spielelogik}
+
+Die Befehle welche der Player absetzen kann, um das Spiel zu beeinflussen, werden als Absichten (Intents) abgebildet.
+Die Gliederung der verschiedenen Intents ist in Figure \ref{fig:classDiagramIntents} ersichtlich.
+
 \begin{figure}[h]
-  \caption{Klassendiagramm Intents}
   \centering
-  \includegraphics[width=0.7\textwidth]{./img/Intent}
+  \includegraphics[width=0.9\textwidth]{Intent}
+  \caption{Klassendiagramm Intents}
+  \label{fig:classDiagramIntents}
 \end{figure}
-%\includegraphics[width=0.7\textwidth]{./img/Intent.svg}
-% Vielleicht später die Recording Engine & Co.?
 
+Die Skripts werden sequentiell ausgeführt und alle Absichten gemäss ihren Kosten pro Skript in eine künstliche Zeitachse eingegliedert.
 
-\section{Infrastructure Architecture}
+Damit die Absichten aller Benutzer berücksichtigt werden können, wird folgender Prozess durchlaufen:
+\begin{itemize}
+  \item Alle individuellen Absichten in globale Ablaufreihenfolge eingliedern.
+  \item Einträge innerhalb eines spezifischen Zeiteintrages zufällig anordnen. Somit wird kein Spieler bevorzugt.
+  \item Absichten, welche nicht im Zeitbudget erreicht werden können, entfernen. Dies stellt sicher, dass Skripts nicht unbegrenzt viele Absichten ausführen können.
+\end{itemize}
+
+Im Anschluss werden die einzelnen Zeitachseneinträge und alle gewünschten Befehle ausgeführt und auf den Spielstand appliziert.
+
+\section{Instrastruktur-Architektur}
+\label{InfrastructureArchitecture}
 % Während der grösste Teil des Guidebooks sich mit der Software selber beschäftigt, wird hier die physikalische/virtuelle Infrastruktur in welche die Software installiert und betrieben wird beschrie-ben. Folgende Fragen sollten hier behandelt werden:
 % • Ist eine klare Infrastruktur Architektur vorhanden?
 % • Welche Hardware (virtuell oder physikalisch) wird dazu verwendet?
@@ -300,25 +321,80 @@ Nachfolgend ein Klassendiagramm der Intents:
 % • Wer ist zuständig für Support und Unterhalt der Infrastruktur?
 % • Wer ist verantwortlich für die Ressourcen (ownership)?•etc.
 
-\section{Installation (Deployment)}
-\subsection{CI /CD}
+Da es sich um ein Schulprojekt handelt und sich das Projekt in der Entwicklungsphase befindet, ist die Infrastruktur zurzeit simpel gehalten. Es wurde jedoch bereits angedacht, wie die Infrastruktur in Zukunft aussehen könnte.
+
+\subsection{Infrastruktur während der Entwicklungsphase}
+Wie auf der folgenden Abbildung zu sehen, wird aktuell ein virtueller Linux Rechner (mit Ubuntu 18.04.4 LTS) eingesetzt. Auf diesem ist Docker installiert, der mittels Docker-Compose jeweils einen Docker-Container für das Frontend und einen für das Backend konfiguriert. Das Backend wird mittels eines Node.js-Images betrieben, wobei für das Frontend ein Nginx-Image verwendet wird, um die statischen Dateien des gebauten React-Apps auszuliefern.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{infrastructure_current.png}
+  \caption{Aktuelle Infrastruktur}
+\end{figure}
+
+\subsection{Skalierbarkeit und Infrastruktur in Zukunft}
+Durch den Einsatz von Docker kann die Software auf einer Reihe von Systemen, wie einzelnen physikalischen/virtuellen Rechnern oder PaaS Anbietern, betrieben werden. Es besteht auch die Möglichkeit der Orchestrierung: 
+\begin{itemize}
+  \item Der Webserver für das Frontend, hat keinen Zustand zu speichern. Mittels eines Load Balancers kann die Last so auf mehrere Server verteilt werden.
+  \item Das Backend hingegen hält den aktuellen Zustand eines Spiels und deren Spielern und Zuschauern. Daher kann man nicht während des Spiels oder in einer neuer Sitzung, während das Match noch läuft, auf einen anderen Server verbinden. Mittels eines Load Balancers, der für die verschiedenen User speichert, welcher Backend Server für den jeweiligen User zuständig ist, kann das Problem umgangen werden. Allerdings ist dies noch zu untersuchen.
+\end{itemize}
+
+Die Zuständigkeiten sind zurzeit nicht bekannt. Auch steht noch kein Konzept bezüglich Disaster-Recovery / Failover. Allerdings ist aufgrund des Einsatzes von Docker und Load Balancers bereits Vorarbeit geleistet.
+
+\section{Deployment}
+
 Um einen raschen Release-Zyklus zu gewährleisten, wurde eine Build- sowie eine Releasepipeline eingerichtet.
 Diese ermöglicht es, Pull-Requests automatisch zu testen und nach einem erfolgten Merge automatisiert zu releasen und deployen.
 Dies soll die Entwicklungsphase beschleunigen und gewähleisten, dass stets und ausschliesslich funktionierender Code deployed wird.
 
+\subsection{Build Pipeline}
 Innerhalb dieser Pipeline werden folgende Schritte durchgeführt:
-\begin{itemize}
+\begin{enumerate}
   \item Installieren aller notwendigen Pakete
-  \item Bauen der beiden Artefakte (Frontend und Backend)
-  \item Durchführen der Unit Tests
-  \item Erstellung eines deploybaren Paketes
-  \item Deployment auf den Server
-  \item Neustarten des Docker-Containers auf dem Server
-\end{itemize}
+  \item Linting und Formatierung werden überprüft
+  \item Build wird durchgeführt
+  \item Tests werden durchgeführt
+  \item Bilden eines Artefakts mit Inhalt: Frontend, Backend und Shared Types
+\end{enumerate}
+Das Build schlägt fehl, sobald ein Schritt nicht erfolgreich war. Wenn zum Beispiel das Linting / die Formatierung nicht korrekt ist, wird das Build abgebrochen und der Pull-Request kann nicht gemerged werden.
+
+\subsection{Release Pipeline}
+Die Release Pipeline verwendet das neuste von der Build Pipeline erstellte Artefakt. Beim erfolgreichen Abschluss der Build Pipeline wird automatisch die Release Pipeline angestossen, die folgende Schritte durchführt:
+\begin{enumerate}
+  \item Entpacken und kopieren des Artefakts auf den Server
+  \item Kopieren der Ordner aus dem Artefakt in das Docker-Compose Projekt
+  \item Neuerstellen der Docker Container mittels Docker-Compose
+\end{enumerate}
+
+Die detaillierte Konfiguration der Pipelines befindet sich in der Datei \textit{azure-pipeline.yml} des Code-Repositorys und in \href{https://dev.azure.com/schaumic/darwin/_build}{Azure DevOps}. Eine Kopie des Docker Compose Projekts befindet sich in \textit{\nameref{Anhang-A}}.
+Wie bereits im Kapitel \textit{\nameref{InfrastructureArchitecture}} erwähnt, ist das Docker-Compose Projekt mit einem Webserver und Node.js konfiguriert.
 
 \section{Operation und Support}
+Da unser Projekt als zeitlich begrenztes Projekt einer Studenten-Gruppe läuft, ist keinerlei Support oder Maintenance nach Ablauf der Entwicklungsphase geplant. Auch eine Überwachungslösung ist nicht vorgesehen. Allgemein gilt, dass die Server mittels Befehlen von \href{https://docs.docker.com/engine/reference/commandline/docker/}{Docker} und \href{https://docs.docker.com/compose/reference/overview/}{Docker Compose} sowie der jeweiligen Server-Software administriert werden können.
 
-Da unser Projekt als zeitlich begrenztes Projekt einer Studenten-Gruppe läuft, ist keinerlei Support oder Maintenance nach Ablauf der Entwicklungsphase geplant.
+Eine Kopie des Docker Compose Setups und der Nginx Konfiguration ist in \textit{\nameref{Anhang-A}} ersichtlich.
+
+\subsection{Zugriff}
+Der Zugriff auf die virtuelle Maschine erfolgt via SSH.
+
+\subsection{Administrationsaufgaben}
+Folgend einige Lösungswege für alltägliche Probleme.
+
+\subsubsection{Absturz und Neustart}
+Sollte die Applikation nicht mehr reagieren oder sonst einen Fehler aufweisen, kann sie mittels den folgenden Befehlen neugestartet werden:
+\begin{verbatim}
+cd /web/darwin
+docker-compose up -d --force-recreate
+\end{verbatim}
+beziehungsweise mit
+\begin{verbatim}
+docker-compose up [frontend/backend] -d --force-recreate
+\end{verbatim}
+um nur den Backend- oder den Frontend-Server neuzustarten.
+
+
+\subsubsection{Logs einsehen}
+Die Logs können mittels \texttt{docker-compose logs} eingesehen werden. Sie werden zurzeit aber nicht persistiert.
 
 \section{Entscheidungs-Logbuch}
 
@@ -356,12 +432,52 @@ Da unser Projekt als zeitlich begrenztes Projekt einer Studenten-Gruppe läuft, 
           \item Matchlobbies werden vorerst nicht unterstützt. Diese Funktion bringt momentan nur einen geringen Mehrwert und wird daher auf unbestimmte
                 Zeit verschoben.
         \end{itemize}
+  \item 01.04.2020
+        \begin{itemize}
+          \item Die Integrationtests werden mit Jest anstatt Cypress umgesetzt. Mit Cypress wären richtige End-to-End-Tests möglich, jedoch gab es massive Probleme technischer Natur im Zusammenhang mit Canvas. 
+                Aufgrund diesen Problemen verwenden wir nun Jest um ganze Komponenten wie z.B. die komplette Game-Engine zu testen.
+        \end{itemize}
 \end{itemize}
 
-\clearpage
+\section{Anhang}
+\subsection{Anhang A: Docker Compose und Nginx Konfiguration}
+\label{Anhang-A}
 
-\printglossary[type=\acronymtype]
+\begin{lstlisting}[caption={Docker Compose},captionpos=b]
+version: "3.7"
+services:
+  frontend:
+    image: nginx:1.17
+    volumes:
+      - ./current/frontend/build:/var/www/html:ro
+      - ./sites.conf:/etc/nginx/conf.d/sites.template:ro
+    ports:
+      - 80:80
+    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/sites.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
+  backend:
+    image: node:12.16.1
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./current/backend:/home/node/app:z
+    ports:
+      - 8080:8080
+    command: /bin/bash -c "npm i --production && npm start"
+\end{lstlisting}
 
-\printglossary
+\begin{lstlisting}[caption={Nginx},captionpos=b]
+server {
+  listen 80;
+  charset UTF-8;
+  server_name _;
+  root /var/www/html;
+  index index.html;
+  error_page 404 /404.html;
+}
+\end{lstlisting}
+
+
 
 \end{document}
