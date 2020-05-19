@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
-const Container = styled.div`
-  margin-top: 2rem;
+const TextContainer = styled.div`
   background: white;
   padding: 2rem;
 `;
 
-export default Container;
+export default TextContainer;

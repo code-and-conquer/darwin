@@ -18,7 +18,7 @@ export const WebsocketContext = createContext<ContextState>(
 );
 
 export function useWebsocket(): ContextState {
-  const [userId, setUserId] = useUserId<UserId>(() => uuidv4());
+  const [userId] = useUserId<UserId>(() => uuidv4());
   const [contextState, dispatch] = useReducer(reducer, emptyWebsocketContext);
   const { socket } = contextState;
 
@@ -38,7 +38,8 @@ export function useWebsocket(): ContextState {
         dispatch(action);
       });
     }
-  }, [socket, setUserId, dispatch]);
+  }, [socket, dispatch]);
+
   return contextState;
 }
 

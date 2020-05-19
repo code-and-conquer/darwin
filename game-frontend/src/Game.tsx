@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Stage } from '@inlet/react-pixi';
 import * as PIXI from 'pixi.js';
-import { GameObjectTypes } from '@darwin/types';
+import { GameObjectTypes, Role } from '@darwin/types';
 import CanvasWrapper from './components/visual/CanvasWrapper';
 import { useGameState, useUserContext } from './service/game';
 import GameObjects from './components/canvas-objects/GameObjects';
@@ -9,12 +9,16 @@ import Grid from './components/canvas-objects/Grid';
 import { FIELD_SIZE, STAGE_COLUMNS, STAGE_ROWS } from './constants/stage';
 import Rectangle from './components/pixi/Rectangle';
 import Firework from './components/pixi/Firework';
-import WaitingDialog from './components/WaitingDialog';
 import {
   useLosingSound,
   useStartSound,
   useWinningSound,
 } from './service/sound';
+import WaitingText from './components/waiting-text';
+import TextContainer from './components/visual/TextContainer';
+import WelcomeText from './components/welcome-text';
+import RoleSwitch from './components/role-switch';
+import { useRole } from './service/game/role';
 
 const width = STAGE_COLUMNS * FIELD_SIZE;
 const height = STAGE_ROWS * FIELD_SIZE;
@@ -23,10 +27,24 @@ function Game(): JSX.Element {
   const [hasJoinedGame, setHasJoinedGame] = useState(false);
   const gameState = useGameState();
   const userContext = useUserContext();
+  const [role] = useRole();
+
+  const matchIsRunning = gameState.objectIds
+    .map(id => gameState.objectMap[id])
+    .some(gameObject => gameObject.type === GameObjectTypes.Unit);
+
+  const isPlayer = role === Role.PLAYER;
+  const isLiving =
+    isPlayer && matchIsRunning && !!gameState.objectMap[userContext.unitId];
+  const isOnlyOnePlayerLeft =
+    gameState.objectIds
+      .map(id => gameState.objectMap[id])
+      .filter(gameObject => gameObject.type === GameObjectTypes.Unit).length ===
+    1;
+  const isDead = isPlayer && hasJoinedGame && !isLiving;
+  const hasWon = isPlayer && hasJoinedGame && isLiving && isOnlyOnePlayerLeft;
+
   const playStartSound = useStartSound();
-
-  const isLiving = !!gameState.objectMap[userContext.unitId];
-
   useEffect(() => {
     if (isLiving) {
       playStartSound();
@@ -34,15 +52,11 @@ function Game(): JSX.Element {
     }
   }, [isLiving, playStartSound]);
 
-  const isDead = hasJoinedGame && !isLiving;
-
-  const isOnlyOnePlayerLeft =
-    gameState.objectIds
-      .map(id => gameState.objectMap[id])
-      .filter(gameObject => gameObject.type === GameObjectTypes.Unit).length ===
-    1;
-
-  const hasWon = isLiving && isOnlyOnePlayerLeft;
+  useEffect(() => {
+    if (hasJoinedGame && !isPlayer) {
+      setHasJoinedGame(false);
+    }
+  }, [hasJoinedGame, isPlayer]);
 
   const playWinningSound = useWinningSound();
   useEffect(() => {
@@ -58,11 +72,23 @@ function Game(): JSX.Element {
     }
   }, [isDead, playLosingSound]);
 
-  if (!hasJoinedGame) {
+  if (isPlayer && !hasJoinedGame) {
     return (
       <>
-        <WaitingDialog hasJoinedGame={hasJoinedGame} />
-        <p>Warten...</p>
+        <TextContainer>
+          <WaitingText />
+        </TextContainer>
+        <RoleSwitch />
+      </>
+    );
+  }
+
+  if (!role) {
+    return (
+      <>
+        <TextContainer>
+          <WelcomeText />
+        </TextContainer>
       </>
     );
   }
@@ -98,11 +124,12 @@ function Game(): JSX.Element {
             <GameObjects
               objectIds={gameState.objectIds}
               objectMap={gameState.objectMap}
-              ownUnitId={userContext.unitId}
+              ownUnitId={userContext ? userContext.unitId : ''}
             />
           </Container>
         </Stage>
       </CanvasWrapper>
+      {!matchIsRunning ? <RoleSwitch /> : null}
     </>
   );
 }

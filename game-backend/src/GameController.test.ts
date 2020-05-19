@@ -15,8 +15,8 @@ const performTickMock = performTick as jest.Mock<
 >;
 
 describe('GameController', () => {
-  let gameController: GameController;
   const mockSendMatchUpdate = jest.fn();
+  const mockTickNotification = jest.fn();
   const mockTerminate = jest.fn();
   jest.useFakeTimers();
 
@@ -28,7 +28,13 @@ describe('GameController', () => {
     jest.clearAllMocks();
     jest.clearAllTimers();
 
-    gameController = new GameController(mockSendMatchUpdate, mockTerminate);
+    // eslint-disable-next-line no-new
+    new GameController(
+      ['user0', 'user1'],
+      mockSendMatchUpdate,
+      mockTickNotification,
+      mockTerminate
+    );
     performTickMock.mockImplementation(
       (state: State, userContextContainer: UserContextContainer) => [
         state,
@@ -49,16 +55,12 @@ describe('GameController', () => {
   });
 
   it('starts ticking', () => {
-    gameController.appendUser('user0');
-    gameController.appendUser('user1');
     jest.advanceTimersByTime(TICK_INTERVAL);
 
     expect(setInterval).toBeCalledTimes(1);
   });
 
   it('sends a matchUpdate', () => {
-    gameController.appendUser('user0');
-    gameController.appendUser('user1');
     jest.advanceTimersByTime(TICK_INTERVAL);
 
     const matchUpdate = parseMatchUpdate(mockSendMatchUpdate.mock.calls[0][1]);
@@ -66,8 +68,6 @@ describe('GameController', () => {
   });
 
   it('sends correct states on tick', () => {
-    gameController.appendUser('user0');
-    gameController.appendUser('user1');
     jest.advanceTimersByTime(TICK_INTERVAL);
 
     const matchUpdate = parseMatchUpdate(mockSendMatchUpdate.mock.calls[0][1]);
@@ -77,18 +77,24 @@ describe('GameController', () => {
     expect(matchUpdate.payload.state.objectMap[unitId]).toBeDefined();
   });
 
-  it('increments tick counter on each tick', () => {
-    let matchUpdate;
+  it('sends empty user context on tick for spectators', () => {
+    jest.advanceTimersByTime(TICK_INTERVAL);
 
-    gameController.appendUser('user0');
-    gameController.appendUser('user1');
+    const matchUpdate = parseMatchUpdate(mockTickNotification.mock.calls[0][0]);
+    const { userContext } = matchUpdate.payload;
+
+    expect(userContext).toBeNull();
+  });
+
+  it('increments tick counter on each tick', () => {
+    let matchUpdate: MatchUpdate;
 
     jest.advanceTimersByTime(TICK_INTERVAL);
     matchUpdate = parseMatchUpdate(mockSendMatchUpdate.mock.calls[0][1]);
     expect(matchUpdate.payload.meta.currentTick).toBe(1);
 
     jest.advanceTimersByTime(TICK_INTERVAL);
-    matchUpdate = parseMatchUpdate(mockSendMatchUpdate.mock.calls[2][1]);
+    matchUpdate = parseMatchUpdate(mockSendMatchUpdate.mock.calls[3][1]);
     expect(matchUpdate.payload.meta.currentTick).toBe(2);
   });
 
@@ -109,10 +115,7 @@ describe('GameController', () => {
     expect(matchUpdate1.payload.meta.currentTick).toBe(expectedTick);
   }
 
-  it('sends the same state to multiple clients', () => {
-    gameController.appendUser('user0');
-    gameController.appendUser('user1');
-
+  it('sends the same state to players', () => {
     jest.advanceTimersByTime(TICK_INTERVAL);
     jest.advanceTimersByTime(TICK_INTERVAL);
 
@@ -135,8 +138,6 @@ describe('GameController', () => {
       { userMap: {}, userIds: [] },
     ]);
 
-    gameController.appendUser('user0');
-    gameController.appendUser('user1');
     jest.advanceTimersByTime(TICK_INTERVAL);
 
     expect(mockTerminate).toHaveBeenCalledTimes(1);

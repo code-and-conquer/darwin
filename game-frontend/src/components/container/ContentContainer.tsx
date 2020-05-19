@@ -7,6 +7,10 @@ const ContentContainer = styled.div`
   align-items: center;
   overflow-y: auto;
   padding: 2rem;
+
+  > *:not(:first-child) {
+    margin-top: 2rem;
+  }
 `;
 
 export default ContentContainer;

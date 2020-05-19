@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import Giphy from './Giphy';
 
-const Text: FC = () => {
+const WaitingText: FC = () => {
   return (
     <>
       <h2>Warten auf Gegner</h2>
@@ -21,4 +21,4 @@ const Text: FC = () => {
   );
 };
 
-export default Text;
+export default WaitingText;

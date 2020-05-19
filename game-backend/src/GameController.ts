@@ -32,38 +32,41 @@ export default class GameController {
   private store = createGameStore();
 
   constructor(
+    userIds: UserId[],
     private sendMatchUpdate: (userId: UserId, matchUpdate: MatchUpdate) => void,
+    private sendTickNotification: (matchUpdate: MatchUpdate) => void,
     private terminate: () => void
   ) {
     this.store.matchState = createMap(this.store.matchState);
+    this.appendUsers(userIds);
+
+    this.startGame();
   }
 
-  appendUser(userId: UserId): void {
-    const unit = this.generateUnit();
+  private appendUsers(userIds: UserId[]): void {
+    userIds
+      .filter(userId => {
+        return !this.store.userContexts.userContextIds.includes(userId);
+      })
+      .forEach(userId => {
+        const unit = this.generateUnit();
 
-    this.addUnitToMatchState(unit);
-    const userCtx: UserExecutionContext = {
-      unitId: unit.id,
-      userScript: {
-        script: '',
-      },
-      store: {},
-    };
+        this.addUnitToMatchState(unit);
+        const userCtx: UserExecutionContext = {
+          unitId: unit.id,
+          userScript: {
+            script: '',
+          },
+          store: {},
+        };
 
-    this.store.userContexts.userContextMap[userId] = userCtx;
-    this.store.userContexts.userContextIds.push(userId);
-
-    this.checkGameState();
+        this.store.userContexts.userContextMap[userId] = userCtx;
+        this.store.userContexts.userContextIds.push(userId);
+      });
   }
 
   setScript(userId: UserId, script: UserScript): void {
     this.store.userContexts.userContextMap[userId].userScript = script;
-  }
-
-  private checkGameState(): void {
-    if (this.hasMoreThanOneUser() && !this.isRunning) {
-      this.startGame();
-    }
   }
 
   private generateUnit(): Unit {
@@ -79,10 +82,6 @@ export default class GameController {
     this.store.matchState.objectIds.push(unit.id);
   }
 
-  private hasMoreThanOneUser(): boolean {
-    return this.store.userContexts.userContextIds.length > 1;
-  }
-
   private startGame(): void {
     this.isRunning = true;
     this.tickingInterval = setInterval(this.getTickExecutor(), TICK_INTERVAL);
@@ -92,6 +91,7 @@ export default class GameController {
     return (): void => {
       const tickFeedback = this.tick();
       this.notifyUsers(tickFeedback);
+      this.notifySpectators();
       const units = getGameObjectsPerType(
         this.store.matchState,
         GameObjectTypes.Unit
@@ -102,6 +102,10 @@ export default class GameController {
         this.terminate();
       }
     };
+  }
+
+  private notifySpectators(): void {
+    this.sendTickNotification(this.generateUpdate(null, []));
   }
 
   private static getPlainUserContext(userContext: UserContext): UserContext {

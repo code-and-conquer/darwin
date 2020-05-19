@@ -5,6 +5,8 @@ import {
   Unit,
   UserContextContainer,
   MatchUpdate,
+  RoleRequest,
+  Role,
 } from '@darwin/types';
 import WebSocket, { OPEN } from 'ws';
 import performTick from './game-engine';
@@ -26,6 +28,11 @@ const performTickNTimes = (
     [state] = performTick(state, userContextContainers);
   }
   return state;
+};
+
+const roleRequestPlayer: RoleRequest = {
+  type: 'roleRequest',
+  payload: { newRole: Role.PLAYER },
 };
 
 describe('Complete game-engine', () => {
@@ -183,20 +190,22 @@ describe('Controller Tests', () => {
   let mainController: MainController;
   beforeAll(() => {
     jest.clearAllTimers();
+    jest.clearAllMocks();
 
     mainController = new MainController();
     mainController.newConnection(wsMock1 as WebSocket, UNIT_ID1);
     mainController.newConnection(wsMock2 as WebSocket, UNIT_ID2);
+
+    // change role to be players
+    const onListener0 = onFunction.mock.calls[0][1];
+    onListener0(JSON.stringify(roleRequestPlayer));
+    const onListener1 = onFunction.mock.calls[1][1];
+    onListener1(JSON.stringify(roleRequestPlayer));
   });
 
   it('finishes one game with both players dying at the same time', () => {
-    // match has started
-    jest.advanceTimersByTime(TICK_INTERVAL);
-    const matchUpdate = parseMatchUpdate(sendFunction1.mock.calls[0][0]);
-    expect(matchUpdate.payload.meta.currentTick).toBe(1);
-
     // last round
-    jest.advanceTimersByTime(TICK_INTERVAL * (ticksTillDeath - 2));
+    jest.advanceTimersByTime(TICK_INTERVAL * (ticksTillDeath - 1));
     let { state } = getLastMatchUpdate(sendFunction1).payload;
     expect(getGameObjectsPerType(state, GameObjectTypes.Unit).length).toBe(2);
 

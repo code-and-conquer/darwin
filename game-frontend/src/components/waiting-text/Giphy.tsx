@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 const GIPHY_ID_LIST = [
   'hiu4RJvbEBUVq',
@@ -8,8 +8,9 @@ const GIPHY_ID_LIST = [
 ];
 
 const Giphy: FC = () => {
-  const giphyID =
-    GIPHY_ID_LIST[Math.floor(Math.random() * GIPHY_ID_LIST.length)];
+  const [giphyID] = useState<string>(
+    GIPHY_ID_LIST[Math.floor(Math.random() * GIPHY_ID_LIST.length)]
+  );
   const posterSrc = `https://media.giphy.com/media/${giphyID}/200_s.gif`;
   const videoSrc = `https://media.giphy.com/media/${giphyID}/giphy.mp4`;
   const altImageSrc = `https://media.giphy.com/media/${giphyID}/giphy.gif`;
