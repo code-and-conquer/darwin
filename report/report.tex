@@ -1,5 +1,6 @@
 \documentclass[11pt,a4paper,german]{scrartcl}
 \usepackage[utf8x]{inputenc}
+\usepackage[main=german,english]{babel}
 \usepackage{xcolor}
 \usepackage{float}
 \usepackage{subfig}
@@ -115,6 +116,7 @@ währenddessen als Hauptprogrammiersprache, im Backend sowie im Frontend, TypeSc
 
 Das Spiel richtet sich auf leidenschaftliche und engagierte Software Entwickler aus, die ihr Können unter Beweis stellen und sich mit Kollegen messen möchten.
 
+\pagebreak
 \subsection{User Roles}
 In diesem Abschnitt werden die User Roles genauer beschrieben. Sie sind die Hauptbenutzer des Spiels.
 \subsubsection{Player}
@@ -207,7 +209,12 @@ Um die Qualität der Software bei der Entwicklung unseres Spieles sicherzustelle
 \begin{itemize}
   \item Hohe Kohäsion und minimale Kopplung ist wichtiger Bestandteil, um die Komplexität unseres Spieles zu minimieren und die Fehlerbehebung zu vereinfachen.
   \item Es wird grundsätzlich Funktionale Programmierung mit dem Immutability Prinzip eingesetzt.
-  \item Coding Guidelines werden für unsere Entwicklung eingesetzt und mittels Eslint und TSlint sowie Pull-Request Reviews überprüft. So können Syntax und Code-Styling eingehalten werden.
+  \item Verschiedenste Coding-Guidelines werden eingesetzt und durch Pull-Request Reviews überprüft.
+    \begin{itemize}
+      \item Eslint und TSlint werden zur Verminderung von Code-Smells eingesetzt.
+      \item Zur Formatierung wird Prettier verwendet.
+      \item Ein Pull-Request wird nicht akzeptiert, falls die Überprüfung durch Eslint oder TSlint fehlschlägt oder der Code nicht korrekt formatiert ist. Dies wird automatisch von der Build-Pipeline überprüft.
+    \end{itemize}
 \end{itemize}
 
 \subsection{DoD}
@@ -222,6 +229,7 @@ Wir halten uns bei unserem Entwicklungsprozess an die folgende Definition of Don
   \item Es sind keine kritischen Bugs offen.
 \end{itemize}
 
+\pagebreak
 \subsection{Testing}
 Das Testen der Applikation erfolgt in drei Schritten:
 
