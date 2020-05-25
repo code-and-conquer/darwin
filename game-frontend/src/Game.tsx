@@ -34,8 +34,12 @@ function Game(): JSX.Element {
     .some(gameObject => gameObject.type === GameObjectTypes.Unit);
 
   const isPlayer = role === Role.PLAYER;
+  const hasJoinedAsPlayer = !!userContext;
   const isLiving =
-    isPlayer && matchIsRunning && !!gameState.objectMap[userContext.unitId];
+    isPlayer &&
+    matchIsRunning &&
+    hasJoinedAsPlayer &&
+    !!gameState.objectMap[userContext.unitId];
   const isOnlyOnePlayerLeft =
     gameState.objectIds
       .map(id => gameState.objectMap[id])
