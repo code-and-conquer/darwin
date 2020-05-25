@@ -66,7 +66,9 @@ export default class GameController {
   }
 
   setScript(userId: UserId, script: UserScript): void {
-    this.store.userContexts.userContextMap[userId].userScript = script;
+    if (this.store.userContexts.userContextMap[userId]) {
+      this.store.userContexts.userContextMap[userId].userScript = script;
+    }
   }
 
   private generateUnit(): Unit {
